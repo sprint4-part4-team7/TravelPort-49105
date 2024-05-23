@@ -3,6 +3,7 @@
     "target": "es5",
     "module": "commonjs",
     "allowJs": true,
+    "noEmit": true,
     "jsx": "preserve",
     "declaration": true,
     "noImplicitAny": true,
@@ -15,7 +16,7 @@
     "lib": ["ES2020", "DOM"],
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src/*/"],
