@@ -14,9 +14,9 @@
     "sourceMap": true,
     "removeComments": true,
     "lib": ["ES2020", "DOM"],
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"]
     }
   },
   "include": ["src/*/"],
