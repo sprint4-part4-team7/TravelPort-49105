@@ -14,11 +14,11 @@
     "sourceMap": true,
     "removeComments": true,
     "lib": ["ES2020", "DOM"],
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./*"]
     }
   },
-  "include": ["src/*/"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"]
 }
