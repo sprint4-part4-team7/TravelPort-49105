@@ -23,6 +23,7 @@
   "rules": {
     "no-unused-vars": "error",
     "no-undef": "error",
+    "import/no-extraneous-dependencies": 0,
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": [
       1,
