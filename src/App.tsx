@@ -1,5 +1,20 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Main from './pages/main';
+import Login from './pages/login';
+
 function App() {
-  return <h1 className="text-3xl font-bold underline">안녕</h1>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/">
+          <Route index element={<Main />} />
+          <Route path="login">
+            <Route index element={<Login />} />
+          </Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
