@@ -1,8 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Main from '@/pages/Main';
 import Login from '@/pages/Login';
+import Main from '@/pages/Main';
+import MyPage from './pages/MyPage';
 
-function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -11,10 +12,13 @@ function App() {
           <Route path="login">
             <Route index element={<Login />} />
           </Route>
+          <Route path="mypage">
+            <Route index element={<MyPage />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;
