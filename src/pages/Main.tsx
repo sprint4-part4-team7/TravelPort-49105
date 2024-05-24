@@ -1,5 +1,7 @@
+import SearchBar from '@/components/common/SearchBar';
+
 function Main() {
-  return <h1 className="text-3xl font-bold underline">안녕</h1>;
+  return <SearchBar />;
 }
 
 export default Main;
