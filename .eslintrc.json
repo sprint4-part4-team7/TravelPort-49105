@@ -33,6 +33,10 @@
     "no-undef": "error",
     "import/no-extraneous-dependencies": 0,
     "react/react-in-jsx-scope": "off",
+    "react/function-component-definition": [
+      2,
+      { "namedComponents": "arrow-function" }
+    ],
     "react/jsx-filename-extension": [
       1,
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }

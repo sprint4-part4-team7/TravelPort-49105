@@ -1,8 +1,7 @@
-import React = require('react');
 import Modal from '@/components/common/modal';
 import useModal from '@/hooks/useModal';
 
-const MyPage: React.FC = () => {
+const MyPage = () => {
   const { isOpen, clickModal } = useModal();
   return (
     <div>

@@ -1,10 +1,8 @@
-import React = require('react');
-
 type ModalProps = {
   isOpen: boolean;
 };
 
-const Modal: React.FC<ModalProps> = ({ isOpen }: ModalProps) => {
+const Modal = ({ isOpen }: ModalProps) => {
   if (!isOpen) {
     return null;
   }
