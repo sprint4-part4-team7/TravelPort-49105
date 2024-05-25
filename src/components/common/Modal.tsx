@@ -1,18 +1,19 @@
+import { ReactNode } from 'react';
+import ModalPortal from '@/utils/ModalPortal';
+
 type ModalProps = {
   isOpen: boolean;
+  children: ReactNode;
 };
 
-const Modal = ({ isOpen }: ModalProps) => {
+const Modal = ({ isOpen, children }: ModalProps) => {
   if (!isOpen) {
     return null;
   }
   return (
-    <div>
-      <div className="my-16 border-1 p-16">
-        <h2>모달 예시</h2>
-        <p>모달이 짜잔</p>
-      </div>
-    </div>
+    <ModalPortal>
+      <div className="my-16 border-1 p-16">{children}</div>
+    </ModalPortal>
   );
 };
 
