@@ -1,4 +1,5 @@
-import Modal from '@/components/common/modal';
+import EditInfo from '@/components/EditInfo';
+import Modal from '@/components/common/Modal';
 import useModal from '@/hooks/useModal';
 
 const MyPage = () => {
@@ -8,7 +9,9 @@ const MyPage = () => {
       <button onClick={clickModal} type="button" className="p-16 border-1">
         Open Modal
       </button>
-      <Modal isOpen={isOpen} />
+      <Modal isOpen={isOpen}>
+        <EditInfo />
+      </Modal>
     </div>
   );
 };
