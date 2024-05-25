@@ -3,13 +3,13 @@ import Modal from '@/components/common/Modal';
 import useModal from '@/hooks/useModal';
 
 const MyPage = () => {
-  const { isOpen, clickModal } = useModal();
+  const { isOpen, openModal, closeModal } = useModal();
   return (
     <div>
-      <button onClick={clickModal} type="button" className="p-16 border-1">
+      <button onClick={openModal} type="button" className="p-16 border-1">
         Open Modal
       </button>
-      <Modal isOpen={isOpen}>
+      <Modal isOpen={isOpen} closeModal={closeModal}>
         <EditInfo />
       </Modal>
     </div>
