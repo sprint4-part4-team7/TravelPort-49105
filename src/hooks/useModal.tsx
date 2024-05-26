@@ -1,14 +1,22 @@
 import { useState } from 'react';
 
+/**
+ *
+ * @returns {object} - `isOpen`, `openModal`, `closeModal`을 반환
+ */
 const useModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
+  const [isOpen, setIsModalOpen] = useState(false);
+  /**
+   * `isOpen`을 `true`로 변경
+   */
   const openModal = () => {
-    setIsOpen(true);
+    setIsModalOpen(true);
   };
-
+  /**
+   * `isOpen`을 `false`로 변경
+   */
   const closeModal = () => {
-    setIsOpen(false);
+    setIsModalOpen(false);
   };
 
   return {
