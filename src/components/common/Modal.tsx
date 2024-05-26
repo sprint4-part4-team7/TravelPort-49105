@@ -17,9 +17,8 @@ const Modal = ({ isOpen, children, closeModal }: ModalProps) => {
 
   return (
     <ModalPortal>
-      <button
-        type="button"
-        className="fixed left-0 top-0 w-full h-full bg-black"
+      <div
+        className="fixed left-0 top-0 https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/tree/HEAD/docs/rules/no-static-element-interactions.mdw-full h-full bg-black"
         onClick={closeModal}
       />
       <div className={`${modalClass} ${isOpen ? 'block' : ''}`}>{children}</div>
