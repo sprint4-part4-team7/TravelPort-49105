@@ -31,9 +31,11 @@
   "rules": {
     "no-unused-vars": "error",
     "react/require-default-props": "off",
+    "react/require-default-props": "off",
     "no-undef": "error",
     "import/no-extraneous-dependencies": 0,
     "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "react/jsx-filename-extension": [
       1,
@@ -44,10 +46,6 @@
       2,
       { "namedComponents": ["arrow-function"] }
     ],
-    "react/jsx-props-no-spreading": "off",
-    "jsx-a11y/click-events-have-key-events": "off",
-    "jsx-a11y/no-static-element-interactions": "off"
-  },
-  "ignorePatterns": ["node_modules/", "*.config.js"],
-  "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off"
+  }
 }
