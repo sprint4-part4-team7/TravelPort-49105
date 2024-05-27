@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Main from './pages/Main';
 import Login from './pages/Login';
-import UserList from './pages/UserList';
+import Reservation from './pages/Reservation';
 
 function App() {
   return (
@@ -12,8 +12,8 @@ function App() {
           <Route path="login">
             <Route index element={<Login />} />
           </Route>
-          <Route path="list">
-            <Route index element={<UserList />} />
+          <Route path="reservation">
+            <Route index element={<Reservation />} />
           </Route>
         </Route>
       </Routes>
