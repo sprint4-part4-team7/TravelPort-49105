@@ -24,6 +24,7 @@ function CalendarCustom() {
         tileDisabled={({ date, view }) =>
           view === 'month' && date.getDay() === 0
         }
+        formatDay={(_, date) => date.toLocaleString('en', { day: 'numeric' })}
       />
     </div>
   );
