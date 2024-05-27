@@ -1,4 +1,3 @@
-import EditInfo from '@/components/EditInfo';
 import Modal from '@/components/common/Modal';
 import useModal from '@/hooks/useModal';
 
@@ -13,8 +12,8 @@ const ModalExample = () => {
       <button onClick={openModal} type="button" className="p-16 border-1">
         Open Modal
       </button>
-      <Modal isOpen={isModalOpen} closeModal={closeModal} modal="w-900">
-        <EditInfo />
+      <Modal isOpen={isModalOpen} closeModal={closeModal}>
+        <div className="p-16">모달 컨텐츠</div>
       </Modal>
     </div>
   );
