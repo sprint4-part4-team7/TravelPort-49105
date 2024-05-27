@@ -29,6 +29,7 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
+    "@typescript-eslint/no-explicit-any": "off",
     "no-unused-vars": "error",
     "no-undef": "error",
     "import/no-extraneous-dependencies": 0,
