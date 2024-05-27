@@ -5,7 +5,7 @@ import { useState } from 'react';
  * @returns {object} - `isOpen`, `openModal`, `closeModal`을 반환
  */
 const useModal = () => {
-  const [isOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   /**
    * `isOpen`을 `true`로 변경
    */
@@ -20,7 +20,7 @@ const useModal = () => {
   };
 
   return {
-    isOpen,
+    isModalOpen,
     openModal,
     closeModal,
   };
