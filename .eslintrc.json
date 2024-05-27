@@ -34,10 +34,6 @@
     "no-undef": "error",
     "import/no-extraneous-dependencies": 0,
     "react/react-in-jsx-scope": "off",
-    "react/function-component-definition": [
-      2,
-      { "namedComponents": "arrow-function" }
-    ],
     "@typescript-eslint/no-explicit-any": "off",
     "react/jsx-filename-extension": [
       1,
@@ -48,5 +44,10 @@
     "jsx-a11y/no-static-element-interactions": "off",
     "react/jsx-props-no-spreading": "off"
   },
-  "ignorePatterns": ["node_modules/", "*.config.js"]
+  "ignorePatterns": ["node_modules/", "*.config.js"],
+  "react/function-component-definition": [
+    2,
+    { "namedComponents": ["arrow-function"] }
+  ],
+  "react/jsx-props-no-spreading": "off"
 }
