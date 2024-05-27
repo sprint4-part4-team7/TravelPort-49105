@@ -1,14 +1,23 @@
+/* eslint-disable no-undef */
 import Calendar from 'react-calendar';
-import { useState } from 'react';
 import 'react-calendar/dist/Calendar.css';
 
 type DatePiece = Date | null;
 type SelectedDate = DatePiece | [DatePiece, DatePiece];
 
-function CalendarCustom() {
-  const [selectedDate, setSelectedDate] = useState<SelectedDate>(new Date());
-  console.log(selectedDate, setSelectedDate);
+interface CalendarCustomProps {
+  startDate: Date;
+  endDate: Date;
+  selectedDate: SelectedDate;
+  setSelectedDate: React.Dispatch<React.SetStateAction<SelectedDate>>;
+}
 
+function CalendarCustom({
+  startDate,
+  endDate,
+  selectedDate,
+  setSelectedDate,
+}: CalendarCustomProps) {
   return (
     <div>
       <Calendar
@@ -17,10 +26,8 @@ function CalendarCustom() {
         view="month"
         calendarType="gregory"
         showNeighboringMonth={false}
-        // activeStartDate={new Date(2024, 5, 2)}
-        defaultValue={[new Date(2024, 4, 4), new Date(2024, 7, 10)]}
-        minDate={new Date(2024, 4, 4)}
-        maxDate={new Date(2024, 7, 10)}
+        minDate={startDate}
+        maxDate={endDate}
         tileDisabled={({ date, view }) =>
           view === 'month' && date.getDay() === 0
         }
