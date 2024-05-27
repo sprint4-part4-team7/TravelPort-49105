@@ -21,7 +21,6 @@
       "@/*": ["./*"]
     }
   },
-
   "include": ["src/**/*", "src", "@types", "src/index.d.ts", "env.d.ts"],
   "exclude": ["node_modules"]
 }
