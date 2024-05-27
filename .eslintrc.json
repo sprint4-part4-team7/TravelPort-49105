@@ -48,5 +48,6 @@
     "jsx-a11y/click-events-have-key-events": "off",
     "jsx-a11y/no-static-element-interactions": "off"
   },
-  "ignorePatterns": ["node_modules/", "*.config.js"]
+  "ignorePatterns": ["node_modules/", "*.config.js"],
+  "react/jsx-props-no-spreading": "off"
 }
