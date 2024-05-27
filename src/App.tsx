@@ -5,6 +5,8 @@ import MyPage from './pages/MyPage';
 import CheckoutPage from '@/components/payments/CheckoutPage';
 import SuccessPage from '@/components/payments/SuccessPage';
 import FailPage from '@/components/payments/FailPage';
+import MyPage from '@/pages/MyPage';
+import Location from '@/pages/productRegist/location/Location';
 
 const App = () => {
   return (
@@ -14,6 +16,9 @@ const App = () => {
           <Route index element={<Main />} />
           <Route path="login">
             <Route index element={<Login />} />
+          </Route>
+          <Route path="location">
+            <Route index element={<Location />} />
           </Route>
           <Route path="mypage">
             <Route index element={<MyPage />} />
