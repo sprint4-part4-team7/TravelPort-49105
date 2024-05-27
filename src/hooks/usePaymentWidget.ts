@@ -7,8 +7,12 @@ interface PaymentWidget {
   requestPayment: (options: any) => any;
 }
 
-const usePaymentWidget = (value: number) => {
-  // value의 타입을 number로 지정
+const usePaymentWidget = (
+  value: number,
+  productName: string,
+  customerName: string,
+  customerEmail: string,
+) => {
   const paymentWidgetRef = useRef<PaymentWidget | null>(null);
   const paymentMethodsWidgetRef = useRef<any>(null);
   const agreementWidgetRef = useRef<any>(null);
@@ -38,11 +42,20 @@ const usePaymentWidget = (value: number) => {
     })();
   }, [value]);
 
-  const requestPayment = async (options: any) => {
+  const requestPayment = async () => {
+    const paymentOptions = {
+      orderId: 'CODEIT0001',
+      orderName: productName,
+      customerName,
+      customerEmail,
+      successUrl: `${window.location.origin}/payments/success${window.location.search}`, // 결제 성공 시 리다이렉션될 URL
+      failUrl: `${window.location.origin}/payments/fail${window.location.search}`, // 결제 실패 시 리다이렉션될 URL
+    };
+
     try {
-      await paymentWidgetRef.current?.requestPayment(options);
+      await paymentWidgetRef.current?.requestPayment(paymentOptions);
     } catch (error) {
-      // TODO: 에러처리하기
+      // TODO: 에러 작성하기
     }
   };
 

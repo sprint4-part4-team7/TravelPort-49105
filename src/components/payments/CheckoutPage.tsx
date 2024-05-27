@@ -4,7 +4,15 @@ import usePaymentWidget from '@/hooks/usePaymentWidget';
 const CheckoutPage = () => {
   const paymentAmount = 10000; // 결제 금액
   const productName = '7팀의 짱멋찐 여행 상품'; // 상품 이름
-  const { requestPayment } = usePaymentWidget(paymentAmount);
+  const customerName = '박지윤'; // 고객 이름
+  const customerEmail = 'parkjiyun3706@gmail.com'; // 고객 이메일
+
+  const { requestPayment } = usePaymentWidget(
+    paymentAmount,
+    productName,
+    customerName,
+    customerEmail,
+  );
 
   return (
     <div className="flex flex-col items-center w-full p-6 overflow-auto">
@@ -23,16 +31,7 @@ const CheckoutPage = () => {
           <button
             type="button"
             className="w-full py-10 text-lg font-semibold text-white border-none rounded-lg cursor-pointer btn-primary"
-            onClick={() =>
-              requestPayment({
-                orderId: 'CODEIT0001',
-                orderName: { productName },
-                customerName: '박지윤',
-                customerEmail: 'parkjiyun3706@gmail.com',
-                successUrl: `${window.location.origin}/payments/success${window.location.search}`,
-                failUrl: `${window.location.origin}/payments/fail${window.location.search}`,
-              })
-            }
+            onClick={requestPayment}
           >
             결제하기
           </button>
