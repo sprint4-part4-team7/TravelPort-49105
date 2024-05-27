@@ -1,0 +1,7 @@
+.btn-primary {
+  @apply bg-blue-500 text-white font-bold rounded px-4 py-2 cursor-pointer;
+}
+
+.btn {
+  @apply bg-gray-200 text-black-modal font-bold rounded px-4 py-2 cursor-pointer;
+}

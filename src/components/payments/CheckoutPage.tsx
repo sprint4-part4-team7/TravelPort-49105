@@ -1,5 +1,6 @@
 import { loadPaymentWidget, ANONYMOUS } from '@tosspayments/payment-widget-sdk';
 import { useEffect, useRef } from 'react';
+import './Payments.css';
 
 interface PaymentWidget {
   renderPaymentMethods: (selector: string, options: any, config: any) => any;
@@ -42,23 +43,22 @@ const CheckoutPage = () => {
   }, []);
 
   return (
-    <div className="wrapper w-100">
+    <div className="flex flex-col items-center w-full p-6 overflow-auto">
       <div>상품이름: 7팀의 개멋찐 여행 상품</div>
       <br />
       <div>가격: 10,000원</div>
       <br />
-      <div className="max-w-540 w-100">
-        <div id="payment-method" className="w-100 " />
-        <div id="agreement" className="w-100" />
-        <div className="btn-wrapper w-100">
+      <div className="max-w-[540px] w-full">
+        <div id="payment-method" className="w-full" />
+        <div id="agreement" className="w-full" />
+        <div className="w-full px-6">
           <button
             type="button"
-            className="btn primary w-100"
+            className="w-full py-3 text-lg font-semibold text-white border-none rounded-lg cursor-pointer btn-primary "
             onClick={async () => {
               const paymentWidget = paymentWidgetRef.current;
 
               try {
-                // 결제하기
                 await paymentWidget?.requestPayment({
                   orderId: 'CODEIT0001',
                   orderName: '7팀의 개멋찐 여행 상품',
