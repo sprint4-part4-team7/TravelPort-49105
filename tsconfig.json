@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["node"],
+    "types": ["kakao.maps.d.ts", "node"],
     "target": "es5",
     "module": "commonjs",
     "esModuleInterop": true,
@@ -16,7 +16,6 @@
     "sourceMap": true,
     "removeComments": true,
     "lib": ["ES2020", "DOM"],
-    "typeRoots": ["./node_modules/@types", "src/assets"],
     "baseUrl": "src",
     "paths": {
       "@/*": ["./*"]
