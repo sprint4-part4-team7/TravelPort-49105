@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["kakao.maps.d.ts", "node"],
+    "types": ["node", "kakao.maps.d.ts"],
     "target": "es5",
     "module": "commonjs",
     "esModuleInterop": true,
