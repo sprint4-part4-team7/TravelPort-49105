@@ -25,7 +25,7 @@ const PostCode = ({ setX, setY, setName }: PostCodeProps) => {
         if (result.data.documents[0].x && result.data.documents[0].y) {
           // Kakao Local API로 검색한 주소 정보 및 위도, 경도값 저장
           // kakaomap에서 제공되는 x,y와 daum에서 제공하는 x,y의 개념이 다름(daum에선 x가 경도, y가 위도)
-          console.log(result);
+
           setX(Number(result.data.documents[0].road_address.y));
           setY(Number(result.data.documents[0].road_address.x));
           setName(result.data.documents[0].road_address.building_name);
