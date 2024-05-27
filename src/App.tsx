@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from '@/pages/Login';
 import Main from '@/pages/Main';
-import MyPage from './pages/MyPage';
 import CheckoutPage from '@/components/payments/CheckoutPage';
 import SuccessPage from '@/components/payments/SuccessPage';
 import FailPage from '@/components/payments/FailPage';
