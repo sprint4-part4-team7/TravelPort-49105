@@ -18,15 +18,11 @@ const usePaymentWidget = (
   const agreementWidgetRef = useRef<any>(null);
 
   useEffect(() => {
-    (async () => {
+    const initializeWidget = async () => {
       const paymentWidget = await loadPaymentWidget(
         process.env.REACT_APP_PAYMENT_WIDGET_KEY!,
         ANONYMOUS,
       );
-
-      if (!paymentWidgetRef.current) {
-        paymentWidgetRef.current = paymentWidget;
-      }
 
       // 결제창 렌더링, value(paymentAmount) 사용
       paymentMethodsWidgetRef.current = paymentWidget.renderPaymentMethods(
@@ -39,8 +35,20 @@ const usePaymentWidget = (
       agreementWidgetRef.current = paymentWidget.renderAgreement('#agreement', {
         variantKey: 'DEFAULT',
       });
-    })();
-  }, [value]);
+
+      // 결제 위젯 인스턴스 저장
+      paymentWidgetRef.current = paymentWidget;
+    };
+
+    initializeWidget();
+
+    return () => {
+      // 컴포넌트 언마운트 시 결제 위젯 정리
+      paymentMethodsWidgetRef.current?.destroy();
+      agreementWidgetRef.current?.destroy();
+      paymentWidgetRef.current = null;
+    };
+  }, [value, productName, customerName, customerEmail]);
 
   const requestPayment = async () => {
     const paymentOptions = {
@@ -55,7 +63,7 @@ const usePaymentWidget = (
     try {
       await paymentWidgetRef.current?.requestPayment(paymentOptions);
     } catch (error) {
-      // TODO: 에러 작성하기
+      console.error(error);
     }
   };
 
