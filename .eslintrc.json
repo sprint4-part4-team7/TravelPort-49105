@@ -35,7 +35,6 @@
     "no-undef": "error",
     "import/no-extraneous-dependencies": 0,
     "react/react-in-jsx-scope": "off",
-    "@typescript-eslint/no-explicit-any": "off",
     "react/jsx-filename-extension": [
       1,
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
