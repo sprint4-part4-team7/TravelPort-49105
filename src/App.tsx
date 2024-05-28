@@ -5,7 +5,7 @@ import CheckoutPage from '@/pages/payments/CheckoutPage';
 import SuccessPage from '@/pages/payments/SuccessPage';
 import FailPage from '@/pages/payments/FailPage';
 import MyPage from '@/pages/MyPage';
-import Location from '@/pages/productRegist/location/Location';
+import Location from '@/pages/productRegist/Location';
 import Reservation from '@/pages/Reservation';
 import List from '@/pages/List';
 import GoogleRedirect from './pages/login/GoogleRedirect';
