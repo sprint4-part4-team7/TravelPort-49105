@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Login from '@/pages/Login';
+import Login from './pages/login/Login';
 import Main from '@/pages/Main';
 import CheckoutPage from '@/pages/payments/CheckoutPage';
 import SuccessPage from '@/pages/payments/SuccessPage';
@@ -8,6 +8,9 @@ import MyPage from '@/pages/MyPage';
 import Location from '@/pages/productRegist/location/Location';
 import Reservation from '@/pages/Reservation';
 import List from '@/pages/List';
+import GoogleRedirect from './pages/login/GoogleRedirect';
+import KakaoRedirect from './pages/login/KakaoRedirect';
+import NaverRedirect from './pages/login/NaverRedirect';
 
 const App = () => {
   return (
@@ -18,6 +21,11 @@ const App = () => {
         </Route>
         <Route path="login">
           <Route index element={<Login />} />
+        </Route>
+        <Route path="oauth">
+          <Route path="google" element={<GoogleRedirect />} />
+          <Route path="kakao" element={<KakaoRedirect />} />
+          <Route path="naver" element={<NaverRedirect />} />
         </Route>
         <Route path="reservation">
           <Route index element={<Reservation />} />
