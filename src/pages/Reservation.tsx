@@ -4,7 +4,7 @@ import CalendarCustom from '../components/common/CalendarCustom';
 type DatePiece = Date | null;
 type SelectedDate = DatePiece | [DatePiece, DatePiece];
 
-function Reservation() {
+const Reservation = () => {
   const [selectedDate, setSelectedDate] = useState<SelectedDate>(new Date());
   console.log(selectedDate, setSelectedDate);
 
@@ -22,6 +22,6 @@ function Reservation() {
       setSelectedDate={setSelectedDate}
     />
   );
-}
+};
 
 export default Reservation;

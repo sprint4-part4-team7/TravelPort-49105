@@ -12,12 +12,12 @@ interface CalendarCustomProps {
   setSelectedDate: React.Dispatch<React.SetStateAction<SelectedDate>>;
 }
 
-function CalendarCustom({
+const CalendarCustom = ({
   startDate,
   endDate,
   selectedDate,
   setSelectedDate,
-}: CalendarCustomProps) {
+}: CalendarCustomProps) => {
   return (
     <div>
       <Calendar
@@ -35,5 +35,5 @@ function CalendarCustom({
       />
     </div>
   );
-}
+};
 export default CalendarCustom;
