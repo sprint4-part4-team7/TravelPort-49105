@@ -7,6 +7,7 @@ import FailPage from '@/components/payments/FailPage';
 import MyPage from '@/pages/MyPage';
 import Location from '@/pages/productRegist/location/Location';
 import Reservation from '@/pages/Reservation';
+import List from '@/pages/List';
 
 const App = () => {
   return (
@@ -20,6 +21,9 @@ const App = () => {
         </Route>
         <Route path="reservation">
           <Route index element={<Reservation />} />
+        </Route>
+        <Route path="list">
+          <Route index element={<List />} />
         </Route>
         <Route path="location">
           <Route index element={<Location />} />
