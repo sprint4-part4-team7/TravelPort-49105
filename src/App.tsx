@@ -50,6 +50,9 @@ const App = () => {
           <Route path="success" element={<SuccessPage />} />
           <Route path="fail" element={<FailPage />} />
         </Route>
+        <Route path="review">
+          <Route index element={<ReviewRegister />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
