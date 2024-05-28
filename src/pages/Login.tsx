@@ -1,43 +1,58 @@
 import Google from '@/assets/images/google_login.png';
-import Kakao from '@/assets/images/kakao_login.png';
+import Kakao from '@/assets/images/kakao_login.svg';
 import Naver from '@/assets/images/naver_login.png';
+import { Link } from 'react-router-dom';
+import Button from '@/components/common/Button';
+import InputBox from '@/components/common/InputBox';
+import useOAuthLogin from '@/hooks/useOAuthLogin';
 
 const Login = () => {
-  const GoogleId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-  const KakaoId = process.env.REACT_APP_KAKAO_CLIENT_ID;
-  const NaverId = process.env.REACT_APP_NAVER_CLIENT_ID;
+  const googleLogin = useOAuthLogin('google');
+  const kakaoLogin = useOAuthLogin('kakao');
+  const naverLogin = useOAuthLogin('naver');
 
-  const GoogleURI = `https://accounts.google.com/o/oauth2/auth?client_id=${GoogleId}&redirect_uri=http://localhost:3000/login&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile`;
-  const GoogleLoginHandler = () => {
-    window.location.href = GoogleURI;
-  };
-
-  const KakaoURI = `https://kauth.kakao.com/oauth/authorize?client_id=${KakaoId}&redirect_uri=http://localhost:3000/login&response_type=code`;
-  const KakaoLoginHandler = () => {
-    window.location.href = KakaoURI;
-  };
-
-  const NaverURI = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NaverId}&state=hLiDdL2uhPtsftcU&redirect_uri=http://localhost:3000/login&response_type=code`;
-  const NaverLoginHandler = () => {
-    window.location.href = NaverURI;
+  const loginClick = () => {
+    console.log('로그인');
   };
 
   return (
-    <div
-      className="flex justify-between items-center w-400 h-50 
-      border-1 rounded-2xl 
-      border-solid border-black"
-    >
-      <span className="text-3xl font-bold ">SNS Login</span>
-      <button type="button" onClick={GoogleLoginHandler}>
-        <img alt="Google" src={Google} />
-      </button>
-      <button type="button" onClick={KakaoLoginHandler}>
-        <img alt="Google" src={Kakao} />
-      </button>
-      <button type="button" onClick={NaverLoginHandler}>
-        <img alt="Naver" width="40px" height="40px" src={Naver} />
-      </button>
+    <div className="flex justify-center items-center h-screen">
+      <div className="flex flex-col gap-40 justify-center items-center">
+        <img alt="travelport logo" />
+        <div className="flex flex-col gap-30 max-w-350 ">
+          <InputBox
+            label="이메일"
+            width="350px"
+            placeholder="example@example.com"
+          />
+          <InputBox label="비밀번호" width="350px" placeholder="비밀번호" />
+          <Button text="로그인 하기" onClick={loginClick} />
+          <div className="text-center">
+            아직 회원이 아니신가요? <Link to="/">이메일로 회원가입</Link>
+          </div>
+          <div
+            className="flex px-24 py-12 justify-between items-center  
+    border-1 rounded-2xl 
+    border-solid border-black"
+          >
+            <div className="text-3xl font-bold ">소셜 로그인</div>
+            <div className="flex gap-16">
+              <button type="button" onClick={googleLogin}>
+                <img alt="Google" src={Google} />
+              </button>
+              <button type="button" onClick={kakaoLogin}>
+                <img alt="Kakao" width="40px" height="40px" src={Kakao} />
+              </button>
+              <button type="button" onClick={naverLogin}>
+                <img alt="Naver" width="40px" height="40px" src={Naver} />
+              </button>
+            </div>
+          </div>
+          <div className="text-center">
+            파트너 등록이 필요하신가요? <Link to="/">파트너 회원가입</Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
