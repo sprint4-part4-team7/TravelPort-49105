@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
+    "types": ["node", "kakao.maps.d.ts"],
     "target": "es5",
     "module": "commonjs",
+    "esModuleInterop": true,
     "allowJs": true,
     "noEmit": true,
     "jsx": "preserve",
@@ -14,11 +16,11 @@
     "sourceMap": true,
     "removeComments": true,
     "lib": ["ES2020", "DOM"],
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./*"]
     }
   },
-  "include": ["src/*/"],
+  "include": ["src/**/*", "src", "@types", "src/index.d.ts", "env.d.ts"],
   "exclude": ["node_modules"]
 }

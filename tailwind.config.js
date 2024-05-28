@@ -17,7 +17,11 @@ module.exports = {
       minWidth: rem0_1200,
       minHeight: rem0_1200,
       spacing: rem0_1200,
-      colors: {},
+      colors: {
+        black: {
+          modal: 'rgba(0, 0, 0, 0.5)',
+        }
+      },
       screens: {
         tablet: { max: '1199px' },
         mobile: { max: '767px' },
