@@ -6,6 +6,7 @@ import SuccessPage from '@/components/payments/SuccessPage';
 import FailPage from '@/components/payments/FailPage';
 import MyPage from '@/pages/MyPage';
 import Location from '@/pages/productRegist/location/Location';
+import Reservation from '@/pages/Reservation';
 
 const App = () => {
   return (
@@ -13,20 +14,23 @@ const App = () => {
       <Routes>
         <Route path="/">
           <Route index element={<Main />} />
-          <Route path="login">
-            <Route index element={<Login />} />
-          </Route>
-          <Route path="location">
-            <Route index element={<Location />} />
-          </Route>
-          <Route path="mypage">
-            <Route index element={<MyPage />} />
-          </Route>
-          <Route path="payments">
-            <Route index element={<CheckoutPage />} />
-            <Route path="success" element={<SuccessPage />} />
-            <Route path="fail" element={<FailPage />} />
-          </Route>
+        </Route>
+        <Route path="login">
+          <Route index element={<Login />} />
+        </Route>
+        <Route path="reservation">
+          <Route index element={<Reservation />} />
+        </Route>
+        <Route path="location">
+          <Route index element={<Location />} />
+        </Route>
+        <Route path="mypage">
+          <Route index element={<MyPage />} />
+        </Route>
+        <Route path="payments">
+          <Route index element={<CheckoutPage />} />
+          <Route path="success" element={<SuccessPage />} />
+          <Route path="fail" element={<FailPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
