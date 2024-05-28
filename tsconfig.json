@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
+    "types": ["node", "kakao.maps.d.ts"],
     "target": "es5",
     "module": "commonjs",
+    "esModuleInterop": true,
     "allowJs": true,
     "noEmit": true,
     "jsx": "preserve",
@@ -19,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src", "@types", "src/index.d.ts", "env.d.ts"],
   "exclude": ["node_modules"]
 }
