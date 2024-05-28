@@ -23,7 +23,7 @@ const InputBox = ({
         {label}
       </label>
       <input
-        className="px-16 py-10 text-2xl border-solid border-1 border-black"
+        className="px-20 py-16 rounded-md text-2xl border-solid border-1 border-black"
         type={inputType}
         placeholder={placeholder}
         value={value}
