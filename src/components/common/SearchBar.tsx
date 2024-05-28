@@ -7,7 +7,7 @@ interface SearchBarProps {
   search: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
-function SearchBar({ titles, search, onChange }: SearchBarProps) {
+const SearchBar = ({ titles, search, onChange }: SearchBarProps) => {
   return (
     <>
       <input
@@ -25,6 +25,6 @@ function SearchBar({ titles, search, onChange }: SearchBarProps) {
       )}
     </>
   );
-}
+};
 
 export default SearchBar;

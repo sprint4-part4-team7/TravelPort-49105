@@ -13,7 +13,7 @@ const cardLists = [
   },
 ];
 
-function List() {
+const List = () => {
   const [search, setSearch] = useState('');
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setSearch(e.target.value);
@@ -29,6 +29,6 @@ function List() {
     <SearchBar titles={filteredTitles} search={search} onChange={onChange} />
     // <Card />
   );
-}
+};
 
 export default List;
