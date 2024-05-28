@@ -13,6 +13,11 @@ const ReviewStar = () => {
     setClicked(clickStates);
   };
 
+  const score = clicked.filter(
+    (clickedBoolean) => clickedBoolean === true,
+  ).length;
+  console.log(score); // score post하기
+
   return (
     <div className="flex">
       {array.map((el) =>
