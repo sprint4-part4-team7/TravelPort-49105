@@ -31,14 +31,14 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ userType }) => {
       .toLowerCase()
       .includes(search.trim().toLowerCase());
   });
+
   return (
-    <div className="pb-[4.5rem] text-2xl font-bold">
+    <div className="px-[3.6rem] fixed top-0 left-0 right-0 py-[4.5rem] text-2xl font-bold bg-white z-50">
       <div className="flex items-center">
-        <div className="flex-1 ">
+        <div className="flex-1">
           <div className="bg-pink-200 w-170 py-[1.5rem] px-[3.2rem]">LOGO</div>
         </div>
         <div className="flex-1 bg-[#F5F5F5]">
-          {/* <div className="py-[1.5rem] px-[3.2rem]">서치바</div> */}
           <SearchBar
             titles={filteredTitles}
             search={search}
