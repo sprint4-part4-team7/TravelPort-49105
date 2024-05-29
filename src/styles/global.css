@@ -6,6 +6,6 @@
 
 @layer components {
   .react-calendar {
-    @apply w-500;
+    @apply w-full;
   }
 }
