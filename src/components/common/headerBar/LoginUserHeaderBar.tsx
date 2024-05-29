@@ -45,13 +45,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
             path: '/reservation-history',
           },
         ]
-      : [
-          {
-            id: 'business-management',
-            label: '사업증 관리',
-            path: '/business-management',
-          },
-        ]),
+      : []),
     { id: 'logout', label: '로그아웃', action: () => setIsLoggedIn(false) },
   ];
 
@@ -69,11 +63,6 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
         />
       </button>
       <span>{user.name}</span>
-      {userType === 'user' && (
-        <button type="button" className="p-5 text-white bg-blue-500">
-          장바구니
-        </button>
-      )}
       {isDropdownOpen && (
         <div
           ref={dropdownRef}
