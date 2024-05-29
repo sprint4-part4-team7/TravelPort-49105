@@ -24,7 +24,7 @@ const images = [
   },
   {
     url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm5UHoR3EZQ9Yu0Cs-SVxI4Yx5Y1uBtCrqbg&usqp=CAU',
-    text: '나른한 오후 그쯤, 호수 구경하기',
+    text: '나른한 오후 1시, 호수 구경하기',
     path: '/',
   },
 ];
