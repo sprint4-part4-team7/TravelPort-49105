@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import searchIcon from '@/assets/images/search.svg';
 import useSearchData from '@/hooks/useSearchData';
+import { RiCloseCircleLine } from 'react-icons/ri';
 
 interface SearchBarProps {
   cardLists: {
@@ -11,7 +12,8 @@ interface SearchBarProps {
   }[];
 }
 const SearchBar = ({ cardLists }: SearchBarProps) => {
-  const { onChange, search, filteredTitles } = useSearchData(cardLists);
+  const { onChange, search, filteredTitles, setSearch } =
+    useSearchData(cardLists);
   return (
     <>
       <div className="relative">
@@ -27,6 +29,12 @@ const SearchBar = ({ cardLists }: SearchBarProps) => {
           src={searchIcon}
           alt="검색아이콘"
           className="absolute top-12 left-12"
+        />
+        <RiCloseCircleLine
+          color="#CBC9CF"
+          size={24}
+          className="absolute top-12 right-12"
+          onClick={() => setSearch('')}
         />
       </div>
       {!!search.length && (
