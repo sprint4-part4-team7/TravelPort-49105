@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/no-array-index-key */
 import Carousel from '@/components/Carousel';
+import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
 
 const images = [
@@ -30,22 +31,25 @@ const images = [
 
 const Main = () => {
   return (
-    <Layout userType="user">
-      <Carousel items={images} />
-      <div className="mt-[8.2rem] grid grid-cols-4 gap-[2.4rem]">
-        {images.map((item, index) => (
-          <div key={index}>
-            <img
-              src={item.url}
-              alt={item.text}
-              className="w-[32.4rem] h-[24rem] rounded-[1.2rem]"
-              onClick={() => (window.location.href = item.path)}
-              style={{ cursor: 'pointer' }}
-            />
-          </div>
-        ))}
-      </div>
-    </Layout>
+    <>
+      <Layout userType="user">
+        <Carousel items={images} />
+        <div className="mt-[8.2rem] grid grid-cols-4 gap-[2.4rem]">
+          {images.map((item, index) => (
+            <div key={index}>
+              <img
+                src={item.url}
+                alt={item.text}
+                className="w-[32.4rem] h-[24rem] rounded-[1.2rem]"
+                onClick={() => (window.location.href = item.path)}
+                style={{ cursor: 'pointer' }}
+              />
+            </div>
+          ))}
+        </div>
+      </Layout>
+      <Footer />
+    </>
   );
 };
 
