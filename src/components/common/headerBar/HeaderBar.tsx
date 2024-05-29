@@ -9,7 +9,7 @@ interface HeaderBarProps {
 const HeaderBar: React.FC<HeaderBarProps> = ({ userType }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
   return (
-    <div className="py-[4.5rem] px-[3.6rem] text-2xl font-bold">
+    <div className="pb-[4.5rem]  text-2xl font-bold ">
       <div className="flex items-center">
         <div className="flex-1 ">
           <div className="bg-pink-200 w-170 py-[1.5rem] px-[3.2rem]">LOGO</div>
