@@ -10,6 +10,7 @@ interface CalendarCustomProps {
   endDate: Date;
   selectedDate: SelectedDate;
   setSelectedDate: React.Dispatch<React.SetStateAction<SelectedDate>>;
+  holiday: number[];
 }
 
 const CalendarCustom = ({
@@ -17,23 +18,31 @@ const CalendarCustom = ({
   endDate,
   selectedDate,
   setSelectedDate,
+  holiday,
 }: CalendarCustomProps) => {
+  const maxStartDate =
+    new Date().getTime() >= startDate.getTime() ? new Date() : startDate;
+  const minEndDate =
+    new Date().getTime() >= endDate.getTime() ? new Date() : endDate;
+
   return (
-    <div>
-      <Calendar
-        onChange={setSelectedDate}
-        value={selectedDate}
-        view="month"
-        calendarType="gregory"
-        showNeighboringMonth={false}
-        minDate={startDate}
-        maxDate={endDate}
-        tileDisabled={({ date, view }) =>
-          view === 'month' && date.getDay() === 0
-        }
-        formatDay={(_, date) => date.toLocaleString('en', { day: 'numeric' })}
-      />
-    </div>
+    <Calendar
+      onChange={setSelectedDate}
+      value={selectedDate}
+      view="month"
+      calendarType="gregory"
+      showNeighboringMonth={false}
+      minDate={maxStartDate}
+      maxDate={minEndDate}
+      tileDisabled={({ date, view }) => {
+        return (
+          holiday.length > 0 &&
+          view === 'month' &&
+          holiday.includes(date.getDay())
+        );
+      }}
+      formatDay={(_, date) => date.toLocaleString('en', { day: 'numeric' })}
+    />
   );
 };
 export default CalendarCustom;
