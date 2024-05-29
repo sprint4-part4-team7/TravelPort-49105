@@ -16,7 +16,7 @@ const SearchBar = ({ cardLists }: SearchBarProps) => {
     useSearchData(cardLists);
   return (
     <>
-      <div className="relative">
+      <div className="relative cursor-pointer">
         <input
           type="text"
           value={search}
