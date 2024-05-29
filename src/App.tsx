@@ -21,11 +21,11 @@ const App = () => {
         </Route>
         <Route path="login">
           <Route index element={<Login />} />
-        </Route>
-        <Route path="oauth">
-          <Route path="google" element={<GoogleRedirect />} />
-          <Route path="kakao" element={<KakaoRedirect />} />
-          <Route path="naver" element={<NaverRedirect />} />
+          <Route path="oauth">
+            <Route path="google" element={<GoogleRedirect />} />
+            <Route path="kakao" element={<KakaoRedirect />} />
+            <Route path="naver" element={<NaverRedirect />} />
+          </Route>
         </Route>
         <Route path="reservation">
           <Route index element={<Reservation />} />
