@@ -24,6 +24,7 @@ const useSearchData = (cardLists: cardListsType[]) => {
     onChange,
     search,
     filteredTitles,
+    setSearch,
   };
 };
 

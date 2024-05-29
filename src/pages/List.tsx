@@ -30,7 +30,7 @@ const List = () => {
 
   return (
     <>
-      <div className="w-[40rem]">
+      <div className="w-[40rem] ml-[10rem] mt-[10rem]">
         <SearchBar cardLists={cardLists} />
       </div>
       {/* {filteredTitles.map((item) => (
