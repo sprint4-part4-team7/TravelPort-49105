@@ -10,7 +10,7 @@ const useOAuthLogin = (provider: Provider) => {
   };
 
   const uri = {
-    google: `https://accounts.google.com/o/oauth2/auth?client_id=${clientId.google}&redirect_uri=http://localhost:3000/oauth/google&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile`,
+    google: `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile&response_type=code&redirect_uri=http://localhost:3000/oauth/google&client_id=${clientId.google}`,
     kakao: `https://kauth.kakao.com/oauth/authorize?client_id=${clientId.kakao}&redirect_uri=http://localhost:3000/oauth/kakao&response_type=code`,
     naver: `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId.naver}&state=hLiDdL2uhPtsftcU&redirect_uri=http://localhost:3000/oauth/naver&response_type=code`,
   };
