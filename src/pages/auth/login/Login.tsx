@@ -18,7 +18,9 @@ const Login = () => {
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="flex flex-col gap-40 justify-center items-center">
-        <img alt="travelport logo" />
+        <Link to="/">
+          <img alt="travelport logo" />
+        </Link>
         <div className="flex flex-col gap-30 max-w-350 ">
           <InputBox
             label="이메일"
@@ -28,7 +30,8 @@ const Login = () => {
           <InputBox label="비밀번호" width="350px" placeholder="비밀번호" />
           <Button text="로그인 하기" onClick={loginClick} />
           <div className="text-center">
-            아직 회원이 아니신가요? <Link to="/">이메일로 회원가입</Link>
+            아직 회원이 아니신가요?{' '}
+            <Link to="/signup/user">이메일로 회원가입</Link>
           </div>
           <div
             className="flex px-24 py-12 justify-between items-center  
@@ -49,7 +52,8 @@ const Login = () => {
             </div>
           </div>
           <div className="text-center">
-            파트너 등록이 필요하신가요? <Link to="/">파트너 회원가입</Link>
+            파트너 등록이 필요하신가요?{' '}
+            <Link to="/signup/partner">파트너 회원가입</Link>
           </div>
         </div>
       </div>

@@ -11,6 +11,8 @@ import List from '@/pages/List';
 import GoogleRedirect from './pages/auth/login/GoogleRedirect';
 import KakaoRedirect from './pages/auth/login/KakaoRedirect';
 import NaverRedirect from './pages/auth/login/NaverRedirect';
+import PartnerSignup from './pages/auth/signup/PartnerSignup';
+import UserSignup from './pages/auth/signup/UserSignup';
 
 const App = () => {
   return (
@@ -26,6 +28,10 @@ const App = () => {
             <Route path="kakao" element={<KakaoRedirect />} />
             <Route path="naver" element={<NaverRedirect />} />
           </Route>
+        </Route>
+        <Route path="signup">
+          <Route path="user" element={<UserSignup />} />
+          <Route path="partner" element={<PartnerSignup />} />
         </Route>
         <Route path="reservation">
           <Route index element={<Reservation />} />
