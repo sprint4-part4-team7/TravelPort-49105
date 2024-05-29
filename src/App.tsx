@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Login from './pages/login/Login';
+import Login from './pages/auth/login/Login';
 import Main from '@/pages/Main';
 import CheckoutPage from '@/pages/payments/CheckoutPage';
 import SuccessPage from '@/pages/payments/SuccessPage';
@@ -8,9 +8,9 @@ import MyPage from '@/pages/MyPage';
 import Location from '@/pages/productRegist/Location';
 import Reservation from '@/pages/Reservation';
 import List from '@/pages/List';
-import GoogleRedirect from './pages/login/GoogleRedirect';
-import KakaoRedirect from './pages/login/KakaoRedirect';
-import NaverRedirect from './pages/login/NaverRedirect';
+import GoogleRedirect from './pages/auth/login/GoogleRedirect';
+import KakaoRedirect from './pages/auth/login/KakaoRedirect';
+import NaverRedirect from './pages/auth/login/NaverRedirect';
 
 const App = () => {
   return (
