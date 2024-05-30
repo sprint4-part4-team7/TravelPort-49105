@@ -7,6 +7,8 @@ type InputBoxProps = {
   placeholder?: string;
   width?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void | undefined;
+  register?: any;
+  disabled?: boolean;
 };
 
 const InputBox = ({
@@ -16,6 +18,8 @@ const InputBox = ({
   placeholder = '입력',
   width = '100%',
   onChange = undefined,
+  register,
+  disabled = false,
 }: InputBoxProps) => {
   return (
     <div className="flex flex-col gap-8" style={{ width }}>
@@ -28,6 +32,8 @@ const InputBox = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        disabled={disabled}
+        {...register}
       />
     </div>
   );
