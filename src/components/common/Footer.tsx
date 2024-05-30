@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer className="w-full bg-[#F2F2F3] h-[6rem]">
       <div className="flex items-center justify-between max-w-screen-xl px-[23.8rem] mx-auto pt-[3.75rem] text-[1.5rem]">
-        <div className="font-medium text-[#7D7986]">TravelPort - 2024</div>
+        <div className="font-medium text-[#7D7986]">©TravelPort - 2024</div>
 
         <div className="flex gap-8 font-normal">
           <a href="/" className="text-[#A4A1AA]">
@@ -18,7 +18,7 @@ const Footer = () => {
           </a>
         </div>
 
-        <div className="flex gap-[1.2rem]">
+        <div className="flex gap-[1.2rem] mt-[-0.8rem]">
           <a aria-label="Save" href="/">
             <img src={message} alt="메세지 아이콘" />
           </a>
