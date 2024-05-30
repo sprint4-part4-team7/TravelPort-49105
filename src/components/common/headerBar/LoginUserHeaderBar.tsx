@@ -77,7 +77,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
       {isDropdownOpen && (
         <div
           ref={dropdownRef}
-          className="absolute mt-4 bg-white border border-gray-300 shadow-2xl top-full rounded-[1.2rem] pt-[0.8rem] pb-[0.4rem]"
+          className="absolute mt-10 bg-white border border-gray-300 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] top-full rounded-[1.2rem] pt-[0.8rem] pb-[0.4rem]"
           style={{ marginLeft: '-1.5rem', width: 'auto' }}
         >
           <ul className="w-[106px] text-[1.5rem] font-normal">
