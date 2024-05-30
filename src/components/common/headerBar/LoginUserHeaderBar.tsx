@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import useOutsideClick from '@/hooks/useOutsideClick';
+import cart from '@/assets/icons/shoppingCart.svg';
 
 interface LoginUserHeaderBarProps {
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -50,7 +51,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
   ];
 
   return (
-    <div className="relative flex items-center space-x-10">
+    <div className="relative flex items-center space-x-12">
       <button
         type="button"
         className="flex items-center"
@@ -59,10 +60,14 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
         <img
           src={user.image}
           alt="Profile"
-          className="rounded-full cursor-pointer h-50 w-50"
+          className="rounded-full cursor-pointer h-[3.2rem] w-[3.2rem]"
         />
       </button>
-      <span>{user.name}</span>
+      <img
+        className="h-[3.2rem] w-[3.2rem]"
+        src={cart}
+        alt="쇼핑 카트 아이콘"
+      />
       {isDropdownOpen && (
         <div
           ref={dropdownRef}

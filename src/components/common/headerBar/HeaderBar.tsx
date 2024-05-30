@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import React, { useState } from 'react';
+import logo from '@/assets/icons/travelPortLogo.svg';
 import LoginUserHeaderBar from './LoginUserHeaderBar';
 import UnLoginUserHeaderBar from './UnLoginUserHeaderBar';
 import SearchBar from '../SearchBar';
@@ -35,20 +36,17 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ userType }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
 
   return (
-    <div className="px-[3.6rem] fixed top-0 left-0 right-0 py-[4.5rem] text-2xl font-bold bg-white z-50">
-      <div className="flex items-center justify-between h-[6rem]">
-        <div className="flex items-center gap-[6.5rem]">
-          <div className="flex-1">
-            <div className="bg-pink-200 w-170 py-[1.5rem] px-[3.2rem]">
-              LOGO
-            </div>
-          </div>
-          <div className="w-[40.2rem] flex-2 items-center">
-            <SearchBar cardLists={cardLists} />
+    <div className="fixed top-0 left-0 right-0 py-[3.2rem] text-2xl font-bold bg-white z-50">
+      <div className="flex items-center justify-between h-[6rem] px-[4.8rem]">
+        <div className="flex items-center">
+          <div className="w-[19.5rem] h-[6.5rem]">
+            <img src={logo} alt="Main Logo" />
           </div>
         </div>
-        <div className="flex-1" />
-        <div className="flex justify-end flex-1 space-x-2">
+        <div className="flex-1 mx-[4.8rem]">
+          <SearchBar cardLists={cardLists} />
+        </div>
+        <div className="flex items-center">
           {isLoggedIn ? (
             <LoginUserHeaderBar
               setIsLoggedIn={setIsLoggedIn}
