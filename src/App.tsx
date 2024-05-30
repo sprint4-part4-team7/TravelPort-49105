@@ -13,6 +13,7 @@ import KakaoRedirect from '@/pages/auth/login/KakaoRedirect';
 import NaverRedirect from '@/pages/auth/login/NaverRedirect';
 import PartnerSignup from '@/pages/auth/signup/PartnerSignup';
 import UserSignup from '@/pages/auth/signup/UserSignup';
+import ReviewRegister from '@/pages/ReviewRegister';
 
 const App = () => {
   return (
