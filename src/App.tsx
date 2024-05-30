@@ -8,11 +8,11 @@ import MyPage from '@/pages/MyPage';
 import Location from '@/pages/productRegist/Location';
 import Reservation from '@/pages/Reservation';
 import List from '@/pages/List';
-import GoogleRedirect from './pages/auth/login/GoogleRedirect';
-import KakaoRedirect from './pages/auth/login/KakaoRedirect';
-import NaverRedirect from './pages/auth/login/NaverRedirect';
-import PartnerSignup from './pages/auth/signup/PartnerSignup';
-import UserSignup from './pages/auth/signup/UserSignup';
+import GoogleRedirect from '@/pages/auth/login/GoogleRedirect';
+import KakaoRedirect from '@/pages/auth/login/KakaoRedirect';
+import NaverRedirect from '@/pages/auth/login/NaverRedirect';
+import PartnerSignup from '@/pages/auth/signup/PartnerSignup';
+import UserSignup from '@/pages/auth/signup/UserSignup';
 
 const App = () => {
   return (
