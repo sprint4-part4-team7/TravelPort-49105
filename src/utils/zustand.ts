@@ -16,6 +16,8 @@ export const useUserStore = create<{
   userInfo: {
     nickname: '',
     email: '',
+    name: '',
+    phone: '',
   },
   setUserInfo: (userInfo) => set({ userInfo }),
 }));
