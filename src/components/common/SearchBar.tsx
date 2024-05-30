@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import searchIcon from '@/assets/images/search.svg';
 import useSearchData from '@/hooks/useSearchData';
-import { RiCloseCircleLine } from 'react-icons/ri';
 
 interface SearchBarProps {
   cardLists: {
@@ -12,29 +11,22 @@ interface SearchBarProps {
   }[];
 }
 const SearchBar = ({ cardLists }: SearchBarProps) => {
-  const { onChange, search, filteredTitles, setSearch } =
-    useSearchData(cardLists);
+  const { onChange, search, filteredTitles } = useSearchData(cardLists);
   return (
+    // bg-gradient-to-r from-[#356EFF] to-[#5FFF8C]
     <>
-      <div className="relative cursor-pointer">
+      <div className="relative">
         <input
           type="text"
           value={search}
           onChange={onChange}
-          className="border-solid border-1 border-[#F5F5F5] p-10 rounded-12 pl-40 w-full
-      text-18 font-semibold bg-[#F5F5F5] placeholder:text-[#CBC9CF] outline-[#AFAEAC]"
-          placeholder="어디로 떠나 볼까요~?"
+          className="border-solid border-[2.4px] border-[#356EFF] py-[1.2rem] px-[2rem] rounded-[2.4rem] w-full
+      text-[1.6rem] pl-44 outline-[#356EFF]"
         />
         <img
           src={searchIcon}
           alt="검색아이콘"
-          className="absolute top-[50%] left-12 transform -translate-y-1/2"
-        />
-        <RiCloseCircleLine
-          color="#CBC9CF"
-          size={24}
-          className="absolute top-[50%] right-12 transform -translate-y-1/2"
-          onClick={() => setSearch('')}
+          className="absolute top-[50%] left-12 transform -translate-y-1/2 cursor-pointer"
         />
       </div>
       {!!search.length && (
