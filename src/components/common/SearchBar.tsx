@@ -22,18 +22,18 @@ const SearchBar = ({ cardLists }: SearchBarProps) => {
           value={search}
           onChange={onChange}
           className="border-solid border-1 border-[#F5F5F5] p-10 rounded-12 pl-40 w-full
-          text-18 font-semibold bg-[#F5F5F5] placeholder:text-[#CBC9CF] outline-[#AFAEAC]"
+      text-18 font-semibold bg-[#F5F5F5] placeholder:text-[#CBC9CF] outline-[#AFAEAC]"
           placeholder="어디로 떠나 볼까요~?"
         />
         <img
           src={searchIcon}
           alt="검색아이콘"
-          className="absolute top-12 left-12"
+          className="absolute top-[50%] left-12 transform -translate-y-1/2"
         />
         <RiCloseCircleLine
           color="#CBC9CF"
           size={24}
-          className="absolute top-12 right-12"
+          className="absolute top-[50%] right-12 transform -translate-y-1/2"
           onClick={() => setSearch('')}
         />
       </div>
