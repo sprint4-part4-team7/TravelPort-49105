@@ -1,11 +1,46 @@
+import { ChangeEventHandler, FormEventHandler, useState } from 'react';
+import { useUserStore } from '@/utils/zustand';
+import { initUserInfo } from '@/mocks/InfoMock';
+
+interface UserInfo {
+  nickname: string;
+  email: string;
+  name?: string;
+  phone?: string;
+}
+
 const EditInfo = () => {
+  const setUserInfo = useUserStore((state) => state.setUserInfo);
+
+  const [edittedInfo, setEdittedInfo] = useState<UserInfo>(initUserInfo);
+
+  const handleNicknameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setEdittedInfo({ ...edittedInfo, nickname: e.target.value });
+  };
+  const handleNameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setEdittedInfo({ ...edittedInfo, name: e.target.value });
+  };
+  const handlePhoneChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setEdittedInfo({ ...edittedInfo, phone: e.target.value });
+  };
+  const handleSave: FormEventHandler = (e) => {
+    e.preventDefault();
+    if (!edittedInfo.nickname) {
+      alert('닉네임을 입력해주세요');
+      return;
+    }
+    setUserInfo(edittedInfo);
+    alert('저장되었습니다');
+    console.log(edittedInfo);
+  };
+
   const inputStyle =
     'w-full h-32 border-2 border-gray-300 rounded-9 px-4 py-2 focus:outline-none focus:border-black-modal';
   const buttonStyle = 'w-full h-fit bg-black-modal text-white rounded-9';
 
   return (
     <div className="p-16 flex flex-col gap-12 w-767">
-      <div className="text-16 flex flex-col gap-24">
+      <form className="text-16 flex flex-col gap-24" onSubmit={handleSave}>
         <div className="flex flex-row gap-6 items-center">
           <label htmlFor="profile" className="p-40 rounded-9 bg-black-modal">
             프로필 사진
@@ -18,6 +53,8 @@ const EditInfo = () => {
                 type="text"
                 id="nickname"
                 className={inputStyle}
+                value={edittedInfo.nickname}
+                onChange={handleNicknameChange}
                 placeholder="닉네임을 입력해주세요"
               />
             </label>
@@ -26,7 +63,9 @@ const EditInfo = () => {
               <input
                 type="text"
                 id="email"
-                className={inputStyle}
+                className="w-full h-32 border-2 border-gray-300 rounded-9 px-4 py-2 text-gray-500 focus:outline-none"
+                value={edittedInfo.email}
+                disabled
                 placeholder="이메일을 입력해주세요"
               />
             </label>
@@ -39,6 +78,8 @@ const EditInfo = () => {
               type="text"
               id="name"
               className={inputStyle}
+              value={edittedInfo.name}
+              onChange={handleNameChange}
               placeholder="이름을 추가해주세요"
             />
           </label>
@@ -48,6 +89,8 @@ const EditInfo = () => {
               type="text"
               id="phone"
               className={inputStyle}
+              value={edittedInfo.phone}
+              onChange={handlePhoneChange}
               placeholder="연락처를 추가해주세요"
             />
           </label>
@@ -55,10 +98,10 @@ const EditInfo = () => {
             비밀번호 변경하기
           </button>
         </div>
-        <button type="button" className={buttonStyle}>
+        <button type="submit" className={buttonStyle} onSubmit={handleSave}>
           저장
         </button>
-      </div>
+      </form>
     </div>
   );
 };
