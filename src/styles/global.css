@@ -4,8 +4,4 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  .react-calendar {
-    @apply w-full;
-  }
-}
+@import url('../components/common/CalendarCustom.css');
