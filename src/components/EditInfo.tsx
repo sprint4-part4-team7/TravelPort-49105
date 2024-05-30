@@ -14,7 +14,11 @@ interface UserInfo {
 const EditInfo = () => {
   const setUserInfo = useUserStore((state) => state.setUserInfo);
 
-  const { register, handleSubmit } = useForm<UserInfo>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UserInfo>({
     defaultValues: initUserInfo,
   });
 
@@ -44,8 +48,17 @@ const EditInfo = () => {
               label="닉네임"
               placeholder="닉네임을 입력해주세요"
               width="100%"
-              register={register('nickname')}
+              register={register('nickname', {
+                required: '닉네임은 필수입니다',
+                maxLength: {
+                  value: 20,
+                  message: '닉네임은 20자 이하로 입력해주세요',
+                },
+              })}
             />
+            <div className="text-red-600 text-12">
+              {errors.nickname?.message && `${errors.nickname.message}`}
+            </div>
             <InputBox
               label="이메일"
               width="100%"
@@ -58,13 +71,29 @@ const EditInfo = () => {
           <InputBox
             label="이름"
             placeholder="이름을 입력해주세요"
-            register={register('name')}
+            register={register('name', {
+              maxLength: {
+                value: 20,
+                message: '이름은 20자 이하로 입력해주세요',
+              },
+            })}
           />
+          <div className="text-red-600 text-12">
+            {errors.name?.message && `${errors.name.message}`}
+          </div>
           <InputBox
             label="전화번호"
-            placeholder="전화번호를 입력해주세요"
-            register={register('phone')}
+            placeholder="'-' 없이 입력해주세요"
+            register={register('phone', {
+              pattern: {
+                value: /^[0-9]{10,11}$/,
+                message: '전화번호 형식에 맞게 입력해주세요',
+              },
+            })}
           />
+          <div className="text-red-600 text-12">
+            {errors.phone?.message && `${errors.phone.message}`}
+          </div>
           <Button text="비밀번호 변경하기" />
         </div>
         <Button text="저장하기" onClick={handleSubmit(handleSave)} />
