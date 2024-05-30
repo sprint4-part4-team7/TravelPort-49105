@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { checkPassword } from '@/mocks/InfoMock';
-import Button from './common/Button';
-import InputBox from './common/InputBox';
+import Button from '../common/Button';
+import InputBox from '../common/InputBox';
 
 const ChangePassword = ({ closeModal }: { closeModal: () => void }) => {
   const {

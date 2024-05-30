@@ -1,10 +1,10 @@
 import { useUserStore } from '@/utils/zustand';
 import { initUserInfo } from '@/mocks/InfoMock';
 import { useForm } from 'react-hook-form';
-import Button from '@/components/common/Button';
-import InputBox from './common/InputBox';
-import Modal from './common/Modal';
 import useModal from '@/hooks/useModal';
+import Button from '@/components/common/Button';
+import InputBox from '../common/InputBox';
+import Modal from '../common/Modal';
 import ChangePassword from './ChangePassword';
 
 interface UserInfo {
