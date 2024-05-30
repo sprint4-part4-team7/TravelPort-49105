@@ -3,6 +3,9 @@ import { initUserInfo } from '@/mocks/InfoMock';
 import { useForm } from 'react-hook-form';
 import Button from '@/components/common/Button';
 import InputBox from './common/InputBox';
+import Modal from './common/Modal';
+import useModal from '@/hooks/useModal';
+import ChangePassword from './ChangePassword';
 
 interface UserInfo {
   nickname: string;
@@ -21,6 +24,8 @@ const EditInfo = () => {
   } = useForm<UserInfo>({
     defaultValues: initUserInfo,
   });
+
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const handleSave = (data: UserInfo) => {
     if (!data.nickname) {
@@ -94,10 +99,13 @@ const EditInfo = () => {
           <div className="text-red-600 text-12">
             {errors.phone?.message && `${errors.phone.message}`}
           </div>
-          <Button text="비밀번호 변경하기" />
+          <Button text="비밀번호 변경하기" onClick={openModal} />
         </div>
         <Button text="저장하기" onClick={handleSubmit(handleSave)} />
       </form>
+      <Modal isOpen={isModalOpen} closeModal={closeModal}>
+        <ChangePassword closeModal={closeModal} />
+      </Modal>
     </div>
   );
 };
