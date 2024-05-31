@@ -5,27 +5,34 @@ import insta from '@/assets/icons/instagram.svg';
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-[#F2F2F3] h-[6rem]">
-      <div className="flex items-center justify-between max-w-screen-xl px-[23.8rem] mx-auto pt-[3.75rem] text-[1.5rem]">
-        <div className="font-medium text-[#7D7986]">©TravelPort - 2024</div>
+    <footer className="w-full bg-[#EBF1FF] h-[6rem] flex items-center">
+      <div className="md:gap-[12rem] xl:gap-[30rem] flex items-center px-16 md:px-8 py-8 justify-between max-w-screen-xl mx-auto text-[1.5rem] w-full ">
+        <div className="font-medium text-[#7D7986] text-right">
+          ©TravelPort - 2024
+        </div>
 
-        <div className="flex gap-8 font-normal">
-          <a href="/" className="text-[#A4A1AA]">
+        <div
+          className="flex font-normal gap-[1.2rem]"
+          style={{
+            margin: '0 auto',
+          }}
+        >
+          <a href="/" className="text-[#A4A1AA] p-[1.2rem]">
             Privacy Policy
           </a>
-          <a href="/" className="text-[#A4A1AA]">
+          <a href="/" className="text-[#A4A1AA] p-[1.2rem]">
             FAQ
           </a>
         </div>
 
-        <div className="flex gap-[1.2rem] mt-[-0.8rem]">
+        <div className="flex gap-[1.2rem] mt-[-0.8rem] justify-start">
           <a aria-label="Save" href="/">
             <img src={message} alt="메세지 아이콘" />
           </a>
           <a aria-label="Save" href="/">
             <img src={facebook} alt="페이스북 아이콘" />
           </a>
-          <a className="mt-[-0.2rem]" aria-label="Save" href="/">
+          <a aria-label="Save" href="/">
             <img src={insta} alt="인스타그램 아이콘" />
           </a>
         </div>
