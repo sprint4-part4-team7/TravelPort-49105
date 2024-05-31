@@ -1,46 +1,69 @@
+/* eslint-disable no-undef */
 import { useForm } from 'react-hook-form';
-import postReview from '@/apis/register';
+// import postReview from '@/apis/register';
 import TextBox from '@/components/common/TextBox';
 import ReviewStar from '@/components/review/ReviewStar';
+import Button from '@/components/common/Button';
 
 const ReviewRegister = () => {
   const {
     register,
     handleSubmit,
-    getValues,
+    setValue,
     formState: { errors },
-  } = useForm();
-  const onSubmit = (data:any) => console.log(data);
+    clearErrors,
+    watch,
+  } = useForm({
+    defaultValues: { reviewContent: '' },
+  });
+
+  const onSubmit = (data: any) => console.log(data);
+
+  // const { reviewContent: reviewContentError } = errors;
+
   // const onSubmit = () => postReview();
+
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValue('reviewContent', e.target.value);
+    console.log(e.target.value);
+    if (e.target.value) clearErrors('reviewContent');
+  };
+
   const name = '시그니엘';
   const optionName = '디럭스룸';
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <div>
-          상품 이름 <span>{name}</span>
+      <div className="mb-30">
+        <div className="text-[2rem] font-bold">
+          상품 이름 <span className="font-normal">{name}</span>
         </div>
-        <div>
-          옵션 <span>{optionName}</span>
+        <div className="text-[2rem] font-bold">
+          옵션 <span className="font-normal">{optionName}</span>
         </div>
       </div>
-      <div>
+      <div className="text-[1.9rem] font-bold mb-30">
         <h1>별점을 입력해주세요.</h1>
         <ReviewStar />
       </div>
-      <div>
+      <div className="mb-30">
         <TextBox
           labelName="리뷰를 입력해주세요."
           textLimit={100}
           placeholder="리뷰를 작성하세요."
-          value=""
-          register={register}
-          rules={{required: '필수 입력 사항입니다.'}}
-          errors={errors}
+          value={watch('reviewContent')}
+          register={register('reviewContent', {
+            required: '필수 입력 사항입니다.',
+          })}
+          onChange={handleContentChange}
         />
-        {errors.}
+        {errors?.reviewContent && (
+          <p className="text-[#FF4D4F] text-[1.2rem] mt-[0.4rem]">
+            {errors?.reviewContent?.message}
+          </p>
+        )}
       </div>
+      <Button text="리뷰 등록하기" onClick={handleSubmit(onSubmit)} />
     </form>
   );
 };
