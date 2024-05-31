@@ -1,4 +1,5 @@
 import React from 'react';
+import { FieldError } from 'react-hook-form';
 
 type InputBoxProps = {
   label: string;
@@ -6,8 +7,9 @@ type InputBoxProps = {
   value?: string | number;
   placeholder?: string;
   width?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void | undefined;
+  error?: FieldError;
   register?: any;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void | undefined;
   disabled?: boolean;
 };
 
@@ -17,17 +19,29 @@ const InputBox = ({
   value,
   placeholder = '입력',
   width = '100%',
-  onChange = undefined,
+  error,
   register,
+  onChange = undefined,
   disabled = false,
 }: InputBoxProps) => {
+  const inputboxBasic =
+    'p-12 rounded text-16 outline-none border-solid border-1 border-black-6';
+  const focusDesign = 'focus:border-blue-6 focus:border-1';
+  const errorDesign = 'border-system-error';
+
+  let inputboxClass = `${inputboxBasic} ${focusDesign}`;
+
+  if (error) {
+    inputboxClass = `${inputboxBasic} ${errorDesign}`;
+  }
+
   return (
     <div className="flex flex-col gap-8" style={{ width }}>
       <label className="text-3xl" htmlFor={inputType}>
         {label}
       </label>
       <input
-        className="px-20 py-16 rounded-md text-2xl border-solid border-1 border-black"
+        className={inputboxClass}
         type={inputType}
         placeholder={placeholder}
         value={value}
@@ -35,6 +49,9 @@ const InputBox = ({
         disabled={disabled}
         {...register}
       />
+      {error && (
+        <div className="text-system-error text-12">{error.message}</div>
+      )}
     </div>
   );
 };
