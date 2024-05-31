@@ -1,23 +1,17 @@
-import { useState } from 'react';
-import Button from '@/components/common/Button';
+import { useUserMypageStore } from '@/utils/zustand';
 import EditInfo from '@/components/myPage/EditUserInfo';
 import EditPartnerInfo from '@/components/myPage/EditPartnerInfo';
+import MyPageSideBar from '@/components/myPage/MyPageSideBar';
 
 const MyPage = () => {
-  const [userType, setUserType] = useState('partner');
-
-  const handleUserType = () => {
-    if (userType === 'partner') {
-      setUserType('user');
-    } else {
-      setUserType('partner');
-    }
-  };
+  const { userMypage } = useUserMypageStore();
 
   return (
     <div>
-      <Button text={userType} onClick={handleUserType} />
-      {userType === 'user' ? <EditInfo /> : <EditPartnerInfo />}
+      <MyPageSideBar>
+        {userMypage === 'user' && <EditInfo />}
+        {userMypage === 'partner' && <EditPartnerInfo />}
+      </MyPageSideBar>
     </div>
   );
 };

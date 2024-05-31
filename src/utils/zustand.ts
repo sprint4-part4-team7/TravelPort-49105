@@ -42,3 +42,13 @@ export const usePartnerStore = create<{
   },
   setPartnerInfo: (partnerInfo) => set({ partnerInfo }),
 }));
+
+interface UserMypageState {
+  userMypage: string;
+  setUserMypage: (userMypage: string) => void;
+}
+
+export const useUserMypageStore = create<UserMypageState>((set) => ({
+  userMypage: 'editInfo',
+  setUserMypage: (userMypage) => set({ userMypage }),
+}));
