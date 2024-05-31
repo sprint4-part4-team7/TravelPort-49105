@@ -4,6 +4,7 @@ import postReview from '@/apis/register';
 import TextBox from '@/components/common/TextBox';
 import ReviewStar from '@/components/review/ReviewStar';
 import Button from '@/components/common/Button';
+import ImageUpload from '@/components/common/ImageUpload';
 
 const ReviewRegister = () => {
   const {
@@ -67,6 +68,7 @@ const ReviewRegister = () => {
           </p>
         )}
       </div>
+      <ImageUpload />
       <Button text="리뷰 등록하기" onClick={handleSubmit(onSubmit)} />
     </form>
   );
