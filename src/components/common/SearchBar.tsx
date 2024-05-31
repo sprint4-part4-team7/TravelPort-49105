@@ -9,7 +9,7 @@ interface SearchBarProps {
     title: string;
     description: string;
   }[];
-  isMainSearchBar: boolean;
+  isMainSearchBar?: boolean;
 }
 const SearchBar = ({ cardLists, isMainSearchBar = false }: SearchBarProps) => {
   const { onChange, search, filteredTitles } = useSearchData(cardLists);
