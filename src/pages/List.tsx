@@ -31,7 +31,7 @@ const List = () => {
   return (
     <>
       <div className="w-[40rem] ml-[10rem] mt-[10rem]">
-        <SearchBar cardLists={cardLists} />
+        <SearchBar cardLists={cardLists} isMainSearchBar={false} />
       </div>
       {/* {filteredTitles.map((item) => (
         <Card key={item.id} info={item} />
