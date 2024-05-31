@@ -45,6 +45,10 @@ const Login = () => {
               placeholder="example@example.com"
               error={errors.email}
               register={register('email', {
+                required: {
+                  value: true,
+                  message: '이메일을 입력해주세요.',
+                },
                 pattern: {
                   value: EMAIL_REGEX,
                   message: '이메일 형식이 맞나요?',
@@ -58,6 +62,10 @@ const Login = () => {
               placeholder="비밀번호"
               error={errors.password}
               register={register('password', {
+                required: {
+                  value: true,
+                  message: '비밀번호를 입력해주세요.',
+                },
                 pattern: {
                   value: PASSWORD_REGEX,
                   message: '비밀번호를 확인해보세요!',
