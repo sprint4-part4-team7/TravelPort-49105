@@ -39,7 +39,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ userType }) => {
     <div className="fixed top-0 left-0 right-0 py-[3.2rem] text-2xl font-bold bg-white z-50">
       <div className="flex items-center justify-between h-[6rem] px-[4.8rem]">
         <div className="flex items-center">
-          <div className="w-[19.5rem] h-[6.5rem]">
+          <div className="w-[19.5rem] h-[6.5rem] mobile:w-[7.6rem] mobile:h-[2.5rem] tablet:w-[14.7rem] tablet:h-[4.8rem]">
             <img src={logo} alt="Main Logo" />
           </div>
         </div>

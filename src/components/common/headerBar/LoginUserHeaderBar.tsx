@@ -58,7 +58,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
 
   return (
     <div className="relative flex items-center space-x-12">
-      <div className="items-center hidden space-x-12 mobile:flex ">
+      <div className="flex items-center space-x-12 mobile:hidden">
         <button
           type="button"
           className="flex items-center"
@@ -76,7 +76,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
           alt="쇼핑 카트 아이콘"
         />
       </div>
-      <div className="mobile:hidden">
+      <div className="hidden mobile:flex">
         <button type="button" onClick={toggleDropdown}>
           <img
             src={menu}

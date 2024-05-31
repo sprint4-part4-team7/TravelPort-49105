@@ -9,14 +9,14 @@ const UnLoginUserHeaderBar = () => {
   return (
     <div className="relative">
       {/* 모바일 환경에서만 햄버거 아이콘 표시 */}
-      <div className="block mobile:hidden">
+      <div className="hidden mobile:flex">
         <button type="button" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <img src={menu} alt="Menu" />
         </button>
       </div>
 
       {/* 태블릿 및 PC 환경에서 버튼들 표시 */}
-      <div className="hidden mobile:flex space-x-[1.2rem]">
+      <div className=" mobile:hidden space-x-[1.2rem]">
         <button
           type="button"
           className="box-border border-1 border-[#356EFF] border-solid mobile:p-[0.75rem] p-[0.9rem] rounded-4 text-[#356EFF] text-[1.4rem] font-semibold leading-[142%]"
