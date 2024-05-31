@@ -11,3 +11,14 @@
   src: url('/src/fonts/IBMPlexSansKR-Medium.ttf') format(medium);
   font-style: normal;
 }
+
+.border-multi {
+  @apply border-0;
+  border: 3px solid transparent;
+  border-radius: 2.4rem;
+  background-image: linear-gradient(#fff, #fff),
+    linear-gradient(to bottom right, #356eff, #5fff8c);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  outline: none;
+}
