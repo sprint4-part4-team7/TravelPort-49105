@@ -11,7 +11,8 @@ const Button = ({
   onClick,
   disabled = false,
 }: ButtonProps) => {
-  const buttonBasic = 'flex justify-center items-center p-10 rounded text-16';
+  const buttonBasic =
+    'flex justify-center items-center p-[1rem] rounded text-16';
   const disabledDesign = 'bg-black-5 text-black-7';
   const cancelDesign = 'bg-black-5 text-black-13';
 
