@@ -1,5 +1,5 @@
 import React from 'react';
-import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 type TextBoxProps = {
   labelName: string;
@@ -8,7 +8,6 @@ type TextBoxProps = {
   value: string;
   onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   register?: UseFormRegisterReturn;
-  error?: FieldError;
 };
 
 const TextBox = ({
@@ -18,7 +17,6 @@ const TextBox = ({
   value,
   onChange,
   register,
-  error,
 }: TextBoxProps) => {
   return (
     <div className="flex flex-col">
