@@ -37,7 +37,7 @@ const InputBox = ({
 
   return (
     <div className="flex flex-col gap-8" style={{ width }}>
-      <label className="text-3xl" htmlFor={inputType}>
+      <label className="text-16" htmlFor={inputType}>
         {label}
       </label>
       <input
