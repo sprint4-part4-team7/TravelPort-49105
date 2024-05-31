@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 // import { useState } from 'react';
 import { EMAIL_REGEX } from '@/constants/InputType';
+import Logo from '@/assets/icons/travelPortLogo.svg';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 
@@ -52,13 +53,13 @@ const UserSignup = () => {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="flex flex-col gap-40 justify-center items-center">
+      <div className="flex flex-col gap-[4rem] justify-center items-center">
         <Link to="/">
-          <img alt="travelport logo" />
+          <img alt="travelport logo" src={Logo} />
         </Link>
-        <div className="flex flex-col gap-30 max-w-350 ">
+        <div className="flex flex-col gap-30 max-w-[35rem]">
           <form
-            className="flex flex-col gap-30 max-w-350 "
+            className="flex flex-col gap-30 max-w-[35rem] "
             onSubmit={handleSubmit(handleSignupForm)}
           >
             <InputBox label="닉네임" width="350px" placeholder="닉네임" />
