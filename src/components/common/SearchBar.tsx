@@ -15,7 +15,7 @@ const SearchBar = ({ cardLists, isMainSearchBar = false }: SearchBarProps) => {
   const { onChange, search, filteredTitles } = useSearchData(cardLists);
 
   return (
-    <>
+    <div className="relative">
       <div className="relative">
         <input
           type="text"
@@ -31,7 +31,7 @@ const SearchBar = ({ cardLists, isMainSearchBar = false }: SearchBarProps) => {
         />
       </div>
       {!!search.length && (
-        <div className="border-solid border-1 border-[#F5F5F5] rounded-8 p-20 pl-40 bg-[#F5F5F5] text-13">
+        <div className="absolute w-full border-solid border-1 border-[#F5F5F5] rounded-8 p-20 pl-40 bg-[#F5F5F5] text-13">
           {filteredTitles.length > 10 ? (
             filteredTitles
               .slice(0, 10)
@@ -47,7 +47,7 @@ const SearchBar = ({ cardLists, isMainSearchBar = false }: SearchBarProps) => {
           )}
         </div>
       )}
-    </>
+    </div>
   );
 };
 
