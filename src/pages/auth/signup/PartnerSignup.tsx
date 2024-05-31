@@ -97,9 +97,15 @@ const PartnerSignup = () => {
               </div>
             </div>
 
-            <InputBox label="비밀번호" width="350px" placeholder="비밀번호" />
+            <InputBox
+              label="비밀번호"
+              inputType="password"
+              width="350px"
+              placeholder="비밀번호"
+            />
             <InputBox
               label="비밀번호 확인"
+              inputType="password"
               width="350px"
               placeholder="비밀번호 확인"
             />
