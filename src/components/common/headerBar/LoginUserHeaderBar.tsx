@@ -92,30 +92,34 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
           style={{ marginLeft: '-1.5rem', width: 'auto' }}
         >
           <ul className="w-[106px] text-[1.5rem] font-normal">
-            <li className="flex items-center justify-between p-2 sm:hidden">
-              <div className="flex items-center">
+            {/* 프로필 이미지랑 이름 */}
+            <li className="items-center hidden p-2 mobile:flex px-[1.2rem] justify-between py-1.5 hover:bg-blue-50">
+              <div className="flex items-center gap-[0.8rem]">
                 <img
                   src={user.image}
                   alt="Profile"
-                  className="rounded-full h-[3.2rem] w-[3.2rem]"
+                  className="rounded-full h-[3.2rem] w-[3.2rem] mobile:w-[2.6rem] mobile:h-[2.6rem] "
                 />
                 <span className="ml-2">{user.name}</span>
               </div>
             </li>
-            <li className="flex items-center justify-between p-2 sm:hidden">
+            {/* 장바구니 아이콘 */}
+            <li className="items-center justify-between hidden px-[1.2rem] mobile:flex py-1.5 hover:bg-blue-50">
               <div className="flex items-center">
                 <img
-                  className="h-[3.2rem] w-[3.2rem]"
+                  className="h-[3.2rem] w-[3.2rem] mobile:w-[1.6rem] mobile:h-[1.6rem]"
                   src={cart}
                   alt="쇼핑 카트 아이콘"
                 />
-                <span className="ml-2">장바구니</span>
+                <span className="ml-[0.8rem]">장바구니</span>
               </div>
             </li>
+
+            {/* 드롭다운 */}
             {menuItems.map((item, index) => (
               <li
                 key={item.id}
-                className={`px-[1.2rem] flex justify-center items-center p-2 ${index === menuItems.length - 1 ? 'border-t border-solid border-gray-200' : ''} ${item.label === '로그아웃' ? 'hover:text-[#000] text-gray-400 font-semibold' : 'hover:bg-blue-50 hover:text-black'}`}
+                className={`px-[1.2rem] flex justify-center items-center p-2 ${index === menuItems.length - 1 ? 'border-t border-solid border-gray-200' : ''} ${item.label === '로그아웃' ? 'hover:text-[#000] text-gray-400 font-semibold' : 'hover:bg-blue-50 '}`}
               >
                 <button
                   type="button"
