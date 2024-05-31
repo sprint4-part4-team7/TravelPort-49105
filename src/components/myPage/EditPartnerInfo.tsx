@@ -1,5 +1,5 @@
-import { useUserStore } from '@/utils/zustand';
-import { initUserInfo } from '@/mocks/InfoMock';
+import { usePartnerStore } from '@/utils/zustand';
+import { initPartnerInfo } from '@/mocks/InfoMock';
 import { useForm } from 'react-hook-form';
 import useModal from '@/hooks/useModal';
 import Button from '@/components/common/Button';
@@ -7,32 +7,28 @@ import InputBox from '../common/InputBox';
 import Modal from '../common/Modal';
 import ChangePassword from './ChangePassword';
 
-interface UserInfo {
+interface PartnerInfo {
   nickname: string;
   email: string;
   name?: string;
   phone?: string;
+  introduction?: string;
 }
 
-const EditInfo = () => {
-  const setUserInfo = useUserStore((state) => state.setUserInfo);
-
+const EditPartnerInfo = () => {
+  const setPartnerInfo = usePartnerStore((state) => state.setPartnerInfo);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<UserInfo>({
-    defaultValues: initUserInfo,
+  } = useForm<PartnerInfo>({
+    defaultValues: initPartnerInfo,
   });
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const handleSave = (data: UserInfo) => {
-    if (!data.nickname) {
-      alert('닉네임을 입력해주세요');
-      return;
-    }
-    setUserInfo(data);
+  const handleSave = (data: PartnerInfo) => {
+    setPartnerInfo(data);
     alert('저장되었습니다');
     console.log(data);
   };
@@ -50,39 +46,17 @@ const EditInfo = () => {
           </label>
           <div className="flex flex-col gap-12">
             <InputBox
-              label="닉네임"
-              placeholder="닉네임을 입력해주세요"
-              width="100%"
-              register={register('nickname', {
-                required: '닉네임은 필수입니다',
-                maxLength: {
-                  value: 20,
-                  message: '닉네임은 20자 이하로 입력해주세요',
-                },
-              })}
+              label="이름/법인명"
+              register={register('nickname')}
+              disabled
             />
             <div className="text-red-600 text-12">
               {errors.nickname?.message && `${errors.nickname.message}`}
             </div>
-            <InputBox
-              label="이메일"
-              width="100%"
-              register={register('email')}
-              disabled
-            />
+            <InputBox label="이메일" register={register('email')} disabled />
           </div>
         </div>
         <div className="flex flex-col gap-12 w-fit">
-          <InputBox
-            label="이름"
-            placeholder="이름을 입력해주세요"
-            register={register('name', {
-              maxLength: {
-                value: 20,
-                message: '이름은 20자 이하로 입력해주세요',
-              },
-            })}
-          />
           <div className="text-red-600 text-12">
             {errors.name?.message && `${errors.name.message}`}
           </div>
@@ -95,6 +69,11 @@ const EditInfo = () => {
                 message: '전화번호 형식에 맞게 입력해주세요',
               },
             })}
+          />
+          <InputBox
+            label="소개"
+            placeholder="소개를 입력해주세요"
+            register={register('introduction')}
           />
           <div className="text-red-600 text-12">
             {errors.phone?.message && `${errors.phone.message}`}
@@ -110,4 +89,4 @@ const EditInfo = () => {
   );
 };
 
-export default EditInfo;
+export default EditPartnerInfo;
