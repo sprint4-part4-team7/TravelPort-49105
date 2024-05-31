@@ -1,5 +1,4 @@
 import { useUserStore } from '@/utils/zustand';
-import { initUserInfo } from '@/mocks/InfoMock';
 import { useForm } from 'react-hook-form';
 import useModal from '@/hooks/useModal';
 import Button from '@/components/common/Button';
@@ -15,23 +14,19 @@ interface UserInfo {
 }
 
 const EditInfo = () => {
-  const setUserInfo = useUserStore((state) => state.setUserInfo);
+  const { userInfo, setUserInfo } = useUserStore();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<UserInfo>({
-    defaultValues: initUserInfo,
+    defaultValues: userInfo,
   });
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const handleSave = (data: UserInfo) => {
-    if (!data.nickname) {
-      alert('닉네임을 입력해주세요');
-      return;
-    }
     setUserInfo(data);
     alert('저장되었습니다');
     console.log(data);
