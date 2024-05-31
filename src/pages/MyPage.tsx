@@ -1,9 +1,23 @@
-import EditInfo from '@/components/myPage/EditInfo';
+import { useState } from 'react';
+import Button from '@/components/common/Button';
+import EditInfo from '@/components/myPage/EditUserInfo';
+import EditPartnerInfo from '@/components/myPage/EditPartnerInfo';
 
 const MyPage = () => {
+  const [userType, setUserType] = useState('partner');
+
+  const handleUserType = () => {
+    if (userType === 'partner') {
+      setUserType('user');
+    } else {
+      setUserType('partner');
+    }
+  };
+
   return (
     <div>
-      <EditInfo />
+      <Button text={userType} onClick={handleUserType} />
+      {userType === 'user' ? <EditInfo /> : <EditPartnerInfo />}
     </div>
   );
 };
