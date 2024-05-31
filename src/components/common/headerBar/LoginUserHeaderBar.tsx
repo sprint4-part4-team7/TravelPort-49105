@@ -4,7 +4,7 @@ import cart from '@/assets/icons/shoppingCart.svg';
 import myInfo from '@/assets/icons/my-info.svg';
 import reservationStatus from '@/assets/icons/reservation-status.svg';
 import list from '@/assets/icons/list.svg';
-// import business from '@/assets/icons/business.svg';
+import menu from '@/assets/icons/menu.svg';
 
 interface LoginUserHeaderBarProps {
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -58,22 +58,33 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
 
   return (
     <div className="relative flex items-center space-x-12">
-      <button
-        type="button"
-        className="flex items-center"
-        onClick={toggleDropdown}
-      >
+      <div className="items-center hidden space-x-12 mobile:flex ">
+        <button
+          type="button"
+          className="flex items-center"
+          onClick={toggleDropdown}
+        >
+          <img
+            src={user.image}
+            alt="Profile"
+            className="rounded-full cursor-pointer h-[3.2rem] w-[3.2rem]"
+          />
+        </button>
         <img
-          src={user.image}
-          alt="Profile"
-          className="rounded-full cursor-pointer h-[3.2rem] w-[3.2rem]"
+          className="h-[3.2rem] w-[3.2rem]"
+          src={cart}
+          alt="쇼핑 카트 아이콘"
         />
-      </button>
-      <img
-        className="h-[3.2rem] w-[3.2rem]"
-        src={cart}
-        alt="쇼핑 카트 아이콘"
-      />
+      </div>
+      <div className="mobile:hidden">
+        <button type="button" onClick={toggleDropdown}>
+          <img
+            src={menu}
+            alt="Menu"
+            className="h-[3.2rem] w-[3.2rem] cursor-pointer"
+          />
+        </button>
+      </div>
       {isDropdownOpen && (
         <div
           ref={dropdownRef}
@@ -81,6 +92,26 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
           style={{ marginLeft: '-1.5rem', width: 'auto' }}
         >
           <ul className="w-[106px] text-[1.5rem] font-normal">
+            <li className="flex items-center justify-between p-2 sm:hidden">
+              <div className="flex items-center">
+                <img
+                  src={user.image}
+                  alt="Profile"
+                  className="rounded-full h-[3.2rem] w-[3.2rem]"
+                />
+                <span className="ml-2">{user.name}</span>
+              </div>
+            </li>
+            <li className="flex items-center justify-between p-2 sm:hidden">
+              <div className="flex items-center">
+                <img
+                  className="h-[3.2rem] w-[3.2rem]"
+                  src={cart}
+                  alt="쇼핑 카트 아이콘"
+                />
+                <span className="ml-2">장바구니</span>
+              </div>
+            </li>
             {menuItems.map((item, index) => (
               <li
                 key={item.id}
