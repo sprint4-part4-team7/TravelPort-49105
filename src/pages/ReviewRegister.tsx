@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { useForm } from 'react-hook-form';
-// import postReview from '@/apis/register';
+import postReview from '@/apis/register';
 import TextBox from '@/components/common/TextBox';
 import ReviewStar from '@/components/review/ReviewStar';
 import Button from '@/components/common/Button';
@@ -14,18 +14,22 @@ const ReviewRegister = () => {
     clearErrors,
     watch,
   } = useForm({
-    defaultValues: { reviewContent: '' },
+    defaultValues: { reviewContent: '', reviewScore: 0 },
   });
 
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = async (data: any) => {
+    try {
+      await postReview(1, 11, 111, data); // 임시
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  // const { reviewContent: reviewContentError } = errors;
-
-  // const onSubmit = () => postReview();
-
+  const handleScoreChange = (selectedScore: number) => {
+    setValue('reviewScore', selectedScore);
+  };
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue('reviewContent', e.target.value);
-    console.log(e.target.value);
     if (e.target.value) clearErrors('reviewContent');
   };
 
@@ -44,7 +48,7 @@ const ReviewRegister = () => {
       </div>
       <div className="text-[1.9rem] font-bold mb-30">
         <h1>별점을 입력해주세요.</h1>
-        <ReviewStar />
+        <ReviewStar onChange={handleScoreChange} />
       </div>
       <div className="mb-30">
         <TextBox
