@@ -28,10 +28,6 @@ const Login = () => {
     console.log(data);
   };
 
-  const testClick = () => {
-    console.log('로그인');
-  };
-
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="flex flex-col gap-40 justify-center items-center">
@@ -73,9 +69,6 @@ const Login = () => {
               onClick={handleSubmit(handleLoginForm)}
             />
           </form>
-          <Button text="일반, pressed, hover" onClick={testClick} />
-          <Button variant="cancel" text="cancel" onClick={testClick} />
-          <Button text="disable" onClick={testClick} disabled />
           <div className="text-center">
             아직 회원이 아니신가요?{' '}
             <Link to="/signup/user">이메일로 회원가입</Link>
