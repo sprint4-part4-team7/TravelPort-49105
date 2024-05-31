@@ -9,9 +9,11 @@ interface SearchBarProps {
     title: string;
     description: string;
   }[];
+  isMainSearchBar: boolean;
 }
-const SearchBar = ({ cardLists }: SearchBarProps) => {
+const SearchBar = ({ cardLists, isMainSearchBar = false }: SearchBarProps) => {
   const { onChange, search, filteredTitles } = useSearchData(cardLists);
+
   return (
     <>
       <div className="relative">
@@ -19,8 +21,8 @@ const SearchBar = ({ cardLists }: SearchBarProps) => {
           type="text"
           value={search}
           onChange={onChange}
-          className="border-solid border-[2.4px] py-[1.2rem] px-2 w-full
-      text-[1.6rem] pl-44 border-multi"
+          className={`border-solid border-[2.4px] border-[#356EFF] py-[1.2rem] px-2 w-full rounded-[2.4rem]
+      text-[1.6rem] pl-44 outline-none ${isMainSearchBar ? 'border-multi' : ''}`}
         />
         <img
           src={searchIcon}
