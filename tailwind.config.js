@@ -65,8 +65,8 @@ module.exports = {
         },
       },
       screens: {
-        tablet: { max: '1199px' },
-        mobile: { max: '767px' },
+        tablet: { min: '1199px' },
+        mobile: { min: '767px' },
       },
       fontFamily: {
         sans: ['Pretendard', 'sans-serif'],
