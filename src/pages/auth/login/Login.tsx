@@ -2,16 +2,32 @@ import Google from '@/assets/images/google_login.png';
 import Kakao from '@/assets/images/kakao_login.svg';
 import Naver from '@/assets/images/naver_login.png';
 import { Link } from 'react-router-dom';
+import useOAuthLogin from '@/hooks/useOAuthLogin';
+import { useForm } from 'react-hook-form';
+import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
-import useOAuthLogin from '@/hooks/useOAuthLogin';
+
+type LoginForm = {
+  email: string;
+  password: string;
+};
 
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginForm>({ mode: 'onChange' });
   const googleLogin = useOAuthLogin('google');
   const kakaoLogin = useOAuthLogin('kakao');
   const naverLogin = useOAuthLogin('naver');
 
-  const loginClick = () => {
+  const handleLoginForm = (data: LoginForm) => {
+    console.log(data);
+  };
+
+  const testClick = () => {
     console.log('로그인');
   };
 
@@ -22,13 +38,43 @@ const Login = () => {
           <img alt="travelport logo" />
         </Link>
         <div className="flex flex-col gap-30 max-w-350 ">
-          <InputBox
-            label="이메일"
-            width="350px"
-            placeholder="example@example.com"
-          />
-          <InputBox label="비밀번호" width="350px" placeholder="비밀번호" />
-          <Button text="로그인 하기" onClick={loginClick} />
+          <form
+            className="flex flex-col gap-30"
+            onSubmit={handleSubmit(handleLoginForm)}
+          >
+            <InputBox
+              label="이메일"
+              width="35rem"
+              placeholder="example@example.com"
+              error={errors.email}
+              register={register('email', {
+                pattern: {
+                  value: EMAIL_REGEX,
+                  message: '이메일 형식이 맞나요?',
+                },
+              })}
+            />
+            <InputBox
+              label="비밀번호"
+              inputType="password"
+              width="35rem"
+              placeholder="비밀번호"
+              error={errors.password}
+              register={register('password', {
+                pattern: {
+                  value: PASSWORD_REGEX,
+                  message: '비밀번호를 확인해보세요!',
+                },
+              })}
+            />
+            <Button
+              text="로그인 하기"
+              onClick={handleSubmit(handleLoginForm)}
+            />
+          </form>
+          <Button text="일반, pressed, hover" onClick={testClick} />
+          <Button variant="cancel" text="cancel" onClick={testClick} />
+          <Button text="disable" onClick={testClick} disabled />
           <div className="text-center">
             아직 회원이 아니신가요?{' '}
             <Link to="/signup/user">이메일로 회원가입</Link>
