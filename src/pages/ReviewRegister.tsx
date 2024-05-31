@@ -20,10 +20,11 @@ const ReviewRegister = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      await postReview(1, 11, 111, data); // 임시
+      await postReview(2, 11, 111, data); // 임시
     } catch (error) {
       console.log(error);
     }
+    // console.log(data);
   };
 
   const handleScoreChange = (selectedScore: number) => {
@@ -62,9 +63,9 @@ const ReviewRegister = () => {
           })}
           onChange={handleContentChange}
         />
-        {errors?.reviewContent && (
+        {errors.reviewContent && (
           <p className="text-[#FF4D4F] text-[1.2rem] mt-[0.4rem]">
-            {errors?.reviewContent?.message}
+            {errors.reviewContent.message}
           </p>
         )}
       </div>
