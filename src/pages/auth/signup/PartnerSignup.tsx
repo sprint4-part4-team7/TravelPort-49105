@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 // import { useState } from 'react';
 import { EMAIL_REGEX } from '@/constants/InputType';
+import Logo from '@/assets/icons/travelPortLogo.svg';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 
@@ -54,19 +55,19 @@ const PartnerSignup = () => {
     <div className="flex justify-center items-center h-screen">
       <div className="flex flex-col gap-40 justify-center items-center">
         <Link to="/">
-          <img alt="travelport logo" />
+          <img alt="travelport logo" src={Logo} />
         </Link>
         <div className="flex flex-col gap-30 max-w-350 ">
           <form
             className="flex flex-col gap-30 max-w-350 "
             onSubmit={handleSubmit(handleSignupForm)}
           >
-            <InputBox label="닉네임" width="350px" placeholder="닉네임" />
+            <InputBox label="닉네임" width="35rem" placeholder="닉네임" />
             <div className="flex gap-10">
               <div className="relative">
                 <InputBox
                   label="이메일"
-                  width="350px"
+                  width="35rem"
                   placeholder="example@example.com"
                   error={errors.email}
                   register={register('email', {

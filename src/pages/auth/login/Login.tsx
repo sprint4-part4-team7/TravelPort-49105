@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import useOAuthLogin from '@/hooks/useOAuthLogin';
 import { useForm } from 'react-hook-form';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
+import Logo from '@/assets/icons/travelPortLogo.svg';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 
@@ -35,7 +36,7 @@ const Login = () => {
     <div className="flex justify-center items-center h-screen">
       <div className="flex flex-col gap-40 justify-center items-center">
         <Link to="/">
-          <img alt="travelport logo" />
+          <img alt="travelport logo" src={Logo} />
         </Link>
         <div className="flex flex-col gap-30 max-w-350 ">
           <form
