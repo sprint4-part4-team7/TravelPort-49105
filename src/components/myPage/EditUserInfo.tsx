@@ -44,7 +44,7 @@ const EditInfo = () => {
         onSubmit={handleSubmit(handleSave)}
       >
         <div className="flex flex-row gap-24 items-center">
-          <label htmlFor="profile" className="p-40 rounded-9 bg-black-modal">
+          <label htmlFor="profile" className="p-40 rounded-9 bg-black-7">
             프로필 사진
             <input type="file" id="profile" hidden />
           </label>
@@ -60,7 +60,7 @@ const EditInfo = () => {
                 },
               })}
             />
-            <div className="text-red-600 text-12">
+            <div className="text-system-error text-12">
               {errors.nickname?.message && `${errors.nickname.message}`}
             </div>
             <InputBox label="이메일" register={register('email')} disabled />
@@ -77,7 +77,7 @@ const EditInfo = () => {
               },
             })}
           />
-          <div className="text-red-600 text-12">
+          <div className="text-system-error text-12">
             {errors.name?.message && `${errors.name.message}`}
           </div>
           <InputBox
@@ -90,7 +90,7 @@ const EditInfo = () => {
               },
             })}
           />
-          <div className="text-red-600 text-12">
+          <div className="text-system-error text-12">
             {errors.phone?.message && `${errors.phone.message}`}
           </div>
           <Button text="비밀번호 변경하기" onClick={openModal} />
