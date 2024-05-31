@@ -13,15 +13,14 @@ interface SearchBarProps {
 const SearchBar = ({ cardLists }: SearchBarProps) => {
   const { onChange, search, filteredTitles } = useSearchData(cardLists);
   return (
-    // bg-gradient-to-r from-[#356EFF] to-[#5FFF8C]
     <>
       <div className="relative">
         <input
           type="text"
           value={search}
           onChange={onChange}
-          className="border-solid border-[2.4px] border-[#356EFF] py-[1.2rem] px-[2rem] rounded-[2.4rem] w-full
-      text-[1.6rem] pl-44 outline-[#356EFF]"
+          className="border-solid border-[2.4px] py-[1.2rem] px-2 w-full
+      text-[1.6rem] pl-44 border-multi"
         />
         <img
           src={searchIcon}
