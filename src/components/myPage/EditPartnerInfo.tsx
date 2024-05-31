@@ -1,5 +1,4 @@
 import { usePartnerStore } from '@/utils/zustand';
-import { initPartnerInfo } from '@/mocks/InfoMock';
 import { useForm } from 'react-hook-form';
 import useModal from '@/hooks/useModal';
 import Button from '@/components/common/Button';
@@ -16,13 +15,13 @@ interface PartnerInfo {
 }
 
 const EditPartnerInfo = () => {
-  const setPartnerInfo = usePartnerStore((state) => state.setPartnerInfo);
+  const { partnerInfo, setPartnerInfo } = usePartnerStore();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<PartnerInfo>({
-    defaultValues: initPartnerInfo,
+    defaultValues: partnerInfo,
   });
 
   const { isModalOpen, openModal, closeModal } = useModal();
