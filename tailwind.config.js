@@ -65,8 +65,9 @@ module.exports = {
         },
       },
       screens: {
-        tablet: { min: '1199px' },
-        mobile: { min: '767px' },
+        mobile: { min: '375px', max: '767px' }, // 모바일은 최대 767px까지
+        tablet: { min: '768px', max: '1199px' }, // 태블릿은 768px 이상 1199px 이하
+        desktop: { min: '1200px' }, // 데스크탑은 1200px 이상
       },
       fontFamily: {
         sans: ['Pretendard', 'sans-serif'],
