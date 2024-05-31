@@ -8,11 +8,13 @@ const Footer = () => {
     <footer className="w-full mt-[2rem] bg-[#EBF1FF] flex flex-col mobile:flex-col justify-center items-center py-[2rem] px-[4rem] text-center">
       <div className="flex mobile:flex-col flex-row tablet:gap-[12rem] gap-[30rem] mobile:gap-[0.8rem] items-center">
         <div>
-          <div>©TravelPort - 2024</div>
+          <div className="text-[1.4rem] font-semibold	mobile:text-[1.3rem] mobile:font-medium	">
+            ⓒTravelPort - 2024
+          </div>
         </div>
 
         <div className="flex flex-row tablet:gap-[12rem] gap-[30rem] mobile:gap-[4.4rem] items-center">
-          <div className="ㅎ메 space-x-4 mobile:flex-col tablet:flex-row mobile:space-x-0">
+          <div className="mobile:text-[1.1rem] mobile:font-normal	 font-medium text-[1.3rem] space-x-4 mobile:flex-col tablet:flex-row mobile:space-x-0">
             <a href="/" className="text-[#A4A1AA] px-4 py-3">
               Privacy Policy
             </a>
