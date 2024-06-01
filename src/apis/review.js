@@ -12,14 +12,15 @@ import instance from '@/utils/axios';
 //   };
 // };
 
-export const postReview = async (userId, productId, productOptionId, reviewInfo) => {
+export const postReview = async (userId, productOptionId, reviewInfo) => {
   try {
     const response = await instance.post('/review', {
       userId,
-      productId,
+      // productId,
       productOptionId,
       ...reviewInfo,
     });
+    console.log(response)
     return response.data;
   } catch(error) {
     console.log(error?.message);

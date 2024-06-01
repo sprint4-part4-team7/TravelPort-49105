@@ -24,7 +24,7 @@ const ReviewRegister = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      await postReview(3, 11, 111, data); // 임시
+      await postReview(1, 1, data); // 임시
     } catch (error) {
       console.log(error);
     }
