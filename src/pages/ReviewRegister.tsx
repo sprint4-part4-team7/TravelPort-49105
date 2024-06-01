@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { useForm } from 'react-hook-form';
-import postReview from '@/apis/register';
+import { postReview } from '@/apis/review';
 import TextBox from '@/components/common/TextBox';
 import ReviewStar from '@/components/review/ReviewStar';
 import Button from '@/components/common/Button';
@@ -24,7 +24,7 @@ const ReviewRegister = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      await postReview(2, 11, 111, data); // 임시
+      await postReview(3, 11, 111, data); // 임시
     } catch (error) {
       console.log(error);
     }
