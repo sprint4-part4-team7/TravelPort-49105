@@ -11,10 +11,14 @@ const KakaoRedirect = () => {
   useEffect(() => {
     // back-end로 인가 코드 전달
     const KakaoLogin = async () => {
-      const res = await instance.get(`auth/kakao/callback?code=${code}`);
-      const ACCESS_TOKEN = res.data.accessToken;
-      setCookie('accessToken', ACCESS_TOKEN);
-      axios.defaults.headers.common.Authorization = `Bearer ${ACCESS_TOKEN}`;
+      try {
+        const res = await instance.get(`auth/kakao/callback?code=${code}`);
+        const ACCESS_TOKEN = res.data.accessToken;
+        setCookie('accessToken', ACCESS_TOKEN);
+        axios.defaults.headers.common.Authorization = `Bearer ${ACCESS_TOKEN}`;
+      } catch (error) {
+        console.error('Error:', error);
+      }
     };
     KakaoLogin();
     navigate('/', { replace: true });
