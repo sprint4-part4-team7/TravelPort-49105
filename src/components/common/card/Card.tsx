@@ -24,7 +24,7 @@ const Card = () => {
   return (
     <div className=" w-265 h-406 overflow-hidden rounded-xl shadow-[0_0_4px_0_rgba(0,0,0,0.25)]">
       <img src={image} alt="예시사진" className="w-265 h-267 object-cover" />
-      <div className="w-265 h-139 bg-white px-16 py-20">
+      <div className="w-265 h-139 bg-white px-16 py-20 hover:bg-blue-1">
         <p className="text-black-13 pb-5 text-xl font-semibold leading-7">
           {title}
         </p>
