@@ -30,13 +30,13 @@ const Login = () => {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="flex flex-col gap-40 justify-center items-center">
+      <div className="flex flex-col gap-[4rem] justify-center items-center">
         <Link to="/">
           <img alt="travelport logo" src={Logo} />
         </Link>
-        <div className="flex flex-col gap-30 max-w-350 ">
+        <div className="flex flex-col gap-[3rem] max-w-[35rem] ">
           <form
-            className="flex flex-col gap-30"
+            className="flex flex-col gap-[3rem]"
             onSubmit={handleSubmit(handleLoginForm)}
           >
             <InputBox
@@ -45,10 +45,7 @@ const Login = () => {
               placeholder="example@example.com"
               error={errors.email}
               register={register('email', {
-                required: {
-                  value: true,
-                  message: '이메일을 입력해주세요.',
-                },
+                required: '이메일을 입력해주세요.',
                 pattern: {
                   value: EMAIL_REGEX,
                   message: '이메일 형식이 맞나요?',
@@ -62,10 +59,8 @@ const Login = () => {
               placeholder="비밀번호"
               error={errors.password}
               register={register('password', {
-                required: {
-                  value: true,
-                  message: '비밀번호를 입력해주세요.',
-                },
+                required: '비밀번호를 입력해주세요.',
+
                 pattern: {
                   value: PASSWORD_REGEX,
                   message: '비밀번호를 확인해보세요!',
@@ -77,12 +72,14 @@ const Login = () => {
               onClick={handleSubmit(handleLoginForm)}
             />
           </form>
-          <div className="text-center">
+          <div className="text-center text-14 text-black-13">
             아직 회원이 아니신가요?{' '}
-            <Link to="/signup/user">이메일로 회원가입</Link>
+            <Link className="text-blue-6" to="/signup/user">
+              이메일로 회원가입
+            </Link>
           </div>
           <div
-            className="flex px-24 py-12 justify-between items-center  
+            className="flex px-[2.4rem] py-[1.2rem] justify-between items-center  
     border-1 rounded-2xl 
     border-solid border-black"
           >
@@ -99,9 +96,11 @@ const Login = () => {
               </button>
             </div>
           </div>
-          <div className="text-center">
+          <div className="text-center text-14 text-black-13">
             파트너 등록이 필요하신가요?{' '}
-            <Link to="/signup/partner">파트너 회원가입</Link>
+            <Link className="text-blue-6" to="/signup/partner">
+              파트너 회원가입
+            </Link>
           </div>
         </div>
       </div>
