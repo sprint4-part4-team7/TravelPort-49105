@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import { useForm } from 'react-hook-form';
 import { postReview } from '@/apis/review';
+import React from 'react';
 import TextBox from '@/components/common/TextBox';
 import ReviewStar from '@/components/review/ReviewStar';
 import Button from '@/components/common/Button';
@@ -14,6 +15,7 @@ const ReviewRegister = () => {
     formState: { errors },
     clearErrors,
     watch,
+    setError,
   } = useForm({
     defaultValues: {
       reviewContent: '',
@@ -31,9 +33,15 @@ const ReviewRegister = () => {
     // console.log(data);
   };
 
-  const handleScoreChange = (selectedScore: number) => {
-    setValue('reviewScore', selectedScore);
-  };
+  const handleScoreChange = React.useCallback((selectedScore: number) => {
+    if (!selectedScore)
+      setError('reviewScore', {
+        type: 'custom',
+        message: '필수 입력 사항입니다.',
+      });
+    else setValue('reviewScore', selectedScore);
+  }, []);
+
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue('reviewContent', e.target.value);
     if (e.target.value) clearErrors('reviewContent');
@@ -59,6 +67,11 @@ const ReviewRegister = () => {
       <div className="text-[1.9rem] font-bold mb-30">
         <h1>별점을 입력해주세요.</h1>
         <ReviewStar onChange={handleScoreChange} />
+        {errors.reviewScore && (
+          <p className="text-[#FF4D4F] text-[1.2rem] mt-[0.4rem]">
+            {errors.reviewScore.message}
+          </p>
+        )}
       </div>
       <div className="mb-30">
         <TextBox
