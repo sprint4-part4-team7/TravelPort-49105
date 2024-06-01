@@ -11,10 +11,14 @@ const NaverRedirect = () => {
   useEffect(() => {
     // back-end로 인가 코드 전달
     const NaverLogin = async () => {
-      const res = await instance.get(`auth/naver/callback?code=${code}`);
-      const ACCESS_TOKEN = res.data.accessToken;
-      setCookie('accessToken', ACCESS_TOKEN);
-      axios.defaults.headers.common.Authorization = `${ACCESS_TOKEN}`;
+      try {
+        const res = await instance.get(`auth/naver/callback?code=${code}`);
+        const ACCESS_TOKEN = res.data.accessToken;
+        setCookie('accessToken', ACCESS_TOKEN);
+        axios.defaults.headers.common.Authorization = `Bearer ${ACCESS_TOKEN}`;
+      } catch (error) {
+        console.error('Error:', error);
+      }
     };
     NaverLogin();
     navigate('/', { replace: true });

@@ -11,11 +11,14 @@ const GoogleRedirect = () => {
   useEffect(() => {
     // back-end로 인가 코드 전달
     const GoogleLogin = async () => {
-      const res = await instance.get(`auth/google/callback?code=${code}`);
-      const ACCESS_TOKEN = res.data.accessToken;
-      console.log(ACCESS_TOKEN);
-      setCookie('accessToken', ACCESS_TOKEN);
-      axios.defaults.headers.common.Authorization = `${ACCESS_TOKEN}`;
+      try {
+        const res = await instance.get(`auth/google/callback?code=${code}`);
+        const ACCESS_TOKEN = res.data.accessToken;
+        setCookie('accessToken', ACCESS_TOKEN);
+        axios.defaults.headers.common.Authorization = `Bearer ${ACCESS_TOKEN}`;
+      } catch (error) {
+        console.error('Error:', error);
+      }
     };
     GoogleLogin();
     navigate('/', { replace: true });
