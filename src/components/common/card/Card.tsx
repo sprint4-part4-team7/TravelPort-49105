@@ -2,14 +2,16 @@
 import emptyImage from '@/assets/images/star-empty.svg';
 // import fillImage from '@/assets/images/star-fill.svg';
 
-const Card = () => {
-  const title = '제주도 둘레길'; // 서버에서 받아오는 제목
-  const location = '제주도 서귀포시 애월읍'; // 서버에서 받아오는 위치(ex 경기도 하남시 신장동)
-  const price = 3000000; // 서버에서 받아오는 가격
-  const score = 4; // 서버에서 받아오는 별점 소수점 없는 수
-  const review = 1000; // 서버에서 받아오는 총 리뷰 수
-  const image = 'https://picsum.photos/265/267'; // 서버에서 받아오는 이미지(임시로 랜덤/width/height)
+type CardProps = {
+  title: string;
+  location: string;
+  price: number;
+  score: number;
+  review: number;
+  image: string;
+};
 
+const Card = ({ title, location, price, score, review, image }: CardProps) => {
   const imageScore = () => {
     const a = [];
     for (let i = 0; i < score; i += 1) {
