@@ -4,7 +4,7 @@ import postReview from '@/apis/register';
 import TextBox from '@/components/common/TextBox';
 import ReviewStar from '@/components/review/ReviewStar';
 import Button from '@/components/common/Button';
-import ImageUpload from '@/components/common/ImageUpload';
+import ImageUpload from '@/components/review/ImageUpload';
 
 const ReviewRegister = () => {
   const {
@@ -15,7 +15,11 @@ const ReviewRegister = () => {
     clearErrors,
     watch,
   } = useForm({
-    defaultValues: { reviewContent: '', reviewScore: 0 },
+    defaultValues: {
+      reviewContent: '',
+      reviewScore: 0,
+      reviewImage: [] as any,
+    },
   });
 
   const onSubmit = async (data: any) => {
@@ -33,6 +37,10 @@ const ReviewRegister = () => {
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue('reviewContent', e.target.value);
     if (e.target.value) clearErrors('reviewContent');
+  };
+
+  const handleImageChange = (selectedImages: string[]) => {
+    setValue('reviewImage', selectedImages);
   };
 
   const name = '시그니엘';
@@ -69,7 +77,7 @@ const ReviewRegister = () => {
           </p>
         )}
       </div>
-      <ImageUpload />
+      <ImageUpload onChange={handleImageChange} />
       <Button text="리뷰 등록하기" onClick={handleSubmit(onSubmit)} />
     </form>
   );
