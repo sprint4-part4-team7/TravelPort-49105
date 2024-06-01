@@ -39,7 +39,10 @@ const ReviewRegister = () => {
         type: 'custom',
         message: '필수 입력 사항입니다.',
       });
-    else setValue('reviewScore', selectedScore);
+    else {
+      setValue('reviewScore', selectedScore);
+      clearErrors('reviewScore');
+    }
   }, []);
 
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -73,7 +76,7 @@ const ReviewRegister = () => {
           </p>
         )}
       </div>
-      <div className="mb-30">
+      <div className="mb-30 w-500">
         <TextBox
           labelName="리뷰를 입력해주세요."
           textLimit={100}
@@ -83,12 +86,8 @@ const ReviewRegister = () => {
             required: '필수 입력 사항입니다.',
           })}
           onChange={handleContentChange}
+          error={errors.reviewContent}
         />
-        {errors.reviewContent && (
-          <p className="text-[#FF4D4F] text-[1.2rem] mt-[0.4rem]">
-            {errors.reviewContent.message}
-          </p>
-        )}
       </div>
       <ImageUpload onChange={handleImageChange} />
       <Button text="리뷰 등록하기" onClick={handleSubmit(onSubmit)} />
