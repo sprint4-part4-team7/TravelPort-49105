@@ -34,7 +34,7 @@ const TextBox = ({
   }, [value.length]);
 
   const textboxBasic =
-    'p-12 rounded text-[1.6rem] w-full h-[15rem] outline-none border-solid border-1 border-black-6 resize-none';
+    'p-12 rounded text-[1.6rem] font-plexSans w-full h-[15rem] outline-none border-solid border-1 border-black-6 resize-none';
   const focusDesign = 'focus:border-blue-6 focus:border-1';
   const errorDesign = 'border-system-error';
 
@@ -64,7 +64,9 @@ const TextBox = ({
         (<span>{` ${textLength} `}</span>/ {`${textLimit} `})
       </p>
       {error && (
-        <div className="text-system-error text-12">{error.message}</div>
+        <div className="text-system-error text-12 font-plexSans">
+          {error.message}
+        </div>
       )}
     </div>
   );
