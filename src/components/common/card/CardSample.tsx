@@ -32,7 +32,7 @@ const CardSample = () => {
   };
   return (
     // 스타일은 페이지별로 디자인이 나와야 세부적으로 classname 설정가능
-    <div className="w-720 flex flex-col gap-20 border-solid border-1 border-black-12">
+    <div className="w-820 flex flex-col gap-20 border-solid border-1 border-black-12">
       <div className="flex flex-row gap-10">{pageContent()}</div>
       <div className="flex justify-center items-center">
         <Pagination
