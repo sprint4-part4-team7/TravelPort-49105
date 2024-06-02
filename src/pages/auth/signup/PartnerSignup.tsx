@@ -36,9 +36,9 @@ const PartnerSignup = () => {
   let checkBtnClass = `${checkBtnBasic}`;
 
   if (errors.email) {
-    checkBtnClass = `${checkBtnBasic} bg-black-4 text-black-6`;
+    checkBtnClass = `${checkBtnBasic} bg-black-3 text-black-5`;
   } else {
-    checkBtnClass = `${checkBtnBasic} bg-blue-1 text-black-13`;
+    checkBtnClass = `${checkBtnBasic} bg-blue-1 text-black-12`;
   }
 
   const handleCheckEmail = (data: EmailForm) => {
@@ -53,7 +53,7 @@ const PartnerSignup = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen font-plexSans">
       <div className="flex flex-col gap-40 justify-center items-center">
         <Link to="/">
           <img alt="travelport logo" src={Logo} />
@@ -153,13 +153,18 @@ const PartnerSignup = () => {
             />
           </form>
 
-          <div className="text-center text-14 text-black-13">
-            이미 회원이신가요? <Link to="/login">로그인하기</Link>
+          <div className="text-center text-14 text-black-12">
+            이미 회원이신가요?{' '}
+            <Link className="text-blue-6" to="/login">
+              로그인하기
+            </Link>
           </div>
 
-          <div className="text-center text-14 text-black-13">
+          <div className="text-center text-14 text-black-12">
             일반 회원가입이 필요하신가요?{' '}
-            <Link to="/signup/user">일반 회원가입</Link>
+            <Link className="text-blue-6" to="/signup/user">
+              일반 회원가입
+            </Link>
           </div>
         </div>
       </div>
