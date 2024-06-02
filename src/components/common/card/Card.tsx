@@ -63,9 +63,6 @@ const Card = ({
             최저 {price.toLocaleString()}원~
           </p>
         </div>
-        <p className="text-blue-6 text-right text-sm font-semibold leading-5">
-          최저 {price.toLocaleString()}원~
-        </p>
       </div>
     </Link>
   );
