@@ -34,16 +34,16 @@ const TextBox = ({
   }, [value.length]);
 
   const textboxBasic =
-    'p-12 rounded text-[1.6rem] font-plexSans w-full h-[15rem] outline-none border-solid border-1 border-black-6 resize-none';
+    'p-12 rounded text-[1.6rem] font-plexSans w-full h-[15rem] outline-none border-solid border-1 border-black-5 resize-none';
   const focusDesign = 'focus:border-blue-6 focus:border-1';
   const errorDesign = 'border-system-error';
 
   let textboxClass = `${textboxBasic} ${focusDesign}`;
-  let lengthDesign = 'absolute bottom-[0.5rem] right-[0.5rem] text-black-6';
+  let lengthDesign = 'absolute bottom-[0.5rem] right-[0.5rem] text-black-5';
 
   if (error) {
     textboxClass = `${textboxBasic} ${errorDesign}`;
-    lengthDesign = 'absolute bottom-[3.1rem] right-[0.5rem] text-black-6';
+    lengthDesign = 'absolute bottom-[3.1rem] right-[0.5rem] text-black-5';
   }
 
   return (
