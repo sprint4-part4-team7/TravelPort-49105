@@ -14,10 +14,7 @@ const useSearchData = (cardLists: cardListsType[]) => {
     setSearch(e.target.value);
 
   const filteredTitles = cardLists.filter((filteredTitle) => {
-    return filteredTitle.title
-      .replace(' ', '')
-      .toLowerCase()
-      .includes(search.trim().toLowerCase());
+    return filteredTitle.title.includes(search.trim());
   });
 
   return {
