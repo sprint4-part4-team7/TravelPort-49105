@@ -1,20 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 type PaginationProps = {
-  children: React.ReactNode;
+  pageNum: number;
   setPageNum: any;
-  allCard: number; // 전체 카드 수
+  allCardNum: number; // 전체 카드 수
   divNum: number; // 카드를 나눌 수(=페이지 표출될 카드 수)
 };
 
 const Pagination = ({
-  children,
+  pageNum,
   setPageNum,
-  allCard,
+  allCardNum,
   divNum,
 }: PaginationProps) => {
-  // 1,2,3,4,5번이 있으면 api에 offset=4,8...20 까지 바뀌게 api get 요청 로직
-  // 애네를 useEffect로 관리해서 데이터 최신으로 변경될떄마다 화면 변경
+  const buttonNum = Math.ceil(allCardNum / divNum);
+
+  const [bigButtonNum, setBigButtonNum] = useState(1);
+
+  useEffect(() => {
+    if (pageNum % 10 === 1 || pageNum % 10 === 0) {
+      setBigButtonNum(Math.ceil(pageNum / 10));
+    }
+    if (pageNum === buttonNum) {
+      setBigButtonNum(Math.ceil(buttonNum / 10));
+    }
+  }, [pageNum]);
 
   const SendPageButton = (num: any) => {
     setPageNum(num);
@@ -22,11 +32,18 @@ const Pagination = ({
 
   const PageButton = () => {
     const buttonList = [];
-    for (let i = 1; i < allCard / divNum + 1; i++) {
-      // card 데이터/4 한 값 = i의 최대값
+    for (
+      let i = 1;
+      i <= (bigButtonNum === Math.ceil(buttonNum / 10) ? buttonNum % 10 : 10);
+      i++
+    ) {
       buttonList.push(
-        <button type="submit" onClick={() => SendPageButton(i)}>
-          {i}
+        <button
+          type="submit"
+          key={`button${(bigButtonNum - 1) * 10 + i}`}
+          onClick={() => SendPageButton((bigButtonNum - 1) * 10 + i)}
+        >
+          {(bigButtonNum - 1) * 10 + i}
         </button>,
       );
     }
@@ -34,13 +51,33 @@ const Pagination = ({
   };
 
   return (
-    <>
-      <div>{children}</div>
-      {/* <button type="submit" onClick={(num) => a(num)}>
-        1,2,3,4,5
-      </button> */}
+    <div className="flex flex-row items-center gap-10">
+      {buttonNum >= 10 && (
+        <button type="button" onClick={() => setPageNum(1)}>
+          ≪
+        </button>
+      )}
+      <button
+        type="button"
+        onClick={() => (pageNum > 1 ? setPageNum(pageNum - 1) : setPageNum(1))}
+      >
+        {'<'}
+      </button>
       {PageButton()}
-    </>
+      <button
+        type="button"
+        onClick={() =>
+          pageNum < buttonNum ? setPageNum(pageNum + 1) : setPageNum(buttonNum)
+        }
+      >
+        {'>'}
+      </button>
+      {buttonNum >= 10 && (
+        <button type="button" onClick={() => setPageNum(buttonNum)}>
+          ≫
+        </button>
+      )}
+    </div>
   );
 };
 
