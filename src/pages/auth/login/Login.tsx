@@ -29,7 +29,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen font-plexSans">
       <div className="flex flex-col gap-[4rem] justify-center items-center">
         <Link to="/">
           <img alt="travelport logo" src={Logo} />
@@ -72,7 +72,7 @@ const Login = () => {
               onClick={handleSubmit(handleLoginForm)}
             />
           </form>
-          <div className="text-center text-14 text-black-13">
+          <div className="text-center text-14 text-black-12">
             아직 회원이 아니신가요?{' '}
             <Link className="text-blue-6" to="/signup/user">
               이메일로 회원가입
@@ -81,7 +81,7 @@ const Login = () => {
           <div
             className="flex px-[2.4rem] py-[1.2rem] justify-between items-center  
     border-1 rounded-2xl 
-    border-solid border-black"
+    border-solid border-black-7"
           >
             <div className="text-3xl font-bold ">소셜 로그인</div>
             <div className="flex gap-16">
@@ -96,7 +96,7 @@ const Login = () => {
               </button>
             </div>
           </div>
-          <div className="text-center text-14 text-black-13">
+          <div className="text-center text-14 text-black-12">
             파트너 등록이 필요하신가요?{' '}
             <Link className="text-blue-6" to="/signup/partner">
               파트너 회원가입
