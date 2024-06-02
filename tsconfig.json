@@ -14,13 +14,14 @@
     "noFallthroughCasesInSwitch": true,
     "strict": true,
     "sourceMap": true,
+    "resolveJsonModule": true,
     "removeComments": true,
     "lib": ["ES2020", "DOM"],
     "baseUrl": "src",
     "paths": {
-      "@/*": ["./*"]
-    }
+      "@/*": ["./*"],
+    },
   },
   "include": ["src/**/*", "src", "@types", "src/index.d.ts", "env.d.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }
