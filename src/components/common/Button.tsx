@@ -13,8 +13,8 @@ const Button = ({
 }: ButtonProps) => {
   const buttonBasic =
     'flex justify-center items-center p-[1rem] rounded text-16 font-plexSans font-bold';
-  const disabledDesign = 'bg-black-5 text-black-7';
-  const cancelDesign = 'bg-black-5 text-black-13';
+  const disabledDesign = 'bg-black-4 text-black-6';
+  const cancelDesign = 'bg-black-4 text-black-12';
 
   let buttonClass = `${buttonBasic} bg-blue-6 hover:bg-blue-5 active:bg-blue-7 text-white`;
 
