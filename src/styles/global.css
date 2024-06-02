@@ -5,3 +5,9 @@
 @tailwind utilities;
 
 @import url('../components/common/CalendarCustom.css');
+
+@font-face {
+  font-family: plex_sansKR;
+  src: url('/src/fonts/IBMPlexSansKR-Medium.ttf') format(medium);
+  font-style: normal;
+}

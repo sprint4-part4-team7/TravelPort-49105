@@ -71,6 +71,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Pretendard', 'sans-serif'],
+        plexSans: ['plex_sansKR', 'sans-serif'],
       },
       zIndex: {
         DEFAULT: '1',
