@@ -119,7 +119,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
             {menuItems.map((item, index) => (
               <li
                 key={item.id}
-                className={`px-[1.2rem] flex justify-center items-center p-2 ${index === menuItems.length - 1 ? 'border-t border-solid border-gray-200' : ''} ${item.label === '로그아웃' ? 'hover:text-[#000] text-gray-400 font-semibold' : 'hover:bg-blue-50 '}`}
+                className={`px-[0.6rem] flex justify-center items-center p-2 ${index === menuItems.length - 1 ? 'border-t border-solid border-gray-200' : ''} ${item.label === '로그아웃' ? 'hover:text-[#000] text-gray-400 font-semibold' : 'hover:bg-blue-50 '}`}
               >
                 <button
                   type="button"
