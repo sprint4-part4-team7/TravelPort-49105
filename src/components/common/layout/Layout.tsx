@@ -8,9 +8,9 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children, userType }) => {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <HeaderBar userType={userType} />
-      <div className="px-[3.6rem] mt-[14.4rem] overflow-hidden break-words whitespace-normal">
+      <div className="flex-grow px-[3.6rem] mt-[14.4rem] break-words whitespace-normal overflow-y-auto">
         {children}
       </div>
     </div>
