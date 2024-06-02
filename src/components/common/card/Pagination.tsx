@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 type PaginationProps = {
   pageNum: number;
@@ -16,6 +17,9 @@ const Pagination = ({
   const buttonNum = Math.ceil(allCardNum / divNum);
 
   const [bigButtonNum, setBigButtonNum] = useState(1);
+
+  const buttonStyle =
+    'p-10 w-32 h-32 text-xs rounded-lg border border-black-4 bg-white';
 
   useEffect(() => {
     if (pageNum % 10 === 1 || pageNum % 10 === 0) {
@@ -39,6 +43,11 @@ const Pagination = ({
     ) {
       buttonList.push(
         <button
+          className={
+            pageNum === (bigButtonNum - 1) * 10 + i
+              ? twMerge(buttonStyle, `bg-blue-6 text-white`)
+              : buttonStyle
+          }
           type="submit"
           key={`button${(bigButtonNum - 1) * 10 + i}`}
           onClick={() => SendPageButton((bigButtonNum - 1) * 10 + i)}
@@ -51,13 +60,18 @@ const Pagination = ({
   };
 
   return (
-    <div className="flex flex-row items-center gap-10">
+    <div className="flex flex-row items-center gap-5 ">
       {buttonNum >= 10 && (
-        <button type="button" onClick={() => setPageNum(1)}>
+        <button
+          className={buttonStyle}
+          type="button"
+          onClick={() => setPageNum(1)}
+        >
           ≪
         </button>
       )}
       <button
+        className={buttonStyle}
         type="button"
         onClick={() => (pageNum > 1 ? setPageNum(pageNum - 1) : setPageNum(1))}
       >
@@ -65,6 +79,7 @@ const Pagination = ({
       </button>
       {PageButton()}
       <button
+        className={buttonStyle}
         type="button"
         onClick={() =>
           pageNum < buttonNum ? setPageNum(pageNum + 1) : setPageNum(buttonNum)
@@ -73,7 +88,11 @@ const Pagination = ({
         {'>'}
       </button>
       {buttonNum >= 10 && (
-        <button type="button" onClick={() => setPageNum(buttonNum)}>
+        <button
+          className={buttonStyle}
+          type="button"
+          onClick={() => setPageNum(buttonNum)}
+        >
           ≫
         </button>
       )}
