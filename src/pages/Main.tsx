@@ -34,7 +34,7 @@ const Main = () => {
     <>
       <Layout userType="user">
         <Carousel items={images} />
-        <div className="mt-[8.2rem] grid grid-cols-4 gap-[2.4rem]">
+        <div className="font-plexSans mt-[8.2rem] grid grid-cols-4 gap-[2.4rem]">
           {images.map((item, index) => (
             <div key={index}>
               <img
