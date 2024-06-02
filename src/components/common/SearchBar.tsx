@@ -12,7 +12,8 @@ interface SearchBarProps {
   isMainSearchBar?: boolean;
 }
 const SearchBar = ({ cardLists, isMainSearchBar = false }: SearchBarProps) => {
-  const { onChange, search, filteredTitles } = useSearchData(cardLists);
+  const { onChange, search, filteredTitles, setSearch } =
+    useSearchData(cardLists);
 
   return (
     <div className="relative">
@@ -31,19 +32,31 @@ const SearchBar = ({ cardLists, isMainSearchBar = false }: SearchBarProps) => {
         />
       </div>
       {!!search.length && (
-        <div className="absolute w-full border-solid border-1 border-[#F5F5F5] rounded-8 p-20 pl-40 bg-[#F5F5F5] text-13">
+        <div
+          className="absolute mt-8 w-full border-solid border-1 border-[#F5F5F5] rounded-17 py-10 bg-[#fff] text-13
+          shadow-[0_0_8px_0_rgba(0,0,0,0.25)]"
+        >
           {filteredTitles.length > 10 ? (
             filteredTitles
               .slice(0, 10)
               .map((filteredTitle) => (
-                <div className="leading-[3rem]">{filteredTitle.title}</div>
+                <div className="hover:bg-[#EBF1FF] py-10 pl-20 cursor-pointer">
+                  {filteredTitle.title}
+                </div>
               ))
           ) : filteredTitles.length > 0 ? (
             filteredTitles.map((filteredTitle) => (
-              <div className="leading-[3rem]">{filteredTitle.title}</div>
+              <div
+                className="hover:bg-[#EBF1FF] py-10 pl-20 cursor-pointer"
+                onClick={() => {
+                  setSearch(filteredTitle.title);
+                }}
+              >
+                {filteredTitle.title}
+              </div>
             ))
           ) : (
-            <div>연관 검색어가 없습니다.</div>
+            <div className="py-10 pl-20">연관 검색어가 없습니다.</div>
           )}
         </div>
       )}
