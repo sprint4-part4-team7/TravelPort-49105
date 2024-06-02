@@ -2,9 +2,15 @@
 import searchIcon from '@/assets/images/search.svg';
 import { useState } from 'react';
 import { RiCloseCircleLine } from 'react-icons/ri';
+import info from '@/mocks/resevationInfo.json';
+import ReservationCard from './ResevationCard';
 
 const MyResevation = () => {
   const [search, setSearch] = useState('');
+
+  const filteredInfo = info.filter((reservation) => {
+    return reservation.title.includes(search);
+  });
 
   return (
     <div className="flex flex-col gap-12 text-16 w-full">
@@ -33,9 +39,15 @@ const MyResevation = () => {
         />
       </div>
       <div className="text-24 font-semibold">예약 목록</div>
-      <div className="border-solid border-1 border-black-3 rounded-12 p-20">
-        예약 목록이 없습니다.
-      </div>
+      {filteredInfo.length > 0 ? (
+        filteredInfo.map((reservation) => (
+          <ReservationCard reservation={reservation} />
+        ))
+      ) : (
+        <div className="border-solid border-1 border-black-3 rounded-12 p-20">
+          예약 목록이 없습니다.
+        </div>
+      )}
     </div>
   );
 };
