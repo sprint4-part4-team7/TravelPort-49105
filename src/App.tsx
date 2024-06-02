@@ -14,6 +14,7 @@ import NaverRedirect from '@/pages/auth/login/NaverRedirect';
 import PartnerSignup from '@/pages/auth/signup/PartnerSignup';
 import UserSignup from '@/pages/auth/signup/UserSignup';
 import ReviewRegister from '@/pages/ReviewRegister';
+import ProductDetails from './pages/ProductDetails';
 
 const App = () => {
   return (
@@ -39,6 +40,9 @@ const App = () => {
         </Route>
         <Route path="list">
           <Route index element={<List />} />
+        </Route>
+        <Route path="details">
+          <Route index element={<ProductDetails />} />
         </Route>
         <Route path="location">
           <Route index element={<Location />} />
