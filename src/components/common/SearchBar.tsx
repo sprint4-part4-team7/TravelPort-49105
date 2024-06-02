@@ -37,13 +37,16 @@ const SearchBar = ({ cardLists, isMainSearchBar = false }: SearchBarProps) => {
           shadow-[0_0_8px_0_rgba(0,0,0,0.25)]"
         >
           {filteredTitles.length > 10 ? (
-            filteredTitles
-              .slice(0, 10)
-              .map((filteredTitle) => (
-                <div className="hover:bg-[#EBF1FF] py-10 pl-20 cursor-pointer">
-                  {filteredTitle.title}
-                </div>
-              ))
+            filteredTitles.slice(0, 10).map((filteredTitle) => (
+              <div
+                className="hover:bg-[#EBF1FF] py-10 pl-20 cursor-pointer"
+                onClick={() => {
+                  setSearch(filteredTitle.title);
+                }}
+              >
+                {filteredTitle.title}
+              </div>
+            ))
           ) : filteredTitles.length > 0 ? (
             filteredTitles.map((filteredTitle) => (
               <div
