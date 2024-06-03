@@ -18,6 +18,11 @@ type GetReviewType = {
   createdAt: string;
 };
 
+type DefaultOptionType = {
+  optionName: string;
+  productName: string;
+};
+
 export const postReview = async (
   userId: number,
   productOptionId: number,
@@ -59,7 +64,9 @@ export const deleteReviewInfo = async (reviewId: number) => {
   }
 };
 
-export const getDefaultOption = async (optionId: number) => {
+export const getDefaultOption = async (
+  optionId: number,
+): Promise<DefaultOptionType> => {
   try {
     const response = await instance.get(`/productOption/${optionId}`);
     const { optionName } = response.data;
