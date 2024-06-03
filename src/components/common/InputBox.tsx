@@ -25,7 +25,7 @@ const InputBox = ({
   disabled = false,
 }: InputBoxProps) => {
   const inputboxBasic =
-    'p-12 rounded text-16 font-plexSans outline-none border-solid border-1 border-black-5';
+    'p-12 rounded text-16 outline-none border-solid border-1 border-black-5';
   const focusDesign = 'focus:border-blue-6 focus:border-1';
   const errorDesign = 'border-system-error';
 
@@ -50,9 +50,7 @@ const InputBox = ({
         {...register}
       />
       {error && (
-        <div className="text-system-error text-12 font-plexSans">
-          {error.message}
-        </div>
+        <div className="text-system-error text-12">{error.message}</div>
       )}
     </div>
   );

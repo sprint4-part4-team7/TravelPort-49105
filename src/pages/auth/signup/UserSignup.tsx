@@ -52,14 +52,14 @@ const UserSignup = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen font-plexSans">
-      <div className="flex flex-col gap-[4rem] justify-center items-center">
+    <div className="flex justify-center items-center h-screen">
+      <div className="flex flex-col gap-40 justify-center items-center">
         <Link to="/">
           <img alt="travelport logo" src={Logo} />
         </Link>
-        <div className="flex flex-col gap-30 max-w-[35rem]">
+        <div className="flex flex-col gap-30 max-w-350">
           <form
-            className="flex flex-col gap-30 max-w-[35rem] "
+            className="flex flex-col gap-30 max-w-350 "
             onSubmit={handleSubmit(handleSignupForm)}
           >
             <InputBox
