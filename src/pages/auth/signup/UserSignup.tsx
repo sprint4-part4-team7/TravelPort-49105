@@ -1,8 +1,9 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-// import { useState } from 'react';
+import { useState } from 'react';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
 import Logo from '@/assets/icons/travelPortLogo.svg';
+import instance from '@/utils/axios';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 
@@ -16,39 +17,74 @@ interface UserSignupForm extends UserSignupData {
   passwordCheck: string;
 }
 
-type EmailForm = {
-  email: string;
-};
-
 const UserSignup = () => {
   const {
     register,
     handleSubmit,
+    watch,
     getValues,
     formState: { errors },
   } = useForm<UserSignupForm>({
     mode: 'onChange',
     defaultValues: { nickname: '', email: '', password: '', passwordCheck: '' },
   });
-  // const [isEmailValid, setIsEmailValid] = useState(false);
+  const navigate = useNavigate();
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [emailMessage, setEmailMessage] = useState('');
   const checkBtnBasic = 'absolute px-8 py-4 text-13 rounded top-44 right-12';
 
   let checkBtnClass = `${checkBtnBasic}`;
+  let disableType = false;
 
-  if (errors.email) {
+  if (errors.email || !watch('email')) {
+    disableType = true;
     checkBtnClass = `${checkBtnBasic} bg-black-3 text-black-5`;
   } else {
+    disableType = false;
     checkBtnClass = `${checkBtnBasic} bg-blue-1 text-black-12`;
   }
 
-  const handleCheckEmail = (data: EmailForm) => {
-    const { email } = data;
-    console.log(email);
+  const handleCheckEmail = async () => {
+    const email = watch('email');
+
+    try {
+      const res = await instance({
+        url: '/auth/valid-email',
+        method: 'POST',
+        data: {
+          email,
+        },
+      });
+      if (res.data.isValid) {
+        setIsEmailValid(res.data.isValid);
+        setEmailMessage(res.data.message);
+      } else {
+        setIsEmailValid(res.data.isValid);
+        setEmailMessage(res.data.message);
+      }
+    } catch (e: any) {
+      setEmailMessage(e.message);
+    }
   };
 
-  const handleSignupForm = (data: UserSignupData) => {
+  const handleSignupForm = async (data: UserSignupData) => {
     const { nickname, email, password } = data;
-    console.log({ nickname, email, password });
+    try {
+      await instance({
+        url: 'auth/user-signup',
+        method: 'POST',
+        data: {
+          nickname,
+          email,
+          password,
+        },
+      });
+      if (isEmailValid) {
+        navigate('/login', { replace: true });
+      }
+    } catch (e: any) {
+      console.log(0);
+    }
   };
 
   return (
@@ -64,67 +100,60 @@ const UserSignup = () => {
           >
             <InputBox
               label="닉네임"
-              width="350px"
+              width="35rem"
               placeholder="닉네임"
               error={errors.nickname}
               register={register('nickname', {
-                required: { value: true, message: '닉네임을 입력해주세요.' },
+                required: '닉네임을 입력해주세요.',
                 maxLength: {
                   value: 20,
                   message: '닉네임은 20자 이하로 입력해주세요',
                 },
               })}
             />
-            <div className="flex gap-10">
+            <div className="flex flex-col gap-10">
               <div className="relative">
                 <InputBox
                   label="이메일"
-                  width="350px"
+                  width="35rem"
                   placeholder="example@example.com"
                   error={errors.email}
                   register={register('email', {
-                    required: {
-                      value: true,
-                      message: '이메일을 입력해주세요.',
-                    },
+                    required: '이메일을 입력해주세요.',
                     pattern: {
                       value: EMAIL_REGEX,
                       message: '이메일 형식이 맞나요?',
                     },
                   })}
                 />
-                {errors.email ? (
-                  <button
-                    className={checkBtnClass}
-                    type="button"
-                    onClick={handleSubmit(handleCheckEmail)}
-                    disabled
-                  >
-                    중복체크
-                  </button>
-                ) : (
-                  <button
-                    className={checkBtnClass}
-                    type="button"
-                    onClick={handleSubmit(handleCheckEmail)}
-                  >
-                    중복체크
-                  </button>
-                )}
+                <button
+                  className={checkBtnClass}
+                  type="button"
+                  onClick={handleCheckEmail}
+                  disabled={disableType}
+                >
+                  중복체크
+                </button>
               </div>
+              {isEmailValid !== null && !errors.email && (
+                <p
+                  className={`text-12 ${
+                    isEmailValid ? 'text-system-complete' : 'text-system-error'
+                  }`}
+                >
+                  {emailMessage}
+                </p>
+              )}
             </div>
 
             <InputBox
               label="비밀번호"
               inputType="password"
-              width="350px"
+              width="35rem"
               placeholder="비밀번호"
               error={errors.password}
               register={register('password', {
-                required: {
-                  value: true,
-                  message: '비밀번호를 입력해주세요.',
-                },
+                required: '비밀번호를 입력해주세요.',
                 pattern: {
                   value: PASSWORD_REGEX,
                   message: '비밀번호 형식이 맞나요?',
@@ -134,14 +163,11 @@ const UserSignup = () => {
             <InputBox
               label="비밀번호 확인"
               inputType="password"
-              width="350px"
+              width="35rem"
               placeholder="비밀번호 확인"
               error={errors.passwordCheck}
               register={register('passwordCheck', {
-                required: {
-                  value: true,
-                  message: '비밀번호 확인을 위해 입력해주세요.',
-                },
+                required: '비밀번호 확인을 위해 입력해주세요.',
                 validate: (value) =>
                   value === getValues('password') ||
                   `위 비밀번호랑 일치하지 않아요!`,
