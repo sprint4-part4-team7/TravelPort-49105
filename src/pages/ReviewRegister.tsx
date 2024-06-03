@@ -1,7 +1,8 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import { useForm } from 'react-hook-form';
-import { postReview } from '@/apis/review';
-import React from 'react';
+import { getDefaultOption, postReview } from '@/apis/review';
+import React, { useEffect, useState } from 'react';
 import TextBox from '@/components/common/TextBox';
 import ReviewStar from '@/components/review/ReviewStar';
 import Button from '@/components/common/Button';
@@ -24,7 +25,18 @@ const ReviewRegister = () => {
     },
   });
 
-  // const { optionName, productName } = getDefaultOption(1);
+  const [option, setOption] = useState('');
+  const [product, setProduct] = useState('');
+
+  useEffect(() => {
+    const fetchDefaultOption = async (optionId: number) => {
+      const { optionName, productName } = await getDefaultOption(optionId);
+      setOption(optionName);
+      setProduct(productName);
+    };
+    fetchDefaultOption(1);
+  }, [option, product]);
+
   const onSubmit = async (data: any) => {
     try {
       await postReview(1, 1, data); // 임시
@@ -55,17 +67,14 @@ const ReviewRegister = () => {
     setValue('reviewImages', selectedImages);
   };
 
-  const name = '시그니엘';
-  const optionName = '디럭스룸';
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="mb-30">
         <div className="text-[2rem] font-bold">
-          상품 이름 <span className="font-normal">{name}</span>
+          상품 이름 <span className="font-normal">{product}</span>
         </div>
         <div className="text-[2rem] font-bold">
-          옵션 <span className="font-normal">{optionName}</span>
+          옵션 <span className="font-normal">{option}</span>
         </div>
       </div>
       <div className="text-[1.9rem] font-bold mb-30">
