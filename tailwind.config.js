@@ -69,8 +69,7 @@ module.exports = {
         desktop: { min: '1200px' }, // 데스크탑은 1200px 이상
       },
       fontFamily: {
-        sans: ['Pretendard', 'sans-serif'],
-        plexSans: ['plex_sansKR', 'sans-serif'],
+        sans: ['plex_sansKR', 'Pretendard', 'sans-serif'],
       },
       zIndex: {
         DEFAULT: '1',
