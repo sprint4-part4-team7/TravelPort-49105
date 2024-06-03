@@ -29,14 +29,14 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen font-plexSans">
-      <div className="flex flex-col gap-[4rem] justify-center items-center">
+    <div className="flex justify-center items-center h-screen">
+      <div className="flex flex-col gap-40 justify-center items-center">
         <Link to="/">
           <img alt="travelport logo" src={Logo} />
         </Link>
-        <div className="flex flex-col gap-[3rem] max-w-[35rem] ">
+        <div className="flex flex-col gap-30 max-w-350 ">
           <form
-            className="flex flex-col gap-[3rem]"
+            className="flex flex-col gap-30"
             onSubmit={handleSubmit(handleLoginForm)}
           >
             <InputBox
@@ -79,7 +79,7 @@ const Login = () => {
             </Link>
           </div>
           <div
-            className="flex px-[2.4rem] py-[1.2rem] justify-between items-center  
+            className="flex px-24 py-12 justify-between items-center  
     border-1 rounded-2xl 
     border-solid border-black-7"
           >
