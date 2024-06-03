@@ -19,29 +19,30 @@ const ReviewRegister = () => {
   } = useForm({
     defaultValues: {
       reviewContent: '',
-      reviewScore: 0,
-      reviewImage: [] as any,
+      score: 0,
+      reviewImages: [] as any,
     },
   });
 
+  // const { optionName, productName } = getDefaultOption(1);
   const onSubmit = async (data: any) => {
     try {
       await postReview(1, 1, data); // 임시
     } catch (error) {
       console.log(error);
     }
-    // console.log(data);
+    // console.log({ ...data });
   };
 
   const handleScoreChange = React.useCallback((selectedScore: number) => {
     if (!selectedScore)
-      setError('reviewScore', {
+      setError('score', {
         type: 'custom',
         message: '필수 입력 사항입니다.',
       });
     else {
-      setValue('reviewScore', selectedScore);
-      clearErrors('reviewScore');
+      setValue('score', selectedScore);
+      clearErrors('score');
     }
   }, []);
 
@@ -51,7 +52,7 @@ const ReviewRegister = () => {
   };
 
   const handleImageChange = (selectedImages: string[]) => {
-    setValue('reviewImage', selectedImages);
+    setValue('reviewImages', selectedImages);
   };
 
   const name = '시그니엘';
@@ -70,9 +71,9 @@ const ReviewRegister = () => {
       <div className="text-[1.9rem] font-bold mb-30">
         <h1>별점을 입력해주세요.</h1>
         <ReviewStar onChange={handleScoreChange} />
-        {errors.reviewScore && (
+        {errors.score && (
           <p className="text-[#FF4D4F] text-[1.2rem] mt-[0.4rem]">
-            {errors.reviewScore.message}
+            {errors.score.message}
           </p>
         )}
       </div>
