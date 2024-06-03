@@ -4,9 +4,11 @@ import { useState } from 'react';
 import { RiCloseCircleLine } from 'react-icons/ri';
 import info from '@/mocks/resevationInfo.json';
 import ReservationCard from './ResevationCard';
+import ReservPagination from '../common/ReservPagination';
 
 const MyResevation = () => {
   const [search, setSearch] = useState('');
+  const [pageNum, setPageNum] = useState(1);
 
   const filteredInfo = info.filter((reservation) => {
     return reservation.title.includes(search);
@@ -40,9 +42,16 @@ const MyResevation = () => {
       </div>
       <div className="text-24 font-semibold">예약 목록</div>
       {filteredInfo.length > 0 ? (
-        filteredInfo.map((reservation) => (
-          <ReservationCard reservation={reservation} />
-        ))
+        <ReservPagination
+          limit={4}
+          pageNum={pageNum}
+          setPageNum={setPageNum}
+          allCardNum={filteredInfo.length}
+        >
+          {filteredInfo.map((reservation) => (
+            <ReservationCard reservation={reservation} />
+          ))}
+        </ReservPagination>
       ) : (
         <div className="border-solid border-1 border-black-3 rounded-12 p-20">
           예약 목록이 없습니다.
