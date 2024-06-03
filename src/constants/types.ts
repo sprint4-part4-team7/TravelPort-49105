@@ -29,6 +29,16 @@ export type ReviewInfoType = {
 };
 
 export type GetReviewType = {
+  review: ReviewData;
+  productId: number;
+};
+
+export type DefaultOptionType = {
+  optionName: string;
+  productName: string;
+};
+
+export type ReviewData = {
   id: number;
   userId: number;
   productOptionId: number;
@@ -37,9 +47,4 @@ export type GetReviewType = {
   reviewContent: string;
   partnerAnswer: string;
   createdAt: string;
-};
-
-export type DefaultOptionType = {
-  optionName: string;
-  productName: string;
 };
