@@ -7,6 +7,7 @@ import SearchBar from '../SearchBar';
 
 interface HeaderBarProps {
   userType: 'user' | 'partner'; // 유저 타입: 'user' 혹은 'partner'
+  main?: boolean;
 }
 
 const cardLists = [
@@ -32,7 +33,7 @@ const cardLists = [
   },
 ];
 
-const HeaderBar: React.FC<HeaderBarProps> = ({ userType }) => {
+const HeaderBar: React.FC<HeaderBarProps> = ({ userType, main = false }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
 
   return (
@@ -44,7 +45,11 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ userType }) => {
           </div>
         </div>
         <div className="flex-1 mx-[4.8rem]">
-          <SearchBar isMainSearchBar cardLists={cardLists} />
+          {main ? (
+            <SearchBar isMainSearchBar cardLists={cardLists} />
+          ) : (
+            <SearchBar cardLists={cardLists} />
+          )}
         </div>
         <div className="flex items-center">
           {isLoggedIn ? (

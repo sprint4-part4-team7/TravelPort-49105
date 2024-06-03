@@ -32,7 +32,7 @@ const images = [
 const Main = () => {
   return (
     <>
-      <Layout userType="user">
+      <Layout userType="user" main>
         <Carousel items={images} />
         <div className="font-plexSans mt-[8.2rem] grid grid-cols-4 gap-[2.4rem]">
           {images.map((item, index) => (
