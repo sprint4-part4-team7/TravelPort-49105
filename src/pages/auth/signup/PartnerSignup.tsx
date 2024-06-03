@@ -31,6 +31,7 @@ const PartnerSignup = () => {
   const navigate = useNavigate();
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [emailMessage, setEmailMessage] = useState('');
+
   const checkBtnBasic = 'absolute px-8 py-4 text-13 rounded top-44 right-12';
 
   let checkBtnClass = `${checkBtnBasic}`;
@@ -46,7 +47,7 @@ const PartnerSignup = () => {
 
   const handleCheckEmail = async () => {
     const email = watch('email');
-
+    setIsEmailValid(false);
     try {
       const res = await instance({
         url: '/auth/valid-email',
@@ -55,14 +56,15 @@ const PartnerSignup = () => {
           email,
         },
       });
-      if (res.data.isValid) {
-        setIsEmailValid(res.data.isValid);
+      if (res.data.result) {
+        setIsEmailValid(res.data.result);
         setEmailMessage(res.data.message);
       } else {
-        setIsEmailValid(res.data.isValid);
+        setIsEmailValid(res.data.result);
         setEmailMessage(res.data.message);
       }
     } catch (e: any) {
+      setIsEmailValid(false);
       setEmailMessage(e.message);
     }
   };
