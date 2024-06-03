@@ -23,6 +23,11 @@ const ProductDetails = () => {
           name={product?.buildingName || ''}
         />
       </Modal>
+      <div>
+        <h2>
+          리뷰 <span>총 27개</span>
+        </h2>
+      </div>
     </>
   );
 };
