@@ -1,12 +1,35 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './Payments.css';
+import useReservationMutation from '@/hooks/reactQuery/reservation/useReservationMutation';
+import { useEffect } from 'react';
 
 const SuccessPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   function confirm() {
     navigate('/');
   }
+
+  const { mutate: createReservation } = useReservationMutation();
+
+  const reservationPost = async () => {
+    createReservation({
+      userId: 0,
+      productOptionId: 0,
+      timeTableId: 0,
+      reservationState: 0,
+      reservationPrice: 0,
+      ticketCount: 0,
+      cancelMsg: 'hihi',
+    });
+  };
+
+  useEffect(() => {
+    if (location.pathname === '/payments/success' && location.search) {
+      reservationPost();
+    }
+  }, []);
 
   return (
     <div className="w-full">
