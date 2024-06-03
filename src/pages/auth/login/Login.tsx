@@ -1,11 +1,14 @@
 import Google from '@/assets/images/google_login.png';
 import Kakao from '@/assets/images/kakao_login.svg';
 import Naver from '@/assets/images/naver_login.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useOAuthLogin from '@/hooks/useOAuthLogin';
 import { useForm } from 'react-hook-form';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
 import Logo from '@/assets/icons/travelPortLogo.svg';
+import instance from '@/utils/axios';
+import { setCookie } from '@/utils/cookie';
+import axios from 'axios';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 
@@ -23,9 +26,23 @@ const Login = () => {
   const googleLogin = useOAuthLogin('google');
   const kakaoLogin = useOAuthLogin('kakao');
   const naverLogin = useOAuthLogin('naver');
+  const navigate = useNavigate();
 
-  const handleLoginForm = (data: LoginForm) => {
-    console.log(data);
+  const handleLoginForm = async (data: LoginForm) => {
+    const { email, password } = data;
+    try {
+      const res = await instance({
+        url: 'auth/user-login',
+        method: 'POST',
+        data: { email, password },
+      });
+      const ACCESS_TOKEN = res.data.accessToken;
+      setCookie('accessToken', ACCESS_TOKEN);
+      axios.defaults.headers.common.Authorization = `Bearer ${ACCESS_TOKEN}`;
+      navigate('/', { replace: true });
+    } catch (error: any) {
+      console.log(error.message);
+    }
   };
 
   return (
@@ -83,7 +100,7 @@ const Login = () => {
     border-1 rounded-2xl 
     border-solid border-black-7"
           >
-            <div className="text-3xl font-bold ">소셜 로그인</div>
+            <div className="text-18 font-bold ">소셜 로그인</div>
             <div className="flex gap-16">
               <button type="button" onClick={googleLogin}>
                 <img alt="Google" src={Google} />
