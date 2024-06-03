@@ -86,7 +86,7 @@ const ReviewRegister = () => {
           </p>
         )}
       </div>
-      <div className="mb-30 w-500">
+      <div className="mb-30 w-600">
         <TextBox
           labelName="리뷰를 입력해주세요."
           textLimit={100}
