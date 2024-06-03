@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
 import Logo from '@/assets/icons/travelPortLogo.svg';
-import instance from '@/utils/axios';
+import { postUserSignup, postVerifyEmail } from '@/apis/signup';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 
@@ -47,20 +47,9 @@ const UserSignup = () => {
   const handleCheckEmail = async () => {
     const email = watch('email');
     try {
-      const res = await instance({
-        url: '/auth/valid-email',
-        method: 'POST',
-        data: {
-          email,
-        },
-      });
-      if (res.data.result) {
-        setIsEmailValid(res.data.result);
-        setEmailMessage(res.data.message);
-      } else {
-        setIsEmailValid(res.data.result);
-        setEmailMessage(res.data.message);
-      }
+      const data = await postVerifyEmail(email);
+      setIsEmailValid(data.result);
+      setEmailMessage(data.message);
     } catch (e: any) {
       setIsEmailValid(false);
       setEmailMessage(e.message);
@@ -68,23 +57,13 @@ const UserSignup = () => {
   };
 
   const handleSignupForm = async (data: UserSignupData) => {
-    const { nickname, email, password } = data;
     try {
-      await instance({
-        url: 'auth/user-signup',
-        method: 'POST',
-        data: {
-          nickname,
-          email,
-          password,
-        },
-      });
-      console.log(isEmailValid);
+      await postUserSignup(data);
       if (isEmailValid) {
         navigate('/login', { replace: true });
       }
     } catch (e: any) {
-      console.log(0);
+      alert(e.message);
     }
   };
 

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
 import Logo from '@/assets/icons/travelPortLogo.svg';
-import instance from '@/utils/axios';
+import { postPartnerSignup, postVerifyEmail } from '@/apis/signup';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 
@@ -47,22 +47,10 @@ const PartnerSignup = () => {
 
   const handleCheckEmail = async () => {
     const email = watch('email');
-    setIsEmailValid(false);
     try {
-      const res = await instance({
-        url: '/auth/valid-email',
-        method: 'POST',
-        data: {
-          email,
-        },
-      });
-      if (res.data.result) {
-        setIsEmailValid(res.data.result);
-        setEmailMessage(res.data.message);
-      } else {
-        setIsEmailValid(res.data.result);
-        setEmailMessage(res.data.message);
-      }
+      const data = await postVerifyEmail(email);
+      setIsEmailValid(data.result);
+      setEmailMessage(data.message);
     } catch (e: any) {
       setIsEmailValid(false);
       setEmailMessage(e.message);
@@ -70,22 +58,13 @@ const PartnerSignup = () => {
   };
 
   const handleSignupForm = async (data: PartnerSignupData) => {
-    const { company, email, password } = data;
     try {
-      await instance({
-        url: 'auth/partner-signup',
-        method: 'POST',
-        data: {
-          company,
-          email,
-          password,
-        },
-      });
+      await postPartnerSignup(data);
       if (isEmailValid) {
         navigate('/login', { replace: true });
       }
     } catch (e: any) {
-      console.log(0);
+      alert(e.message);
     }
   };
 
