@@ -5,7 +5,13 @@ import Carousel from '@/components/Carousel';
 import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
 
-const images = [
+interface ImageItem {
+  url: string;
+  text?: string;
+  path?: string;
+}
+
+const images: ImageItem[] = [
   {
     url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyKD1-YGiJrzk3PakRGE8AbqtzgkEG3iWpoA&usqp=CAU',
     text: '낭만의 액티비티, 열기구',
@@ -41,7 +47,7 @@ const Main = () => {
                 src={item.url}
                 alt={item.text}
                 className="w-[32.4rem] h-[24rem] rounded-[1.2rem]"
-                onClick={() => (window.location.href = item.path)}
+                onClick={() => item.path && (window.location.href = item.path)}
                 style={{ cursor: 'pointer' }}
               />
             </div>
