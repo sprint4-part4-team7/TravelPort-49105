@@ -6,9 +6,7 @@ import useOAuthLogin from '@/hooks/useOAuthLogin';
 import { useForm } from 'react-hook-form';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
 import Logo from '@/assets/icons/travelPortLogo.svg';
-import instance from '@/utils/axios';
-import { setCookie } from '@/utils/cookie';
-import axios from 'axios';
+import { postLogin } from '@/apis/login';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 
@@ -29,19 +27,11 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLoginForm = async (data: LoginForm) => {
-    const { email, password } = data;
     try {
-      const res = await instance({
-        url: 'auth/user-login',
-        method: 'POST',
-        data: { email, password },
-      });
-      const ACCESS_TOKEN = res.data.accessToken;
-      setCookie('accessToken', ACCESS_TOKEN);
-      axios.defaults.headers.common.Authorization = `Bearer ${ACCESS_TOKEN}`;
+      await postLogin(data);
       navigate('/', { replace: true });
     } catch (error: any) {
-      console.log(error.message);
+      alert(error.message);
     }
   };
 
