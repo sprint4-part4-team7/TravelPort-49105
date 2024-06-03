@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import React, { useState } from 'react';
 import logo from '@/assets/icons/travelPortLogo.svg';
+import { useNavigate } from 'react-router-dom';
 import LoginUserHeaderBar from './LoginUserHeaderBar';
 import UnLoginUserHeaderBar from './UnLoginUserHeaderBar';
 import SearchBar from '../SearchBar';
@@ -34,14 +35,25 @@ const cardLists = [
 ];
 
 const HeaderBar: React.FC<HeaderBarProps> = ({ userType, main = false }) => {
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+
+  const handleHome = () => {
+    navigate('/');
+  };
 
   return (
     <div className="fixed top-0 left-0 right-0 py-[3.2rem] text-2xl font-bold bg-white z-50">
       <div className="flex items-center justify-between h-[6rem] px-[4.8rem]">
         <div className="flex items-center">
           <div className="w-[19.5rem] h-[6.5rem] mobile:w-[7.6rem] mobile:h-[2.5rem] tablet:w-[14.7rem] tablet:h-[4.8rem]">
-            <img src={logo} alt="Main Logo" />
+            <button
+              type="button"
+              onClick={handleHome}
+              className="p-0 border-none bg-none"
+            >
+              <img src={logo} alt="Main Logo" style={{ cursor: 'pointer' }} />
+            </button>{' '}
           </div>
         </div>
         <div className="flex-1 mx-[4.8rem]">
