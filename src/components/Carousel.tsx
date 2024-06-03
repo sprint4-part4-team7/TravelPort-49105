@@ -3,12 +3,13 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-undef */
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
+import useCarousel from '@/hooks/useCarousel';
 
 interface CarouselItem {
   url: string;
-  text: string;
-  path: string;
+  text?: string;
+  path?: string;
 }
 
 interface CarouselProps {
@@ -16,41 +17,9 @@ interface CarouselProps {
 }
 
 const Carousel: React.FC<CarouselProps> = ({ items }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const resetTimeout = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-  };
-
-  useEffect(() => {
-    resetTimeout();
-    timeoutRef.current = setTimeout(
-      () =>
-        setCurrentIndex((prevIndex) =>
-          prevIndex === items.length - 1 ? 0 : prevIndex + 1,
-        ),
-      3000,
-    );
-
-    return () => {
-      resetTimeout();
-    };
-  }, [currentIndex, items.length]);
-
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === items.length - 1 ? 0 : prevIndex + 1,
-    );
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? items.length - 1 : prevIndex - 1,
-    );
-  };
+  const { currentIndex, setCurrentIndex, nextSlide, prevSlide } = useCarousel(
+    items.length,
+  );
 
   return (
     <div className="relative w-full mx-auto max-w-screen-2lg">
@@ -80,7 +49,9 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
                 </div>
                 <div className="absolute bottom-[4.5rem] right-0 flex items-end justify-center w-[27.7rem] h-[2.2rem] text-white ">
                   <button
-                    onClick={() => (window.location.href = item.path)}
+                    onClick={() =>
+                      item.path ? (window.location.href = item.path) : null
+                    }
                     className="text-2xl px-[4.4rem] py-[1.7rem] text-white bg-[#3F57D6] rounded-[1.2rem] font-semibold  "
                   >
                     지금 바로 예약하기! &gt;
