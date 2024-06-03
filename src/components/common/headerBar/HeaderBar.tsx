@@ -44,7 +44,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ userType }) => {
           </div>
         </div>
         <div className="flex-1 mx-[4.8rem]">
-          <SearchBar cardLists={cardLists} />
+          <SearchBar isMainSearchBar cardLists={cardLists} />
         </div>
         <div className="flex items-center">
           {isLoggedIn ? (
