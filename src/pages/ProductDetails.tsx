@@ -2,12 +2,15 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import useFetchDetails from '@/hooks/useFetchDetails';
 import useModal from '@/hooks/useModal';
+import useFetchReview from '@/hooks/useFetchReview';
 import KakaoMap from '@/components/common/map/KakaoMap';
 import Modal from '@/components/common/Modal';
 
 const ProductDetails = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const { product, option } = useFetchDetails(1, 1);
+
+  const { review } = useFetchReview(5);
 
   return (
     <>
@@ -27,6 +30,7 @@ const ProductDetails = () => {
         <h2>
           리뷰 <span>총 27개</span>
         </h2>
+        <div>{review?.score}</div>
       </div>
     </>
   );
