@@ -1,27 +1,12 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable consistent-return */
 import instance from '@/utils/axios';
-
-type ReviewInfoType = {
-  reviewContent: string;
-  reviewScore: number;
-};
-
-type GetReviewType = {
-  id: number;
-  userId: number;
-  productOptionId: number;
-  score: number;
-  reviewImages: string[];
-  reviewContent: string;
-  partnerAnswer: string;
-  createdAt: string;
-};
-
-type DefaultOptionType = {
-  optionName: string;
-  productName: string;
-};
+import {
+  DefaultOptionType,
+  GetReviewType,
+  ReviewInfoType,
+} from '@/constants/types';
+import { getProduct } from './product';
 
 export const postReview = async (
   userId: number,
@@ -69,9 +54,9 @@ export const getDefaultOption = async (
 ): Promise<DefaultOptionType> => {
   try {
     const response = await instance.get(`/productOption/${optionId}`);
-    const { optionName } = response.data;
-    const { productId } = response.data;
-    const productName = await instance.get(`/product/${productId}`);
+    const { optionName } = response.data.productOption;
+    const { productId } = response.data.productOption;
+    const productName = (await getProduct(productId)).name;
     return { optionName, productName };
   } catch (error) {
     console.log(error);
