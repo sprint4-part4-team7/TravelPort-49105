@@ -46,7 +46,6 @@ const UserSignup = () => {
 
   const handleCheckEmail = async () => {
     const email = watch('email');
-
     try {
       const res = await instance({
         url: '/auth/valid-email',
@@ -55,14 +54,15 @@ const UserSignup = () => {
           email,
         },
       });
-      if (res.data.isValid) {
-        setIsEmailValid(res.data.isValid);
+      if (res.data.result) {
+        setIsEmailValid(res.data.result);
         setEmailMessage(res.data.message);
       } else {
-        setIsEmailValid(res.data.isValid);
+        setIsEmailValid(res.data.result);
         setEmailMessage(res.data.message);
       }
     } catch (e: any) {
+      setIsEmailValid(false);
       setEmailMessage(e.message);
     }
   };
@@ -79,6 +79,7 @@ const UserSignup = () => {
           password,
         },
       });
+      console.log(isEmailValid);
       if (isEmailValid) {
         navigate('/login', { replace: true });
       }
