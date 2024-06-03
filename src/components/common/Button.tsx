@@ -12,7 +12,7 @@ const Button = ({
   disabled = false,
 }: ButtonProps) => {
   const buttonBasic =
-    'flex justify-center items-center p-[1rem] rounded text-16 font-plexSans font-bold';
+    'flex justify-center items-center p-10 rounded text-16 font-bold';
   const disabledDesign = 'bg-black-4 text-black-6';
   const cancelDesign = 'bg-black-4 text-black-12';
 
