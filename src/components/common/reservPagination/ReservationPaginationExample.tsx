@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import info from '@/mocks/resevationInfo.json';
 import ReservationCard from './ResevationCard';
-import ReservPagination from '../common/ReservPagination';
-import ReservChips from './ReservChips';
-import ReservButton from './ReservButton';
+import ReservPagination from './ReservPagination';
+import ReservChips from '../../myPage/ReservChips';
+import ReservButton from '../../myPage/ReservButton';
 
 const ResevationPaginationExample = () => {
   const [pageNum, setPageNum] = useState(1);
