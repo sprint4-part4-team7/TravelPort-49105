@@ -8,6 +8,12 @@ interface SearchBarProps {
     id: number;
     title: string;
     description: string;
+    location: string;
+    price: number;
+    score: number;
+    review: number;
+    image: string;
+    link: string;
   }[];
   isMainSearchBar?: boolean;
 }
