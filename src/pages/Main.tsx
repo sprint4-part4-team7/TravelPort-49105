@@ -12,8 +12,8 @@ interface ImageItem {
   path?: string;
   location?: string;
   price?: number;
-  score: number;
-  review: number;
+  score?: number;
+  review?: number;
 }
 
 const images: ImageItem[] = [
