@@ -5,6 +5,7 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import useCarousel from '@/hooks/useCarousel';
+import Button from '@/components/common/Button';
 
 interface CarouselItem {
   url: string;
@@ -43,19 +44,17 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
             >
               <div className="relative w-full h-full">
                 <div className="absolute top-0 left-0 flex justify-center w-1/4 h-full text-white transform -translate-y-1 bg-gray-900 bg-opacity-50">
-                  <p className="text-[3.6rem] text-white py-[8rem] px-[4.8rem]">
-                    {item.text}
-                  </p>
+                  <p className="text-36 text-white py-80 px-48">{item.text}</p>
                 </div>
-                <div className="absolute bottom-[4.5rem] right-0 flex items-end justify-center w-[27.7rem] h-[2.2rem] text-white ">
-                  <button
+                <div className="absolute bottom-30 right-15 flex items-end justify-center w-300 h-22">
+                  <Button
+                    variant="floating"
+                    buttonStyle="px-40 py-18 text-24 font-semibold"
+                    text="지금 바로 예약하기! >"
                     onClick={() =>
                       item.path ? (window.location.href = item.path) : null
                     }
-                    className="text-2xl px-[4.4rem] py-[1.7rem] text-white bg-[#3F57D6] rounded-[1.2rem] font-semibold  "
-                  >
-                    지금 바로 예약하기! &gt;
-                  </button>
+                  />
                 </div>
               </div>
             </div>
