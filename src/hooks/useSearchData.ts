@@ -9,7 +9,7 @@ const useSearchData = (cardLists: CardListsType[]) => {
     setSearch(e.target.value);
 
   const filteredTitles = cardLists.filter((filteredTitle) => {
-    return filteredTitle.title.includes(search.trim());
+    return filteredTitle.product.name.includes(search.trim());
   });
 
   return {
