@@ -1,12 +1,15 @@
 import { useUserStore } from '@/utils/zustand';
 import { useForm } from 'react-hook-form';
 import useModal from '@/hooks/useModal';
+import { getCookie } from '@/utils/cookie';
+import jwtDecode from '@/utils/jwtDecode';
 import Button from '@/components/common/Button';
 import InputBox from '../common/InputBox';
 import Modal from '../common/Modal';
 import ChangePassword from './ChangePassword';
 
 interface UserInfo {
+  id: number;
   nickname: string;
   email: string;
   name?: string;
@@ -31,6 +34,9 @@ const EditInfo = () => {
     alert('저장되었습니다');
     console.log(data);
   };
+
+  const accessToken = getCookie('accessToken');
+  console.log(jwtDecode(accessToken));
 
   return (
     <div className="p-16 flex flex-col gap-12 w-767">

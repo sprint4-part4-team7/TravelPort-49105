@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
 import Logo from '@/assets/icons/travelPortLogo.svg';
 import { postPartnerSignup, postVerifyEmail } from '@/apis/signup';
+import { useUserStore } from '@/utils/zustand';
+import { getCookie } from '@/utils/cookie';
+import jwtDecode from '@/utils/jwtDecode';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 
@@ -31,6 +34,7 @@ const PartnerSignup = () => {
   const navigate = useNavigate();
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [emailMessage, setEmailMessage] = useState('');
+  const setUserInfo = useUserStore((state) => state.setUserInfo);
 
   const checkBtnBasic = 'absolute px-8 py-4 text-13 rounded top-44 right-12';
 
@@ -61,6 +65,8 @@ const PartnerSignup = () => {
     try {
       await postPartnerSignup(data);
       if (isEmailValid) {
+        const accessToken = getCookie('accessToken');
+        if (accessToken) setUserInfo({ ...jwtDecode(accessToken) });
         navigate('/login', { replace: true });
       }
     } catch (e: any) {
