@@ -22,14 +22,15 @@ const Card = ({
   image,
   link,
 }: CardProps) => {
+  const roundScore = Math.round(score);
   const ImageScore = () => {
     const imageList = [];
-    for (let i = 0; i < score; i += 1) {
+    for (let i = 0; i < roundScore; i += 1) {
       imageList.push(
         <img key={`fill${i}`} src={fillImage} alt="이미지가 있음" />,
       );
     }
-    for (let i = 0; i < 5 - score; i += 1) {
+    for (let i = 0; i < 5 - roundScore; i += 1) {
       imageList.push(
         <img key={`empty${i}`} src={emptyImage} alt="이미지가 없음" />,
       );
@@ -39,7 +40,7 @@ const Card = ({
 
   return (
     <Link to={link}>
-      <div className="flex flex-col w-265 h-400 overflow-hidden rounded-xl shadow-[0_0_4px_0_rgba(0,0,0,0.25)] font-plexSans tablet:w-229 tablet:h-350 mobile:w-335 mobile:h-198 mobile:flex-row">
+      <div className="flex flex-col w-265 h-400 overflow-hidden rounded-xl shadow-[0_0_4px_0_rgba(0,0,0,0.25)] tablet:w-229 tablet:h-350 mobile:w-335 mobile:h-198 mobile:flex-row">
         <img
           src={image}
           alt="예시사진"
