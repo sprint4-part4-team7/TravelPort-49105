@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import info from '@/mocks/resevationInfo.json';
-import ReservationCard from './ResevationCard';
-import ReservPagination from '../common/ReservPagination';
+import ReservationCard from '../common/reservPagination/ResevationCard';
+import ReservPagination from '../common/reservPagination/ReservPagination';
 import ReservChips from './ReservChips';
 import ReservButton from './ReservButton';
 
