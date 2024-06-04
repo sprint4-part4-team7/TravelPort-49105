@@ -48,3 +48,15 @@ export type ReviewData = {
   partnerAnswer: string;
   createdAt: string;
 };
+
+export type CardListsType = {
+  id: number;
+  title: string;
+  description: string;
+  location: string;
+  price: number;
+  score: number;
+  review: number;
+  image: string;
+  link: string;
+};

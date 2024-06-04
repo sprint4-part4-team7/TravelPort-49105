@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
-import useSearchData from '@/hooks/useSearchData';
+// import useSearchData from '@/hooks/useSearchData';
+import { useState } from 'react';
+import { CardListsType } from '@/constants/types';
 import SearchBar from '../components/common/SearchBar';
 import Card from '@/components/common/card/Card';
 
@@ -51,13 +53,15 @@ const cardLists = [
 ];
 
 const List = () => {
-  const { filteredTitles } = useSearchData(cardLists);
-  console.log(filteredTitles);
+  const [filteredTitles, setFilteredTitles] = useState<CardListsType[]>([]);
 
   return (
     <>
       <div className="w-[40rem] ml-10 my-10">
-        <SearchBar cardLists={cardLists} />
+        <SearchBar
+          cardLists={cardLists}
+          setFilteredTitles={setFilteredTitles}
+        />
       </div>
       <div className="flex">
         {filteredTitles.map((item) => (

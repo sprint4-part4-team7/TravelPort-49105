@@ -1,25 +1,33 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import searchIcon from '@/assets/images/search.svg';
+import { CardListsType } from '@/constants/types';
 import useSearchData from '@/hooks/useSearchData';
+import { useEffect } from 'react';
 
 interface SearchBarProps {
-  cardLists: {
-    id: number;
-    title: string;
-    description: string;
-    location: string;
-    price: number;
-    score: number;
-    review: number;
-    image: string;
-    link: string;
-  }[];
+  cardLists: CardListsType[];
+  setFilteredTitles: (titles: CardListsType[]) => void;
   isMainSearchBar?: boolean;
 }
-const SearchBar = ({ cardLists, isMainSearchBar = false }: SearchBarProps) => {
+const SearchBar = ({
+  cardLists,
+  setFilteredTitles,
+  isMainSearchBar = false,
+}: SearchBarProps) => {
   const { onChange, search, filteredTitles, setSearch } =
     useSearchData(cardLists);
+
+  useEffect(() => {
+    if (search) {
+      const filtered = cardLists.filter((card) =>
+        card.title.toLowerCase().includes(search.toLowerCase()),
+      );
+      setFilteredTitles(filtered);
+    } else {
+      setFilteredTitles(cardLists);
+    }
+  }, [search, cardLists, setFilteredTitles]);
 
   return (
     <div className="relative">
@@ -45,6 +53,7 @@ const SearchBar = ({ cardLists, isMainSearchBar = false }: SearchBarProps) => {
           {filteredTitles.length > 10 ? (
             filteredTitles.slice(0, 10).map((filteredTitle) => (
               <div
+                key={filteredTitle.id}
                 className="hover:bg-[#EBF1FF] py-10 pl-20 cursor-pointer"
                 onClick={() => {
                   setSearch(filteredTitle.title);
@@ -56,6 +65,7 @@ const SearchBar = ({ cardLists, isMainSearchBar = false }: SearchBarProps) => {
           ) : filteredTitles.length > 0 ? (
             filteredTitles.map((filteredTitle) => (
               <div
+                key={filteredTitle.id}
                 className="hover:bg-[#EBF1FF] py-10 pl-20 cursor-pointer"
                 onClick={() => {
                   setSearch(filteredTitle.title);
