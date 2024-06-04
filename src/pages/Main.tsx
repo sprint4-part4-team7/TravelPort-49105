@@ -60,7 +60,7 @@ const Main = () => {
     <>
       <Layout userType="user" main>
         <Carousel items={images} />
-        <div className="flex justify-center p-20">
+        <div className="flex justify-center p-20 pb-5">
           <div className="grid gap-20 mobile:grid-cols-1 tablet:grid-cols-3 desktop:grid-cols-4">
             {images.map((item, index) => (
               <Card
