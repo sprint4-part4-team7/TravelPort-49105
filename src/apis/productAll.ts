@@ -16,7 +16,7 @@ export const getProductOptionAll = async () => {
   try {
     const response = await instance.get(`/productOption/all`);
     console.log(response.data);
-    return response.data.productOption;
+    return response.data;
   } catch (error) {
     console.log(error);
     throw error;
