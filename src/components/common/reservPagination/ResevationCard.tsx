@@ -1,6 +1,4 @@
 import { ReactNode } from 'react';
-// import ReservButton from './ReservButton';
-// import ReservChips from './ReservChips';
 
 interface ReservationCardProps {
   id: number;

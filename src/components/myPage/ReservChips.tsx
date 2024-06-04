@@ -1,6 +1,6 @@
-import approved from '../../assets/icons/status-approved.svg';
-import pending from '../../assets/icons/status-pending.svg';
-import rejected from '../../assets/icons/status-rejected.svg';
+import approved from '@/assets/icons/status-approved.svg';
+import pending from '@/assets/icons/status-pending.svg';
+import rejected from '@/assets/icons/status-rejected.svg';
 
 const ReservChips = ({ status }: { status: string }) => {
   let src;
