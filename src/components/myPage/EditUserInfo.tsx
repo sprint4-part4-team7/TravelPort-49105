@@ -1,8 +1,6 @@
 import { useUserStore } from '@/utils/zustand';
 import { useForm } from 'react-hook-form';
 import useModal from '@/hooks/useModal';
-import { getCookie } from '@/utils/cookie';
-import jwtDecode from '@/utils/jwtDecode';
 import Button from '@/components/common/Button';
 import InputBox from '../common/InputBox';
 import Modal from '../common/Modal';
@@ -34,9 +32,7 @@ const EditInfo = () => {
     alert('저장되었습니다');
     console.log(data);
   };
-
-  const accessToken = getCookie('accessToken');
-  console.log(jwtDecode(accessToken));
+  console.log(userInfo);
 
   return (
     <div className="p-16 flex flex-col gap-12 w-767">
@@ -45,8 +41,20 @@ const EditInfo = () => {
         onSubmit={handleSubmit(handleSave)}
       >
         <div className="flex flex-row gap-24 items-center">
-          <label htmlFor="profile" className="p-40 rounded-9 bg-black-7">
-            프로필 사진
+          <label
+            htmlFor="profile"
+            className="relative w-120 h-120 rounded-9 bg-black-7"
+          >
+            {userInfo?.profileImage ? (
+              <img
+                src={userInfo.profileImage}
+                className="rounded-9"
+                alt="profile"
+              />
+            ) : (
+              <div className="absolute top-0">프로필</div>
+            )}
+
             <input type="file" id="profile" hidden />
           </label>
           <div className="flex flex-col gap-12">
