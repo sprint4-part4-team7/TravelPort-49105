@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
-import Button from '../common/Button';
-import InputBox from '../common/InputBox';
+import Button from '@/components/common/Button';
+import InputBox from '@/components/common/InputBox';
 
 interface Password {
   currentPassword: string;

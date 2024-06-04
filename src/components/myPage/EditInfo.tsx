@@ -3,9 +3,9 @@ import { useForm } from 'react-hook-form';
 import useModal from '@/hooks/useModal';
 import uploadIcon from '@/assets/icons/upload.svg';
 import Button from '@/components/common/Button';
-import InputBox from '../common/InputBox';
-import Modal from '../common/Modal';
-import ChangePassword from './ChangePassword';
+import InputBox from '@/components/common/InputBox';
+import Modal from '@/components/common/Modal';
+import ChangePassword from '@/components/myPage/ChangePassword';
 
 interface UserInfo {
   id: number;

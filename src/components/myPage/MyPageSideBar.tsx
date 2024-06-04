@@ -1,7 +1,7 @@
 import React from 'react';
 import { useUserMypageStore, useUserStore } from '@/utils/zustand';
-import Button from '../common/Button';
-import MyPageButton from './MyPageButton';
+import Button from '@/components/common/Button';
+import MyPageButton from '@/components/myPage/MyPageButton';
 
 interface MyPageSideBarProps {
   children: React.ReactNode;
