@@ -27,7 +27,7 @@ const SearchBar = ({
     if (e.key === 'Enter') {
       navigate(`/${path}search?query=${search}`);
       const filteredData = cardLists.filter((cardList) =>
-        cardList.title.includes(search),
+        cardList.product.name.includes(search),
       );
       setFilteredData && setFilteredData(filteredData);
     }
@@ -61,10 +61,10 @@ const SearchBar = ({
                 key={filteredTitle.id}
                 className="hover:bg-[#EBF1FF] py-10 pl-20 cursor-pointer"
                 onClick={() => {
-                  setSearch(filteredTitle.title);
+                  setSearch(filteredTitle.product.name);
                 }}
               >
-                {filteredTitle.title}
+                {filteredTitle.product.name}
               </div>
             ))
           ) : filteredTitles.length > 0 ? (
@@ -73,10 +73,10 @@ const SearchBar = ({
                 key={filteredTitle.id}
                 className="hover:bg-[#EBF1FF] py-10 pl-20 cursor-pointer"
                 onClick={() => {
-                  setSearch(filteredTitle.title);
+                  setSearch(filteredTitle.product.name);
                 }}
               >
-                {filteredTitle.title}
+                {filteredTitle.product.name}
               </div>
             ))
           ) : (

@@ -51,12 +51,12 @@ export type ReviewData = {
 
 export type CardListsType = {
   id: number;
-  title: string;
-  description: string;
-  location: string;
-  price: number;
-  score: number;
-  review: number;
-  image: string;
-  link: string;
+  product: {
+    id: string;
+    buildingName: string;
+    name: string;
+    productAddress: string;
+    productDesc: string;
+    productImages: string[];
+  };
 };
