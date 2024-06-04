@@ -6,6 +6,8 @@ import reservationStatus from '@/assets/icons/reservation-status.svg';
 import list from '@/assets/icons/list.svg';
 import menu from '@/assets/icons/menu.svg';
 import useLogoutMutation from '@/hooks/reactQuery/auth/useLogoutMutation';
+import { removeCookie } from '@/utils/cookie';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginUserHeaderBarProps {
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,6 +25,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const navagate = useNavigate();
   const { mutate: logout } = useLogoutMutation();
 
   const toggleDropdown = () => {
@@ -33,6 +36,8 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
 
   const clickLogoutButton = () => {
     setIsLoggedIn(false);
+    removeCookie('accessToken');
+    navagate('/');
     logout();
   };
 
