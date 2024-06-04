@@ -158,6 +158,7 @@ const PartnerSignup = () => {
               })}
             />
             <Button
+              buttonStyle="font-semibold"
               text="회원가입 하기"
               onClick={handleSubmit(handleSignupForm)}
             />

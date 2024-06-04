@@ -81,6 +81,7 @@ const Login = () => {
               })}
             />
             <Button
+              buttonStyle="font-semibold"
               text="로그인 하기"
               onClick={handleSubmit(handleLoginForm)}
             />
