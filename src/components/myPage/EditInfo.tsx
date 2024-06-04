@@ -14,10 +14,12 @@ interface UserInfo {
   name?: string;
   phone?: string;
   profileImage?: string;
+  introduction?: string;
 }
 
-const EditInfo = () => {
+const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
   const { userInfo, setUserInfo } = useUserStore();
+  const isUser = userType === 'user';
 
   const {
     register,
@@ -71,7 +73,7 @@ const EditInfo = () => {
         </div>
         <div className="flex flex-col gap-32 w-full">
           <InputBox
-            label="닉네임"
+            label={isUser ? '닉네임' : '이름/법인명'}
             placeholder="닉네임을 입력해주세요"
             register={register('nickname', {
               required: '닉네임은 필수입니다',
@@ -80,20 +82,23 @@ const EditInfo = () => {
                 message: '닉네임은 20자 이하로 입력해주세요',
               },
             })}
+            disabled={!isUser}
             error={errors.nickname}
           />
           <InputBox label="이메일" register={register('email')} disabled />
-          <InputBox
-            label="이름"
-            placeholder="이름을 입력해주세요"
-            register={register('name', {
-              maxLength: {
-                value: 20,
-                message: '이름은 20자 이하로 입력해주세요',
-              },
-            })}
-            error={errors.name}
-          />
+          {isUser && (
+            <InputBox
+              label="이름"
+              placeholder="이름을 입력해주세요"
+              register={register('name', {
+                maxLength: {
+                  value: 20,
+                  message: '이름은 20자 이하로 입력해주세요',
+                },
+              })}
+              error={errors.name}
+            />
+          )}
           <InputBox
             label="전화번호"
             placeholder="'-' 없이 입력해주세요"
@@ -105,6 +110,22 @@ const EditInfo = () => {
             })}
             error={errors.phone}
           />
+          {!isUser && (
+            <div className="flex flex-col gap-8">
+              <label
+                className="flex flex-col gap-8 text-16"
+                htmlFor="introduction"
+              >
+                소개글
+                <textarea
+                  id="introduction"
+                  className="p-12 h-72 rounded text-16 resize-none outline-none border-1 border-black-5 focus:border-blue-6"
+                  placeholder="간단한 소개를 입력해주세요"
+                  {...register('introduction')}
+                />
+              </label>
+            </div>
+          )}
           <div>
             <InputBox
               inputType="password"
