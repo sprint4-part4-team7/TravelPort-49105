@@ -1,4 +1,4 @@
-import { getNaverLogin } from '@/apis/login';
+import { getNaverLogin } from '@/apis/auth';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 

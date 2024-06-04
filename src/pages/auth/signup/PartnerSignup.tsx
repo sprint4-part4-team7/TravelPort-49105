@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
 import Logo from '@/assets/icons/travelPortLogo.svg';
-import { postPartnerSignup, postVerifyEmail } from '@/apis/signup';
+import { postPartnerSignup, postVerifyEmail } from '@/apis/auth';
 import { useUserStore } from '@/utils/zustand';
 import { getCookie } from '@/utils/cookie';
 import jwtDecode from '@/utils/jwtDecode';
