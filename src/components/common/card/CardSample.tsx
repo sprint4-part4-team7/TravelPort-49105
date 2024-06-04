@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Card from './Card';
-import Pagination from './Pagination';
+import Pagination from '../Pagination';
 
 const CardSample = () => {
   const [pageNum, setPageNum] = useState(1);

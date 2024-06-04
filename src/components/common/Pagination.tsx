@@ -19,14 +19,11 @@ const Pagination = ({
   const [bigButtonNum, setBigButtonNum] = useState(1);
 
   const buttonStyle =
-    'p-10 w-32 h-32 text-xs rounded-lg border border-black-4 bg-white font-plexSans font-medium';
+    'p-10 w-32 h-32 text-xs rounded-lg border border-black-4 bg-white font-medium';
 
   useEffect(() => {
-    if (pageNum % 10 === 1 || pageNum % 10 === 0) {
+    if (pageNum % 10 === 1 || pageNum % 10 === 0 || pageNum === buttonNum) {
       setBigButtonNum(Math.ceil(pageNum / 10));
-    }
-    if (pageNum === buttonNum) {
-      setBigButtonNum(Math.ceil(buttonNum / 10));
     }
   }, [pageNum]);
 
