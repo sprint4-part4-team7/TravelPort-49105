@@ -30,7 +30,7 @@ const cardLists = [
   },
   {
     id: 3,
-    title: '나이트 사파리 체험',
+    title: '나이트 사파리 체험으아아아아아아아앙',
     description: '밤에 동물들을 보세요',
     location: '에버랜드',
     price: 40000,
@@ -63,7 +63,7 @@ const List = () => {
           setFilteredTitles={setFilteredTitles}
         />
       </div>
-      <div className="flex">
+      <div className="flex mobile:flex-col">
         {filteredTitles.map((item) => (
           <Card
             key={item.id}
