@@ -9,7 +9,16 @@ const List = () => {
   const [filteredData, setFilteredData] = useState();
   const { optionAll } = useProductAll();
 
-  const { filteredTitles } = useSearchData(optionAll);
+  const optionId: number[] = [];
+  const uniqueOptionAll = [];
+  for (let i = 0; i < optionAll.length; i++) {
+    if (!optionId.includes(optionAll[i].productId)) {
+      optionId.push(optionAll[i].productId);
+      uniqueOptionAll.push(optionAll[i]);
+    }
+  }
+
+  const { filteredTitles } = useSearchData(uniqueOptionAll);
 
   const cards = filteredData || filteredTitles;
 
