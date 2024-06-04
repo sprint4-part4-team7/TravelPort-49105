@@ -6,6 +6,12 @@ type cardListsType = {
   id: number;
   title: string;
   description: string;
+  location: string;
+  price: number;
+  score: number;
+  review: number;
+  image: string;
+  link: string;
 };
 
 const useSearchData = (cardLists: cardListsType[]) => {
