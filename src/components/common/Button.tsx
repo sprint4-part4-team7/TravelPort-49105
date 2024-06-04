@@ -11,14 +11,14 @@ type ButtonProps = {
 const Button = ({
   variant = 'default',
   outlined = false,
-  buttonStyle = '',
+  buttonStyle = 'text-16 p-12',
   text = '',
   onClick,
   isCancel = false,
   disabled = false,
 }: ButtonProps) => {
   const styles = {
-    base: `${buttonStyle} flex justify-center items-center text-16 p-12 w-full rounded`,
+    base: `flex justify-center items-center w-full rounded ${buttonStyle}`,
     default: 'bg-blue-6 text-white hover:bg-blue-5 active:bg-blue-7',
     outlined:
       'bg-white border-1 border-solid border-blue-6 text-blue-6 hover:border-blue-5 hover:text-blue-5 active:border-blue-7 active:text-blue-7',
