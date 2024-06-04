@@ -36,7 +36,7 @@ export const postLogout = () => {
 export const postLogin = async (data: LoginForm) => {
   const { email, password } = data;
   try {
-    const res = await instance.post('auth/user-login', {
+    const res = await instance.post('auth/login', {
       email,
       password,
     });
@@ -99,7 +99,7 @@ export const getNaverLogin = async (code: string | null) => {
  */
 export const postVerifyEmail = async (email: string) => {
   try {
-    const res = await instance.post('/auth/valid-email', { email });
+    const res = await instance.post('auth/valid-email', { email });
     const result = res.data;
     return result;
   } catch (error: any) {
@@ -113,11 +113,13 @@ export const postVerifyEmail = async (email: string) => {
 
 export const postUserSignup = async (data: UserSignupForm) => {
   const { nickname, email, password } = data;
+  const loginType = 'USER';
   try {
-    const res = await instance.post('/auth/user-signup', {
+    const res = await instance.post('auth/signup', {
       nickname,
       email,
       password,
+      loginType,
     });
     const result = res.data;
     return result;
@@ -130,15 +132,15 @@ export const postUserSignup = async (data: UserSignupForm) => {
   }
 };
 
-// 현재 Swagger에는 /auth/partner-signup이 없음
-// 추가 뒤 사용 권장
 export const postPartnerSignup = async (data: PartnerSignupForm) => {
   const { company, email, password } = data;
+  const loginType = 'PARTNER';
   try {
-    const res = await instance.post('/auth/partner-signup', {
+    const res = await instance.post('auth/signup', {
       company,
       email,
       password,
+      loginType,
     });
     const result = res.data;
     return result;
