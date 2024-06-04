@@ -51,6 +51,7 @@ export type ReviewData = {
 
 export type CardListsType = {
   id: number;
+  productId: number;
   product: {
     id: string;
     buildingName: string;
