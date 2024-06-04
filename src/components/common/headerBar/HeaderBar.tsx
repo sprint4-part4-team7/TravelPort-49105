@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import logo from '@/assets/icons/travelPortLogo.svg';
 import { useNavigate } from 'react-router-dom';
+import { getCookie } from '@/utils/cookie';
 import LoginUserHeaderBar from './LoginUserHeaderBar';
 import UnLoginUserHeaderBar from './UnLoginUserHeaderBar';
 import SearchBar from '../SearchBar';
-import { getCookie } from '../../../utils/cookie';
 
 interface HeaderBarProps {
   userType: 'user' | 'partner'; // 유저 타입: 'user' 혹은 'partner'
