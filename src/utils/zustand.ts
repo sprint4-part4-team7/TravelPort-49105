@@ -1,12 +1,13 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { initUserInfo, initPartnerInfo } from '@/mocks/InfoMock';
 
 interface UserInfo {
+  id: number;
   nickname: string;
   email: string;
   name?: string;
   phone?: string;
+  profileImage?: string;
 }
 interface UserState {
   userInfo: UserInfo;
@@ -17,7 +18,9 @@ export const useUserStore = create(
   persist<UserState>(
     (set) => ({
       userInfo: {
-        ...initUserInfo,
+        id: 0,
+        nickname: '',
+        email: '',
       },
       setUserInfo: (userInfo) => set({ userInfo }),
     }),
@@ -33,6 +36,7 @@ interface PartnerInfo {
   name?: string;
   phone?: string;
   introduction?: string;
+  profileImage?: string;
 }
 
 interface PartnerState {
@@ -44,7 +48,9 @@ export const usePartnerStore = create(
   persist<PartnerState>(
     (set) => ({
       partnerInfo: {
-        ...initPartnerInfo,
+        id: 0,
+        nickname: '',
+        email: '',
       },
       setPartnerInfo: (partnerInfo) => set({ partnerInfo }),
     }),

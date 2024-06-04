@@ -7,8 +7,11 @@ import { useForm } from 'react-hook-form';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
 import Logo from '@/assets/icons/travelPortLogo.svg';
 import { postLogin } from '@/apis/login';
-import Button from '@/components/common/Button';
+import { getCookie } from '@/utils/cookie';
+import jwtDecode from '@/utils/jwtDecode';
+import { useUserStore } from '@/utils/zustand';
 import InputBox from '@/components/common/InputBox';
+import Button from '@/components/common/Button';
 
 type LoginForm = {
   email: string;
@@ -25,10 +28,13 @@ const Login = () => {
   const kakaoLogin = useOAuthLogin('kakao');
   const naverLogin = useOAuthLogin('naver');
   const navigate = useNavigate();
+  const setUserInfo = useUserStore((state) => state.setUserInfo);
 
   const handleLoginForm = async (data: LoginForm) => {
     try {
       await postLogin(data);
+      const accessToken = getCookie('accessToken');
+      if (accessToken) setUserInfo({ ...jwtDecode(accessToken) });
       navigate('/', { replace: true });
     } catch (error: any) {
       alert(error.message);

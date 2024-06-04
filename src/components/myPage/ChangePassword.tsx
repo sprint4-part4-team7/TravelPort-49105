@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import { checkPassword } from '@/mocks/InfoMock';
 import Button from '../common/Button';
 import InputBox from '../common/InputBox';
 
@@ -26,7 +25,7 @@ const ChangePassword = ({ closeModal }: { closeModal: () => void }) => {
         register={register('currentPassword', {
           required: '현재 비밀번호는 필수입니다',
           validate: (value) =>
-            checkPassword(value) || '비밀번호가 일치하지 않습니다',
+            value === 'travel49105' || '비밀번호가 일치하지 않습니다',
         })}
       />
       <div className="text-red-600 text-12">
