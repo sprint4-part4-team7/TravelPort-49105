@@ -1,54 +1,21 @@
-// import SearchBar from '../common/SearchBar';
-import searchIcon from '@/assets/images/search.svg';
 import { useState } from 'react';
-import { RiCloseCircleLine } from 'react-icons/ri';
 import info from '@/mocks/resevationInfo.json';
 import ReservationCard from './ResevationCard';
 import ReservPagination from '../common/ReservPagination';
 
 const MyResevation = () => {
-  const [search, setSearch] = useState('');
   const [pageNum, setPageNum] = useState(1);
-
-  const filteredInfo = info.filter((reservation) => {
-    return reservation.title.includes(search);
-  });
-
   return (
-    <div className="flex flex-col gap-12 text-16 w-full">
-      <div className="text-24 font-semibold">예약 관리</div>
-      <div className="relative cursor-pointer">
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-          }}
-          className="border-solid border-1 border-black-3 p-10 rounded-12 pl-40 w-full
-      text-18 font-semibold bg-black-3 placeholder:text-[#CBC9CF] outline-[#AFAEAC]"
-          placeholder="예약 내역 검색하기"
-        />
-        <img
-          src={searchIcon}
-          alt="검색아이콘"
-          className="absolute top-1/2 left-12 transform -translate-y-1/2"
-        />
-        <RiCloseCircleLine
-          color="#CBC9CF"
-          size={24}
-          className="absolute top-1/2 right-12 transform -translate-y-1/2"
-          onClick={() => setSearch('')}
-        />
-      </div>
-      <div className="text-24 font-semibold">예약 목록</div>
-      {filteredInfo.length > 0 ? (
+    <div className="flex flex-col gap-48 w-full">
+      <div className="text-20 font-semibold">예약 목록</div>
+      {info.length > 0 ? (
         <ReservPagination
           limit={4}
           pageNum={pageNum}
           setPageNum={setPageNum}
-          allCardNum={filteredInfo.length}
+          allCardNum={info.length}
         >
-          {filteredInfo.map((reservation) => (
+          {info.map((reservation) => (
             <ReservationCard reservation={reservation} />
           ))}
         </ReservPagination>
