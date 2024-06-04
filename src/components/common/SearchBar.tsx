@@ -1,33 +1,37 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import searchIcon from '@/assets/images/search.svg';
 import { CardListsType } from '@/constants/types';
 import useSearchData from '@/hooks/useSearchData';
-import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface SearchBarProps {
   cardLists: CardListsType[];
-  setFilteredTitles: (titles: CardListsType[]) => void;
+  setFilteredData?: React.Dispatch<React.SetStateAction<any>>;
   isMainSearchBar?: boolean;
+  path?: string;
 }
 const SearchBar = ({
   cardLists,
-  setFilteredTitles,
+  setFilteredData,
   isMainSearchBar = false,
+  path = '',
 }: SearchBarProps) => {
   const { onChange, search, filteredTitles, setSearch } =
     useSearchData(cardLists);
 
-  useEffect(() => {
-    if (search) {
-      const filtered = cardLists.filter((card) =>
-        card.title.toLowerCase().includes(search.toLowerCase()),
+  const navigate = useNavigate();
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      navigate(`/${path}search?query=${search}`);
+      const filteredData = cardLists.filter((cardList) =>
+        cardList.title.includes(search),
       );
-      setFilteredTitles(filtered);
-    } else {
-      setFilteredTitles(cardLists);
+      setFilteredData && setFilteredData(filteredData);
     }
-  }, [search, cardLists, setFilteredTitles]);
+  };
 
   return (
     <div className="relative">
@@ -36,8 +40,9 @@ const SearchBar = ({
           type="text"
           value={search}
           onChange={onChange}
-          className={`border-solid border-[2.4px] border-[#356EFF] py-[1.2rem] px-2 w-full rounded-[2.4rem]
-      text-[1.6rem] pl-44 outline-none ${isMainSearchBar ? 'border-multi' : ''}`}
+          onKeyDown={handleKeyDown}
+          className={`border-solid border-[2.4px] border-[#356EFF] py-12 px-2 w-full rounded-24
+      text-16 pl-44 outline-none ${isMainSearchBar ? 'border-multi' : ''}`}
         />
         <img
           src={searchIcon}
