@@ -1,4 +1,4 @@
-import { getGoogleLogin } from '@/apis/login';
+import { getGoogleLogin } from '@/apis/auth';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 

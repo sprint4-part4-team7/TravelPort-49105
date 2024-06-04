@@ -6,7 +6,7 @@ import useOAuthLogin from '@/hooks/useOAuthLogin';
 import { useForm } from 'react-hook-form';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
 import Logo from '@/assets/icons/travelPortLogo.svg';
-import { postLogin } from '@/apis/login';
+import { postLogin } from '@/apis/auth';
 import { getCookie } from '@/utils/cookie';
 import jwtDecode from '@/utils/jwtDecode';
 import { useUserStore } from '@/utils/zustand';

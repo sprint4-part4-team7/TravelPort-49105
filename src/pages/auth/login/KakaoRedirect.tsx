@@ -1,4 +1,4 @@
-import { getKakaoLogin } from '@/apis/login';
+import { getKakaoLogin } from '@/apis/auth';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
