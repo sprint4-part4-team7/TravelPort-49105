@@ -1,5 +1,5 @@
 import React from 'react';
-import Pagination from './card/Pagination';
+import Pagination from './Pagination';
 
 interface ReservPaginationProps {
   pageNum: number;
@@ -22,8 +22,8 @@ const ReservPagination: React.FC<ReservPaginationProps> = ({
   const slicedChildren = React.Children.toArray(children).slice(start, end);
 
   return (
-    <div className="w-full flex flex-col gap-20 border-solid border-1 border-black-12">
-      <div className="flex flex-col gap-10">{slicedChildren}</div>
+    <div className="w-full flex flex-col gap-32">
+      <div className="flex flex-col gap-32">{slicedChildren}</div>
       <div className="flex justify-center items-center">
         <Pagination
           pageNum={pageNum}
