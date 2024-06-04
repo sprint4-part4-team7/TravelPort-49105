@@ -5,6 +5,7 @@ import myInfo from '@/assets/icons/my-info.svg';
 import reservationStatus from '@/assets/icons/reservation-status.svg';
 import list from '@/assets/icons/list.svg';
 import menu from '@/assets/icons/menu.svg';
+import useLogoutMutation from '@/hooks/reactQuery/auth/useLogoutMutation';
 
 interface LoginUserHeaderBarProps {
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,12 +23,18 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { mutate: logout } = useLogoutMutation();
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
   useOutsideClick(dropdownRef, () => setIsDropdownOpen(false));
+
+  const clickLogoutButton = () => {
+    setIsLoggedIn(false);
+    logout();
+  };
 
   const user: User = {
     name: '김짱구',
@@ -53,7 +60,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
           },
         ]
       : []),
-    { id: 'logout', label: '로그아웃', action: () => setIsLoggedIn(false) },
+    { id: 'logout', label: '로그아웃', action: clickLogoutButton },
   ];
 
   return (
