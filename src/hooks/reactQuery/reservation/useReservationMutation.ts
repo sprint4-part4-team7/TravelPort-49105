@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import reservationApi from '@/apis/reservation.api';
+import reservationApi from '@/apis/reservation';
 
 interface PostReservationProp {
   userId: number;
@@ -14,7 +14,7 @@ interface PostReservationProp {
 const useReservationMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  const mutation = useMutation({
     mutationFn: async ({
       userId,
       productOptionId,
@@ -41,6 +41,12 @@ const useReservationMutation = () => {
       alert('성공 !');
     },
   });
+
+  // 'status'를 사용하여 로딩 상태를 확인할 수 있다 !
+  const isLoading = mutation.status === 'pending';
+
+  // 'isLoading' 상태와 함께 'mutate' 함수도 함께 반환 !
+  return { mutate: mutation.mutate, isLoading };
 };
 
 export default useReservationMutation;

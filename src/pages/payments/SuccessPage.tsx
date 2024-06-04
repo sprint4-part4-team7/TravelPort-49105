@@ -12,7 +12,7 @@ const SuccessPage = () => {
     navigate('/');
   }
 
-  const { mutate: createReservation } = useReservationMutation();
+  const { mutate: createReservation, isLoading } = useReservationMutation();
 
   const reservationPost = async () => {
     createReservation({
@@ -31,6 +31,8 @@ const SuccessPage = () => {
       reservationPost();
     }
   }, []);
+
+  if (isLoading) return <h1>loading...</h1>;
 
   return (
     <Layout userType="user">
