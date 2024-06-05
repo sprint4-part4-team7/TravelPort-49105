@@ -8,9 +8,8 @@ interface UserInfo {
   realName?: string;
   phone?: string;
   profileImage?: string;
-  iat?: number;
-  exp?: number;
-  isPartner: number;
+  isPartner?: number;
+  description?: string;
 }
 interface UserState {
   userInfo: UserInfo;

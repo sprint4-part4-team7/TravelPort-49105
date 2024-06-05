@@ -2,22 +2,21 @@ import { useUserStore } from '@/utils/zustand';
 import { useForm } from 'react-hook-form';
 import useModal from '@/hooks/useModal';
 import uploadIcon from '@/assets/icons/upload.svg';
+import putUserInfo from '@/apis/editInfo';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 import Modal from '@/components/common/Modal';
 import ChangePassword from '@/components/myPage/ChangePassword';
 
 interface UserInfo {
-  id: number;
+  id?: number;
   name: string;
-  email: string;
-  isPartner: number;
+  email?: string;
+  isPartner?: number;
   realName?: string;
   phone?: string;
   profileImage?: string;
-  introduction?: string;
-  iat?: number;
-  exp?: number;
+  description?: string;
 }
 
 const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
@@ -34,10 +33,21 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const handleSave = (data: UserInfo) => {
-    setUserInfo(data);
-    alert('저장되었습니다');
-    console.log(data);
+  const handleSave = async (data: UserInfo) => {
+    const newData = { ...data };
+    delete newData.isPartner;
+    delete newData.email;
+    delete newData.id;
+    if (newData.isPartner) delete newData.realName;
+    else delete newData.description;
+    try {
+      await putUserInfo(newData);
+      alert('저장되었습니다');
+      setUserInfo({ ...userInfo, ...newData });
+    } catch (error) {
+      console.error(error);
+      alert('저장에 실패했습니다');
+    }
   };
 
   return (
@@ -66,7 +76,7 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
               <input
                 id="profileImg"
                 hidden
-                type="file"
+                type="text"
                 accept="image/*"
                 {...register('profileImage')}
               />
@@ -88,7 +98,7 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
             disabled={!isUser}
             error={errors.name}
           />
-          <InputBox label="이메일" register={register('email')} disabled />
+          <InputBox label="이메일" placeholder={userInfo.email} disabled />
           {isUser && (
             <InputBox
               label="이름"
@@ -117,14 +127,14 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
             <div className="flex flex-col gap-8">
               <label
                 className="flex flex-col gap-8 text-16"
-                htmlFor="introduction"
+                htmlFor="description"
               >
                 소개글
                 <textarea
-                  id="introduction"
+                  id="description"
                   className="p-12 h-72 rounded text-16 resize-none outline-none border-1 border-black-5 focus:border-blue-6"
                   placeholder="간단한 소개를 입력해주세요"
-                  {...register('introduction')}
+                  {...register('description')}
                 />
               </label>
             </div>
