@@ -76,3 +76,10 @@ export const getDefaultOption = async (
     throw error;
   }
 };
+
+export const getReviewAll = () => {
+  return instance({
+    url: `/review/all`,
+    method: 'GET',
+  });
+};
