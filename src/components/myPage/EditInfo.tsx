@@ -2,19 +2,21 @@ import { useUserStore } from '@/utils/zustand';
 import { useForm } from 'react-hook-form';
 import useModal from '@/hooks/useModal';
 import uploadIcon from '@/assets/icons/upload.svg';
+import { putUserInfo } from '@/apis/editInfo';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 import Modal from '@/components/common/Modal';
 import ChangePassword from '@/components/myPage/ChangePassword';
 
 interface UserInfo {
-  id: number;
-  nickname: string;
-  email: string;
-  name?: string;
+  id?: number;
+  name: string;
+  email?: string;
+  isPartner?: number;
+  realName?: string;
   phone?: string;
   profileImage?: string;
-  introduction?: string;
+  description?: string;
 }
 
 const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
@@ -31,10 +33,21 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const handleSave = (data: UserInfo) => {
-    setUserInfo(data);
-    alert('저장되었습니다');
-    console.log(data);
+  const handleSave = async (data: UserInfo) => {
+    const newData = { ...data };
+    delete newData.isPartner;
+    delete newData.email;
+    delete newData.id;
+    if (newData.isPartner) delete newData.realName;
+    else delete newData.description;
+    try {
+      await putUserInfo(newData);
+      alert('저장되었습니다');
+      setUserInfo({ ...userInfo, ...newData });
+    } catch (error) {
+      console.error(error);
+      alert('저장에 실패했습니다');
+    }
   };
 
   return (
@@ -44,14 +57,18 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
         onSubmit={handleSubmit(handleSave)}
       >
         <div className="flex flex-row gap-24 items-center">
-          {userInfo?.profileImage ? (
+          {userInfo?.profileImage?.length ? (
             <img
               src={userInfo.profileImage}
               className="rounded-full w-140 h-140 object-cover"
               alt="profile"
             />
           ) : (
-            <div className="w-140 h-140 rounded-full bg-black-6" />
+            <div className="w-140 h-140 rounded-full relative bg-black-6">
+              <div className="absolute text-64 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                {userInfo.name[0]}
+              </div>
+            </div>
           )}
           <div className="flex flex-col gap-12">
             <label
@@ -63,7 +80,7 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
               <input
                 id="profileImg"
                 hidden
-                type="file"
+                type="text"
                 accept="image/*"
                 {...register('profileImage')}
               />
@@ -75,7 +92,7 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
           <InputBox
             label={isUser ? '닉네임' : '이름/법인명'}
             placeholder="닉네임을 입력해주세요"
-            register={register('nickname', {
+            register={register('name', {
               required: '닉네임은 필수입니다',
               maxLength: {
                 value: 20,
@@ -83,20 +100,20 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
               },
             })}
             disabled={!isUser}
-            error={errors.nickname}
+            error={errors.name}
           />
-          <InputBox label="이메일" register={register('email')} disabled />
+          <InputBox label="이메일" placeholder={userInfo.email} disabled />
           {isUser && (
             <InputBox
               label="이름"
               placeholder="이름을 입력해주세요"
-              register={register('name', {
+              register={register('realName', {
                 maxLength: {
                   value: 20,
                   message: '이름은 20자 이하로 입력해주세요',
                 },
               })}
-              error={errors.name}
+              error={errors.realName}
             />
           )}
           <InputBox
@@ -114,14 +131,14 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
             <div className="flex flex-col gap-8">
               <label
                 className="flex flex-col gap-8 text-16"
-                htmlFor="introduction"
+                htmlFor="description"
               >
                 소개글
                 <textarea
-                  id="introduction"
+                  id="description"
                   className="p-12 h-72 rounded text-16 resize-none outline-none border-1 border-black-5 focus:border-blue-6"
                   placeholder="간단한 소개를 입력해주세요"
-                  {...register('introduction')}
+                  {...register('description')}
                 />
               </label>
             </div>

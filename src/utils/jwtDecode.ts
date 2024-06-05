@@ -1,9 +1,12 @@
 interface JwtPayload {
   id: number;
+  name: string;
   email: string;
-  nickname: string;
-  iat: number;
-  exp: number;
+  realName?: string;
+  phone?: string;
+  profileImage?: string;
+  isPartner?: number;
+  description?: string;
 }
 
 const jwtDecode = (token: string): JwtPayload => {
@@ -18,8 +21,10 @@ const jwtDecode = (token: string): JwtPayload => {
         })
         .join(''),
     );
-
-    return JSON.parse(jsonPayload);
+    const userData = JSON.parse(jsonPayload);
+    delete userData.iat;
+    delete userData.exp;
+    return userData;
   } catch (e) {
     throw new Error('Invalid JWT token');
   }

@@ -20,13 +20,19 @@ const MyPageSideBar = ({ children }: MyPageSideBarProps) => {
       <div className="flex flex-col relative justify-between px-12 border-r-1 border-black-4">
         <div className="flex flex-col w-241 gap-32">
           <div className="flex flex-col gap-12 items-center">
-            {userInfo?.profileImage ? (
+            {userInfo?.profileImage?.length ? (
               <img
                 src={userInfo.profileImage}
                 alt="profile"
                 className="w-120 h-120 rounded-full"
               />
-            ) : null}
+            ) : (
+              <div className="w-120 h-120 rounded-full relative bg-black-6">
+                <div className="absolute text-64 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                  {userInfo.name[0]}
+                </div>
+              </div>
+            )}
             <span className="text-14 font-semibold px-4 py-8">
               {userInfo.name || '사용자 이름'}
             </span>

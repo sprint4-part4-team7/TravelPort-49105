@@ -43,7 +43,6 @@ export const postLogin = async (data: LoginForm) => {
     const result = res.data;
     const ACCESS_TOKEN = result.accessToken;
     setCookie('accessToken', ACCESS_TOKEN);
-    axios.defaults.headers.common.Authorization = `Bearer ${ACCESS_TOKEN}`;
   } catch (error: any) {
     if (axios.isAxiosError(error) && error.response?.status === 401) {
       throw new Error(error.response.data.message);
@@ -60,7 +59,6 @@ export const getGoogleLogin = async (code: string | null) => {
     const res = await instance.get(`auth/google/callback?code=${code}`);
     const ACCESS_TOKEN = res.data.accessToken;
     setCookie('accessToken', ACCESS_TOKEN);
-    axios.defaults.headers.common.Authorization = `Bearer ${ACCESS_TOKEN}`;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 500) {
       throw new Error(error.response.data.message);
@@ -73,7 +71,6 @@ export const getKakaoLogin = async (code: string | null) => {
     const res = await instance.get(`auth/kakao/callback?code=${code}`);
     const ACCESS_TOKEN = res.data.accessToken;
     setCookie('accessToken', ACCESS_TOKEN);
-    axios.defaults.headers.common.Authorization = `Bearer ${ACCESS_TOKEN}`;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 500) {
       throw new Error(error.response.data.message);
@@ -86,7 +83,6 @@ export const getNaverLogin = async (code: string | null) => {
     const res = await instance.get(`auth/naver/callback?code=${code}`);
     const ACCESS_TOKEN = res.data.accessToken;
     setCookie('accessToken', ACCESS_TOKEN);
-    axios.defaults.headers.common.Authorization = `Bearer ${ACCESS_TOKEN}`;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 500) {
       throw new Error(error.response.data.message);
