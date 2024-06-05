@@ -4,6 +4,7 @@ import { useState } from 'react';
 import useProductAll from '@/hooks/useProductAll';
 import getMinPrice from '@/utils/getMinPrice';
 import useScoreAvg from '@/hooks/useScoreAvg';
+import uniqueProduct from '@/utils/uniqueProduct';
 import SearchBar from '../components/common/SearchBar';
 import Card from '@/components/common/card/Card';
 
@@ -12,14 +13,7 @@ const List = () => {
   const { optionAll } = useProductAll();
 
   // productId 같은 경우 하나만 나오도록
-  const optionId: number[] = [];
-  const uniqueOptionAll = [];
-  for (let i = 0; i < optionAll.length; i++) {
-    if (!optionId.includes(optionAll[i].productId)) {
-      optionId.push(optionAll[i].productId);
-      uniqueOptionAll.push(optionAll[i]);
-    }
-  }
+  const uniqueOptionAll = uniqueProduct(optionAll);
 
   // 평점 구하기
   const { avg, length } = useScoreAvg();
