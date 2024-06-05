@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import logo from '@/assets/icons/travelPortLogo.svg';
 import { useNavigate } from 'react-router-dom';
 import { getCookie } from '@/utils/cookie';
+import useProductAll from '@/hooks/useProductAll';
+import useSearchData from '@/hooks/useSearchData';
 import LoginUserHeaderBar from './LoginUserHeaderBar';
 import UnLoginUserHeaderBar from './UnLoginUserHeaderBar';
 import SearchBar from '../SearchBar';
@@ -12,56 +14,60 @@ interface HeaderBarProps {
   main?: boolean;
 }
 
-const cardLists = [
-  {
-    id: 1,
-    title: '스쿠버 다이빙',
-    description: '신나는 바닷속 체험',
-    location: '마닐라섬',
-    price: 100000,
-    score: 4,
-    review: 129,
-    image: '',
-    link: '/',
-  },
-  {
-    id: 2,
-    title: '스쿠버플라잉',
-    description: '신나는 하늘 체험',
-    location: '단양',
-    price: 120000,
-    score: 4.1,
-    review: 8,
-    image: '',
-    link: '/',
-  },
-  {
-    id: 3,
-    title: '나이트 사파리 체험으아아아아아아아앙',
-    description: '밤에 동물들을 보세요',
-    location: '에버랜드',
-    price: 40000,
-    score: 4.8,
-    review: 1622,
-    image: '',
-    link: '/',
-  },
-  {
-    id: 4,
-    title: '스킨스쿠버',
-    description: '피부로 느끼는 물놀이',
-    location: '제주도',
-    price: 100000,
-    score: 3.1,
-    review: 25,
-    image: '',
-    link: '/',
-  },
-];
+// const cardLists = [
+//   {
+//     id: 1,
+//     title: '스쿠버 다이빙',
+//     description: '신나는 바닷속 체험',
+//     location: '마닐라섬',
+//     price: 100000,
+//     score: 4,
+//     review: 129,
+//     image: '',
+//     link: '/',
+//   },
+//   {
+//     id: 2,
+//     title: '스쿠버플라잉',
+//     description: '신나는 하늘 체험',
+//     location: '단양',
+//     price: 120000,
+//     score: 4.1,
+//     review: 8,
+//     image: '',
+//     link: '/',
+//   },
+//   {
+//     id: 3,
+//     title: '나이트 사파리 체험으아아아아아아아앙',
+//     description: '밤에 동물들을 보세요',
+//     location: '에버랜드',
+//     price: 40000,
+//     score: 4.8,
+//     review: 1622,
+//     image: '',
+//     link: '/',
+//   },
+//   {
+//     id: 4,
+//     title: '스킨스쿠버',
+//     description: '피부로 느끼는 물놀이',
+//     location: '제주도',
+//     price: 100000,
+//     score: 3.1,
+//     review: 25,
+//     image: '',
+//     link: '/',
+//   },
+// ];
 
 const HeaderBar: React.FC<HeaderBarProps> = ({ userType, main = false }) => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+
+  const { optionAll } = useProductAll();
+
+  const { filteredTitles } = useSearchData(optionAll);
 
   useEffect(() => {
     const accessToken = getCookie('accessToken');
@@ -92,9 +98,9 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ userType, main = false }) => {
         </div>
         <div className="flex-1 mx-[4.8rem]">
           {main ? (
-            <SearchBar isMainSearchBar cardLists={cardLists} />
+            <SearchBar isMainSearchBar cardLists={filteredTitles} />
           ) : (
-            <SearchBar cardLists={cardLists} />
+            <SearchBar cardLists={filteredTitles} />
           )}
         </div>
         <div className="flex items-center">
