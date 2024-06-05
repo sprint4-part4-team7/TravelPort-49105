@@ -2,59 +2,62 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import useFetchDetails from '@/hooks/useFetchDetails';
 import useModal from '@/hooks/useModal';
-import useFetchReview from '@/hooks/useFetchReview';
 import location from '@/assets/icons/location.svg';
+import calendar from '@/assets/icons/calendar.svg';
+import arrowRightUp from '@/assets/icons/arrowRightUp.svg';
+import getDate from '@/utils/getDate';
+import useProductAll from '@/hooks/useProductAll';
+import getMinPrice from '@/utils/getMinPrice';
 import KakaoMap from '@/components/common/map/KakaoMap';
 import Modal from '@/components/common/Modal';
-import Button from '@/components/common/Button';
 
 const ProductDetails = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
-  const { product, option } = useFetchDetails(1, 1);
-
-  const { review } = useFetchReview(5);
+  const { product } = useFetchDetails(3, 1);
+  const { optionAll } = useProductAll();
 
   return (
-    <>
-      {/* <img src={product?.productImages[0]} alt="상품이미지" /> */}
-      <div className="px-40">
-        <h1 className="text-28 font-bold py-32 mobile:py-24 mobile:text-20">
-          {product?.name}
-        </h1>
-        <div className="flex justify-between mobile:flex-col mobile:gap-40">
-          <div className="flex flex-col gap-8">
-            <h2 className="text-20 font-semibold">체험 설명</h2>
-            <p className="text-16">{product?.productDesc}</p>
-          </div>
-          <div>
-            <div className="flex flex-col gap-21 w-285">
-              <div className="flex gap-8 text-17 font-semibold">
-                <img src={location} alt="위치아이콘" /> 위치
-              </div>
-              <p className="text-17 mb-12 font-semibold">
-                {product?.productAddress}
-              </p>
-            </div>
-            <Button onClick={openModal} text="지도에서 확인하기" />
-            <Modal isOpen={isModalOpen} closeModal={closeModal}>
-              <KakaoMap
-                x={product?.productSiteLat}
-                y={product?.productSiteLng}
-                name={product?.buildingName || ''}
-              />
-            </Modal>
-          </div>
-        </div>
-        <div>{option?.userCount}표 남음</div>
+    <div className="mt-100 mb-40 mobile:mt-40">
+      <img
+        src={product?.productImages[0]}
+        alt="상품이미지"
+        className="mx-auto w-784"
+      />
+      <div className="flex flex-col gap-12 mt-32 mb-40 w-784 mx-auto">
+        <h1 className="text-20 font-bold">{product?.name}</h1>
+        <h2 className="text-20 font-bold mt-4">{getMinPrice(optionAll)}원~</h2>
+        <p className="text-16 mb-8">{product?.productDesc}</p>
 
-        <div>
-          <h2>
-            리뷰 <span>총 27개</span>
-          </h2>
-          <div>{review?.score}</div>
+        <div className="flex gap-8 text-17 font-semibold">
+          <img src={calendar} alt="달력 아이콘" width={23} />
+          <span className="text-15 font-normal text-black-6">
+            {product && getDate(product.startDate)}~
+            {product && getDate(product.endDate)}
+          </span>
+        </div>
+
+        <div className="flex gap-8 text-17 font-semibold">
+          <img src={location} alt="위치아이콘" />
+          <span className="text-15 font-normal text-black-6">
+            {product?.productAddress}
+          </span>
+          <span
+            onClick={openModal}
+            className="font-13 font-medium ml-13 cursor-pointer"
+          >
+            지도뷰로 확인하기{' '}
+            <img src={arrowRightUp} alt="대각선화살표" className="inline" />
+          </span>
+          <Modal isOpen={isModalOpen} closeModal={closeModal}>
+            <KakaoMap
+              x={product?.productSiteLat}
+              y={product?.productSiteLng}
+              name={product?.buildingName || ''}
+            />
+          </Modal>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
