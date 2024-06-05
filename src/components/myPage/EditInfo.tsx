@@ -2,7 +2,7 @@ import { useUserStore } from '@/utils/zustand';
 import { useForm } from 'react-hook-form';
 import useModal from '@/hooks/useModal';
 import uploadIcon from '@/assets/icons/upload.svg';
-import putUserInfo from '@/apis/editInfo';
+import { putUserInfo } from '@/apis/editInfo';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 import Modal from '@/components/common/Modal';

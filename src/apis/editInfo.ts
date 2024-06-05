@@ -8,8 +8,13 @@ interface UserData {
   description?: string;
 }
 
-const putUserInfo = (data: UserData) => {
+export const putUserInfo = (data: UserData) => {
   return instance.put('user/modify', data);
 };
 
-export default putUserInfo;
+export const putPassword = (data: {
+  prevPassword: string;
+  newPassword: string;
+}) => {
+  return instance.put('user/modify-password', data);
+};
