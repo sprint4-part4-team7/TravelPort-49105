@@ -9,12 +9,15 @@ import ChangePassword from '@/components/myPage/ChangePassword';
 
 interface UserInfo {
   id: number;
-  nickname: string;
+  name: string;
   email: string;
-  name?: string;
+  isPartner: number;
+  realName?: string;
   phone?: string;
   profileImage?: string;
   introduction?: string;
+  iat?: number;
+  exp?: number;
 }
 
 const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
@@ -44,7 +47,7 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
         onSubmit={handleSubmit(handleSave)}
       >
         <div className="flex flex-row gap-24 items-center">
-          {userInfo?.profileImage ? (
+          {userInfo?.profileImage?.length ? (
             <img
               src={userInfo.profileImage}
               className="rounded-full w-140 h-140 object-cover"
@@ -75,7 +78,7 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
           <InputBox
             label={isUser ? '닉네임' : '이름/법인명'}
             placeholder="닉네임을 입력해주세요"
-            register={register('nickname', {
+            register={register('name', {
               required: '닉네임은 필수입니다',
               maxLength: {
                 value: 20,
@@ -83,20 +86,20 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
               },
             })}
             disabled={!isUser}
-            error={errors.nickname}
+            error={errors.name}
           />
           <InputBox label="이메일" register={register('email')} disabled />
           {isUser && (
             <InputBox
               label="이름"
               placeholder="이름을 입력해주세요"
-              register={register('name', {
+              register={register('realName', {
                 maxLength: {
                   value: 20,
                   message: '이름은 20자 이하로 입력해주세요',
                 },
               })}
-              error={errors.name}
+              error={errors.realName}
             />
           )}
           <InputBox

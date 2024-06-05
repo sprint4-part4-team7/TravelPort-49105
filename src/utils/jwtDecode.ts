@@ -1,7 +1,8 @@
 interface JwtPayload {
   id: number;
   email: string;
-  nickname: string;
+  name: string;
+  isPartner: number;
   iat: number;
   exp: number;
 }

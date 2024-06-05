@@ -3,11 +3,14 @@ import { persist } from 'zustand/middleware';
 
 interface UserInfo {
   id: number;
-  nickname: string;
+  name: string;
   email: string;
-  name?: string;
+  realName?: string;
   phone?: string;
   profileImage?: string;
+  iat?: number;
+  exp?: number;
+  isPartner: number;
 }
 interface UserState {
   userInfo: UserInfo;
@@ -19,45 +22,16 @@ export const useUserStore = create(
     (set) => ({
       userInfo: {
         id: 0,
-        nickname: '',
+        name: '',
         email: '',
         profileImage:
           'https://i.pinimg.com/736x/53/7e/f5/537ef59499259ba707068742f91a10f8.jpg',
+        isPartner: 0,
       },
       setUserInfo: (userInfo) => set({ userInfo }),
     }),
     {
       name: 'user-info',
-    },
-  ),
-);
-
-interface PartnerInfo {
-  nickname: string;
-  email: string;
-  name?: string;
-  phone?: string;
-  introduction?: string;
-  profileImage?: string;
-}
-
-interface PartnerState {
-  partnerInfo: PartnerInfo;
-  setPartnerInfo: (partnerInfo: PartnerInfo) => void;
-}
-
-export const usePartnerStore = create(
-  persist<PartnerState>(
-    (set) => ({
-      partnerInfo: {
-        id: 0,
-        nickname: '',
-        email: '',
-      },
-      setPartnerInfo: (partnerInfo) => set({ partnerInfo }),
-    }),
-    {
-      name: 'partner-info',
     },
   ),
 );

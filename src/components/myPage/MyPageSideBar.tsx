@@ -20,7 +20,7 @@ const MyPageSideBar = ({ children }: MyPageSideBarProps) => {
       <div className="flex flex-col relative justify-between px-12 border-r-1 border-black-4">
         <div className="flex flex-col w-241 gap-32">
           <div className="flex flex-col gap-12 items-center">
-            {userInfo?.profileImage ? (
+            {userInfo?.profileImage?.length ? (
               <img
                 src={userInfo.profileImage}
                 alt="profile"
