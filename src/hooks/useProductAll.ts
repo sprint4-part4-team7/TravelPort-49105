@@ -1,10 +1,9 @@
 import { getProductAll, getProductOptionAll } from '@/apis/productAll';
-import { CardListsType } from '@/constants/types';
 import { useEffect, useState } from 'react';
 
 const useProductAll = () => {
   const [productAll, setProductAll] = useState<any>([]);
-  const [optionAll, setOptionAll] = useState<CardListsType[]>([]);
+  const [optionAll, setOptionAll] = useState<any>([]);
 
   useEffect(() => {
     const fetchProductAll = async () => {
