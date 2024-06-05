@@ -1,11 +1,12 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useMemo } from 'react';
+/* eslint-disable no-case-declarations */
+/* eslint-disable @typescript-eslint/no-shadow */
+import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import useProductAll from '@/hooks/useProductAll';
 
 import useScoreAvg from '@/hooks/useScoreAvg';
 import useProductsWithMinPrice from '@/hooks/useProductsWithMinPrice';
+// import useReviewAllQuery from '@/hooks/reactQuery/review/useReviewAllQuery';
 import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
 import Card from '@/components/common/card/Card';
@@ -49,13 +50,11 @@ const SearchResultPage = () => {
   const query = useQuery();
   const search = query.get('query')?.toLowerCase() || '';
   const { productAll, optionAll } = useProductAll();
-  const products = productAll?.data || [];
+  const products = useMemo(() => productAll?.data || [], [productAll]);
+  // const { data: reviewAll } = useReviewAllQuery();
 
-  // optionAll 배열에서 productId 추출
-  const productIds = useMemo(
-    () => optionAll.map((option: any) => option.productId),
-    [optionAll],
-  );
+  const [sortType, setSortType] = useState('popular');
+  const [sortedProducts, setSortedProducts] = useState<ProductCardProps[]>([]);
 
   const productsWithMinPrice = useProductsWithMinPrice(
     products,
@@ -63,19 +62,59 @@ const SearchResultPage = () => {
     search,
   );
 
+  const sortProducts = (product: any) => {
+    switch (sortType) {
+      case 'popular':
+        const popularSorted = [...product].sort((a, b) => b.avg - a.avg);
+        return popularSorted;
+      case 'review':
+        const reviewSorted = [...product].sort((a, b) => b.length - a.length);
+        return reviewSorted;
+      case 'priceHigh':
+        const priceHighSorted = [...product].sort(
+          (a, b) => b.minPrice - a.minPrice,
+        );
+        return priceHighSorted;
+      default:
+        return product;
+    }
+  };
+
+  useEffect(() => {
+    setSortedProducts(sortProducts(productsWithMinPrice));
+  }, [sortType, productsWithMinPrice]);
+
   return (
     <div>
       <Layout userType="user">
         <div className="text-50">
           <h1>&quot;{search}&quot; 검색결과</h1>
         </div>
-        <div>
-          <button type="button">인기순</button>
-          <button type="button">후기순</button>
-          <button type="button">가격순</button>
+        <div className="flex p-10 text-white gap-50">
+          <button
+            className="p-20 bg-blue-700"
+            type="button"
+            onClick={() => setSortType('popular')}
+          >
+            인기순
+          </button>
+          <button
+            className="p-20 bg-blue-700"
+            type="button"
+            onClick={() => setSortType('review')}
+          >
+            후기순
+          </button>
+          <button
+            className="p-20 bg-blue-700"
+            type="button"
+            onClick={() => setSortType('priceHigh')}
+          >
+            가격순
+          </button>
         </div>
-        <div className="flex gap-10">
-          {productsWithMinPrice.map((item) => (
+        <div className="flex gap-10 mb-3">
+          {sortedProducts.map((item) => (
             <ProductCard
               key={item.id}
               id={item.id}
