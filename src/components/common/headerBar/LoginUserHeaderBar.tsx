@@ -37,6 +37,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
   const clickLogoutButton = () => {
     setIsLoggedIn(false);
     removeCookie('accessToken');
+    removeCookie('refreshToken');
     navagate('/');
     logout();
   };
