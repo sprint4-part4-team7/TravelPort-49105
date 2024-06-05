@@ -2,7 +2,6 @@ import { getProductReview } from '@/apis/review';
 import { useEffect, useState } from 'react';
 
 const useScoreAvg = (id: number) => {
-  console.log(id);
   const [total, setTotal] = useState(0);
   const [length, setLength] = useState(0);
 
