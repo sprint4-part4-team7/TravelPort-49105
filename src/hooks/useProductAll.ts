@@ -3,7 +3,7 @@ import { CardListsType } from '@/constants/types';
 import { useEffect, useState } from 'react';
 
 const useProductAll = () => {
-  const [productAll, setProductAll] = useState([]);
+  const [productAll, setProductAll] = useState<any>([]);
   const [optionAll, setOptionAll] = useState<CardListsType[]>([]);
 
   useEffect(() => {
