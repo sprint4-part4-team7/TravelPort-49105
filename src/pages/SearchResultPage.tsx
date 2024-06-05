@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import useProductAll from '@/hooks/reactQuery/product/useProductAllQuery';
+import useProductAll from '@/hooks/useProductAll';
 import getMinPrice from '@/utils/getMinPrice';
 
 import Footer from '@/components/common/Footer';
@@ -16,8 +16,8 @@ const useQuery = () => {
 const SearchResultPage = () => {
   const query = useQuery();
   const search = query.get('query');
-  const { data: productRes } = useProductAll();
-  const products = productRes?.data;
+  const { productAll } = useProductAll();
+  const products = productAll.data;
 
   return (
     <div>
