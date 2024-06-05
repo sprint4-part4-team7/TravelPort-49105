@@ -26,8 +26,10 @@ const SearchBar = ({
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       navigate(`/${path}search?query=${search}`);
-      const filteredData = cardLists.filter((cardList) =>
-        cardList.product.name.includes(search),
+      const filteredData = cardLists.filter(
+        (cardList) =>
+          cardList.product.name.includes(search) ||
+          cardList.product.productAddress.includes(search),
       );
       setFilteredData && setFilteredData(filteredData);
     }
@@ -55,28 +57,46 @@ const SearchBar = ({
           className="absolute mt-8 w-full border-solid border-1 border-[#F5F5F5] rounded-17 py-10 bg-[#fff] text-13
           shadow-[0_0_8px_0_rgba(0,0,0,0.25)]"
         >
-          {filteredTitles.length > 10 ? (
-            filteredTitles.slice(0, 10).map((filteredTitle) => (
-              <div
-                key={filteredTitle.id}
-                className="hover:bg-[#EBF1FF] py-10 pl-20 cursor-pointer"
-                onClick={() => {
-                  setSearch(filteredTitle.product.name);
-                }}
-              >
-                {filteredTitle.product.name}
+          {filteredTitles.length > 5 ? (
+            filteredTitles.slice(0, 5).map((filteredTitle) => (
+              <div key={filteredTitle.id}>
+                <div
+                  className="hover:bg-[#EBF1FF] py-10 pl-20 cursor-pointer"
+                  onClick={() => {
+                    setSearch(filteredTitle.product.name);
+                  }}
+                >
+                  {filteredTitle.product.name}
+                </div>
+                <div
+                  className="hover:bg-[#EBF1FF] py-10 pl-20 cursor-pointer"
+                  onClick={() => {
+                    setSearch(filteredTitle.product.productAddress);
+                  }}
+                >
+                  {filteredTitle.product.productAddress}
+                </div>
               </div>
             ))
           ) : filteredTitles.length > 0 ? (
             filteredTitles.map((filteredTitle) => (
-              <div
-                key={filteredTitle.id}
-                className="hover:bg-[#EBF1FF] py-10 pl-20 cursor-pointer"
-                onClick={() => {
-                  setSearch(filteredTitle.product.name);
-                }}
-              >
-                {filteredTitle.product.name}
+              <div key={filteredTitle.id}>
+                <div
+                  className="hover:bg-[#EBF1FF] py-10 pl-20 cursor-pointer"
+                  onClick={() => {
+                    setSearch(filteredTitle.product.name);
+                  }}
+                >
+                  {filteredTitle.product.name}
+                </div>
+                <div
+                  className="hover:bg-[#EBF1FF] py-10 pl-20 cursor-pointer"
+                  onClick={() => {
+                    setSearch(filteredTitle.product.productAddress);
+                  }}
+                >
+                  {filteredTitle.product.productAddress}
+                </div>
               </div>
             ))
           ) : (
