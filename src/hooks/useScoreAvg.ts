@@ -8,6 +8,7 @@ const useScoreAvg = () => {
   useEffect(() => {
     const fetchProductReview = async () => {
       let count = 0;
+      // TODO: product ID 추가하기
       const response = await getProductReview(1);
       for (let i = 0; i < response.length; i++) {
         count += response[i].score;
