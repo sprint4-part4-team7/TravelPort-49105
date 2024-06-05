@@ -3,13 +3,13 @@ import useSearchData from '@/hooks/useSearchData';
 import { useState } from 'react';
 import useProductAll from '@/hooks/useProductAll';
 import getMinPrice from '@/utils/getMinPrice';
+import useScoreAvg from '@/hooks/useScoreAvg';
 import SearchBar from '../components/common/SearchBar';
 import Card from '@/components/common/card/Card';
 
 const List = () => {
   const [filteredData, setFilteredData] = useState();
   const { optionAll } = useProductAll();
-  console.log(optionAll);
 
   // productId 같은 경우 하나만 나오도록
   const optionId: number[] = [];
@@ -20,6 +20,9 @@ const List = () => {
       uniqueOptionAll.push(optionAll[i]);
     }
   }
+
+  // 평점 구하기
+  const { avg, length } = useScoreAvg();
 
   const { filteredTitles } = useSearchData(uniqueOptionAll);
 
@@ -40,12 +43,9 @@ const List = () => {
             key={item.id}
             title={item.product.name}
             location={item.product.productAddress}
-            // price={item.price}
-            // score={item.score}
-            // review={item.review}
             price={getMinPrice(optionAll)}
-            score={4.3}
-            review={1022}
+            score={avg}
+            review={length}
             image={item.product.productImages[0]}
             link="/"
           />

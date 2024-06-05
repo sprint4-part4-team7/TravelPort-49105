@@ -4,6 +4,7 @@ import instance from '@/utils/axios';
 import {
   DefaultOptionType,
   GetReviewType,
+  ReviewData,
   ReviewInfoType,
 } from '@/constants/types';
 import { getProduct } from './product';
@@ -32,6 +33,18 @@ export const getReviewInfo = async (
 ): Promise<GetReviewType> => {
   try {
     const response = await instance.get(`/review/${reviewId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getProductReview = async (
+  productId: number,
+): Promise<ReviewData[]> => {
+  try {
+    const response = await instance.get(`/review/product/${productId}`);
     return response.data;
   } catch (error) {
     console.log(error);
