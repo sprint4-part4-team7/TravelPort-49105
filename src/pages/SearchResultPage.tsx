@@ -29,17 +29,25 @@ const calculateAveragePrice = (productName: string, options: any[]) => {
 
 const SearchResultPage = () => {
   const query = useQuery();
-  const search = query.get('query');
+  const search = query.get('query')?.toLowerCase() || ''; // 검색어를 소문자로 변환
   const { productAll, optionAll } = useProductAll();
   const products = productAll?.data || [];
 
-  // 평균 가격 계산
+  // 평균 가격 계산 및 필터링
   const productsWithAveragePrice = useMemo(() => {
-    return products.map((product: any) => {
-      const averagePrice = calculateAveragePrice(product.name, optionAll);
-      return { ...product, averagePrice };
-    });
-  }, [products, optionAll]);
+    return products
+      .map((product: any) => {
+        const averagePrice = calculateAveragePrice(product.name, optionAll);
+        return { ...product, averagePrice };
+      })
+      .filter((product: any) => {
+        const nameMatch = product.name.toLowerCase().includes(search);
+        const addressMatch = product.productAddress
+          .toLowerCase()
+          .includes(search);
+        return nameMatch || addressMatch;
+      });
+  }, [products, optionAll, search]);
 
   return (
     <div>
