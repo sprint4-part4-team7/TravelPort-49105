@@ -16,7 +16,8 @@ const List = () => {
   const uniqueOptionAll = uniqueProduct(optionAll);
 
   // 평점 구하기
-  const { avg, length } = useScoreAvg();
+  // useScoreAvg() 괄호 안에 productOptionId 보내면 됩니다 !
+  const { avg, length } = useScoreAvg(1);
 
   const { filteredTitles } = useSearchData(uniqueOptionAll);
 
@@ -24,7 +25,7 @@ const List = () => {
 
   return (
     <>
-      <div className="w-400 ml-10 my-10">
+      <div className="my-10 ml-10 w-400">
         <SearchBar
           cardLists={cards}
           path="list/"

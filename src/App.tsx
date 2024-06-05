@@ -15,6 +15,7 @@ import PartnerSignup from '@/pages/auth/signup/PartnerSignup';
 import UserSignup from '@/pages/auth/signup/UserSignup';
 import ReviewRegister from '@/pages/ReviewRegister';
 import ProductDetails from './pages/ProductDetails';
+import SearchResultPage from './pages/SearchResultPage';
 
 const App = () => {
   return (
@@ -57,6 +58,9 @@ const App = () => {
         </Route>
         <Route path="review">
           <Route index element={<ReviewRegister />} />
+        </Route>
+        <Route path="search">
+          <Route index element={<SearchResultPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

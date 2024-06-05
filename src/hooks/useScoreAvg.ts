@@ -1,14 +1,14 @@
 import { getProductReview } from '@/apis/review';
 import { useEffect, useState } from 'react';
 
-const useScoreAvg = () => {
+const useScoreAvg = (id: number) => {
   const [total, setTotal] = useState(0);
   const [length, setLength] = useState(0);
 
   useEffect(() => {
     const fetchProductReview = async () => {
       let count = 0;
-      const response = await getProductReview(1);
+      const response = await getProductReview(id);
       for (let i = 0; i < response.length; i++) {
         count += response[i].score;
       }
@@ -16,7 +16,7 @@ const useScoreAvg = () => {
       setLength(response.length);
     };
     fetchProductReview();
-  }, []);
+  }, [id]);
   const avg = Number((total / length).toFixed(1));
   return { avg, length };
 };

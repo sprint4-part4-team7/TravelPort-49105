@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { getCookie } from '@/utils/cookie';
 import useProductAll from '@/hooks/useProductAll';
 import useSearchData from '@/hooks/useSearchData';
+import uniqueProduct from '@/utils/uniqueProduct';
 import LoginUserHeaderBar from './LoginUserHeaderBar';
 import UnLoginUserHeaderBar from './UnLoginUserHeaderBar';
 import SearchBar from '../SearchBar';
@@ -14,60 +15,16 @@ interface HeaderBarProps {
   main?: boolean;
 }
 
-// const cardLists = [
-//   {
-//     id: 1,
-//     title: '스쿠버 다이빙',
-//     description: '신나는 바닷속 체험',
-//     location: '마닐라섬',
-//     price: 100000,
-//     score: 4,
-//     review: 129,
-//     image: '',
-//     link: '/',
-//   },
-//   {
-//     id: 2,
-//     title: '스쿠버플라잉',
-//     description: '신나는 하늘 체험',
-//     location: '단양',
-//     price: 120000,
-//     score: 4.1,
-//     review: 8,
-//     image: '',
-//     link: '/',
-//   },
-//   {
-//     id: 3,
-//     title: '나이트 사파리 체험으아아아아아아아앙',
-//     description: '밤에 동물들을 보세요',
-//     location: '에버랜드',
-//     price: 40000,
-//     score: 4.8,
-//     review: 1622,
-//     image: '',
-//     link: '/',
-//   },
-//   {
-//     id: 4,
-//     title: '스킨스쿠버',
-//     description: '피부로 느끼는 물놀이',
-//     location: '제주도',
-//     price: 100000,
-//     score: 3.1,
-//     review: 25,
-//     image: '',
-//     link: '/',
-//   },
-// ];
-
 const HeaderBar: React.FC<HeaderBarProps> = ({ userType, main = false }) => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
 
   const { optionAll } = useProductAll();
 
-  const { filteredTitles } = useSearchData(optionAll);
+  // productId 같은 경우 하나만 나오도록
+  const uniqueOptionAll = uniqueProduct(optionAll);
+
+  const { filteredTitles } = useSearchData(uniqueOptionAll);
 
   useEffect(() => {
     const accessToken = getCookie('accessToken');

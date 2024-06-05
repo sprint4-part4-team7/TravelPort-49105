@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable prettier/prettier */
 /* eslint-disable consistent-return */
 import instance from '@/utils/axios';
@@ -75,4 +76,11 @@ export const getDefaultOption = async (
     console.log(error);
     throw error;
   }
+};
+
+export const getReviewAll = () => {
+  return instance({
+    url: `/`,
+    method: 'GET',
+  });
 };
