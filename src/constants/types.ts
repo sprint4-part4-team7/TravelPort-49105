@@ -52,6 +52,7 @@ export type ReviewData = {
 export type CardListsType = {
   id: number;
   productId: number;
+  optionPrice: number;
   product: {
     id: string;
     buildingName: string;
