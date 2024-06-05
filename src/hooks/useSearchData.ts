@@ -8,8 +8,11 @@ const useSearchData = (cardLists: CardListsType[]) => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setSearch(e.target.value);
 
-  const filteredTitles = cardLists.filter((filteredTitle) => {
-    return filteredTitle.product.name.includes(search.trim());
+  const filteredTitles = cardLists.filter((filtered) => {
+    return (
+      filtered.product.name.includes(search.trim()) ||
+      filtered.product.productAddress.includes(search.trim())
+    );
   });
 
   return {
