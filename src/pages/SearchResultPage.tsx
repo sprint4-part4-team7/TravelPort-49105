@@ -10,6 +10,37 @@ import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
 import Card from '@/components/common/card/Card';
 
+interface ProductCardProps {
+  id: number;
+  name: string;
+  productAddress: string;
+  productImages: string;
+  minPrice: number;
+}
+
+const ProductCard = ({
+  id,
+  name,
+  productAddress,
+  productImages,
+  minPrice,
+}: ProductCardProps) => {
+  const { avg, length } = useScoreAvg(id);
+
+  return (
+    <Card
+      key={id}
+      title={name}
+      location={productAddress}
+      price={minPrice}
+      score={avg}
+      review={length}
+      image={productImages}
+      link="/"
+    />
+  );
+};
+
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
@@ -19,7 +50,12 @@ const SearchResultPage = () => {
   const search = query.get('query')?.toLowerCase() || '';
   const { productAll, optionAll } = useProductAll();
   const products = productAll?.data || [];
-  const { avg, length } = useScoreAvg();
+
+  // optionAll 배열에서 productId 추출
+  const productIds = useMemo(
+    () => optionAll.map((option: any) => option.productId),
+    [optionAll],
+  );
 
   const productsWithMinPrice = useProductsWithMinPrice(
     products,
@@ -39,30 +75,16 @@ const SearchResultPage = () => {
           <button type="button">가격순</button>
         </div>
         <div className="flex gap-10">
-          {productsWithMinPrice.map(
-            (item: {
-              id: number;
-              name: string;
-              productAddress: string;
-              productImages: string;
-              minPrice: number;
-            }) => {
-              const { id, name, productAddress, productImages, minPrice } =
-                item;
-              return (
-                <Card
-                  key={id}
-                  title={name}
-                  location={productAddress}
-                  price={minPrice}
-                  score={avg}
-                  review={length}
-                  image={productImages}
-                  link="/"
-                />
-              );
-            },
-          )}
+          {productsWithMinPrice.map((item) => (
+            <ProductCard
+              key={item.id}
+              id={item.id}
+              name={item.name}
+              productAddress={item.productAddress}
+              productImages={item.productImages}
+              minPrice={item.minPrice}
+            />
+          ))}
         </div>
       </Layout>
       <Footer />
