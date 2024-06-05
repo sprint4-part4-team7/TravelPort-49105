@@ -26,7 +26,13 @@ const MyPageSideBar = ({ children }: MyPageSideBarProps) => {
                 alt="profile"
                 className="w-120 h-120 rounded-full"
               />
-            ) : null}
+            ) : (
+              <div className="w-120 h-120 rounded-full relative bg-black-6">
+                <div className="absolute text-64 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                  {userInfo.name[0]}
+                </div>
+              </div>
+            )}
             <span className="text-14 font-semibold px-4 py-8">
               {userInfo.name || '사용자 이름'}
             </span>

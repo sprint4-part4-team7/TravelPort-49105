@@ -64,7 +64,11 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
               alt="profile"
             />
           ) : (
-            <div className="w-140 h-140 rounded-full bg-black-6" />
+            <div className="w-140 h-140 rounded-full relative bg-black-6">
+              <div className="absolute text-64 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                {userInfo.name[0]}
+              </div>
+            </div>
           )}
           <div className="flex flex-col gap-12">
             <label
