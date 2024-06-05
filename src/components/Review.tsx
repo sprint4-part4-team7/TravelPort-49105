@@ -9,6 +9,9 @@
 //   createdAt: string;
 // };
 
+import SMILE from '@/assets/icons/message-smile-square.svg';
+import CHEVRON from '@/assets/icons/chevron-right.svg';
+
 const Review = () => {
   return (
     <div
@@ -71,7 +74,28 @@ const Review = () => {
         </div>
       </div>
 
-      <div className="flex flex-col p-12">판매자</div>
+      <div className="flex flex-col p-12">
+        <button type="button" className="flex items-center gap-8 p-8">
+          <div className="flex  gap-4">
+            <img
+              alt="판매자 댓글 icon"
+              width="16px"
+              height="16px"
+              src={SMILE}
+            />
+            <div className="text-13 text-blue-6 font-medium">판매자 댓글</div>
+          </div>
+          <img alt="화살표" width="16px" height="16px" src={CHEVRON} />
+        </button>
+
+        <div className="p-8 w-full text-wrap text-13 font-medium">
+          판매자 댓글 내용판매자 댓글 내용판매자 댓글 내용판매자 댓글 내용판매자
+          댓글 내용판매자 댓글 내용판매자 댓글 내용판매자 댓글 내용판매자 댓글
+          내용판매자 댓글 내용판매자 댓글 내용판매자 댓글 내용판매자 댓글
+          내용판매자 댓글 내용판매자 댓글 내용판매자 댓글 내용판매자 댓글
+          내용판매자 댓글 내용판매자 댓글 내용판매자 댓글 내용
+        </div>
+      </div>
     </div>
   );
 };
