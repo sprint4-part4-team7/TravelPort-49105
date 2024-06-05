@@ -1,8 +1,12 @@
 interface JwtPayload {
   id: number;
-  email: string;
   name: string;
-  isPartner: number;
+  email: string;
+  realName?: string;
+  phone?: string;
+  profileImage?: string;
+  isPartner?: number;
+  description?: string;
 }
 
 const jwtDecode = (token: string): JwtPayload => {
