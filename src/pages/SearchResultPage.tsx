@@ -7,6 +7,7 @@ import useProductAll from '@/hooks/useProductAll';
 import useScoreAvg from '@/hooks/useScoreAvg';
 import useProductsWithMinPrice from '@/hooks/useProductsWithMinPrice';
 // import useReviewAllQuery from '@/hooks/reactQuery/review/useReviewAllQuery';
+import useReviewAllQuery from '@/hooks/reactQuery/review/useReviewAllQuery';
 import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
 import Card from '@/components/common/card/Card';
@@ -51,7 +52,7 @@ const SearchResultPage = () => {
   const search = query.get('query')?.toLowerCase() || '';
   const { productAll, optionAll } = useProductAll();
   const products = useMemo(() => productAll?.data || [], [productAll]);
-  // const { data: reviewAll } = useReviewAllQuery();
+  const { data: reviewAll } = useReviewAllQuery();
 
   const [sortType, setSortType] = useState('popular');
   const [sortedProducts, setSortedProducts] = useState<ProductCardProps[]>([]);
@@ -59,20 +60,25 @@ const SearchResultPage = () => {
   const productsWithMinPrice = useProductsWithMinPrice(
     products,
     optionAll,
+    reviewAll,
     search,
   );
 
   const sortProducts = (product: any) => {
     switch (sortType) {
       case 'popular':
-        const popularSorted = [...product].sort((a, b) => b.avg - a.avg);
+        const popularSorted = [...product].sort(
+          (a, b) => b.averageScore - a.averageScore,
+        );
         return popularSorted;
       case 'review':
-        const reviewSorted = [...product].sort((a, b) => b.length - a.length);
+        const reviewSorted = [...product].sort(
+          (a, b) => b.totalReviews - a.totalReviews,
+        );
         return reviewSorted;
       case 'priceHigh':
         const priceHighSorted = [...product].sort(
-          (a, b) => b.minPrice - a.minPrice,
+          (a, b) => a.minPrice - b.minPrice,
         );
         return priceHighSorted;
       default:
