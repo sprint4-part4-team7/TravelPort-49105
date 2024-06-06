@@ -51,10 +51,10 @@ const Review = ({ reviewId }: ReviewProps) => {
   // 유저 정보를 확인할 수 있는 API 구현 시 추가 예정
   // const [profileImg, setProfileImg] = useState();
   // const [userName, setUserName] = useState();
-  const [productOption, setProductOption] = useState<string | null>('');
-  const handleUserProduct = async () => {
+  const [productOption, setProductOption] = useState<string | null>();
+  const handleUserProduct = async (oId: number) => {
     try {
-      const res = await instance.get(`/productOption/${productOptionId}`);
+      const res = await instance.get(`/productOption/${oId}`);
       const result = res.data;
       const optionName = result.optionName !== null ? result.optionName : '';
       setProductOption(optionName);
@@ -65,8 +65,12 @@ const Review = ({ reviewId }: ReviewProps) => {
 
   useEffect(() => {
     handleReview(reviewId);
-    handleUserProduct();
-  }, [reviewId, productOptionId]);
+  }, []);
+  useEffect(() => {
+    if (productOptionId > 0) {
+      handleUserProduct(productOptionId);
+    }
+  }, [productOptionId]);
 
   // 판매자 댓글 클릭 시, 댓글 내용이 보이게 하도록 하는 handler 함수
   const handleCommnent = () => {
@@ -91,7 +95,7 @@ const Review = ({ reviewId }: ReviewProps) => {
         />
         프로필
       </div>
-      <div className="flex overflow-x-scroll w-fit gap-4">
+      <div className="flex overflow-x-auto w-full gap-4">
         {/* {reviewImages &&
           reviewImages.length > 0 &&
           reviewImages.map((image, index) => (
@@ -107,7 +111,7 @@ const Review = ({ reviewId }: ReviewProps) => {
             </>
           ))} */}
         <img
-          className="object-fill border-1 border-solid rounded-lg border-black-6"
+          className="border-1 border-solid rounded-lg border-black-6"
           alt="리뷰 이미지1"
           width="90px"
           height="90px"
