@@ -80,7 +80,7 @@ export const getDefaultOption = async (
 
 export const getReviewAll = () => {
   return instance({
-    url: `/`,
+    url: `/review/all`,
     method: 'GET',
   });
 };
