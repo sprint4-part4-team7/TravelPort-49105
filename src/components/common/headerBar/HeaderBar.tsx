@@ -14,9 +14,14 @@ import MainCategoryButton from '@/components/MainCategoryButton';
 interface HeaderBarProps {
   userType: 'user' | 'partner'; // 유저 타입: 'user' 혹은 'partner'
   main?: boolean;
+  category?: boolean;
 }
 
-const HeaderBar: React.FC<HeaderBarProps> = ({ userType, main = false }) => {
+const HeaderBar: React.FC<HeaderBarProps> = ({
+  userType,
+  main = false,
+  category = false,
+}) => {
   const navigate = useNavigate();
   // TODO: 경로 맞게 수정하기 (지금은 임시 ..)
   const handleAccommodation = () => {
@@ -67,17 +72,14 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ userType, main = false }) => {
         </div>
         <div className="flex-1 mx-[4.8rem] relative">
           {main && (
-            <>
-              <SearchBar isMainSearchBar={main} cardLists={filteredTitles} />
-              <div className="absolute bottom-[-4rem] right-0 flex gap-8 left-15 z-1">
-                <MainCategoryButton
-                  title="숙소"
-                  onclick={handleAccommodation}
-                />
-                <MainCategoryButton title="체험" onclick={handleActivity} />
-                <MainCategoryButton title="교통" onclick={handleTraffic} />
-              </div>
-            </>
+            <SearchBar isMainSearchBar={main} cardLists={filteredTitles} />
+          )}
+          {category && (
+            <div className="absolute bottom-[-4rem] right-0 flex gap-8 left-15 z-1">
+              <MainCategoryButton title="숙소" onclick={handleAccommodation} />
+              <MainCategoryButton title="체험" onclick={handleActivity} />
+              <MainCategoryButton title="교통" onclick={handleTraffic} />
+            </div>
           )}
         </div>
 

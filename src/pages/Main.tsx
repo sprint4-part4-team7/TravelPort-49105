@@ -113,7 +113,7 @@ const Main = () => {
 
   return (
     <>
-      <Layout userType="user" main>
+      <Layout userType="user" main category>
         <Carousel items={carousel} />
         <div className="flex justify-center p-20 pb-5 mb-80">
           <MainCard
