@@ -8,7 +8,12 @@ import Date from './Date';
 import Option from './Option';
 
 const ProductRegist = () => {
-  const [page, setPage] = useState(<Category />);
+  const [categoryId, setCategoryId] = useState(0);
+  const [page, setPage] = useState(
+    <Category categoryId={categoryId} setCategoryId={setCategoryId} />,
+  );
+
+  console.log(categoryId);
   return (
     <>
       <aside
@@ -21,7 +26,14 @@ const ProductRegist = () => {
             <li>
               <div
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                onClick={() => setPage(<Category />)}
+                onClick={() =>
+                  setPage(
+                    <Category
+                      categoryId={categoryId}
+                      setCategoryId={setCategoryId}
+                    />,
+                  )
+                }
               >
                 <div className="step-number">1</div>
                 <span className="ms-3">상품 유형</span>
@@ -71,11 +83,6 @@ const ProductRegist = () => {
       <main>
         <div className="p-4 sm:ml-177">{page}</div>
       </main>
-      <footer>
-        <button type="button" className="next-button" disabled>
-          다음
-        </button>
-      </footer>
     </>
   );
 };
