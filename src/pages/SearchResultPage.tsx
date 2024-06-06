@@ -68,17 +68,17 @@ const SearchResultPage = () => {
     switch (sortType) {
       case 'popular':
         const popularSorted = [...product].sort(
-          (a, b) => b.averageScore - a.averageScore,
+          (a, b) => b.averageScore - a.averageScore, // 별점 높은 순
         );
         return popularSorted;
       case 'review':
         const reviewSorted = [...product].sort(
-          (a, b) => b.totalReviews - a.totalReviews,
+          (a, b) => b.totalReviews - a.totalReviews, // 리뷰 많은 순
         );
         return reviewSorted;
       case 'priceHigh':
         const priceHighSorted = [...product].sort(
-          (a, b) => a.minPrice - b.minPrice,
+          (a, b) => a.minPrice - b.minPrice, // 가격 낮은 순
         );
         return priceHighSorted;
       default:
