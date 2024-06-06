@@ -55,7 +55,7 @@ const SearchBar = ({
       {!!search.length && (
         <div
           className="absolute mt-8 w-full border-solid border-1 border-[#F5F5F5] rounded-17 py-10 bg-[#fff] text-13
-          shadow-[0_0_8px_0_rgba(0,0,0,0.25)]"
+          shadow-[0_0_8px_0_rgba(0,0,0,0.25)] z-30"
         >
           {filteredTitles.length > 5 ? (
             filteredTitles.slice(0, 5).map((filteredTitle) => (

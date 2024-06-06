@@ -34,7 +34,7 @@ const MainCard: React.FC<PopularAccommodationsProps> = ({
           outlined
           isCancel
           onClick={onclick}
-          buttonStyle="px-12 py-8 w-61 text-13 font-medium text-[#BFBFBF]"
+          buttonStyle="rounded-4 px-12 py-8 w-61 text-13 font-medium text-[#BFBFBF]"
         />
       </div>
       <div className="grid gap-20 mobile:grid-cols-1 tablet:grid-cols-3 desktop:grid-cols-4">
