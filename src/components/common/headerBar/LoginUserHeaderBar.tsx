@@ -49,20 +49,20 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
   };
 
   const menuItems = [
-    { id: 'my-info', icon: myInfo, label: '내 정보', path: '/' },
+    { id: 'my-info', icon: myInfo, label: '내 정보', path: '/mypage' },
     ...(userType === 'user'
       ? [
           {
             id: 'reservation-status',
             icon: list,
             label: '예약 내역',
-            path: '/reservation-status',
+            path: '/',
           },
           {
             id: 'reservation-history',
             icon: reservationStatus,
             label: '예약 현황',
-            path: '/reservation-history',
+            path: '/',
           },
         ]
       : []),
