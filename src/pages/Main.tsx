@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/no-array-index-key */
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Carousel from '@/components/Carousel';
 import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
@@ -19,6 +20,27 @@ interface ImageItem {
   score?: number;
   review?: number;
 }
+
+const carousel: ImageItem[] = [
+  {
+    url: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIALsAyAMBIgACEQEDEQH/xAAZAAEBAQEBAQAAAAAAAAAAAAACAwEABgX/xAAZEAEBAQEBAQAAAAAAAAAAAAABABECQSH/xAAZAQEBAQEBAQAAAAAAAAAAAAACAAEDBQb/xAAWEQEBAQAAAAAAAAAAAAAAAAAAARH/2gAMAwEAAhEDEQA/APgJdkkuy9t4ugliTSxKboJYk0sSm6CXJJLkpup5Zk8uSi1NLEmkctKUMsSeWJTZU0jlRI5RygxyokUopQSKT8sS0pU0ilRIpRROxmkGigpda3Wlr0mWJNLsubx9TSxKiWJTdDLGaXJa3U0ik0uSi0Ejk8sym6mlyTSOU2UEjlRItpygkUnnyxKKVPLEmkUopQY+TyxtOUGLNIpRSpsfKjFo4Dda2U16ZLsmliQeNoJYk0sSm6CXJJLspup5Yk8sSi1PLEnkUtbKGWJUSKUaeWJPLEpsqaRyokUtOUGLPLGilTSKVEilHKmxqJFooDBqJFLSlTSybdRvTpYlRLEg8PU0uSaWJRanlyTSOU3QyxJ5YlFKnliTyxKKVNI5USKWlKCRZ5YlGnYk0ilNlTbGbFtdICRZ2NFE2LNi0UBIs2LaYN1rdRPVJYk0sSDwtFI5NLkotTSxJ5YlFqeWJNLEopU0jlRIpRSgkUnljRRNItRItpSp2M2LRgxZsUooDFmxbTgMGoxaKJsWaRadIDda3WlHrcsSaXJc3g6mkcqJHKboZYkkutbKmkcqJFKOUEik8saOVNilRilFKmkWoxaOVNiz6jacBizYtFAYs2LaUBik2LRxNizYtHAbJN1pvXpck0jlzfP6CRyqkUpsqaRyokUopQYpNjacoJFKjBo5QSLNi0UBizYtHAYs2LacBg1GDRQGLNi0cBizYNpwOos2LRwG65utN7NLEnliXJ85KmkcqJFLTlBIpPyxopU2KTYpRQGKTYtpwGDUYtHE2LNi06QGDUYNFAYs2La6QGLNg0UBizYtrpAYs2HVFAbrW6je1yxKmRS5vmpU0ilRi0cqaRZsW04DFmxaNNizYtFAYNRg2ukBizYtOkBgzYtHAYsmLaUBizYtOkBgz6i2lAYs2DRwG61uo49wxZpFub5qUEizYtFAYNRg2nAYNRh1RwGLNg0cFgzYtrpAYM2LTpAYM2LRwGLJi2nAYs2DRwWDNi0cBiyYtpQG61uo3umDUYdXJ8zAYs2DacDqLNg06QGLNg2lAYs2DTpBYM2DacFgzYNOkFgzYNHBYdTYtpwGLJi0cBizYNHBYM2DacFuubqN7th1Nh1cnzEFiyYtrpAYsmLRwGLJg2nBYM2DTpBYsmLacBgzYtHAYsuoNOkFiyYtpwWDNg0cFgyYtHBYsmLacDq2zq2jf//Z',
+    text: '낭만의 액티비티, 열기구',
+    path: '/',
+    location: '인천 남동구',
+    price: 30000,
+    score: 5,
+    review: 1034,
+  },
+  {
+    url: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIALcAwwMBIgACEQEDEQH/xAAZAAEBAQEBAQAAAAAAAAAAAAACAQADBAf/xAAbEAEBAQEAAwEAAAAAAAAAAAAAARECEjFBIf/EABgBAQEBAQEAAAAAAAAAAAAAAAIBAAME/8QAGREBAQEBAQEAAAAAAAAAAAAAAAERAjES/9oADAMBAAIRAxEAPwD66lVnoeMKNPoVShRp0LFg0KNOjVEBp2DViihYilEhc+0wozpysKJCjO0Vo2FGdIsZY0iKjUsaxhrnRp2DYzl0CEzOb31CsRzQKmFUUQoWOlg1hrnRrpYFiwRwbHTBsWLAqYWNhHBxcWRcZ05aFI0iyI7RYuLIuM6RpGKRcTSHPxsORsTQ6crEx0sGxHHpysZ0xGc3sTCsSwEoWJh4NUQo10wasCudGx0sGwokAa6WJilAxsLGxdODi4si4xxMKNhSJrtGkWRZFkTTiyNIUhSJpWhIuHItiWhXLBsdsG8prl05Yzp4o2ubvYxWJYkQLBx0wbFGudg2Olg2KNAbHQbFGDYFjoOLDg42EzFBKRsXGOJhRJDkSuvNaFGkKRC1ZCkaFIlpNI2HIuBqVzwbHbBvLa59OXizpiNrkTVWqtRGw76FYFc6NdKFYaI0x69GMSwaTWLDgY0KxMZWxZG+NEpxsWNC+Icq8kkKMcpQ4MOBThSHInLpIFrB4peXTGsTUs1x8WdMRtc/lzqVUdBsSpWqLHOwaNKiwClWpTRGrNVhQa0VmZmjQolKNCiQohxiglEpylDglPQk6cukDk4501+MkWIyYiszOA1dGurn01CraNqxyqVGtG1YFa1Go04NX62pakYSRtVjYoJRKsKM0VKUWHIMhARQpBhxKcpcukc4UoHKTJamti6uoHkrY2uOjatC11iVqNrWpqxxqWjVtG0nOro2talWAzJakqoRShKrNpwoPNKDTKFBhQasKFEi/BLShQYqHKTDFtQ9XRta0L02Npajn5K2No6NqWpa6SNWtG1tG0nPper+Dalo2rI5UrUtS0LSA7WlDWlVjKOcpypWOHHOHyCyukPkOTg0iKCUGrKrNUQ1qa19BWXVtC1rQ6pRtXUc7WYdW1LUtTTdbWtTUtS0sc61qWpqE5WtalS1FwNXW1GbE05Slc4UbFdYccuXXkKp8ukc4cCrK6SqMqiStKmslXWoVbR6qxdTquXVK1z6qyNqawaxYOnU1kN3raNqjVc+mGqixyqMixgZmZmYoJRmdJ6OenOOnI9LD5dI58nHNT5IYqLK1ZqlQktDqlQtVhrn3Trl1Vg2hayViTXVqjE9VT6NZmcqyMxOfQrEZgVmZmWFGZmKHGYb6sdIUZgqnCZhaJUqsxhRrMiVz69OXSsQ1yZmJH//2Q==',
+    text: '낭만의 액티비티, 열기구',
+    path: '/',
+    location: '인천 남동구',
+    price: 30000,
+    score: 5,
+    review: 1034,
+  },
+];
 
 const datas: ImageItem[] = [
   {
@@ -61,6 +83,26 @@ const datas: ImageItem[] = [
 
 const Main = () => {
   const navigate = useNavigate();
+  const [filteredData, setFilteredData] = useState(datas);
+
+  // 화면 크기에 따라 데이터를 필터링
+  const handleResize = () => {
+    if (window.innerWidth >= 1199) {
+      setFilteredData(datas.slice(0, 4)); // PC일 때는 4개의 데이터
+    } else {
+      setFilteredData(datas.slice(0, 3)); // 태블릿일 때는 3개의 데이터
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener('resize', handleResize); // 화면 크기 변경 시 실행
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   // TODO: 경로 맞게 수정하기 (지금은 임시 ..)
   const handleAccommodation = () => {
     navigate('./list');
@@ -68,20 +110,21 @@ const Main = () => {
   const handleActivity = () => {
     navigate('./list');
   };
+
   return (
     <>
       <Layout userType="user" main>
-        <Carousel items={datas} />
+        <Carousel items={carousel} />
         <div className="flex justify-center p-20 pb-5 mb-80">
           <MainCard
-            images={datas}
+            images={filteredData}
             title="인기많은 숙소"
             onclick={handleAccommodation}
           />
         </div>
         <div className="flex justify-center p-20 pb-5">
           <MainCard
-            images={datas}
+            images={filteredData}
             title="인기많은 액티비티"
             onclick={handleActivity}
           />
