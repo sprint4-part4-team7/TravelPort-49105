@@ -54,10 +54,8 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ userType, main = false }) => {
           </div>
         </div>
         <div className="flex-1 mx-[4.8rem]">
-          {main ? (
-            <SearchBar isMainSearchBar cardLists={filteredTitles} />
-          ) : (
-            <SearchBar cardLists={filteredTitles} />
+          {main && (
+            <SearchBar isMainSearchBar={main} cardLists={filteredTitles} />
           )}
         </div>
         <div className="flex items-center">
