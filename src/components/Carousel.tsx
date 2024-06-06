@@ -5,6 +5,8 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import useCarousel from '@/hooks/useCarousel';
+import arrowright from '@/assets/icons/arrowright.svg';
+import arrowleft from '@/assets/icons/arrowleft.svg';
 import Button from '@/components/common/Button';
 
 interface CarouselItem {
@@ -23,7 +25,7 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
   );
 
   return (
-    <div className="relative w-full mx-auto max-w-screen-2lg">
+    <div className="relative w-full mx-auto mt-40 y-266 max-w-screen-2lg mb-100">
       <div className="relative overflow-hidden">
         <div
           className="flex transition-transform duration-500 ease-out"
@@ -44,12 +46,12 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
             >
               <div className="relative w-full h-full">
                 <div className="absolute top-0 left-0 flex justify-center w-1/4 h-full text-white transform -translate-y-1 bg-gray-900 bg-opacity-50">
-                  <p className="text-36 text-white py-80 px-48">{item.text}</p>
+                  <p className="px-48 text-white text-36 py-80">{item.text}</p>
                 </div>
-                <div className="absolute bottom-30 right-15 flex items-end justify-center w-300 h-22">
+                <div className="absolute left-0 right-0 flex items-center justify-center m-auto bottom-41 w-300 h-22">
                   <Button
-                    variant="floating"
-                    buttonStyle="px-40 py-18 text-24 font-semibold"
+                    variant="default"
+                    buttonStyle="px-12 py-12 text-16 font-normal w-240 mb-20"
                     text="지금 바로 예약하기! >"
                     onClick={() =>
                       item.path ? (window.location.href = item.path) : null
@@ -62,7 +64,7 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
         </div>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 flex justify-center mb-4 space-x-2">
+      <div className="absolute left-0 right-0 flex justify-center mb-4 space-x-2 bottom-110">
         {items.map((_, index) => (
           <button
             key={index}
@@ -76,15 +78,15 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
 
       <button
         onClick={prevSlide}
-        className="absolute left-0 p-2 text-white transform -translate-y-1/2 top-1/2"
+        className="ml-12 absolute flex items-center justify-center left-0 transform -translate-y-1/2 text- top-1/2 bg-white rounded-[50%] w-30 h-30"
       >
-        &lt;
+        <img className="p-9" src={arrowleft} alt="왼쪽 화살표" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-0 p-2 text-white transform -translate-y-1/2 top-1/2"
+        className="mr-12 absolute flex items-center justify-center right-0 transform -translate-y-1/2 bg-white top-1/2 rounded-[50%] w-30 h-30"
       >
-        &gt;
+        <img className="p-9" src={arrowright} alt="오른쪽 화살표" />
       </button>
     </div>
   );
