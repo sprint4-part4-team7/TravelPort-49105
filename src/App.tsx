@@ -5,7 +5,6 @@ import CheckoutPage from '@/pages/payments/CheckoutPage';
 import SuccessPage from '@/pages/payments/SuccessPage';
 import FailPage from '@/pages/payments/FailPage';
 import MyPage from '@/pages/MyPage';
-import Location from '@/pages/productRegist/Location';
 import Reservation from '@/pages/Reservation';
 import List from '@/pages/List';
 import GoogleRedirect from '@/pages/auth/login/GoogleRedirect';
@@ -14,8 +13,8 @@ import NaverRedirect from '@/pages/auth/login/NaverRedirect';
 import PartnerSignup from '@/pages/auth/signup/PartnerSignup';
 import UserSignup from '@/pages/auth/signup/UserSignup';
 import ReviewRegister from '@/pages/ReviewRegister';
-import ProductDetails from './pages/ProductDetails';
-import SearchResultPage from './pages/SearchResultPage';
+import ProductDetails from '@/pages/ProductDetails';
+import ProductRegist from '@/pages/productRegist/ProductRegist';
 
 const App = () => {
   return (
@@ -45,8 +44,8 @@ const App = () => {
         <Route path="details">
           <Route index element={<ProductDetails />} />
         </Route>
-        <Route path="location">
-          <Route index element={<Location />} />
+        <Route path="product-regist">
+          <Route index element={<ProductRegist />} />
         </Route>
         <Route path="mypage">
           <Route index element={<MyPage />} />
