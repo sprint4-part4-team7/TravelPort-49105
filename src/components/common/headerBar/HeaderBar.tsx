@@ -14,9 +14,16 @@ import MainCategoryButton from '@/components/MainCategoryButton';
 interface HeaderBarProps {
   userType: 'user' | 'partner'; // 유저 타입: 'user' 혹은 'partner'
   main?: boolean;
+  category?: boolean;
+  noSearch?: boolean;
 }
 
-const HeaderBar: React.FC<HeaderBarProps> = ({ userType, main = false }) => {
+const HeaderBar: React.FC<HeaderBarProps> = ({
+  userType,
+  main = false,
+  category = false,
+  noSearch = true,
+}) => {
   const navigate = useNavigate();
   // TODO: 경로 맞게 수정하기 (지금은 임시 ..)
   const handleAccommodation = () => {
@@ -62,13 +69,17 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ userType, main = false }) => {
               className="p-0 border-none bg-none"
             >
               <img src={logo} alt="Main Logo" style={{ cursor: 'pointer' }} />
-            </button>{' '}
+            </button>
           </div>
         </div>
-        <div className="flex-1 mx-[4.8rem] relative">
-          {main && (
-            <>
-              <SearchBar isMainSearchBar={main} cardLists={filteredTitles} />
+        {!noSearch && (
+          <div className="flex-1 mx-[4.8rem] relative">
+            {main ? (
+              <SearchBar isMainSearchBar cardLists={filteredTitles} />
+            ) : (
+              <SearchBar cardLists={filteredTitles} />
+            )}
+            {category && (
               <div className="absolute bottom-[-4rem] right-0 flex gap-8 left-15 z-1">
                 <MainCategoryButton
                   title="숙소"
@@ -77,9 +88,9 @@ const HeaderBar: React.FC<HeaderBarProps> = ({ userType, main = false }) => {
                 <MainCategoryButton title="체험" onclick={handleActivity} />
                 <MainCategoryButton title="교통" onclick={handleTraffic} />
               </div>
-            </>
-          )}
-        </div>
+            )}
+          </div>
+        )}
 
         <div className="flex items-center">
           {isLoggedIn ? (
