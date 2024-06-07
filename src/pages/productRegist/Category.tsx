@@ -1,44 +1,37 @@
-import { getCategory, postCategory, putCategory } from '@/apis/category';
 import { useForm } from 'react-hook-form';
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import CheckButton from './CheckButton';
+import Description from './Description';
 
 type CategoryForm = {
   category: string;
 };
 
 type CategoryIdProps = {
-  categoryId: number;
-  setCategoryId: Dispatch<SetStateAction<number>>;
+  setPage: Dispatch<SetStateAction<React.ReactNode>>;
 };
 
-const Category = ({ categoryId, setCategoryId }: CategoryIdProps) => {
-  const { register, handleSubmit, watch, setValue } = useForm<CategoryForm>({
+const Category = ({ setPage }: CategoryIdProps) => {
+  const { register, handleSubmit, watch } = useForm<CategoryForm>({
     mode: 'onChange',
   });
 
   const preCategoryValue = watch('category'); // register의 category값을 감시(숙박input이 들어가나, 체험input이들어가나)
 
-  const onSubmit = async (data: CategoryForm) => {
-    if (categoryId === 0) {
-      // 초기에 할때(post)
-      const response = await postCategory(data.category);
-      setCategoryId(response.id);
-    } else {
-      // 한번 하고 수정할때(get,put)
-      await putCategory(categoryId, data.category);
+  const [disabled, setDisabled] = useState(true); // [버튼] disabled 된게 초기설정
+
+  const onSubmit = (data: CategoryForm) => {
+    setPage(<Description />);
+    console.log(data);
+  };
+
+  // [버튼] input 클릭시 abled
+  const handleButton = () => {
+    if (preCategoryValue !== 'undefined') {
+      setDisabled(false);
     }
   };
 
-  useEffect(() => {
-    const fetchCategory = async () => {
-      if (categoryId !== 0) {
-        const response = await getCategory(categoryId);
-        setValue('category', response.name); // setValue를 사용하여 category에 원래있던 기초값을 전달
-      }
-    };
-    fetchCategory();
-  }, []);
   return (
     <div className="flex flex-col gap-32">
       <h3 className="mb-5 text-17 font-semiblod text-black-10">
@@ -60,6 +53,7 @@ const Category = ({ categoryId, setCategoryId }: CategoryIdProps) => {
                 className="hidden"
                 required
                 checked={preCategoryValue === '숙박'}
+                onClick={handleButton}
               />
               <div className="flex flex-col h-200 p-3 justify-center items-center flex-[1_0_0]">
                 <p className="w-full text-22 font-semibold text-center">숙박</p>
@@ -82,6 +76,7 @@ const Category = ({ categoryId, setCategoryId }: CategoryIdProps) => {
                 value="체험"
                 className="hidden"
                 checked={preCategoryValue === '체험'}
+                onClick={handleButton}
               />
               <div className="flex flex-col h-200 p-3 justify-center items-center flex-[1_0_0]">
                 <p className="w-full text-22 font-semibold text-center">체험</p>
@@ -92,7 +87,7 @@ const Category = ({ categoryId, setCategoryId }: CategoryIdProps) => {
             </label>
           </li>
         </ul>
-        <CheckButton />
+        <CheckButton disabled={disabled} />
       </form>
     </div>
   );
