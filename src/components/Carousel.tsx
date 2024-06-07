@@ -45,9 +45,6 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
               }}
             >
               <div className="relative w-full h-full">
-                <div className="absolute top-0 left-0 flex justify-center w-1/4 h-full text-white transform -translate-y-1 bg-gray-900 bg-opacity-50">
-                  <p className="px-48 text-white text-36 py-80">{item.text}</p>
-                </div>
                 <div className="absolute left-0 right-0 flex items-center justify-center m-auto bottom-41 w-300 h-22">
                   <Button
                     variant="default"
