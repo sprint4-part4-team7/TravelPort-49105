@@ -27,14 +27,14 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
   const navigate = useNavigate();
   // TODO: 경로 맞게 수정하기 (지금은 임시 ..)
   const handleAccommodation = () => {
-    navigate('./list');
+    navigate('/list/3');
   };
   const handleActivity = () => {
-    navigate('./list');
+    navigate('/list/20');
   };
   // TODO: 교통 LIST 페이지로 가면 "서비스가 준비중입니다" 나오게 하기
   const handleTraffic = () => {
-    navigate('./list');
+    navigate('/list');
   };
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
 
