@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import useModal from '@/hooks/useModal';
 import uploadIcon from '@/assets/icons/upload.svg';
 import { putUserInfo } from '@/apis/editInfo';
+import { PHONE_NUMBER_REGEX } from '@/constants/InputType';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 import Modal from '@/components/common/Modal';
@@ -118,10 +119,10 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
           )}
           <InputBox
             label="전화번호"
-            placeholder="'-' 없이 입력해주세요"
+            placeholder="010-****-****"
             register={register('phone', {
               pattern: {
-                value: /^[0-9]{10,11}$/,
+                value: PHONE_NUMBER_REGEX,
                 message: '전화번호 형식에 맞게 입력해주세요',
               },
             })}
@@ -161,7 +162,11 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
         </div>
       </form>
       <Button text="저장하기" onClick={handleSubmit(handleSave)} />
-      <Modal isOpen={isModalOpen} closeModal={closeModal}>
+      <Modal
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        modal="w-full max-w-536"
+      >
         <ChangePassword closeModal={closeModal} />
       </Modal>
     </div>

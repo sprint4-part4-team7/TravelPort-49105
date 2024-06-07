@@ -6,6 +6,7 @@ type InputBoxProps = {
   inputType?: 'text' | 'password' | 'number';
   value?: string | number;
   placeholder?: string;
+  direction?: 'row' | 'col';
   width?: string;
   error?: FieldError;
   register?: any;
@@ -19,13 +20,13 @@ const InputBox = ({
   value,
   placeholder = '입력',
   width = '100%',
+  direction = 'col',
   error,
   register,
   onChange = undefined,
   disabled = false,
 }: InputBoxProps) => {
-  const inputboxBasic =
-    'p-12 rounded text-16 outline-none border-solid border-1 border-black-5';
+  const inputboxBasic = `p-12 rounded text-16 outline-none border-solid border-1 border-black-5 ${direction === 'col' ? '' : 'w-full max-w-335'}`;
   const focusDesign = 'focus:border-blue-6 focus:border-1';
   const errorDesign = 'border-system-error';
 
@@ -36,7 +37,10 @@ const InputBox = ({
   }
 
   return (
-    <div className="flex flex-col gap-8" style={{ width }}>
+    <div
+      className={`flex gap-8 ${direction === 'col' ? 'flex-col' : 'flew-row items-center justify-end'}`}
+      style={{ width }}
+    >
       <label className="text-16" htmlFor={inputType}>
         {label}
       </label>
