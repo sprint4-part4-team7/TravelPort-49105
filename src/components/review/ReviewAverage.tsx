@@ -63,8 +63,7 @@ const ReviewAverage = ({ productId }: ReviewProps) => {
   return (
     <div
       className="flex min-w-376 mobile:flex-col items-center 
-      justify-center gap-40 mx-auto my-0 w-fit
-      border-1 border-solid border-black-3"
+      justify-center gap-40 mx-auto my-0 w-fit"
     >
       <div className="flex flex-col items-center justify-center gap-8">
         <div className="flex items-center justify-center gap-4">
@@ -74,7 +73,9 @@ const ReviewAverage = ({ productId }: ReviewProps) => {
             <span className="text-black-4 font-light"> / 5</span>
           </div>
         </div>
-        <div className="text-black-5 font-semibold">{reviewNum}명 참여</div>
+        <div className="text-14 text-black-5 font-semibold">
+          {reviewNum}명 참여
+        </div>
       </div>
       <div className="flex flex-col text-16">
         {[5, 4, 3, 2, 1].map((score) => (
