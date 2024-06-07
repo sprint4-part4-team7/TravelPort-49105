@@ -1,5 +1,5 @@
-import Modal from '@/components/common/Modal';
 import useModal from '@/hooks/useModal';
+import Modal from '@/components/common/Modal';
 
 const ModalExample = () => {
   //  useModal 훅을 사용하여 isOpen, openModal, closeModal을 가져온다.
