@@ -5,8 +5,10 @@ import { CardListsType, DetailData } from '@/constants/types';
 import minus from '@/assets/icons/minus.svg';
 import plus from '@/assets/icons/plus.svg';
 import { useState } from 'react';
+import getDate from '@/utils/getDate';
 import CalendarCustom from '../common/CalendarCustom';
 import Button from '../common/Button';
+import '@/styles/ProductDetails.css';
 
 interface ReservationProps {
   product?: DetailData;
@@ -31,15 +33,26 @@ const Reservation = ({ product, options }: ReservationProps) => {
     setTicketNum(ticketNum - 1);
   };
   const handleTicketPlus = () => {
-    if (ticketNum >= filteredOption[0].userCount) return;
+    if (
+      !filteredOption[0]?.userCount ||
+      ticketNum >= filteredOption[0].userCount
+    )
+      return;
     setTicketNum(ticketNum + 1);
   };
 
-  const mockDate = '2024-05-27T03:05:19.935Z';
-  const dateArray = mockDate.split('T')[0].split('-').map(Number);
-  const startDate = new Date(dateArray[0], dateArray[1] - 1, dateArray[2]);
-  const endDate = new Date(2024, 7, 10);
-  const holiday = ['0'].map(Number);
+  const startDateArray =
+    product && getDate(product.startDate).split('-').map(Number);
+  const startDate =
+    startDateArray &&
+    new Date(startDateArray[0], startDateArray[1] - 1, startDateArray[2]);
+  const endDateArray =
+    product && getDate(product.endDate).split('-').map(Number);
+  const endDate =
+    endDateArray &&
+    new Date(endDateArray[0], endDateArray[1] - 1, endDateArray[2]);
+  const holiday = product ? product?.closedDay.map(Number) : [];
+
   return (
     <div className="mt-40">
       <h1 className="my-20 text-24 font-bold">일정을 선택하세요</h1>
@@ -56,11 +69,11 @@ const Reservation = ({ product, options }: ReservationProps) => {
 
       <h1 className="my-20 text-24 font-bold">회차를 선택하세요</h1>
       <hr className="mb-20" />
-      <div className="grid mx-auto grid-cols-3 gap-16 text-14 font-semibold mb-60 cursor-pointer">
+      <div className="grid mx-auto grid-cols-3 mobile:grid-cols-2 gap-16 text-14 font-semibold mb-60 cursor-pointer">
         {options.map((option) => {
           if (option.userCount === 0) {
             return (
-              <div className="flex flex-col justify-center items-center bg-black-3 text-black-6 border-black-4 border-1 rounded-4 h-60">
+              <div className="line flex flex-col justify-center items-center bg-black-3 text-black-6 border-black-4 border-1 rounded-4 h-60">
                 <div>{option.optionName}</div>
                 <div className="font-normal">마감</div>
               </div>
@@ -69,7 +82,10 @@ const Reservation = ({ product, options }: ReservationProps) => {
           return (
             <div
               className={`flex justify-center items-center border-black-4 border-1 rounded-4 h-60 flex-1 ${selectedOption === option.optionName ? 'bg-blue-6 text-white' : ''}`}
-              onClick={() => handleClick(option.optionName)}
+              onClick={() => {
+                handleClick(option.optionName);
+                setTicketNum(0);
+              }}
             >
               {option.optionName}
             </div>

@@ -11,6 +11,7 @@ export type DetailData = {
   startDate: string;
   endDate: string;
   closedDay: string[];
+  thumbnail: string;
 };
 
 export type OptionData = {

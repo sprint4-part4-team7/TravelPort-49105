@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
@@ -7,20 +8,21 @@ import { useState } from 'react';
 import LocationMap from '@/components/details/LocationMap';
 import SalesPeriod from '@/components/details/SalesPeriod';
 import Reservation from '@/components/details/Reservation';
+import DetailsCarousel from '@/components/details/detailsCarousel';
 
 const ProductDetails = () => {
-  const { product, options } = useFetchDetails(2, 1);
+  const { product, options } = useFetchDetails(1, 1);
   const [activeTab, setActiveTab] = useState('');
 
   const handleTabClick = (tab: string) => setActiveTab(tab);
 
+  let newUrls;
+  if (product?.productImages)
+    newUrls = [product?.thumbnail].concat(product?.productImages);
+
   return (
-    <div className="mt-100 mb-40 mobile:mt-40 mobile:mx-20 tablet:mx-20">
-      <img
-        src={product?.productImages[0]}
-        alt="상품이미지"
-        className="mx-auto w-784"
-      />
+    <div className="max-w-784 mx-auto mt-100 mb-40 mobile:mt-40 mobile:px-20 tablet:px-20">
+      <DetailsCarousel urls={newUrls} />
       <div className="flex flex-col gap-12 mt-32 mb-40 max-w-784 w-full mx-auto">
         <h1 className="text-20 font-bold">{product?.name}</h1>
         <h2 className="text-20 font-bold mt-4">
