@@ -12,13 +12,14 @@ const useProductAll = () => {
   });
 
   const {
-    data: optionAll,
+    data: optionAllResponse,
     isLoading: isLoadingOptions,
     error: optionsError,
   } = useQuery({
     queryKey: ['getProductOptionAll'],
     queryFn: getProductOptionAll,
   });
+  const optionAll = optionAllResponse ? optionAllResponse.data : [];
 
   return {
     productAll,

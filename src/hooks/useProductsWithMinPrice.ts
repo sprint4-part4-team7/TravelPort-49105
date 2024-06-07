@@ -3,12 +3,14 @@ import { useMemo } from 'react';
 
 const useProductsWithMinPrice = (
   products: any[],
-  optionAll: any[],
+  optionAll: any,
   reviews: any[],
   search: string,
 ) => {
   // 최소 가격을 계산하는 함수
   const calculateMinPrice = (productId: number, options: any[]) => {
+    // 옵션 존재 여부 확인
+    if (!options) return 0;
     const filteredOptions = options.filter(
       (option) => option.productId === productId,
     );
@@ -22,6 +24,8 @@ const useProductsWithMinPrice = (
     options: any[],
     reviews: any[],
   ) => {
+    // 옵션과 리뷰의 존재 여부 확인
+    if (!options || !reviews) return { totalReviews: 0, averageScore: 0 };
     const optionIds = options
       .filter((option) => option.productId === productId)
       .map((option) => option.id);
@@ -39,6 +43,8 @@ const useProductsWithMinPrice = (
   };
 
   const productsWithMinPriceAndReviews = useMemo(() => {
+    // 제품, 옵션, 리뷰 존재 여부 확인
+    if (!products || !optionAll || !reviews) return [];
     return products
       .map((product) => {
         const minPrice = calculateMinPrice(product.id, optionAll);

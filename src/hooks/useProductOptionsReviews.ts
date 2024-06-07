@@ -15,7 +15,9 @@ const useProductOptionsReviews = (
           // 해당 제품의 옵션 찾기
           const productOptions =
             optionAll &&
-            optionAll.filter((option: any) => option.productId === product.id);
+            optionAll?.filter(
+              (option: any) => option?.productId === product.id,
+            );
 
           // 해당 옵션들의 리뷰 찾기
           const reviews =
