@@ -1,80 +1,91 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-undef */
 import { useEffect, useState } from 'react';
-import { TiDeleteOutline } from 'react-icons/ti';
-import { CiCirclePlus } from 'react-icons/ci';
+import plusUpload from '@/assets/icons/plusUpload.svg';
 
 type ImageUploadProps = {
   onChange: (selectedImages: string[]) => void;
 };
 
-const ImageUpload = ({ onChange }: ImageUploadProps) => {
-  const [showImages, setShowImages] = useState<string[]>([]);
+const ImageUpload = ({ onChange }: ImageUploadProps): any => {
+  const [showImages, setShowImages] = useState<string[]>(Array(5).fill(''));
+  const uploadArray = [0, 1, 2, 3, 4];
 
   // 이미지 상대경로 저장
-  const handleAddImages = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAddImages = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    idx: number,
+  ): any => {
     const imageLists = event.target.files;
-    let imageUrlLists = [...showImages];
 
-    if (imageLists) {
-      for (let i = 0; i < imageLists.length; i++) {
-        const currentImageUrl = URL.createObjectURL(imageLists[i]);
-        imageUrlLists.push(currentImageUrl);
-      }
+    if (imageLists && imageLists.length > 0) {
+      const currentImageUrl = URL.createObjectURL(imageLists[0]);
+
+      const updatedImages = showImages.map((image, imageIdx) =>
+        imageIdx === idx ? currentImageUrl : image,
+      );
+
+      setShowImages(updatedImages);
     }
-
-    if (imageUrlLists.length > 10) {
-      imageUrlLists = imageUrlLists.slice(0, 10);
-    }
-
-    setShowImages(imageUrlLists);
   };
 
   useEffect(() => {
     onChange(showImages);
   }, [showImages]);
 
-  // X버튼 클릭 시 이미지 삭제
-  const handleDeleteImage = (id: number) => {
-    setShowImages(showImages.filter((_, index) => index !== id));
+  // 클릭 시 이미지 삭제
+  const handleDeleteImage = (boxIdx: number) => {
+    const updatedImages = showImages.map((image, idx) =>
+      idx === boxIdx ? '' : image,
+    );
+    setShowImages(updatedImages);
   };
 
   return (
-    <>
-      <div className="flex items-center justify-center border-1 border-#000 border-solid w-120 h-120">
-        <label htmlFor="input-file">
-          <input
-            type="file"
-            id="input-file"
-            multiple
-            className="hidden"
-            onChange={handleAddImages}
-          />
-          <CiCirclePlus
-            fill="#646F7C"
-            size={24}
-            className="w-full flex justify-center cursor-pointer"
-          />
-          <span>사진추가</span>
-        </label>
-      </div>
-
-      {/* 저장해둔 이미지들을 순회하면서 화면에 이미지 출력 */}
-      <div className="flex ">
-        {showImages.map((image, id) => {
-          return (
-            <div key={id} className="relative">
-              <img src={image} alt={`${image}-${id}`} className="h-120" />
-              <TiDeleteOutline
-                size={24}
-                onClick={() => handleDeleteImage(id)}
-                className="absolute top-0 right-0 cursor-pointer"
+    <div className="flex gap-12 flex-wrap">
+      {uploadArray.map((_, idx) => {
+        return (
+          <div
+            key={idx}
+            className="relative flex items-center justify-center w-120 h-120 bg-black-2 border-dotted border-black-4 border-1 rounded-2"
+          >
+            <label htmlFor={`input-file-${idx}`}>
+              <input
+                type="file"
+                id={`input-file-${idx}`}
+                className="hidden"
+                onChange={(e) => handleAddImages(e, idx)}
               />
-            </div>
-          );
-        })}
-      </div>
-    </>
+              {!showImages[idx].length && (
+                <div className="flex flex-col gap-8">
+                  <img
+                    src={plusUpload}
+                    alt="업로드아이콘"
+                    width={14}
+                    className="w-full flex justify-center cursor-pointer"
+                  />
+                  <div className="text-13 font-medium text-black-6">업로드</div>
+                </div>
+              )}
+            </label>
+            {/* 저장해둔 이미지들을 순회하면서 화면에 이미지 출력 */}
+            {showImages[idx] && (
+              <div
+                className="absolute top-0 left-0"
+                onClick={() => handleDeleteImage(idx)}
+              >
+                <img
+                  src={showImages[idx]}
+                  alt={`uploaded-${idx}`}
+                  className="h-120"
+                />
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
   );
 };
 

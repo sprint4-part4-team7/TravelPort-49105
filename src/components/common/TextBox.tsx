@@ -3,6 +3,8 @@ import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
 type TextBoxProps = {
   labelName: string;
+  textSize: number;
+  mb: number;
   textLimit: number;
   placeholder: string;
   value: string;
@@ -13,6 +15,8 @@ type TextBoxProps = {
 
 const TextBox = ({
   labelName,
+  textSize,
+  mb = 0,
   textLimit,
   placeholder,
   value,
@@ -48,7 +52,10 @@ const TextBox = ({
 
   return (
     <div className="relative flex flex-col w-full gap-8">
-      <label className="text-16" htmlFor={labelName}>
+      <label
+        className={`text-${textSize} font-bold mb-${mb}`}
+        htmlFor={labelName}
+      >
         {labelName}
       </label>
       <textarea
