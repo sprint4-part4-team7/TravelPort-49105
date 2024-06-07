@@ -24,3 +24,10 @@ export const getProductOptionAll = async () => {
     throw error;
   }
 };
+
+export const getProductOptionAll2 = () => {
+  return instance({
+    url: `/productOption/all`,
+    method: 'GET',
+  });
+};

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import logo from '@/assets/icons/travelPortLogo.svg';
 import { useNavigate } from 'react-router-dom';
 import { getCookie } from '@/utils/cookie';
-import useProductAll from '@/hooks/useProductAll';
+import useProductAll from '@/hooks/reactQuery/product/useProductAll';
 import useSearchData from '@/hooks/useSearchData';
 import uniqueProduct from '@/utils/uniqueProduct';
 import LoginUserHeaderBar from './LoginUserHeaderBar';

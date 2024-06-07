@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 import { useMemo } from 'react';
 
 const useProductOptionsReviews = (
@@ -6,35 +7,37 @@ const useProductOptionsReviews = (
   reviewAll: any,
 ) => {
   return useMemo(() => {
-    const products = productAll.data;
+    const products = productAll?.data;
     return (
       products &&
       products
         .map((product: any) => {
           // 해당 제품의 옵션 찾기
-          const productOptions = optionAll.filter(
-            (option: any) => option.productId === product.id,
-          );
+          const productOptions =
+            optionAll &&
+            optionAll.filter((option: any) => option.productId === product.id);
 
           // 해당 옵션들의 리뷰 찾기
-          const reviews = reviewAll.filter((review: any) =>
-            productOptions.some(
-              (option: any) => option.id === review.productOptionId,
-            ),
-          );
+          const reviews =
+            reviewAll &&
+            reviewAll.filter((review: any) =>
+              productOptions.some(
+                (option: any) => option.id === review.productOptionId,
+              ),
+            );
 
           // 리뷰 개수
-          const reviewCount = reviews.length;
+          const reviewCount = reviews?.length;
           // 평균 점수 계산
           const averageScore =
             Math.round(
-              (reviews.reduce((acc: any, curr: any) => acc + curr.score, 0) /
+              (reviews?.reduce((acc: any, curr: any) => acc + curr.score, 0) /
                 reviewCount) *
                 10,
             ) / 10 || 0;
 
           // 최저 가격 계산
-          const minPrice = productOptions.reduce((min: any, option: any) => {
+          const minPrice = productOptions?.reduce((min: any, option: any) => {
             return option.optionPrice < min ? option.optionPrice : min;
           }, Infinity);
 

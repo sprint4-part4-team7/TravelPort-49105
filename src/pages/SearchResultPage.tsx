@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import useProductAll from '@/hooks/useProductAll';
+import useProductAll from '@/hooks/reactQuery/product/useProductAll';
 
 import useScoreAvg from '@/hooks/useScoreAvg';
 import useProductsWithMinPrice from '@/hooks/useProductsWithMinPrice';
