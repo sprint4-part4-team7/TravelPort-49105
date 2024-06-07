@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import { useForm } from 'react-hook-form';
-import { getDefaultOption, postReview } from '@/apis/review';
+import { getDefaultOption } from '@/apis/review';
 import React, { useEffect, useState } from 'react';
+import useModal from '@/hooks/useModal';
 import TextBox from '@/components/common/TextBox';
 import ReviewStar from '@/components/review/ReviewStar';
 import Button from '@/components/common/Button';
 import ImageUpload from '@/components/review/ImageUpload';
+import Modal from '@/components/common/Modal';
 
 const ReviewRegister = () => {
   const {
@@ -28,6 +30,8 @@ const ReviewRegister = () => {
   const [option, setOption] = useState('');
   const [product, setProduct] = useState('');
 
+  const { isModalOpen, openModal, closeModal } = useModal();
+
   useEffect(() => {
     const fetchDefaultOption = async (optionId: number) => {
       const { optionName, productName } = await getDefaultOption(optionId);
@@ -38,12 +42,12 @@ const ReviewRegister = () => {
   }, [option, product]);
 
   const onSubmit = async (data: any) => {
-    try {
-      await postReview(1, 1, data); // 임시
-    } catch (error) {
-      console.log(error);
-    }
-    // console.log({ ...data });
+    // try {
+    //   await postReview(1, 1, data); // 임시
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    console.log({ ...data });
   };
 
   const handleScoreChange = React.useCallback((selectedScore: number) => {
@@ -109,8 +113,17 @@ const ReviewRegister = () => {
       </h1>
       <ImageUpload onChange={handleImageChange} />
       <div className="mt-60">
-        <Button text="등록하기" onClick={handleSubmit(onSubmit)} />
+        <Button
+          text="등록하기"
+          onClick={() => {
+            handleSubmit(onSubmit);
+            openModal();
+          }}
+        />
       </div>
+      <Modal isOpen={isModalOpen} closeModal={closeModal}>
+        <div className="p-16">리뷰를 등록하시겠습니까?</div>
+      </Modal>
     </form>
   );
 };
