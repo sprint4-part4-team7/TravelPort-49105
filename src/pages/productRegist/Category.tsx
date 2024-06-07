@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import CheckButton from './CheckButton';
 import Description from './Description';
 
@@ -12,7 +12,7 @@ type CategoryIdProps = {
 };
 
 const Category = ({ setPage }: CategoryIdProps) => {
-  const { register, handleSubmit, watch } = useForm<CategoryForm>({
+  const { register, handleSubmit, watch, setValue } = useForm<CategoryForm>({
     mode: 'onChange',
   });
 
@@ -22,8 +22,20 @@ const Category = ({ setPage }: CategoryIdProps) => {
 
   const onSubmit = (data: CategoryForm) => {
     setPage(<Description />);
-    console.log(data);
+    if (data.category === '숙박') {
+      localStorage.setItem('categoryId', '3'); // 서버 바뀌면 1
+    } else if (data.category === '체험') {
+      localStorage.setItem('categoryId', '20'); // 서버 바뀌면 2
+    }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem('categoryId') === '3') {
+      setValue('category', '숙박'); // setValue를 사용하여 category에 원래있던 기초값을 전달
+    } else if (localStorage.getItem('categoryId') === '20') {
+      setValue('category', '체험'); // setValue를 사용하여 category에 원래있던 기초값을 전달
+    }
+  }, []);
 
   // [버튼] input 클릭시 abled
   const handleButton = () => {
