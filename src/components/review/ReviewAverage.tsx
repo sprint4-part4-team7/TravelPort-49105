@@ -40,7 +40,25 @@ const ReviewAverage = ({ productId }: ReviewProps) => {
     }
   }
 
-  const maxScoreNum = Math.max.apply(null, scoreArray);
+  const maxScoreNum = Math.max(...scoreArray);
+
+  const getBarClass = (score: number) => {
+    const ratio = scoreArray[score] / maxScoreNum;
+    if (ratio === 1) return 'w-full bg-blue-6';
+    if (ratio >= 0.75) return 'w-3/4 bg-blue-5';
+    if (ratio >= 0.5) return 'w-1/2 bg-blue-4';
+    if (ratio >= 0.25) return 'w-1/4 bg-blue-3';
+    return scoreArray[score] === 0 ? 'w-1/6 bg-black-4' : '';
+  };
+
+  const getTextClass = (score: number) => {
+    const ratio = scoreArray[score] / maxScoreNum;
+    if (ratio === 1) return 'text-blue-6';
+    if (ratio >= 0.75) return 'text-blue-5';
+    if (ratio >= 0.5) return 'text-blue-4';
+    if (ratio >= 0.25) return 'text-blue-3';
+    return scoreArray[score] === 0 ? 'text-black-4' : '';
+  };
 
   return (
     <div
@@ -63,52 +81,9 @@ const ReviewAverage = ({ productId }: ReviewProps) => {
           <div key={score} className="flex gap-8 items-center justify-center">
             <div>{score}</div>
             <div className="w-280 h-10">
-              <div
-                className={` ${
-                  scoreArray[score] === 0 && 'w-1/6 h-10 bg-black-4'
-                } ${
-                  scoreArray[score] >= maxScoreNum * 0.75 &&
-                  scoreArray[score] < maxScoreNum
-                    ? 'w-3/4 h-10 bg-blue-5'
-                    : ''
-                } ${
-                  scoreArray[score] >= maxScoreNum * 0.5 &&
-                  scoreArray[score] < maxScoreNum * 0.75
-                    ? 'w-1/2 h-10 bg-blue-4'
-                    : ''
-                } ${
-                  scoreArray[score] >= maxScoreNum * 0.25 &&
-                  scoreArray[score] < maxScoreNum * 0.5
-                    ? 'w-1/4 h-10 bg-blue-3'
-                    : ''
-                }
-                  ${
-                    scoreArray[score] === maxScoreNum && 'w-full h-10 bg-blue-6'
-                  }`}
-              />
+              <div className={`h-10 ${getBarClass(score)}`} />
             </div>
-
-            <div
-              className={`text-17 font-semibold ${
-                scoreArray[score] === 0 && 'text-black-4'
-              } ${
-                scoreArray[score] >= maxScoreNum * 0.75 &&
-                scoreArray[score] < maxScoreNum
-                  ? 'text-blue-5'
-                  : ''
-              } ${
-                scoreArray[score] >= maxScoreNum * 0.5 &&
-                scoreArray[score] < maxScoreNum * 0.75
-                  ? 'text-blue-4'
-                  : ''
-              } ${
-                scoreArray[score] >= maxScoreNum * 0.25 &&
-                scoreArray[score] < maxScoreNum * 0.5
-                  ? 'text-blue-3'
-                  : ''
-              }
-                  ${scoreArray[score] === maxScoreNum && 'text-blue-6'}`}
-            >
+            <div className={`text-17 font-semibold ${getTextClass(score)}`}>
               {scoreArray[score]}
             </div>
           </div>
