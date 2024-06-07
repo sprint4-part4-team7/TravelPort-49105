@@ -116,13 +116,13 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
             id: 'reservation-status',
             icon: list,
             label: '예약 내역',
-            path: '/',
+            path: '/mypage',
           },
           {
             id: 'reservation-history',
             icon: reservationStatus,
             label: '예약 현황',
-            path: '/',
+            path: '/mypage',
           },
         ]
       : []),
@@ -137,13 +137,13 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
             id: 'reservation-status',
             icon: list,
             label: '예약 내역',
-            path: '/',
+            path: '/mypage',
           },
           {
             id: 'reservation-history',
             icon: reservationStatus,
             label: '예약 현황',
-            path: '/',
+            path: '/mypage',
           },
         ]
       : []),
