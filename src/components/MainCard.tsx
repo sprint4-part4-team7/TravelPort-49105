@@ -40,18 +40,19 @@ const MainCard: React.FC<PopularAccommodationsProps> = ({
         </div>
       </div>
       <div className="grid gap-20 mobile:grid-cols-1 tablet:grid-cols-3 desktop:grid-cols-4">
-        {images.map((item, index) => (
-          <Card
-            key={index}
-            title={item.text as string}
-            location={item.location as string}
-            price={item.price as number}
-            score={item.score as number}
-            review={item.review as number}
-            image={item.url as string}
-            link={item.path as string}
-          />
-        ))}
+        {images &&
+          images.map((item, index) => (
+            <Card
+              key={index}
+              title={item.text as string}
+              location={item.location as string}
+              price={item.price as number}
+              score={item.score as number}
+              review={item.review as number}
+              image={item.url as string}
+              link={item.path as string}
+            />
+          ))}
       </div>
     </div>
   );
