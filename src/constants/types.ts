@@ -53,6 +53,8 @@ export type CardListsType = {
   id: number;
   productId: number;
   optionPrice: number;
+  optionName: string;
+  userCount: number;
   product: {
     id: string;
     buildingName: string;

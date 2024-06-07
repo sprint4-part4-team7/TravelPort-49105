@@ -5,7 +5,6 @@ import CheckoutPage from '@/pages/payments/CheckoutPage';
 import SuccessPage from '@/pages/payments/SuccessPage';
 import FailPage from '@/pages/payments/FailPage';
 import MyPage from '@/pages/MyPage';
-import Reservation from '@/pages/Reservation';
 import List from '@/pages/List';
 import GoogleRedirect from '@/pages/auth/login/GoogleRedirect';
 import KakaoRedirect from '@/pages/auth/login/KakaoRedirect';
@@ -35,9 +34,6 @@ const App = () => {
         <Route path="signup">
           <Route path="user" element={<UserSignup />} />
           <Route path="partner" element={<PartnerSignup />} />
-        </Route>
-        <Route path="reservation">
-          <Route index element={<Reservation />} />
         </Route>
         <Route path="list">
           <Route index element={<List />} />
