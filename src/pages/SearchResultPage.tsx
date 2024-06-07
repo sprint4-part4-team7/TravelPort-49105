@@ -16,7 +16,7 @@ interface ProductCardProps {
   id: number;
   name: string;
   productAddress: string;
-  productImages: string;
+  thumbnail: string;
   minPrice: number;
 }
 
@@ -24,7 +24,7 @@ const ProductCard = ({
   id,
   name,
   productAddress,
-  productImages,
+  thumbnail,
   minPrice,
 }: ProductCardProps) => {
   const { avg, length } = useScoreAvg(id);
@@ -37,7 +37,7 @@ const ProductCard = ({
       price={minPrice}
       score={avg}
       review={length}
-      image={productImages}
+      image={thumbnail}
       link="/"
     />
   );
@@ -126,7 +126,7 @@ const SearchResultPage = () => {
               id={item.id}
               name={item.name}
               productAddress={item.productAddress}
-              productImages={item.productImages}
+              thumbnail={item.thumbnail}
               minPrice={item.minPrice}
             />
           ))}
