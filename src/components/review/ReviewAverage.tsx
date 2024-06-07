@@ -10,13 +10,20 @@ const ReviewAverage = ({ productId }: ReviewProps) => {
   const [reviewNum, setReviewNum] = useState(0);
   const [reviews, setReviews] = useState<any[]>([]);
   const scoreArray = [0, 0, 0, 0, 0, 0];
+  const reviewLength = reviews.length;
 
   const handleReview = async (pId: number = 0) => {
     try {
       const res = await instance.get(`/review/product/${pId}`);
       const result = res.data;
+      const uniqueResult: number[] = [];
+      result.forEach((oneResult: { userId: number }) => {
+        if (!uniqueResult.includes(oneResult.userId)) {
+          uniqueResult.push(oneResult.userId);
+        }
+      });
       setReviews(result);
-      setReviewNum(result.length);
+      setReviewNum(uniqueResult.length);
     } catch (error: any) {
       console.error(error.message);
     }
@@ -28,15 +35,15 @@ const ReviewAverage = ({ productId }: ReviewProps) => {
 
   let scoreTotal = 0;
   let scoreAvg = 0;
-  for (let i = 0; i < reviewNum; i++) {
+  for (let i = 0; i < reviewLength; i++) {
     if (reviews[i].score === null) {
       scoreArray[0]++;
     } else {
       scoreArray[Math.round(reviews[i].score)]++;
       scoreTotal += reviews[i].score;
     }
-    if (i === reviewNum - 1) {
-      scoreAvg = Math.round((scoreTotal / reviewNum) * 100) / 100;
+    if (i === reviewLength - 1) {
+      scoreAvg = Math.round((scoreTotal / reviewLength) * 100) / 100;
     }
   }
 
@@ -63,7 +70,7 @@ const ReviewAverage = ({ productId }: ReviewProps) => {
   return (
     <div
       className="flex min-w-376 mobile:flex-col items-center 
-      justify-center gap-40 mx-auto my-0 w-fit"
+      justify-center gap-40 mx-auto mb-20 w-fit"
     >
       <div className="flex flex-col items-center justify-center gap-8">
         <div className="flex items-center justify-center gap-4">

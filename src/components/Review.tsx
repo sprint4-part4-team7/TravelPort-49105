@@ -6,14 +6,15 @@ import STAR_EMPTY from '@/assets/images/star-empty.svg';
 import STAR_FILL from '@/assets/images/star-fill.svg';
 import { useEffect, useState } from 'react';
 import instance from '@/utils/axios';
+import { ReviewData } from '@/constants/types';
 
 type ReviewProps = {
-  reviewId?: number;
+  review: ReviewData;
 };
 
-const Review = ({ reviewId }: ReviewProps) => {
+const Review = ({ review }: ReviewProps) => {
   const [isComment, setIsComment] = useState(false);
-  const [reviewImages, setReviewImages] = useState([]);
+  const [reviewImages, setReviewImages] = useState<string[]>([]);
   const [reviewContent, setReviewContent] = useState('');
   const [score, setScore] = useState(0);
   const [userId, setUserId] = useState<number>(0);
@@ -30,21 +31,15 @@ const Review = ({ reviewId }: ReviewProps) => {
     return `${year}.${month}.${day}`;
   };
 
-  const handleReview = async (rId: number = 0) => {
-    try {
-      const res = await instance.get(`/review/${rId}`);
-      const result = res.data.review;
-      const reviewScore = result.score !== null ? Math.round(result.score) : 0;
-      setUserId(result.userId);
-      setProductOptionId(result.productOptionId);
-      setReviewContent(result.reviewContent);
-      setScore(reviewScore);
-      setReviewImages(result.reviewImgaes);
-      setPartnerAnswer(result.partnerAnswer);
-      setCreatedAt(formatDate(result.createdAt));
-    } catch (error: any) {
-      console.error(error.message);
-    }
+  const handleReview = () => {
+    const reviewScore = review.score !== null ? Math.round(review.score) : 0;
+    setUserId(review.userId);
+    setProductOptionId(review.productOptionId);
+    setReviewContent(review.reviewContent);
+    setScore(reviewScore);
+    setReviewImages(review.reviewImages);
+    setPartnerAnswer(review.partnerAnswer);
+    setCreatedAt(formatDate(review.createdAt));
   };
 
   // user 정보 및 상품옵션
@@ -64,7 +59,7 @@ const Review = ({ reviewId }: ReviewProps) => {
   };
 
   useEffect(() => {
-    handleReview(reviewId);
+    handleReview();
   }, []);
   useEffect(() => {
     if (productOptionId > 0) {
@@ -73,7 +68,7 @@ const Review = ({ reviewId }: ReviewProps) => {
   }, [productOptionId]);
 
   // 판매자 댓글 클릭 시, 댓글 내용이 보이게 하도록 하는 handler 함수
-  const handleCommnent = () => {
+  const handleComment = () => {
     setIsComment(!isComment);
   };
 
@@ -179,7 +174,7 @@ const Review = ({ reviewId }: ReviewProps) => {
           <button
             type="button"
             className="inline-flex items-center gap-8 p-8 rounded w-fit hover:bg-black-3"
-            onClick={handleCommnent}
+            onClick={handleComment}
           >
             <div className="flex gap-4">
               <img

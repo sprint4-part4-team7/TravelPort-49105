@@ -1,0 +1,8 @@
+.line {
+  background: linear-gradient(
+    to bottom right,
+    #f0f0f0 calc(50% - 1px),
+    #d9d9d9,
+    #f0f0f0 calc(50% + 1px)
+  );
+}
