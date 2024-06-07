@@ -8,7 +8,7 @@ import { useState } from 'react';
 import LocationMap from '@/components/details/LocationMap';
 import SalesPeriod from '@/components/details/SalesPeriod';
 import Reservation from '@/components/details/Reservation';
-import DetailsCarousel from '@/components/details/detailsCarousel';
+import DetailsCarousel from '@/components/details/DetailsCarousel';
 
 const ProductDetails = () => {
   const { product, options } = useFetchDetails(1, 1);
