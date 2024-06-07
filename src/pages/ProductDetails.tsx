@@ -5,14 +5,20 @@
 import useFetchDetails from '@/hooks/useFetchDetails';
 import getMinPrice from '@/utils/getMinPrice';
 import { useState } from 'react';
+import useProductReview from '@/hooks/useProductReview';
 import LocationMap from '@/components/details/LocationMap';
 import SalesPeriod from '@/components/details/SalesPeriod';
 import Reservation from '@/components/details/Reservation';
 import DetailsCarousel from '@/components/details/DetailsCarousel';
+import Review from '@/components/Review';
+import ReviewAverage from '@/components/review/ReviewAverage';
 
 const ProductDetails = () => {
-  const { product, options } = useFetchDetails(1, 1);
+  const productId = 2;
+  const { product, options } = useFetchDetails(productId);
   const [activeTab, setActiveTab] = useState('');
+
+  const { productReviews } = useProductReview(productId);
 
   const handleTabClick = (tab: string) => setActiveTab(tab);
 
@@ -61,6 +67,20 @@ const ProductDetails = () => {
         </div>
         {activeTab === 'reservation' && (
           <Reservation product={product} options={options} />
+        )}
+        {activeTab === 'review' && (
+          <div className="mt-60">
+            <ReviewAverage productId={productId} />
+            <h1 className="text-18 font-semibold py-16">
+              리뷰
+              <span className="text-blue-6 pl-11">
+                {productReviews.length}개
+              </span>
+            </h1>
+            {productReviews.map((review) => {
+              return <Review review={review} />;
+            })}
+          </div>
         )}
       </div>
     </div>
