@@ -49,11 +49,13 @@ const Main = () => {
   const navigate = useNavigate();
   const { productAll, optionAll } = useProductAll();
   const { data: reviewAll } = useReviewAllQuery();
+  // 카드에 들어가는 데이터
   const combinedData = useProductOptionsReviews(
     productAll,
     optionAll,
     reviewAll,
   );
+  // 카테고리로 분류
   const { sortedCategoryAccommodation, sortedCategoryActivity } =
     useFilterByCategory(combinedData);
 
