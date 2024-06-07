@@ -6,15 +6,13 @@ import location from '@/assets/icons/location.svg';
 import calendar from '@/assets/icons/calendar.svg';
 import arrowRightUp from '@/assets/icons/arrowRightUp.svg';
 import getDate from '@/utils/getDate';
-import useProductAll from '@/hooks/useProductAll';
 import getMinPrice from '@/utils/getMinPrice';
 import KakaoMap from '@/components/common/map/KakaoMap';
 import Modal from '@/components/common/Modal';
 
 const ProductDetails = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
-  const { product } = useFetchDetails(3, 1);
-  const { optionAll } = useProductAll();
+  const { product, options } = useFetchDetails(3, 1);
 
   return (
     <div className="mt-100 mb-40 mobile:mt-40">
@@ -25,7 +23,9 @@ const ProductDetails = () => {
       />
       <div className="flex flex-col gap-12 mt-32 mb-40 w-784 mx-auto">
         <h1 className="text-20 font-bold">{product?.name}</h1>
-        <h2 className="text-20 font-bold mt-4">{getMinPrice(optionAll)}원~</h2>
+        <h2 className="text-20 font-bold mt-4">
+          {getMinPrice(options).toLocaleString()}원~
+        </h2>
         <p className="text-16 mb-8">{product?.productDesc}</p>
 
         <div className="flex gap-8 text-17 font-semibold">
