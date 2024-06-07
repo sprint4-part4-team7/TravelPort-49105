@@ -28,14 +28,14 @@ const MainCard: React.FC<PopularAccommodationsProps> = ({
     <div className="">
       <div className="flex justify-between mb-18">
         <p className="font-semibold text-22 ">{title} </p>
-        <div>
+        <div className="w-61">
           <Button
             variant="default"
             text="더보기"
             outlined
             isCancel
             onClick={onclick}
-            buttonStyle="rounded-4 px-12 py-8 w-61 text-13 font-medium text-[#BFBFBF]"
+            buttonStyle="rounded-4 px-12 py-8 text-13 font-medium text-black-5"
           />
         </div>
       </div>
