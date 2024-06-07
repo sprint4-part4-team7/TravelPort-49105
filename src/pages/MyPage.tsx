@@ -8,7 +8,7 @@ const MyPage = () => {
   const { userMypage } = useUserMypageStore();
 
   return (
-    <Layout userType="user">
+    <Layout>
       <MyPageSideBar>
         {userMypage === 'user' && <EditInfo userType="user" />}
         {userMypage === 'partner' && <EditInfo userType="partner" />}

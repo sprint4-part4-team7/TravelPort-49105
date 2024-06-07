@@ -92,7 +92,7 @@ const SearchResultPage = () => {
 
   return (
     <div>
-      <Layout userType="user" noSearch={false}>
+      <Layout noSearch={false}>
         <div className="text-50">
           <h1>&quot;{search}&quot; 검색결과</h1>
         </div>

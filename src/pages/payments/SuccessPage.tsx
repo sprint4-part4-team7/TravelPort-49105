@@ -35,7 +35,7 @@ const SuccessPage = () => {
   if (isLoading) return <h1>loading...</h1>;
 
   return (
-    <Layout userType="user">
+    <Layout>
       <div className="w-full">
         <div className="flex flex-col items-center w-full max-w-xl mx-auto">
           <div className="flex flex-col items-center">
