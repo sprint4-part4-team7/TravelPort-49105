@@ -9,6 +9,11 @@ import useLogoutMutation from '@/hooks/reactQuery/auth/useLogoutMutation';
 import { removeCookie } from '@/utils/cookie';
 import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '@/utils/zustand';
+import defaul1Img1 from '@/assets/icons/defaultImg1.svg';
+import defaul1Img2 from '@/assets/icons/defaultImg2.svg';
+import defaul1Img3 from '@/assets/icons/defaultImg3.svg';
+import defaul1Img4 from '@/assets/icons/defaultImg4.svg';
+import defaul1Img5 from '@/assets/icons/defaultImg5.svg';
 
 interface LoginUserHeaderBarProps {
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,6 +23,14 @@ interface LoginUserHeaderBarProps {
 interface User {
   name: string;
   image: string | undefined;
+}
+
+interface MenuItem {
+  id: string;
+  icon?: any;
+  label: string;
+  path?: any;
+  action?: () => void;
 }
 
 const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
@@ -30,6 +43,28 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
   const navagate = useNavigate();
   const { mutate: logout } = useLogoutMutation();
   const { userInfo } = useUserStore();
+
+  const defaultImages = [
+    defaul1Img1,
+    defaul1Img2,
+    defaul1Img3,
+    defaul1Img4,
+    defaul1Img5,
+  ];
+
+  // 랜덤으로 이미지 선택
+  const getRandomImage = (images: string[]): string => {
+    const randomIndex = Math.floor(Math.random() * images.length);
+    return images[randomIndex];
+  };
+
+  // userInfo.profileImage가 비어있으면 랜덤 이미지를, 그렇지 않으면 userInfo.profileImage를 사용
+  const image = userInfo.profileImage || getRandomImage(defaultImages);
+
+  const user: User = {
+    name: userInfo.name,
+    image,
+  };
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -73,12 +108,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
     };
   }, [isSidebarOpen]);
 
-  const user: User = {
-    name: userInfo.name,
-    image: userInfo.profileImage,
-  };
-
-  const menuItems = [
+  const menuItems: MenuItem[] = [
     { id: 'my-info', icon: myInfo, label: '내 정보', path: '/mypage' },
     ...(userType === 'user'
       ? [
@@ -97,6 +127,26 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
         ]
       : []),
     { id: 'logout', label: '로그아웃', action: clickLogoutButton },
+  ];
+
+  const sideItems: MenuItem[] = [
+    { id: 'my-info', icon: myInfo, label: '내 정보', path: '/mypage' },
+    ...(userType === 'user'
+      ? [
+          {
+            id: 'reservation-status',
+            icon: list,
+            label: '예약 내역',
+            path: '/',
+          },
+          {
+            id: 'reservation-history',
+            icon: reservationStatus,
+            label: '예약 현황',
+            path: '/',
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -201,28 +251,50 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
           className={`fixed top-0 right-0 h-full w-280 bg-white z-50 transition-transform transform ease-in-out duration-300 ${isSidebarOpen ? 'translate-x-0' : 'translate-x-full'}`}
         >
           <div className="p-4" ref={dropdownRef}>
-            <ul>
-              {menuItems.map((item) => (
-                <li key={item.id} className="py-2">
-                  <button
-                    type="button"
-                    className="flex items-center w-full py-2 cursor-pointer"
-                    onClick={() => {
-                      if (item.action) {
-                        item.action();
-                      } else {
-                        window.location.href = item.path;
-                      }
-                    }}
-                  >
-                    {item.icon && (
-                      <img src={item.icon} alt="아이콘" className="mr-2" />
-                    )}
-                    {item.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
+            <div className="flex flex-col gap-16 px-24 border-solid py-28 border-b-1 border-black-3">
+              <div className="flex items-center gap-13 ">
+                <img
+                  className="w-32 y-32"
+                  src={user.image}
+                  alt="프로필 이미지"
+                />
+                <div className="font-normal text-15 ">{user.name}</div>
+              </div>
+              <div>
+                <button
+                  className="px-12 py-6 font-normal border-solid text-11 border-1 border-black-12 rounded-24"
+                  type="button"
+                >
+                  로그아웃
+                </button>
+              </div>
+            </div>
+            <div className="p-24">
+              <ul>
+                {sideItems.map((item) => (
+                  <li key={item.id} className="py-2">
+                    <button
+                      type="button"
+                      className="flex items-center w-full px-12 py-8 cursor-pointer hover:bg-blue-50"
+                      onClick={() => {
+                        if (item.action) {
+                          item.action();
+                        } else {
+                          window.location.href = item.path;
+                        }
+                      }}
+                    >
+                      <div className="flex gap-8 font-normal text-15">
+                        {item.icon && (
+                          <img src={item.icon} alt="아이콘" className="mr-2" />
+                        )}
+                        {item.label}
+                      </div>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
