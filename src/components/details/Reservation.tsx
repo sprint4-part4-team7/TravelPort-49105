@@ -18,7 +18,10 @@ interface ReservationProps {
 const Reservation = ({ product, options }: ReservationProps) => {
   const { selectedDate, setSelectedDate } = useCalendar();
   const [selectedOption, setSelectedOption] = useState('');
+  const [optionId, setOptionId] = useState(0);
   const [ticketNum, setTicketNum] = useState(0);
+
+  console.log(optionId);
 
   const handleClick = (optionName: string) => {
     setSelectedOption(optionName);
@@ -85,6 +88,7 @@ const Reservation = ({ product, options }: ReservationProps) => {
               onClick={() => {
                 handleClick(option.optionName);
                 setTicketNum(0);
+                setOptionId(option.id);
               }}
             >
               {option.optionName}
