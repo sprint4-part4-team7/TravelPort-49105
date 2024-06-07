@@ -15,6 +15,7 @@ import UserSignup from '@/pages/auth/signup/UserSignup';
 import ReviewRegister from '@/pages/ReviewRegister';
 import ProductDetails from '@/pages/ProductDetails';
 import ProductRegist from '@/pages/productRegist/ProductRegist';
+import SearchResultPage from '@/pages/SearchResultPage';
 
 const App = () => {
   return (
