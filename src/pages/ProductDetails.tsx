@@ -15,7 +15,7 @@ const ProductDetails = () => {
   const { product, options } = useFetchDetails(3, 1);
 
   return (
-    <div className="mt-100 mb-40 mobile:mt-40">
+    <div className="mt-100 mb-40 mobile:mt-40 mobile:mx-20 tablet:mx-20">
       <img
         src={product?.productImages[0]}
         alt="상품이미지"
