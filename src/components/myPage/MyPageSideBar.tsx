@@ -16,9 +16,9 @@ const MyPageSideBar = ({ children }: MyPageSideBarProps) => {
   };
 
   return (
-    <div className="flex flex-row gap-24 w-full">
-      <div className="flex flex-col relative justify-between px-12 border-r-1 border-black-4">
-        <div className="flex flex-col w-241 gap-32">
+    <div className="flex flex-row mobile:flex-col gap-24 w-full">
+      <div className="flex flex-col relative justify-between px-12 border-r-1 mobile:border-r-0 border-black-4">
+        <div className="flex flex-col w-241 mobile:w-full gap-32">
           <div className="flex flex-col gap-12 items-center">
             {userInfo?.profileImage?.length ? (
               <img
@@ -37,7 +37,7 @@ const MyPageSideBar = ({ children }: MyPageSideBarProps) => {
               {userInfo.name || '사용자 이름'}
             </span>
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 mobile:flex-row mobile:justify-center">
             <MyPageButton setMyPage={setMypage} page="user">
               정보 수정
             </MyPageButton>
@@ -53,6 +53,7 @@ const MyPageSideBar = ({ children }: MyPageSideBarProps) => {
           text="로그아웃"
           isCancel
           outlined
+          buttonStyle="text-16 p-12 mobile:hidden"
           onClick={handleStorageClear}
         />
       </div>
