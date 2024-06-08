@@ -41,12 +41,12 @@ const ChangePassword = ({ closeModal }: { closeModal: () => void }) => {
     <div className="flex flex-col gap-48">
       <div className="flex flex-col gap-24">
         <div className="text-20 font-bold">비밀번호 변경하기</div>
-        <div className="text-16 flex flex-col gap-32">
+        <div className="text-16 flex flex-col gap-32 w-full max-w-475">
           <InputBox
             label="기존 비밀번호"
             inputType="password"
-            width="flex-row"
-            placeholder="기존 비밀번호를 입력해주세요"
+            direction="row"
+            placeholder="********"
             register={register('prevPassword', {
               required: '기존 비밀번호를 입력해주세요',
             })}
@@ -55,7 +55,8 @@ const ChangePassword = ({ closeModal }: { closeModal: () => void }) => {
           <InputBox
             label="새 비밀번호"
             inputType="password"
-            placeholder="새 비밀번호를 입력해주세요"
+            direction="row"
+            placeholder="********"
             register={register('newPassword', {
               required: '새 비밀번호를 입력해주세요',
               pattern: {
@@ -72,7 +73,8 @@ const ChangePassword = ({ closeModal }: { closeModal: () => void }) => {
           <InputBox
             label="새 비밀번호 확인"
             inputType="password"
-            placeholder="새 비밀번호를 다시 입력해주세요"
+            direction="row"
+            placeholder="********"
             register={register('newPasswordConfirm', {
               required: '새 비밀번호 확인은 필수입니다',
               validate: (value) =>

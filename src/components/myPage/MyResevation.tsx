@@ -4,6 +4,7 @@ import ReservationCard from '@/components/common/reservPagination/ResevationCard
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
 import ReservChips from '@/components/myPage/ReservChips';
 import ReservButton from '@/components/myPage/ReservButton';
+import ReservButtonOutlined from './ReservButtonOutlined';
 
 const MyResevation = () => {
   const [pageNum, setPageNum] = useState(1);
@@ -30,7 +31,13 @@ const MyResevation = () => {
               option={reservation.option}
               title={reservation.title}
               upperRight={<ReservChips status={reservation.status} />}
-              lowerRight={<ReservButton status={reservation.status} />}
+              lowerRight={
+                reservation.status === 'rejected' ? (
+                  <ReservButton status={reservation.status} />
+                ) : (
+                  <ReservButtonOutlined />
+                )
+              }
             />
           ))}
         </ReservPagination>

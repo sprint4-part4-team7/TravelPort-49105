@@ -18,7 +18,7 @@ const Modal = ({ isOpen, children, closeModal, modal = '' }: ModalProps) => {
     }
   }, [isOpen]);
 
-  const modalBasicClass = `flex flex-col fixed top-1/2 left-1/2 bg-white rounded-8 z-50 transform -translate-x-1/2 -translate-y-1/2 px-28 py-32 ${isOpen ? 'block' : ''}`;
+  const modalBasicClass = `flex flex-col fixed top-1/2 z-modal left-1/2 bg-white transform -translate-x-1/2 -translate-y-1/2 px-28 py-32 ${isOpen ? 'block' : ''}`;
 
   const modalClass = twMerge(modalBasicClass, modal);
 
@@ -41,7 +41,7 @@ const Modal = ({ isOpen, children, closeModal, modal = '' }: ModalProps) => {
   return (
     <ModalPortal>
       <div
-        className="fixed left-0 top-0 w-full h-full bg-black-modal"
+        className="fixed left-0 top-0 w-full h-full z-modal bg-black-modal"
         onClick={closeModal}
       />
       <div className={modalClass}>{children}</div>

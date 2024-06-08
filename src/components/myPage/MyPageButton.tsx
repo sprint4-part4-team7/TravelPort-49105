@@ -13,7 +13,7 @@ const MyPageButton = ({ children, setMyPage, page }: MyPageButtonProps) => {
   return (
     <button
       type="button"
-      className={`text-left text-14 font-normal px-12 py-8 hover:bg-blue-1 ${isMyPage ? 'bg-blue-1' : 'bg-white'}`}
+      className={`text-left text-14 font-normal px-12 py-8 rounded-4 hover:bg-blue-1 ${isMyPage ? 'bg-blue-1' : 'bg-white'}`}
       onClick={() => setMyPage(page)}
     >
       {children}
