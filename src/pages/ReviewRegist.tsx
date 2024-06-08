@@ -5,7 +5,7 @@ import Footer from '@/components/common/Footer';
 const ReviewRegist = () => {
   return (
     <>
-      <Layout userType="user" main={false} category noSearch={false}>
+      <Layout main={false} category noSearch={false}>
         <ReviewRegister />
       </Layout>
       <Footer />
