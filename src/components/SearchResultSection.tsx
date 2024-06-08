@@ -1,5 +1,5 @@
 import useScoreAvg from '@/hooks/useScoreAvg';
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Card from './common/card/Card';
 
 interface ProductCardProps {
@@ -36,40 +36,42 @@ const ProductCard = ({
   );
 };
 
+interface SearchResultSectionProps {
+  productsWithMinPrice: any;
+}
+
 const SearchResultSection = ({
   productsWithMinPrice,
 }: SearchResultSectionProps) => {
   const [sortType, setSortType] = useState('popular');
-  const [sortedProducts, setSortedProducts] = useState<ProductCardProps[]>([]);
 
-  const sortProducts = (product: any) => {
+  const sortProducts = (products: any[]) => {
     switch (sortType) {
       case 'popular': {
-        const popularSorted = [...product].sort(
+        return [...products].sort(
           (a, b) => b.averageScore - a.averageScore, // 별점 높은 순
         );
-        return popularSorted;
       }
       case 'review': {
-        const reviewSorted = [...product].sort(
+        return [...products].sort(
           (a, b) => b.totalReviews - a.totalReviews, // 리뷰 많은 순
         );
-        return reviewSorted;
       }
       case 'priceHigh': {
-        const priceHighSorted = [...product].sort(
+        return [...products].sort(
           (a, b) => b.minPrice - a.minPrice, // 가격 높은 순
         );
-        return priceHighSorted;
       }
       default:
-        return product;
+        return products;
     }
   };
 
-  useEffect(() => {
-    setSortedProducts(sortProducts(productsWithMinPrice));
-  }, [sortType, productsWithMinPrice]);
+  const sortedProducts = useMemo(
+    () => sortProducts(productsWithMinPrice),
+    [sortType, productsWithMinPrice],
+  );
+
   return (
     <div>
       <div className="flex items-center justify-between mb-16 font-semibold">
