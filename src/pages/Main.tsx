@@ -9,6 +9,7 @@ import useProductAll from '@/hooks/reactQuery/product/useProductAll';
 import useReviewAllQuery from '@/hooks/reactQuery/review/useReviewAllQuery';
 import useProductOptionsReviews from '@/hooks/useProductOptionsReviews';
 import useFilterByCategory from '@/hooks/useFilterByCategory';
+import useDisplayCount from '@/hooks/useDispalyControl';
 import Carousel from '@/components/Carousel';
 import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
@@ -74,24 +75,7 @@ const Main = () => {
     );
   };
 
-  const [displayCount, setDisplayCount] = useState(4);
-
-  useEffect(() => {
-    const updateDisplayCount = () => {
-      if (window.innerWidth >= 1199) {
-        setDisplayCount(4);
-      } else if (window.innerWidth >= 768) {
-        setDisplayCount(3);
-      } else {
-        setDisplayCount(4);
-      }
-    };
-
-    window.addEventListener('resize', updateDisplayCount);
-    updateDisplayCount();
-
-    return () => window.removeEventListener('resize', updateDisplayCount);
-  }, []);
+  const displayCount = useDisplayCount();
 
   const transformedAccommodation = transformData(
     sortedCategoryAccommodation,
