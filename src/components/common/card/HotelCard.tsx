@@ -47,7 +47,7 @@ const HotelCard = ({
             </p>
           </div>
           <p className="text-black-13 text-17 font-bold mb-8 mobile:text-14">
-            {price}원 / 1박
+            {price.toLocaleString()}원 / 1박
           </p>
           <Button
             text="상세보기"

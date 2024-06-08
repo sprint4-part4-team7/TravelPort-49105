@@ -1,13 +1,12 @@
+/* eslint-disable prefer-const */
 /* eslint-disable no-undef */
 import useSearchData from '@/hooks/useSearchData';
 import { useState } from 'react';
 import useProductAll from '@/hooks/reactQuery/product/useProductAll';
-import getMinPrice from '@/utils/getMinPrice';
 import useScoreAvg from '@/hooks/useScoreAvg';
 import uniqueProduct from '@/utils/uniqueProduct';
 import arrowDown from '@/assets/icons/arrowDown.svg';
 import SearchBar from '../components/common/SearchBar';
-// import Card from '@/components/common/card/Card';
 import Layout from '@/components/common/layout/Layout';
 import HotelCard from '@/components/common/card/HotelCard';
 
@@ -22,7 +21,7 @@ const List = () => {
 
   // 평점 구하기
   // useScoreAvg() 괄호 안에 productOptionId 보내면 됩니다 !
-  const { avg, length } = useScoreAvg(1);
+  // const { avg, length } = useScoreAvg(1);
 
   const { filteredTitles } = useSearchData(uniqueOptionAll);
 
@@ -31,7 +30,7 @@ const List = () => {
   return (
     <Layout main noSearch={false}>
       <div className="rounded-42 px-48 py-20 shadow-[0_0_12px_0_rgba(0,0,0,0.25)] mt-40 max-w-928 mx-auto tablet:mx-20 mobile:mx-16">
-        <div className="flex gap-30 justify-center items-center">
+        <div className="flex gap-30 justify-between items-center">
           {filterings.map((filtering) => (
             <p className="text-13 font-medium">
               {filtering} <span className="mobile:hidden">선택하기</span>
@@ -52,18 +51,23 @@ const List = () => {
         />
       </div>
       <div className="flex flex-col gap-24">
-        {cards.map((item) => (
-          <HotelCard
-            key={item.id}
-            title={item.product.name}
-            location={item.product.productAddress}
-            price={getMinPrice(optionAll)}
-            score={avg}
-            review={length}
-            image={item.product.productImages[0]}
-            link="/"
-          />
-        ))}
+        {cards.map((item) => {
+          let { avg, length } = useScoreAvg(item.id);
+          if (!avg) avg = 0;
+
+          return (
+            <HotelCard
+              key={item.id}
+              title={item.product.name}
+              location={item.product.productAddress}
+              price={item.optionPrice}
+              score={avg}
+              review={length}
+              image={item.product.productImages[0]}
+              link="/"
+            />
+          );
+        })}
       </div>
     </Layout>
   );
