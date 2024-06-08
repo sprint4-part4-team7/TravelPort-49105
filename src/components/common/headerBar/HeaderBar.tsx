@@ -3,29 +3,29 @@ import React, { useEffect, useState } from 'react';
 import logo from '@/assets/icons/travelPortLogo.svg';
 import { useNavigate } from 'react-router-dom';
 import { getCookie } from '@/utils/cookie';
-import useProductAll from '@/hooks/useProductAll';
+import useProductAll from '@/hooks/reactQuery/product/useProductAll';
 import useSearchData from '@/hooks/useSearchData';
 import uniqueProduct from '@/utils/uniqueProduct';
+import { useUserStore } from '@/utils/zustand';
 import LoginUserHeaderBar from './LoginUserHeaderBar';
 import UnLoginUserHeaderBar from './UnLoginUserHeaderBar';
 import SearchBar from '../SearchBar';
 import MainCategoryButton from '@/components/MainCategoryButton';
 
 interface HeaderBarProps {
-  userType: 'user' | 'partner'; // 유저 타입: 'user' 혹은 'partner'
   main?: boolean;
   category?: boolean;
   noSearch?: boolean;
 }
 
 const HeaderBar: React.FC<HeaderBarProps> = ({
-  userType,
   main = false,
   category = false,
   noSearch = true,
 }) => {
+  const { userInfo } = useUserStore();
+  const userType = userInfo.isPartner === 1 ? 'partner' : 'user';
   const navigate = useNavigate();
-  // TODO: 경로 맞게 수정하기 (지금은 임시 ..)
   const handleAccommodation = () => {
     navigate('/list/3');
   };

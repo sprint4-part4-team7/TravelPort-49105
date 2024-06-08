@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import useProductAll from '@/hooks/useProductAll';
+import useProductAll from '@/hooks/reactQuery/product/useProductAll';
 
 import useScoreAvg from '@/hooks/useScoreAvg';
 import useProductsWithMinPrice from '@/hooks/useProductsWithMinPrice';
@@ -92,7 +92,7 @@ const SearchResultPage = () => {
 
   return (
     <div>
-      <Layout userType="user" noSearch={false}>
+      <Layout noSearch={false}>
         <div className="text-50">
           <h1>&quot;{search}&quot; 검색결과</h1>
         </div>

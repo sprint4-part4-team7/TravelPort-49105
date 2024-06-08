@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import useSearchData from '@/hooks/useSearchData';
 import { useState } from 'react';
-import useProductAll from '@/hooks/useProductAll';
+import useProductAll from '@/hooks/reactQuery/product/useProductAll';
 import getMinPrice from '@/utils/getMinPrice';
 import useScoreAvg from '@/hooks/useScoreAvg';
 import uniqueProduct from '@/utils/uniqueProduct';

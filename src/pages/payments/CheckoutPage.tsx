@@ -17,7 +17,7 @@ const CheckoutPage = () => {
 
   return (
     <div className="flex flex-col items-center w-full p-6 overflow-auto">
-      <Layout userType="user">
+      <Layout>
         {' '}
         <div className="w-[54rem] text-2xl text-white bg-pink-600 p-10 rounded-2xl">
           상품이름: {productName}

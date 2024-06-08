@@ -1,6 +1,6 @@
-const getMinPrice = (array: any[]) => {
+const getMinPrice = (array: any) => {
   const prices: number[] = [];
-  array.forEach((optionInfo) => prices.push(optionInfo.optionPrice));
+  array.forEach((optionInfo: any) => prices.push(optionInfo.optionPrice));
   const minPrice = Math.min(...prices);
 
   return minPrice;

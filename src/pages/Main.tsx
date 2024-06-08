@@ -5,7 +5,7 @@
 /* eslint-disable react/no-array-index-key */
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import useProductAll from '@/hooks/useProductAll';
+import useProductAll from '@/hooks/reactQuery/product/useProductAll';
 import useReviewAllQuery from '@/hooks/reactQuery/review/useReviewAllQuery';
 import useProductOptionsReviews from '@/hooks/useProductOptionsReviews';
 import useFilterByCategory from '@/hooks/useFilterByCategory';
@@ -115,7 +115,7 @@ const Main = () => {
 
   return (
     <>
-      <Layout userType="user" main category noSearch={false}>
+      <Layout main category noSearch={false}>
         <Carousel items={carousel} />
         <div className="flex justify-center p-20 pb-5 mb-80">
           <MainCard
