@@ -50,7 +50,7 @@ const Card = ({
           <h2 className="text-black-12 mb-5 text-20 py-4 h-28 font-semibold leading-20 truncate">
             {title}
           </h2>
-          <p className="text-black-12 mb-8 text-12 leading-4 mobile:my-15">
+          <p className="text-black-12 mb-8 text-12 mobile:my-15 truncate">
             {location}
           </p>
           <div className="flex flex-row items-center mb-16 mobile:flex-col mobile:items-start ">
