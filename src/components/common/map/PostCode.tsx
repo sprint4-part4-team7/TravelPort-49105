@@ -5,10 +5,11 @@ import { useDaumPostcodePopup } from 'react-daum-postcode';
 type PostCodeProps = {
   setX: React.Dispatch<React.SetStateAction<number>>;
   setY: React.Dispatch<React.SetStateAction<number>>;
-  setName: React.Dispatch<React.SetStateAction<string>>;
+  setBuilding: React.Dispatch<React.SetStateAction<string>>;
+  setLocation: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const PostCode = ({ setX, setY, setName }: PostCodeProps) => {
+const PostCode = ({ setX, setY, setBuilding, setLocation }: PostCodeProps) => {
   const open = useDaumPostcodePopup();
 
   const [address, setAddress] = useState({ x: 0, y: 0, addressName: '' }); // postcode에서 받아올 x,y,주소를 저장할 변수
@@ -58,7 +59,8 @@ const PostCode = ({ setX, setY, setName }: PostCodeProps) => {
     // 최종적으로 보낼 정보를 저장(추후 서버에 보낼때도 사용)
     setX(address.x);
     setY(address.y);
-    setName(sideAddress);
+    setBuilding(sideAddress);
+    setLocation(address.addressName);
   };
   return (
     <div>

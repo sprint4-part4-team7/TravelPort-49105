@@ -7,15 +7,22 @@ import KakaoMap from '@/components/common/map/KakaoMap';
 const Location = () => {
   const [x, setX] = useState(33.5563);
   const [y, setY] = useState(126.79581);
-  const [name, setName] = useState('');
+  const [building, setBuilding] = useState('');
+  const [location, setLocation] = useState('');
+  console.log(x, y, building, location); // 로컬스토리지에 넣기
 
   return (
     <>
       <div>
-        <PostCode setX={setX} setY={setY} setName={setName} />
+        <PostCode
+          setX={setX}
+          setY={setY}
+          setBuilding={setBuilding}
+          setLocation={setLocation}
+        />
       </div>
       <div>
-        <KakaoMap x={x} y={y} name={name} />
+        <KakaoMap x={x} y={y} building={building} />
       </div>
     </>
   );
