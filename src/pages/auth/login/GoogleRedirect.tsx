@@ -9,10 +9,10 @@ const GoogleRedirect = () => {
   useEffect(() => {
     try {
       getGoogleLogin(code);
+      navigate('/', { replace: true });
     } catch (error: any) {
       alert(error.message);
     }
-    navigate('/', { replace: true });
   }, [code]);
 
   return (

@@ -9,10 +9,10 @@ const NaverRedirect = () => {
   useEffect(() => {
     try {
       getNaverLogin(code);
+      navigate('/', { replace: true });
     } catch (error: any) {
       alert(error.message);
     }
-    navigate('/', { replace: true });
   }, [code]);
 
   return (
