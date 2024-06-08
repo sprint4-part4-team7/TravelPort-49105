@@ -1,4 +1,6 @@
+/* eslint-disable react/button-has-type */
 type ButtonProps = {
+  buttonType?: 'button' | 'submit' | 'reset';
   variant?: 'default' | 'more' | 'floating';
   outlined?: boolean;
   buttonStyle?: string; // font 굵기, text 크기, padding, width 변경 시 tailwind 형식으로 진행
@@ -9,6 +11,7 @@ type ButtonProps = {
 };
 
 const Button = ({
+  buttonType = 'button',
   variant = 'default',
   outlined = false,
   buttonStyle = 'text-16 p-12',
@@ -54,7 +57,7 @@ const Button = ({
   return (
     <button
       className={`${styles.base} ${getButtonClass()}`}
-      type="button"
+      type={buttonType}
       onClick={onClick}
       disabled={disabled}
     >

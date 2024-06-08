@@ -7,13 +7,12 @@ const KakaoRedirect = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // back-end로 인가 코드 전달
     try {
       getKakaoLogin(code);
+      navigate('/', { replace: true });
     } catch (error: any) {
       alert(error.message);
     }
-    navigate('/', { replace: true });
   }, [code]);
 
   return (
