@@ -26,7 +26,7 @@ const InputBox = ({
   onChange = undefined,
   disabled = false,
 }: InputBoxProps) => {
-  const inputboxBasic = `p-12 rounded text-16 outline-none border-solid border-1 border-black-5 ${direction === 'col' ? '' : 'w-full max-w-335'}`;
+  const inputboxBasic = `p-12 rounded text-16 outline-none border-solid border-1 border-black-5 ${direction === 'col' ? '' : 'w-full max-w-335 mobile:max-w-none'}`;
   const focusDesign = 'focus:border-blue-6 focus:border-1';
   const errorDesign = 'border-system-error';
 
@@ -38,7 +38,7 @@ const InputBox = ({
 
   return (
     <div
-      className={`flex gap-8 ${direction === 'col' ? 'flex-col' : 'flew-row items-center justify-end'}`}
+      className={`flex gap-8 ${direction === 'col' ? 'flex-col' : 'flew-row items-center justify-end mobile:flex-col mobile:items-start mobile:justify-start'}`}
       style={{ width }}
     >
       <label className="text-16" htmlFor={inputType}>
