@@ -68,8 +68,8 @@ export const getDefaultOption = async (
 ): Promise<DefaultOptionType> => {
   try {
     const response = await instance.get(`/productOption/${optionId}`);
-    const { optionName } = response.data.productOption;
-    const { productId } = response.data.productOption;
+    const { optionName } = response.data;
+    const { productId } = response.data;
     const productName = (await getProduct(productId)).name;
     return { optionName, productName };
   } catch (error) {

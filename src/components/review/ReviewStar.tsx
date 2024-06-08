@@ -26,12 +26,12 @@ const ReviewStar = ({ onChange }: ReviewStarProps) => {
   }, [clicked, onChange]);
 
   return (
-    <div className="flex">
+    <div className="flex gap-4">
       {array.map((el) =>
         clicked[el] ? (
           <ImStarFull
             size={35}
-            color="yellow"
+            color="#3065e8"
             onClick={() => handleStarClick(el)}
           />
         ) : (
@@ -39,7 +39,7 @@ const ReviewStar = ({ onChange }: ReviewStarProps) => {
             key={el}
             onClick={() => handleStarClick(el)}
             size={35}
-            color="yellow"
+            color="#3065e8"
           />
         ),
       )}

@@ -11,10 +11,10 @@ import KakaoRedirect from '@/pages/auth/login/KakaoRedirect';
 import NaverRedirect from '@/pages/auth/login/NaverRedirect';
 import PartnerSignup from '@/pages/auth/signup/PartnerSignup';
 import UserSignup from '@/pages/auth/signup/UserSignup';
-import ReviewRegister from '@/pages/ReviewRegister';
 import ProductDetails from '@/pages/ProductDetails';
 import ProductRegist from '@/pages/productRegist/ProductRegist';
 import SearchResultPage from '@/pages/SearchResultPage';
+import ReviewRegist from './pages/ReviewRegist';
 
 const App = () => {
   return (
@@ -53,7 +53,7 @@ const App = () => {
           <Route path="fail" element={<FailPage />} />
         </Route>
         <Route path="review">
-          <Route index element={<ReviewRegister />} />
+          <Route index element={<ReviewRegist />} />
         </Route>
         <Route path="search">
           <Route index element={<SearchResultPage />} />

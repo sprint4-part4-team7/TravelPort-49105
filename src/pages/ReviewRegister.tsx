@@ -1,12 +1,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import { useForm } from 'react-hook-form';
-import { getDefaultOption, postReview } from '@/apis/review';
+import { getDefaultOption } from '@/apis/review';
 import React, { useEffect, useState } from 'react';
+import useModal from '@/hooks/useModal';
 import TextBox from '@/components/common/TextBox';
 import ReviewStar from '@/components/review/ReviewStar';
 import Button from '@/components/common/Button';
 import ImageUpload from '@/components/review/ImageUpload';
+import Modal from '@/components/common/Modal';
 
 const ReviewRegister = () => {
   const {
@@ -28,6 +30,8 @@ const ReviewRegister = () => {
   const [option, setOption] = useState('');
   const [product, setProduct] = useState('');
 
+  const { isModalOpen, openModal, closeModal } = useModal();
+
   useEffect(() => {
     const fetchDefaultOption = async (optionId: number) => {
       const { optionName, productName } = await getDefaultOption(optionId);
@@ -38,12 +42,12 @@ const ReviewRegister = () => {
   }, [option, product]);
 
   const onSubmit = async (data: any) => {
-    try {
-      await postReview(1, 1, data); // 임시
-    } catch (error) {
-      console.log(error);
-    }
-    // console.log({ ...data });
+    // try {
+    //   await postReview(1, 1, data); // 임시
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    console.log({ ...data });
   };
 
   const handleScoreChange = React.useCallback((selectedScore: number) => {
@@ -68,17 +72,20 @@ const ReviewRegister = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="mb-30">
-        <div className="text-[2rem] font-bold">
+    <form onSubmit={handleSubmit(onSubmit)} className="mt-40 max-w-784 mx-auto">
+      <h1 className="py-20 text-24 font-bold">리뷰 작성하기</h1>
+      <hr />
+      <div className="my-20 flex flex-col gap-20">
+        <div className="text-17 font-bold">
           상품 이름 <span className="font-normal">{product}</span>
         </div>
-        <div className="text-[2rem] font-bold">
+        <div className="text-17 font-bold">
           옵션 <span className="font-normal">{option}</span>
         </div>
       </div>
-      <div className="text-[1.9rem] font-bold mb-30">
-        <h1>별점을 입력해주세요.</h1>
+      <hr />
+      <div className="text-18 font-bold my-40">
+        <h1 className="mb-20">STEP1 별점을 입력해주세요</h1>
         <ReviewStar onChange={handleScoreChange} />
         {errors.score && (
           <p className="text-[#FF4D4F] text-[1.2rem] mt-[0.4rem]">
@@ -86,9 +93,11 @@ const ReviewRegister = () => {
           </p>
         )}
       </div>
-      <div className="mb-30 w-600">
+      <div className="mb-40">
         <TextBox
-          labelName="리뷰를 입력해주세요."
+          labelName="STEP2 리뷰를 입력해주세요"
+          textSize={18}
+          mb={20}
           textLimit={100}
           placeholder="리뷰를 작성하세요."
           value={watch('reviewContent')}
@@ -99,8 +108,22 @@ const ReviewRegister = () => {
           error={errors.reviewContent}
         />
       </div>
+      <h1 className="text-18 font-bold my-20">
+        STEP3 사진을 추가하기 (최대 5장)
+      </h1>
       <ImageUpload onChange={handleImageChange} />
-      <Button text="리뷰 등록하기" onClick={handleSubmit(onSubmit)} />
+      <div className="mt-60">
+        <Button
+          text="등록하기"
+          onClick={() => {
+            handleSubmit(onSubmit);
+            openModal();
+          }}
+        />
+      </div>
+      <Modal isOpen={isModalOpen} closeModal={closeModal}>
+        <div className="p-16">리뷰를 등록하시겠습니까?</div>
+      </Modal>
     </form>
   );
 };
