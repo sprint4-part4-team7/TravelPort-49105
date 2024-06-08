@@ -20,6 +20,14 @@ const Category = ({ setPage }: CategoryIdProps) => {
 
   const [disabled, setDisabled] = useState(true); // [버튼] disabled 된게 초기설정
 
+  useEffect(() => {
+    if (localStorage.getItem('categoryId') === '3') {
+      setValue('category', '숙박'); // setValue를 사용하여 category에 원래있던 기초값을 전달
+    } else if (localStorage.getItem('categoryId') === '20') {
+      setValue('category', '체험'); // setValue를 사용하여 category에 원래있던 기초값을 전달
+    }
+  }, []);
+
   const onSubmit = (data: CategoryForm) => {
     setPage(<Description />);
     if (data.category === '숙박') {
@@ -28,14 +36,6 @@ const Category = ({ setPage }: CategoryIdProps) => {
       localStorage.setItem('categoryId', '20'); // 서버 바뀌면 2
     }
   };
-
-  useEffect(() => {
-    if (localStorage.getItem('categoryId') === '3') {
-      setValue('category', '숙박'); // setValue를 사용하여 category에 원래있던 기초값을 전달
-    } else if (localStorage.getItem('categoryId') === '20') {
-      setValue('category', '체험'); // setValue를 사용하여 category에 원래있던 기초값을 전달
-    }
-  }, []);
 
   // [버튼] input 클릭시 abled
   const handleButton = () => {

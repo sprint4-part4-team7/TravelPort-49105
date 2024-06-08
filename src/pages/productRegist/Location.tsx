@@ -8,18 +8,13 @@ const Location = () => {
   const [x, setX] = useState(33.5563);
   const [y, setY] = useState(126.79581);
   const [building, setBuilding] = useState('');
-  const [location, setLocation] = useState('');
-  console.log(x, y, building, location); // 로컬스토리지에 넣기
+
+  console.log(x, y, building); // 로컬스토리지에 넣기
 
   return (
     <>
       <div>
-        <PostCode
-          setX={setX}
-          setY={setY}
-          setBuilding={setBuilding}
-          setLocation={setLocation}
-        />
+        <PostCode setX={setX} setY={setY} setBuilding={setBuilding} />
       </div>
       <div>
         <KakaoMap x={x} y={y} building={building} />
