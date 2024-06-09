@@ -86,6 +86,7 @@ const PartnerSignup = () => {
             onSubmit={handleSubmit(handleSignupForm)}
           >
             <InputBox
+              id="company"
               label="이름/법인명"
               width="35rem"
               placeholder="이름/법인명"
@@ -97,6 +98,7 @@ const PartnerSignup = () => {
             <div className="flex gap-10">
               <div className="relative">
                 <InputBox
+                  id="email"
                   label="이메일"
                   width="35rem"
                   placeholder="example@example.com"
@@ -131,6 +133,7 @@ const PartnerSignup = () => {
             </div>
 
             <InputBox
+              id="password"
               label="비밀번호"
               inputType="password"
               width="35rem"
@@ -145,6 +148,7 @@ const PartnerSignup = () => {
               })}
             />
             <InputBox
+              id="pwCheck"
               label="비밀번호 확인"
               inputType="password"
               width="35rem"
