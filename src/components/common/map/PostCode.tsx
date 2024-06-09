@@ -2,7 +2,9 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useForm } from 'react-hook-form';
+import saveImage from '@/assets/icons/check-circle-broken.svg';
 import CheckButton from '@/pages/productRegist/CheckButton';
+import ImageButton from '@/pages/productRegist/ImageButton';
 
 type PostCodeForm = {
   address: string;
@@ -26,6 +28,7 @@ const PostCode = ({ setX, setY, setBuilding }: PostCodeProps) => {
   const [sideAddress, setSideAddress] = useState(''); // 상세주소 input에 들어갈 값(초기엔 받아온 빌딩이름, 수정시 변경한 텍스트)으로 이 페이지내에서만 사용
 
   const [disabled, setDisabled] = useState(true); // [버튼] disabled 된게 초기설정
+  const [disabledSave, setDisabledSave] = useState(true); // [주소저장버튼] disabled 된게 초기설정
 
   useEffect(() => {
     if (localStorage.getItem('addressName') !== null) {
@@ -89,6 +92,13 @@ const PostCode = ({ setX, setY, setBuilding }: PostCodeProps) => {
     open({ onComplete: handleComplete });
   };
 
+  useEffect(() => {
+    if (sideAddress.length > 0) {
+      setDisabledSave(false);
+    } else {
+      setDisabledSave(true);
+    }
+  }, [sideAddress]);
   const changeBuildingName = (event: any) => {
     setSideAddress(event?.target.value);
   };
@@ -120,6 +130,7 @@ const PostCode = ({ setX, setY, setBuilding }: PostCodeProps) => {
           id="address"
           type="text"
           onClick={handleClick}
+          onFocus={changeBuildingName}
           readOnly // 검색으론 쓸수있지만 직접 텍스트입력은 못함
         />
       </label>
@@ -136,9 +147,10 @@ const PostCode = ({ setX, setY, setBuilding }: PostCodeProps) => {
           onChange={changeBuildingName}
         />
       </label>
-      <button type="submit" onClick={handleSubmit(onSubmit)}>
+      <ImageButton onClick={handleSubmit(onSubmit)} disabled={disabledSave}>
+        <img src={saveImage} alt="저장이미지" />
         주소 정보 저장
-      </button>
+      </ImageButton>
       <CheckButton disabled={disabled} />
     </form>
   );
