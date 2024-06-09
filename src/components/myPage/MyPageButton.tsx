@@ -7,11 +7,7 @@ interface MyPageButtonProps {
   setStatus: (page: string) => void;
 }
 
-const MyPageButton = ({
-  children,
-  setStatus: setMyPage,
-  page,
-}: MyPageButtonProps) => {
+const MyPageButton = ({ children, setStatus, page }: MyPageButtonProps) => {
   const myPage = useUserMypageStore((state) => state.userMypage);
   const isMyPage = myPage === page;
   return (
