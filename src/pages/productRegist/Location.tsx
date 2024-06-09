@@ -7,17 +7,17 @@ import KakaoMap from '@/components/common/map/KakaoMap';
 const Location = () => {
   const [x, setX] = useState(33.5563);
   const [y, setY] = useState(126.79581);
-  const [name, setName] = useState('');
+  const [building, setBuilding] = useState('');
 
   return (
-    <>
+    <div>
       <div>
-        <PostCode setX={setX} setY={setY} setName={setName} />
+        <PostCode setX={setX} setY={setY} setBuilding={setBuilding} />
       </div>
-      <div>
-        <KakaoMap x={x} y={y} name={name} />
+      <div className="mx-40">
+        <KakaoMap x={x} y={y} building={building} />
       </div>
-    </>
+    </div>
   );
 };
 

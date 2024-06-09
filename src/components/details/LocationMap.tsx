@@ -29,7 +29,7 @@ const LocationMap = ({ product }: LocationMapProps) => {
         <KakaoMap
           x={product?.productSiteLat}
           y={product?.productSiteLng}
-          name={product?.buildingName || ''}
+          building={product?.buildingName || ''}
         />
       </Modal>
     </>
