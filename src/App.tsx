@@ -45,9 +45,7 @@ const App = () => {
         <Route path="product-regist">
           <Route index element={<ProductRegist />} />
         </Route>
-        <Route path="mypage">
-          <Route index element={<MyPage />} />
-        </Route>
+        <Route path="mypage/:status" element={<MyPage />} />
         <Route path="payments">
           <Route index element={<CheckoutPage />} />
           <Route path="success" element={<SuccessPage />} />

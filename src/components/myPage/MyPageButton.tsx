@@ -4,10 +4,14 @@ import React from 'react';
 interface MyPageButtonProps {
   children: React.ReactNode;
   page: string;
-  setMyPage: (page: string) => void;
+  setStatus: (page: string) => void;
 }
 
-const MyPageButton = ({ children, setMyPage, page }: MyPageButtonProps) => {
+const MyPageButton = ({
+  children,
+  setStatus: setMyPage,
+  page,
+}: MyPageButtonProps) => {
   const myPage = useUserMypageStore((state) => state.userMypage);
   const isMyPage = myPage === page;
   return (
