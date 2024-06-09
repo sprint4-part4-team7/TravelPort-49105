@@ -1,6 +1,8 @@
 import usePaymentWidget from '@/hooks/usePaymentWidget';
 import './Payments.css';
 import Layout from '@/components/common/layout/Layout';
+import Footer from '@/components/common/Footer';
+import Pay from '@/components/Pay';
 
 const CheckoutPage = () => {
   const paymentAmount = 10000; // 결제 금액
@@ -18,7 +20,6 @@ const CheckoutPage = () => {
   return (
     <div className="flex flex-col items-center w-full p-6 overflow-auto">
       <Layout>
-        {' '}
         <div className="w-[54rem] text-2xl text-white bg-pink-600 p-10 rounded-2xl">
           상품이름: {productName}
         </div>
@@ -27,20 +28,9 @@ const CheckoutPage = () => {
           가격: {paymentAmount}원
         </div>
         <br />
-        <div className="max-w-[54rem] w-full">
-          <div id="payment-method" className="w-full" />
-          <div id="agreement" className="w-full" />
-          <div className="w-full px-6">
-            <button
-              type="button"
-              className="w-full py-10 text-lg font-semibold text-white border-none rounded-lg cursor-pointer btn-primary"
-              onClick={requestPayment}
-            >
-              결제하기
-            </button>
-          </div>
-        </div>
+        <Pay requestPayment={requestPayment} />
       </Layout>
+      <Footer />
     </div>
   );
 };
