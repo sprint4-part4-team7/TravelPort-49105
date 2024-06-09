@@ -2,6 +2,7 @@ import React from 'react';
 import { FieldError } from 'react-hook-form';
 
 type InputBoxProps = {
+  id: string;
   label: string;
   inputType?: 'text' | 'password' | 'number';
   value?: string | number;
@@ -15,6 +16,7 @@ type InputBoxProps = {
 };
 
 const InputBox = ({
+  id,
   label,
   inputType = 'text',
   value,
@@ -41,10 +43,11 @@ const InputBox = ({
       className={`flex gap-8 ${direction === 'col' ? 'flex-col' : 'flew-row items-center justify-end mobile:flex-col mobile:items-start mobile:justify-start'}`}
       style={{ width }}
     >
-      <label className="text-16" htmlFor={inputType}>
+      <label className="text-16" htmlFor={id}>
         {label}
       </label>
       <input
+        id={id}
         className={inputboxClass}
         type={inputType}
         placeholder={placeholder}

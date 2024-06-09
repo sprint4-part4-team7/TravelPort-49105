@@ -95,6 +95,7 @@ const ReviewRegister = () => {
       </div>
       <div className="mb-40">
         <TextBox
+          id="review"
           labelName="STEP2 리뷰를 입력해주세요"
           textSize={18}
           mb={20}

@@ -53,6 +53,7 @@ const Login = () => {
             onSubmit={handleSubmit(handleLoginForm)}
           >
             <InputBox
+              id="email"
               label="이메일"
               width="35rem"
               placeholder="example@example.com"
@@ -66,6 +67,7 @@ const Login = () => {
               })}
             />
             <InputBox
+              id="password"
               label="비밀번호"
               inputType="password"
               width="35rem"
