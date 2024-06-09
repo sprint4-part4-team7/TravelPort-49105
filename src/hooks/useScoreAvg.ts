@@ -17,7 +17,7 @@ const useScoreAvg = (id: number) => {
     };
     fetchProductReview();
   }, [id]);
-  const avg = Number((total / length).toFixed(1));
+  const avg = Number((total / length).toFixed(1)) || 0;
   return { avg, length };
 };
 
