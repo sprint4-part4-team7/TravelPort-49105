@@ -120,37 +120,43 @@ const PostCode = ({ setX, setY, setBuilding }: PostCodeProps) => {
 
   return (
     <form>
-      <label htmlFor="address">
-        <p>기본 주소 검색</p>
-        <input
-          {...register('address', {
-            required: '주소를 다시 검색해주세요.',
-          })}
-          placeholder="클릭해서 주소를 검색해주세요."
-          id="address"
-          type="text"
-          onClick={handleClick}
-          onFocus={changeBuildingName}
-          readOnly // 검색으론 쓸수있지만 직접 텍스트입력은 못함
-        />
-      </label>
-      <label htmlFor="sideAddress">
-        <p>상세 주소 입력</p>
-        {/* input엔 빌딩이름이 기본적으로 존재하면 들어가고, 파트너가 바꾸고 싶다면 변경가능하게 구현 */}
-        <input
-          {...register('building', {
-            required: '빌딩이름을 다시 적어주세요.',
-          })}
-          placeholder="빌딩이름을 적어주세요."
-          id="sideAddress"
-          type="text"
-          onChange={changeBuildingName}
-        />
-      </label>
-      <ImageButton onClick={handleSubmit(onSubmit)} disabled={disabledSave}>
-        <img src={saveImage} alt="저장이미지" />
-        주소 정보 저장
-      </ImageButton>
+      <div className="mx-40 flex flex-col gap-24">
+        <label htmlFor="address">
+          <p className="text-17">기본 주소 검색</p>
+          <input
+            className="h-48"
+            {...register('address', {
+              required: '주소를 다시 검색해주세요.',
+            })}
+            placeholder="클릭해서 주소를 검색해주세요."
+            id="address"
+            type="text"
+            onClick={handleClick}
+            onFocus={changeBuildingName}
+            readOnly // 검색으론 쓸수있지만 직접 텍스트입력은 못함
+          />
+        </label>
+        <label htmlFor="sideAddress">
+          <p className="text-17">상세 주소 입력</p>
+          {/* input엔 빌딩이름이 기본적으로 존재하면 들어가고, 파트너가 바꾸고 싶다면 변경가능하게 구현 */}
+          <input
+            className="h-48"
+            {...register('building', {
+              required: '빌딩이름을 다시 적어주세요.',
+            })}
+            placeholder="빌딩이름을 적어주세요."
+            id="sideAddress"
+            type="text"
+            onChange={changeBuildingName}
+          />
+        </label>
+        <div className="flex justify-end mb-8">
+          <ImageButton onClick={handleSubmit(onSubmit)} disabled={disabledSave}>
+            <img src={saveImage} alt="저장이미지" />
+            주소 정보 저장
+          </ImageButton>
+        </div>
+      </div>
       <CheckButton disabled={disabled} />
     </form>
   );
