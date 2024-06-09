@@ -1,15 +1,6 @@
-interface JwtPayload {
-  id: number;
-  name: string;
-  email: string;
-  realName?: string;
-  phone?: string;
-  profileImage?: string;
-  isPartner?: number;
-  description?: string;
-}
+import { UserInfo } from '@/constants/types';
 
-const jwtDecode = (token: string): JwtPayload => {
+const jwtDecode = (token: string): UserInfo => {
   try {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');

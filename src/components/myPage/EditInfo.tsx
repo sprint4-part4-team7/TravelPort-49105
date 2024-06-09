@@ -4,21 +4,11 @@ import useModal from '@/hooks/useModal';
 import uploadIcon from '@/assets/icons/upload.svg';
 import { putUserInfo } from '@/apis/editInfo';
 import { PHONE_NUMBER_REGEX } from '@/constants/InputType';
+import { UserInfo } from '@/constants/types';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 import Modal from '@/components/common/Modal';
 import ChangePassword from '@/components/myPage/ChangePassword';
-
-interface UserInfo {
-  id?: number;
-  name: string;
-  email?: string;
-  isPartner?: number;
-  realName?: string;
-  phone?: string;
-  profileImage?: string;
-  description?: string;
-}
 
 const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
   const { userInfo, setUserInfo } = useUserStore();
