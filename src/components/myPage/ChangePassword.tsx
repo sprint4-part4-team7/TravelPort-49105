@@ -43,6 +43,7 @@ const ChangePassword = ({ closeModal }: { closeModal: () => void }) => {
         <div className="text-20 font-bold">비밀번호 변경하기</div>
         <div className="text-16 flex flex-col gap-32 w-full max-w-475">
           <InputBox
+            id="oldPW"
             label="기존 비밀번호"
             inputType="password"
             direction="row"
@@ -53,6 +54,7 @@ const ChangePassword = ({ closeModal }: { closeModal: () => void }) => {
             error={errors.prevPassword}
           />
           <InputBox
+            id="newPW"
             label="새 비밀번호"
             inputType="password"
             direction="row"
@@ -71,6 +73,7 @@ const ChangePassword = ({ closeModal }: { closeModal: () => void }) => {
             error={errors.newPassword}
           />
           <InputBox
+            id="newPWCheck"
             label="새 비밀번호 확인"
             inputType="password"
             direction="row"

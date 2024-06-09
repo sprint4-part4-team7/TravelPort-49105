@@ -91,6 +91,7 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
         </div>
         <div className="flex flex-col gap-32 w-full">
           <InputBox
+            id="nickname"
             label={isUser ? '닉네임' : '이름/법인명'}
             placeholder="닉네임을 입력해주세요"
             register={register('name', {
@@ -103,9 +104,15 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
             disabled={!isUser}
             error={errors.name}
           />
-          <InputBox label="이메일" placeholder={userInfo.email} disabled />
+          <InputBox
+            id="email"
+            label="이메일"
+            placeholder={userInfo.email}
+            disabled
+          />
           {isUser && (
             <InputBox
+              id="name"
               label="이름"
               placeholder="이름을 입력해주세요"
               register={register('realName', {
@@ -118,6 +125,7 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
             />
           )}
           <InputBox
+            id="phone"
             label="전화번호"
             placeholder="010-****-****"
             register={register('phone', {
@@ -146,6 +154,7 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
           )}
           <div>
             <InputBox
+              id="password"
               inputType="password"
               label="비밀번호"
               placeholder="********"
