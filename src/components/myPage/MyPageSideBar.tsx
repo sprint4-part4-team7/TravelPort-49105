@@ -6,11 +6,12 @@ import MyPageButton from '@/components/myPage/MyPageButton';
 
 interface MyPageSideBarProps {
   children: React.ReactNode;
+  isPartner?: boolean;
 }
 
-const MyPageSideBar = ({ children }: MyPageSideBarProps) => {
+const MyPageSideBar = ({ children, isPartner = false }: MyPageSideBarProps) => {
   const navigate = useNavigate();
-
+  const navigateUrl = `${isPartner ? '/partner' : ''}/mypage/`;
   const { userMypage, setUserMypage } = useUserMypageStore();
   const { userInfo } = useUserStore();
 
@@ -22,7 +23,7 @@ const MyPageSideBar = ({ children }: MyPageSideBarProps) => {
   const changeStatus = (newStatus: string) => {
     if (newStatus !== userMypage && !!newStatus) {
       setUserMypage(newStatus);
-      navigate(`/mypage/${newStatus}`, { replace: true });
+      navigate(navigateUrl + newStatus, { replace: true });
     }
   };
 
@@ -49,11 +50,8 @@ const MyPageSideBar = ({ children }: MyPageSideBarProps) => {
             </span>
           </div>
           <div className="flex flex-col gap-4 mobile:flex-row mobile:justify-center">
-            <MyPageButton setStatus={changeStatus} page="user">
+            <MyPageButton setStatus={changeStatus} page="edit-info">
               정보 수정
-            </MyPageButton>
-            <MyPageButton setStatus={changeStatus} page="partner">
-              파트너 정보 수정
             </MyPageButton>
             <MyPageButton setStatus={changeStatus} page="reservation">
               예약 내역

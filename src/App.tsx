@@ -46,6 +46,9 @@ const App = () => {
           <Route index element={<ProductRegist />} />
         </Route>
         <Route path="mypage/:status" element={<MyPage />} />
+        <Route path="partner/">
+          <Route path="mypage/:status" element={<MyPage isPartner />} />
+        </Route>
         <Route path="payments">
           <Route index element={<CheckoutPage />} />
           <Route path="success" element={<SuccessPage />} />

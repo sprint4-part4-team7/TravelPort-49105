@@ -10,9 +10,9 @@ import InputBox from '@/components/common/InputBox';
 import Modal from '@/components/common/Modal';
 import ChangePassword from '@/components/myPage/ChangePassword';
 
-const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
+const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
   const { userInfo, setUserInfo } = useUserStore();
-  const isUser = userType === 'user';
+  const isUser = !isPartner;
 
   const {
     register,

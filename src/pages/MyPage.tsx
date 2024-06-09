@@ -6,7 +6,7 @@ import MyPageSideBar from '@/components/myPage/MyPageSideBar';
 import MyResevation from '@/components/myPage/MyResevation';
 import Layout from '@/components/common/layout/Layout';
 
-const MyPage = () => {
+const MyPage = ({ isPartner = false }: { isPartner?: boolean }) => {
   const { status } = useParams();
   const { userMypage, setUserMypage } = useUserMypageStore();
 
@@ -18,9 +18,8 @@ const MyPage = () => {
 
   return (
     <Layout>
-      <MyPageSideBar>
-        {status === 'user' && <EditInfo userType="user" />}
-        {status === 'partner' && <EditInfo userType="partner" />}
+      <MyPageSideBar isPartner={isPartner}>
+        {status === 'edit-info' && <EditInfo isPartner={isPartner} />}
         {status === 'reservation' && <MyResevation />}
       </MyPageSideBar>
     </Layout>
