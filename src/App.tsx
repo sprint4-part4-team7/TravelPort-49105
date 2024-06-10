@@ -15,6 +15,7 @@ import ProductDetails from '@/pages/ProductDetails';
 import ProductRegist from '@/pages/productRegist/ProductRegist';
 import SearchResultPage from '@/pages/SearchResultPage';
 import ReviewRegist from './pages/ReviewRegist';
+import ReservationManagement from '@/pages/ReservationManagement';
 
 const App = () => {
   return (
@@ -57,6 +58,9 @@ const App = () => {
         </Route>
         <Route path="search">
           <Route index element={<SearchResultPage />} />
+        </Route>
+        <Route path="manage">
+          <Route index element={<ReservationManagement />} />
         </Route>
       </Routes>
     </BrowserRouter>
