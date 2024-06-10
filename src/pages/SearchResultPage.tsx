@@ -24,7 +24,7 @@ const SearchResultPage = () => {
 
   const filteredProducts = productAll?.data?.filter((product: any) => {
     if (selectedTab === 'all') return true;
-    return product.categoryId === (selectedTab === 'accommodation' ? 3 : 20);
+    return product.categoryId === (selectedTab === 'accommodation' ? 1 : 2);
   });
 
   const productsWithMinPrice = useProductsWithMinPrice(
@@ -49,15 +49,15 @@ const SearchResultPage = () => {
     if (productAll?.data) {
       const allProducts = productAll.data.filter(
         (product: any) =>
-          (product.categoryId === 3 || product.categoryId === 20) &&
+          (product.categoryId === 1 || product.categoryId === 2) &&
           (product.name.toLowerCase().includes(search) ||
             product.productAddress.toLowerCase().includes(search)),
       );
       const accommodationCount = allProducts.filter(
-        (product: any) => product.categoryId === 3,
+        (product: any) => product.categoryId === 1,
       ).length;
       const experienceCount = allProducts.filter(
-        (product: any) => product.categoryId === 20,
+        (product: any) => product.categoryId === 2,
       ).length;
       setCategoryCounts({
         all: allProducts.length,

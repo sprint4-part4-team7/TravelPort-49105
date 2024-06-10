@@ -58,12 +58,12 @@ const useProductsWithMinPrice = (
         return { ...product, minPrice, totalReviews, averageScore };
       })
       .filter((product: any) => {
-        const nameMatch = product.name
-          .toLowerCase()
-          .includes(search.toLowerCase());
-        const addressMatch = product.productAddress
-          .toLowerCase()
-          .includes(search.toLowerCase());
+        const nameMatch =
+          product.name &&
+          product.name.toLowerCase().includes(search.toLowerCase());
+        const addressMatch =
+          product.productAddress &&
+          product.productAddress.toLowerCase().includes(search.toLowerCase());
         return nameMatch || addressMatch;
       });
   }, [products, optionAll, reviews, search]);
