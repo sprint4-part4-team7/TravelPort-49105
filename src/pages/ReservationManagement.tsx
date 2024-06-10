@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
 import SearchBar from '@/components/common/SearchBar';
+import Button from '@/components/common/Button';
 
 const ReservationManagement = () => {
   const [isNew, setIsNew] = useState<boolean>(false);
@@ -90,24 +91,27 @@ const ReservationManagement = () => {
                       예약일시 :{' '}
                     </div>
                   </div>
-                  {/* <div className="flex gap-8 items-center">
+                  <div className="flex gap-8 items-center">
                     <Button
                       variant="default"
                       outlined
-                      buttonStyle="text-14 px-12 h-fit py-8 font-semibold "
-                      text="승인하기"
-                      image={{ src: APPROVE, width: 16, height: 16 }}
-                    />
+                      buttonStyle="flex gap-4 text-14 px-12 h-fit py-8 font-semibold rounded-8"
+                    >
+                      승인하기
+                      <img alt="승인" src={APPROVE} width={16} height={16} />
+                    </Button>
                     <Button
                       variant="default"
                       outlined
-                      buttonStyle="text-14 px-12 py-8 h-fit text-system-error font-semibold border-system-error
+                      buttonStyle="flex gap-4 text-14 px-12 py-8 h-fit 
+                      text-system-error font-semibold border-system-error rounded-8
                       hover:border-system-error hover:text-system-error-bg
                       active:border-system-error active:text-system-error"
-                      text="거절하기"
-                      image={{ src: DENIED, width: 16, height: 16 }}
-                    />
-                  </div> */}
+                    >
+                      거절하기
+                      <img alt="거절" src={DENIED} width={16} height={16} />
+                    </Button>
+                  </div>
                 </div>
 
                 <div
