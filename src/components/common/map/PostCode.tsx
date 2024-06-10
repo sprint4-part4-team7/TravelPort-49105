@@ -4,7 +4,7 @@ import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useForm } from 'react-hook-form';
 import saveImage from '@/assets/icons/check-circle-broken.svg';
 import CheckButton from '@/pages/productRegist/CheckButton';
-import ImageButton from '@/pages/productRegist/ImageButton';
+import Button from '@/components/common/Button';
 
 type PostCodeForm = {
   address: string;
@@ -151,10 +151,15 @@ const PostCode = ({ setX, setY, setBuilding }: PostCodeProps) => {
           />
         </label>
         <div className="flex justify-end mb-8">
-          <ImageButton onClick={handleSubmit(onSubmit)} disabled={disabledSave}>
+          <Button
+            buttonType="submit"
+            buttonStyle="text-16 p-12 flex gap-6 justify-center items-center"
+            onClick={handleSubmit(onSubmit)}
+            disabled={disabledSave}
+          >
             <img src={saveImage} alt="저장이미지" />
             주소 정보 저장
-          </ImageButton>
+          </Button>
         </div>
       </div>
       <CheckButton disabled={disabled} />

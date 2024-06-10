@@ -32,7 +32,7 @@ const ImageUploadExample = () => {
   return (
     <div>
       <input type="file" onChange={handleFileChange} accept="image/*" />
-      <Button text="업로드" onClick={handleUpload} />
+      <Button onClick={handleUpload}>업로드</Button>
       {instantImg.length > 0 && <img src={instantImg} alt="test" />}
     </div>
   );

@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 interface SearchBarProps {
-  cardLists: CardListsType[];
+  cardLists: CardListsType[] | [];
   setFilteredData?: React.Dispatch<React.SetStateAction<any>>;
   isMainSearchBar?: boolean;
   path?: string;

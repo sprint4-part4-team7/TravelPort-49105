@@ -89,8 +89,10 @@ const ChangePassword = ({ closeModal }: { closeModal: () => void }) => {
         </div>
       </div>
       <div className="flex justify-between gap-16">
-        <Button text="취소" isCancel onClick={closeModal} />
-        <Button text="비밀번호 변경하기" onClick={handleSubmit(handleSave)} />
+        <Button isCancel onClick={closeModal}>
+          취소
+        </Button>
+        <Button onClick={handleSubmit(handleSave)}>비밀번호 변경하기</Button>
       </div>
     </div>
   );

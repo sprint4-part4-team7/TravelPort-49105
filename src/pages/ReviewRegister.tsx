@@ -115,12 +115,13 @@ const ReviewRegister = () => {
       <ImageUpload onChange={handleImageChange} />
       <div className="mt-60">
         <Button
-          text="등록하기"
           onClick={() => {
             handleSubmit(onSubmit);
             openModal();
           }}
-        />
+        >
+          등록하기
+        </Button>
       </div>
       <Modal isOpen={isModalOpen} closeModal={closeModal}>
         <div className="p-16">리뷰를 등록하시겠습니까?</div>

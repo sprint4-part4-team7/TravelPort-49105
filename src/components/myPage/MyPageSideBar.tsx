@@ -50,12 +50,13 @@ const MyPageSideBar = ({ children }: MyPageSideBarProps) => {
           </div>
         </div>
         <Button
-          text="로그아웃"
           isCancel
           outlined
           buttonStyle="text-16 p-12 mobile:hidden"
           onClick={handleStorageClear}
-        />
+        >
+          로그아웃
+        </Button>
       </div>
       {children}
     </div>

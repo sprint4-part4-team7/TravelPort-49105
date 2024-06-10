@@ -49,11 +49,12 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
                   <Button
                     variant="default"
                     buttonStyle="px-12 py-12 text-16 font-normal w-240 mb-20"
-                    text="지금 바로 예약하기 "
                     onClick={() =>
                       item.path ? (window.location.href = item.path) : null
                     }
-                  />
+                  >
+                    지금 바로 예약하기
+                  </Button>
                 </div>
               </div>
             </div>
