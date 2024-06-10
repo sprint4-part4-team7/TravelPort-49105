@@ -31,12 +31,13 @@ const MainCard: React.FC<PopularAccommodationsProps> = ({
         <div className="w-61">
           <Button
             variant="default"
-            text="더보기"
             outlined
             isCancel
             onClick={onclick}
             buttonStyle="rounded-4 px-12 py-8 text-13 font-medium text-black-5"
-          />
+          >
+            더보기
+          </Button>
         </div>
       </div>
       <div className="grid gap-20 mobile:grid-cols-1 tablet:grid-cols-3 desktop:grid-cols-4">

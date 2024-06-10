@@ -51,10 +51,11 @@ const HotelCard = ({
           </p>
           <div className="w-74">
             <Button
-              text="상세보기"
               outlined
               buttonStyle="text-13 py-8 px-12 font-medium mobile:flex"
-            />
+            >
+              상세보기
+            </Button>
           </div>
         </div>
       </div>

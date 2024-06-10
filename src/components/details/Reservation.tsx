@@ -135,10 +135,10 @@ const Reservation = ({ product, options }: ReservationProps) => {
       </div>
       <div className="flex gap-20 w-full pb-58">
         <div className="w-1/3">
-          <Button outlined text="장바구니 담기" />
+          <Button outlined>장바구니 담기</Button>
         </div>
         <div className="w-2/3">
-          <Button text="결제하기" />
+          <Button>결제하기</Button>
         </div>
       </div>
     </div>

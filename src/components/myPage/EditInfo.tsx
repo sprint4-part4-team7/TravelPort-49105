@@ -170,7 +170,7 @@ const EditInfo = ({ userType }: { userType: 'user' | 'partner' }) => {
           </div>
         </div>
       </form>
-      <Button text="저장하기" onClick={handleSubmit(handleSave)} />
+      <Button onClick={handleSubmit(handleSave)}>저장하기</Button>
       <Modal
         isOpen={isModalOpen}
         closeModal={closeModal}

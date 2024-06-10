@@ -8,12 +8,13 @@ const CheckButton = ({ disabled }: ButtonProps) => {
   return (
     <div className="absolute bottom-24 mx-40 w-[calc(100%-364px)]">
       <Button
+        buttonType="submit"
         variant="default"
         buttonStyle="text-16 p-16"
-        text="다음"
         disabled={disabled}
-        buttonType="submit"
-      />
+      >
+        다음
+      </Button>
     </div>
   );
 };

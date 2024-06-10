@@ -63,20 +63,22 @@ const UnLoginUserHeaderBar = () => {
             <Button
               outlined
               buttonStyle="text-14 p-8 font-semibold"
-              text="파트너 페이지"
               onClick={() => {
                 navigate('./partner');
                 setIsMenuOpen(false);
               }}
-            />
+            >
+              파트너 페이지
+            </Button>
             <Button
               buttonStyle="text-14 p-8 font-semibold"
-              text="로그인 및 회원가입"
               onClick={() => {
                 navigate('./login');
                 setIsMenuOpen(false);
               }}
-            />
+            >
+              로그인 및 회원가입
+            </Button>
           </div>
         </div>
       </div>
@@ -86,18 +88,20 @@ const UnLoginUserHeaderBar = () => {
         <Button
           outlined
           buttonStyle="min-w-fit text-14 p-10 font-semibold"
-          text="파트너 페이지"
           onClick={() => {
             navigate('./partner');
           }}
-        />
+        >
+          파트너 페이지
+        </Button>
         <Button
           buttonStyle="min-w-fit text-14 p-10 font-semibold"
-          text="로그인 및 회원가입"
           onClick={() => {
             navigate('./login');
           }}
-        />
+        >
+          로그인 및 회원가입
+        </Button>
       </div>
     </div>
   );
