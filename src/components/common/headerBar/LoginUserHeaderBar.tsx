@@ -43,6 +43,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
   const navagate = useNavigate();
   const { mutate: logout } = useLogoutMutation();
   const { userInfo } = useUserStore();
+  console.log(userInfo);
 
   const defaultImages = [
     defaul1Img1,
@@ -197,16 +198,18 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
               </div>
             </li>
             {/* 장바구니 아이콘 */}
-            <li className="items-center justify-between hidden px-[1.2rem] mobile:flex py-1.5 hover:bg-blue-50">
-              <div className="flex items-center">
-                <img
-                  className="h-[3.2rem] w-[3.2rem] mobile:w-[1.6rem] mobile:h-[1.6rem]"
-                  src={cart}
-                  alt="쇼핑 카트 아이콘"
-                />
-                <span className="ml-[0.8rem]">장바구니</span>
-              </div>
-            </li>
+            {userInfo.isPartner === 0 && (
+              <li className="items-center justify-between hidden px-[1.2rem] mobile:flex py-1.5 hover:bg-blue-50">
+                <div className="flex items-center">
+                  <img
+                    className="h-[3.2rem] w-[3.2rem] mobile:w-[1.6rem] mobile:h-[1.6rem]"
+                    src={cart}
+                    alt="쇼핑 카트 아이콘"
+                  />
+                  <span className="ml-[0.8rem]">장바구니</span>
+                </div>
+              </li>
+            )}
             {/* 드롭다운 */}
             {menuItems.map((item, index) => (
               <li
@@ -264,6 +267,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
                 <button
                   className="px-12 py-6 font-normal border-solid text-11 border-1 border-black-12 rounded-24"
                   type="button"
+                  onClick={clickLogoutButton}
                 >
                   로그아웃
                 </button>
