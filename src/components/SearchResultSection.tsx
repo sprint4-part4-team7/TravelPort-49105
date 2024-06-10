@@ -1,5 +1,6 @@
 import useScoreAvg from '@/hooks/useScoreAvg';
-import React, { useMemo, useState } from 'react';
+import React from 'react';
+import useFilterProducts from '@/hooks/useFilterProducts';
 import Card from './common/card/Card';
 
 interface ProductCardProps {
@@ -43,34 +44,8 @@ interface SearchResultSectionProps {
 const SearchResultSection = ({
   productsWithMinPrice,
 }: SearchResultSectionProps) => {
-  const [sortType, setSortType] = useState('popular');
-
-  const sortProducts = (products: any[]) => {
-    switch (sortType) {
-      case 'popular': {
-        return [...products].sort(
-          (a, b) => b.averageScore - a.averageScore, // 별점 높은 순
-        );
-      }
-      case 'review': {
-        return [...products].sort(
-          (a, b) => b.totalReviews - a.totalReviews, // 리뷰 많은 순
-        );
-      }
-      case 'priceHigh': {
-        return [...products].sort(
-          (a, b) => b.minPrice - a.minPrice, // 가격 높은 순
-        );
-      }
-      default:
-        return products;
-    }
-  };
-
-  const sortedProducts = useMemo(
-    () => sortProducts(productsWithMinPrice),
-    [sortType, productsWithMinPrice],
-  );
+  const { sortedProducts, sortType, setSortType } =
+    useFilterProducts(productsWithMinPrice);
 
   return (
     <div>
