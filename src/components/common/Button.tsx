@@ -1,13 +1,15 @@
+import React from 'react';
+
 /* eslint-disable react/button-has-type */
 type ButtonProps = {
   buttonType?: 'button' | 'submit' | 'reset';
   variant?: 'default' | 'more' | 'floating';
   outlined?: boolean;
   buttonStyle?: string; // font 굵기, text 크기, padding, width 변경 시 tailwind 형식으로 진행
-  text: string;
   onClick?: () => void;
   isCancel?: boolean;
   disabled?: boolean;
+  children: React.ReactNode;
 };
 
 const Button = ({
@@ -15,13 +17,13 @@ const Button = ({
   variant = 'default',
   outlined = false,
   buttonStyle = 'text-16 p-12',
-  text = '',
   onClick,
   isCancel = false,
   disabled = false,
+  children,
 }: ButtonProps) => {
   const styles = {
-    base: `flex justify-center items-center w-full rounded ${buttonStyle}`,
+    base: `flex justify-center items-center w-full rounded-4 ${buttonStyle}`,
     default: 'bg-blue-6 text-white hover:bg-blue-5 active:bg-blue-7',
     outlined:
       'bg-white border-1 border-solid border-blue-6 text-blue-6 hover:border-blue-5 hover:text-blue-5 active:border-blue-7 active:text-blue-7',
@@ -61,7 +63,7 @@ const Button = ({
       onClick={onClick}
       disabled={disabled}
     >
-      {text}
+      {children}
     </button>
   );
 };
