@@ -45,6 +45,7 @@ interface SearchResultSectionProps {
 const SearchResultSection = ({
   productsWithMinPrice,
 }: SearchResultSectionProps) => {
+  // 필터링 훅 구현
   const { sortedProducts, sortType, setSortType } =
     useFilterProducts(productsWithMinPrice);
 
@@ -55,6 +56,7 @@ const SearchResultSection = ({
           {productsWithMinPrice.length}개의 상품
         </div>
         <div className="text-14 text-black-5">
+          {/* 필터링 버튼 컴포넌트 */}
           <FilterButton
             label="인기순"
             sortType="popular"
