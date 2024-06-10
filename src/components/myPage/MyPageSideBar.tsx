@@ -1,18 +1,30 @@
 import React from 'react';
 import { useUserMypageStore, useUserStore } from '@/utils/zustand';
+import { useNavigate } from 'react-router-dom';
 import Button from '@/components/common/Button';
 import MyPageButton from '@/components/myPage/MyPageButton';
 
 interface MyPageSideBarProps {
   children: React.ReactNode;
+  isPartner?: boolean;
 }
 
-const MyPageSideBar = ({ children }: MyPageSideBarProps) => {
-  const setMypage = useUserMypageStore((state) => state.setUserMypage);
+const MyPageSideBar = ({ children, isPartner = false }: MyPageSideBarProps) => {
+  const navigate = useNavigate();
+  const navigateUrl = `${isPartner ? '/partner' : ''}/mypage/`;
+  const { userMypage, setUserMypage } = useUserMypageStore();
   const { userInfo } = useUserStore();
+
   const handleStorageClear = () => {
     localStorage.clear();
     window.location.reload();
+  };
+
+  const changeStatus = (newStatus: string) => {
+    if (newStatus !== userMypage && !!newStatus) {
+      setUserMypage(newStatus);
+      navigate(navigateUrl + newStatus, { replace: true });
+    }
   };
 
   return (
@@ -34,17 +46,14 @@ const MyPageSideBar = ({ children }: MyPageSideBarProps) => {
               </div>
             )}
             <span className="text-14 font-semibold px-4 py-8">
-              {userInfo.name || '사용자 이름'}
+              {userInfo.name}
             </span>
           </div>
           <div className="flex flex-col gap-4 mobile:flex-row mobile:justify-center">
-            <MyPageButton setMyPage={setMypage} page="user">
+            <MyPageButton setStatus={changeStatus} page="edit-info">
               정보 수정
             </MyPageButton>
-            <MyPageButton setMyPage={setMypage} page="partner">
-              파트너 정보 수정
-            </MyPageButton>
-            <MyPageButton setMyPage={setMypage} page="reservation">
+            <MyPageButton setStatus={changeStatus} page="reservation">
               예약 내역
             </MyPageButton>
           </div>

@@ -79,3 +79,14 @@ export interface PostData {
   }[];
   bucketName: string;
 }
+
+export interface UserInfo {
+  id?: number;
+  name: string;
+  email?: string;
+  isPartner?: number;
+  realName?: string;
+  phone?: string;
+  profileImage?: string;
+  description?: string;
+}

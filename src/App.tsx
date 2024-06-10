@@ -16,6 +16,7 @@ import ProductRegist from '@/pages/productRegist/ProductRegist';
 import SearchResultPage from '@/pages/SearchResultPage';
 import ReviewRegist from './pages/ReviewRegist';
 import ReservationManagement from '@/pages/ReservationManagement';
+import PartnerMain from './pages/PartnerMain';
 
 const App = () => {
   return (
@@ -45,8 +46,10 @@ const App = () => {
         <Route path="product-regist">
           <Route index element={<ProductRegist />} />
         </Route>
-        <Route path="mypage">
-          <Route index element={<MyPage />} />
+        <Route path="mypage/:status" element={<MyPage />} />
+        <Route path="partner/">
+          <Route index element={<PartnerMain />} />
+          <Route path="mypage/:status" element={<MyPage isPartner />} />
         </Route>
         <Route path="payments">
           <Route index element={<CheckoutPage />} />

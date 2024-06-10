@@ -1,16 +1,7 @@
+import { UserInfo } from '@/constants/types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-interface UserInfo {
-  id: number;
-  name: string;
-  email: string;
-  realName?: string;
-  phone?: string;
-  profileImage?: string;
-  isPartner?: number;
-  description?: string;
-}
 interface UserState {
   userInfo: UserInfo;
   setUserInfo: (userInfo: UserInfo) => void;
