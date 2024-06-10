@@ -19,7 +19,9 @@ const useProductAll = () => {
     queryKey: ['getProductOptionAll'],
     queryFn: getProductOptionAll,
   });
-  const optionAll = optionAllResponse ? optionAllResponse.data : [];
+  const optionAll = optionAllResponse
+    ? optionAllResponse.data.productOptions
+    : [];
 
   return {
     productAll,
