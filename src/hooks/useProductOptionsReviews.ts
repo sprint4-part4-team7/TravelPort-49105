@@ -7,7 +7,7 @@ const useProductOptionsReviews = (
   reviewAll: any,
 ) => {
   return useMemo(() => {
-    const products = productAll?.productOptions;
+    const products = productAll?.data;
     return (
       products &&
       products
@@ -15,7 +15,7 @@ const useProductOptionsReviews = (
           // 해당 제품의 옵션 찾기
           const productOptions =
             optionAll &&
-            optionAll?.filter(
+            optionAll.productOptions?.filter(
               (option: any) => option?.productId === product.id,
             );
 
