@@ -15,6 +15,7 @@ import HotelCard from '@/components/common/card/HotelCard';
 import CalendarCustom from '@/components/common/CalendarCustom';
 import HeadCount from '@/components/common/filter/HeadCount';
 import PriceRange from '@/components/common/filter/PriceRange';
+import ProductType from '@/components/common/filter/ProductType';
 
 const List = () => {
   const [filteredData, setFilteredData] = useState();
@@ -36,6 +37,7 @@ const List = () => {
   const { filteredTitles } = useSearchData(uniqueOptionAll);
 
   const cards = filteredData || filteredTitles;
+  console.log(filteredTitles);
   const filterSearch = window.innerWidth > 767 ? '어디로 떠날까요?' : '검색';
 
   const handleSearchBar = () => {
@@ -90,6 +92,11 @@ const List = () => {
               <PriceRange />
             </div>
           )}
+          {filterTab === '숙소 종류' && (
+            <div className="absolute w-2/5 top-80 right-0 mobile:w-full">
+              <ProductType />
+            </div>
+          )}
 
           <div
             className="flex gap-2 cursor-pointer"
@@ -117,7 +124,7 @@ const List = () => {
         </div>
       </div>
       <div className="flex flex-col gap-24">
-        {cards.map((item) => {
+        {cards.map((item: any) => {
           // const { avg, length } = useScoreAvg(item.id);
 
           return (
