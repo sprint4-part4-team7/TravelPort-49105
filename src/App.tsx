@@ -16,6 +16,7 @@ import ProductRegist from '@/pages/productRegist/ProductRegist';
 import SearchResultPage from '@/pages/SearchResultPage';
 import ReviewRegist from './pages/ReviewRegist';
 import ReservationManagement from '@/pages/ReservationManagement';
+import PartnerMain from './pages/PartnerMain';
 
 const App = () => {
   return (
@@ -47,6 +48,7 @@ const App = () => {
         </Route>
         <Route path="mypage/:status" element={<MyPage />} />
         <Route path="partner/">
+          <Route index element={<PartnerMain />} />
           <Route path="mypage/:status" element={<MyPage isPartner />} />
         </Route>
         <Route path="payments">
