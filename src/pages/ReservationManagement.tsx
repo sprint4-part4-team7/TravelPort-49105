@@ -1,127 +1,140 @@
 import APPROVE from '@/assets/icons/check-circle.svg';
+import DENIED from '@/assets/icons/x-square-red.svg';
 import ARROW from '@/assets/icons/arrowDown.svg';
 import { useState } from 'react';
 import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
-import ReservationCard from '@/components/common/reservPagination/ResevationCard';
+import SearchBar from '@/components/common/SearchBar';
 
 const ReservationManagement = () => {
-  const [detail, setDetail] = useState(false);
-  const [allApprove, setAllApprove] = useState(false);
+  const [isNew, setIsNew] = useState<boolean>(false);
 
-  const handleDetail = () => {
-    setDetail(!detail);
+  const toggleDropdown = () => {
+    setIsNew(!isNew);
   };
 
-  const handleAllApprove = () => {
-    setAllApprove(!allApprove);
-  };
   return (
     <>
       <Layout>
         <div className="flex flex-col gap-60 mt-60">
           <div className="flex flex-col gap-20">
             <div className="font-bold text-24">예약 관리</div>
-            <input className="border-1 border-solid border-black-5 rounded-8 text-16" />
+            <SearchBar cardLists={[]} />
           </div>
 
           <div>
-            <div className="flex py-24">
-              <div className="flex justify-center items-center p-10 w-120 p-10 text-20 font-semibold">
-                전체
-              </div>
-              <div className="flex justify-center items-center p-10 w-120 p-10 text-20 font-semibold">
-                숙박
-              </div>
-              <div className="flex justify-center items-center p-10 w-120 p-10 text-20 font-semibold">
-                체험
-              </div>
-              <div className="flex justify-center items-center p-10 w-120 p-10 text-20 font-semibold text-black-5">
-                교통
-              </div>
-            </div>
-            <div className="flex flex-col gap-24 border-1 border-solid border-black-7 rounded-8 p-16">
-              <div className="flex gap-12">
-                <div className="flex flex-col gap-12 w-full">
-                  <div className="text-20 font-semibold">상품명</div>
-                  <div className="text-14">상품 옵션</div>
-                  <div className="text-16">예약 팀: n팀</div>
+            <div className="flex justify-between py-24">
+              <div className="flex">
+                <div className="flex justify-center items-center p-10 w-120 p-10 text-20 font-semibold">
+                  전체
                 </div>
-                <button
-                  type="button"
-                  className="flex items-center justify-center"
-                  onClick={handleDetail}
-                >
-                  {detail ? (
-                    <img alt="openDetail" src={ARROW} />
-                  ) : (
+                <div className="flex justify-center items-center p-10 w-120 p-10 text-20 font-semibold">
+                  숙박
+                </div>
+                <div className="flex justify-center items-center p-10 w-120 p-10 text-20 font-semibold">
+                  체험
+                </div>
+                <div className="flex justify-center items-center p-10 w-120 p-10 text-20 font-semibold text-black-5">
+                  교통
+                </div>
+              </div>
+              <button
+                type="button"
+                className="flex items-center justify-center gap-4 
+                px-12 py-8 text-16 font-semibold
+                border-1 border-solid border-black-5 rounded-8"
+                onClick={toggleDropdown}
+              >
+                {isNew ? (
+                  <>
+                    최신순
                     <img
-                      className="-scale-y-100"
-                      alt="closeDetail"
+                      className=""
+                      width="14px"
+                      height="14px"
+                      alt="new"
                       src={ARROW}
                     />
-                  )}
-                </button>
-              </div>
-
-              <div className="flex justify-end">
-                {allApprove ? (
-                  <div className="flex gap-10">
-                    <button
-                      type="button"
-                      className="flex gap-4 items-center w-fit px-12 py-8 
-                  font-semibold text-15 
-                border-1 border-solid border-blue-6 rounded-8 text-blue-6"
-                    >
-                      승인됨
-                    </button>
-                    <button
-                      type="button"
-                      className="flex gap-4 items-center w-fit px-12 py-8 
-                  font-semibold text-15 
-                border-1 border-solid border-system-error rounded-8 text-system-error"
-                      onClick={handleAllApprove}
-                    >
-                      승인 취소
-                    </button>
-                  </div>
+                  </>
                 ) : (
-                  <button
-                    type="button"
-                    className="flex gap-4 items-center w-fit px-12 py-8 
-                  font-semibold text-15 
-                border-1 border-solid border-blue-6 rounded-8 text-blue-6"
-                    onClick={handleAllApprove}
-                  >
-                    모두 예약확정
-                    <img alt="승인" src={APPROVE} />
-                  </button>
+                  <>
+                    과거순
+                    <img
+                      className="-scale-y-100"
+                      width="14px"
+                      height="14px"
+                      alt="old"
+                      src={ARROW}
+                    />
+                  </>
                 )}
-              </div>
-              {detail ? (
-                <div className="flex flex-col gap-16">
-                  <ReservationCard
-                    id={1}
-                    title="예약자명 / 예약 수량 / 예약 기간"
-                    option="전화번호"
-                    date="예약 신청일: 2023.01.01"
-                  />
-                  <ReservationCard
-                    id={2}
-                    title="예약자명 / 예약 수량 / 예약 기간"
-                    option="전화번호"
-                    date="2023.01.01"
-                  />
-                  <ReservationCard
-                    id={3}
-                    title="예약자명 / 예약 수량 / 예약 기간"
-                    option="전화번호"
-                    date="2023.01.01"
-                  />
+              </button>
+            </div>
+            <div className="flex flex-col gap-24 border-1 border-solid border-black-7 rounded-8 p-16">
+              <div className="flex flex-col gap-16 ">
+                <div
+                  className="flex gap-12 p-16 justify-between items-center
+                  border-1 border-solid border-black-6 rounded-8"
+                >
+                  <div className="flex flex-col gap-12 ">
+                    <div className="text-20 font-semibold">
+                      상품명(판매 게시글 제목)
+                    </div>
+                    <div className="text-14 text-black-10">
+                      상품 상세 옵션(옵션, 수량, 기간)
+                    </div>
+                    <div className="text-16 font-medium">
+                      예약자명 / 전화번호
+                    </div>
+                    <div className="text-12 font-medium text-black-6">
+                      예약일시 :{' '}
+                    </div>
+                  </div>
+                  {/* <div className="flex gap-8 items-center">
+                    <Button
+                      variant="default"
+                      outlined
+                      buttonStyle="text-14 px-12 h-fit py-8 font-semibold "
+                      text="승인하기"
+                      image={{ src: APPROVE, width: 16, height: 16 }}
+                    />
+                    <Button
+                      variant="default"
+                      outlined
+                      buttonStyle="text-14 px-12 py-8 h-fit text-system-error font-semibold border-system-error
+                      hover:border-system-error hover:text-system-error-bg
+                      active:border-system-error active:text-system-error"
+                      text="거절하기"
+                      image={{ src: DENIED, width: 16, height: 16 }}
+                    />
+                  </div> */}
                 </div>
-              ) : (
-                ''
-              )}
+
+                <div
+                  className="flex flex-col gap-12 w-full p-16
+                  border-1 border-solid border-black-6 rounded-8"
+                >
+                  <div className="text-20 font-semibold">
+                    상품명(판매 게시글 제목)
+                  </div>
+                  <div className="text-14 text-black-10">
+                    상품 상세 옵션(옵션, 수량, 기간)
+                  </div>
+                  <div className="text-16 font-medium">예약자명 / 전화번호</div>
+                </div>
+                <div
+                  className="flex flex-col gap-12 w-full p-16
+                  border-1 border-solid border-black-6 rounded-8"
+                >
+                  <div className="text-20 font-semibold">
+                    상품명(판매 게시글 제목)
+                  </div>
+                  <div className="text-14 text-black-10">
+                    상품 상세 옵션(옵션, 수량, 기간)
+                  </div>
+                  <div className="text-16 font-medium">예약자명 / 전화번호</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
