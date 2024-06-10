@@ -108,11 +108,11 @@ export const postVerifyEmail = async (email: string) => {
 };
 
 export const postUserSignup = async (data: UserSignupForm) => {
-  const { nickname, email, password } = data;
+  const { nickname: name, email, password } = data;
   const loginType = 'USER';
   try {
     const res = await instance.post('auth/signup', {
-      nickname,
+      name,
       email,
       password,
       loginType,
@@ -129,11 +129,11 @@ export const postUserSignup = async (data: UserSignupForm) => {
 };
 
 export const postPartnerSignup = async (data: PartnerSignupForm) => {
-  const { company, email, password } = data;
+  const { company: name, email, password } = data;
   const loginType = 'PARTNER';
   try {
     const res = await instance.post('auth/signup', {
-      company,
+      name,
       email,
       password,
       loginType,
