@@ -15,17 +15,19 @@ const useProductOptionsReviews = (
           // 해당 제품의 옵션 찾기
           const productOptions =
             optionAll &&
-            optionAll?.filter(
+            optionAll.productOptions?.filter(
               (option: any) => option?.productId === product.id,
             );
 
           // 해당 옵션들의 리뷰 찾기
           const reviews =
             reviewAll &&
-            reviewAll.filter((review: any) =>
-              productOptions.some(
-                (option: any) => option.id === review.productOptionId,
-              ),
+            reviewAll.filter(
+              (review: any) =>
+                productOptions &&
+                productOptions.some(
+                  (option: any) => option.id === review.productOptionId,
+                ),
             );
 
           // 리뷰 개수

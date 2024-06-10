@@ -8,29 +8,33 @@ const useProductsWithMinPrice = (
   search: string,
 ) => {
   // 최소 가격을 계산하는 함수
-  const calculateMinPrice = (productId: number, options: any[]) => {
+  const calculateMinPrice = (productId: number, options: any) => {
     // 옵션 존재 여부 확인
     if (!options) return 0;
     const filteredOptions =
-      options && options.filter((option) => option.productId === productId);
+      options &&
+      options.productOptions.filter(
+        (option: any) => option.productId === productId,
+      );
     const prices =
-      filteredOptions && filteredOptions.map((option) => option.optionPrice);
+      filteredOptions &&
+      filteredOptions.map((option: any) => option.optionPrice);
     return prices.length ? Math.min(...prices) : 0;
   };
 
   // 리뷰의 총 개수와 평균 점수를 계산하는 함수
   const calculateReviews = (
     productId: number,
-    options: any[],
+    options: any,
     reviews: any[],
   ) => {
     // 옵션과 리뷰의 존재 여부 확인
     if (!options || !reviews) return { totalReviews: 0, averageScore: 0 };
     const optionIds =
       options &&
-      options
-        .filter((option) => option.productId === productId)
-        .map((option) => option.id);
+      options.productOptions
+        .filter((option: any) => option.productId === productId)
+        .map((option: any) => option.id);
     const relevantReviews =
       reviews &&
       reviews.filter((review) => optionIds.includes(review.productOptionId));
@@ -58,12 +62,12 @@ const useProductsWithMinPrice = (
         return { ...product, minPrice, totalReviews, averageScore };
       })
       .filter((product: any) => {
-        const nameMatch = product.name
-          .toLowerCase()
-          .includes(search.toLowerCase());
-        const addressMatch = product.productAddress
-          .toLowerCase()
-          .includes(search.toLowerCase());
+        const nameMatch =
+          product.name &&
+          product.name.toLowerCase().includes(search.toLowerCase());
+        const addressMatch =
+          product.productAddress &&
+          product.productAddress.toLowerCase().includes(search.toLowerCase());
         return nameMatch || addressMatch;
       });
   }, [products, optionAll, reviews, search]);

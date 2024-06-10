@@ -79,9 +79,9 @@ const Main = () => {
 
   const transformedAccommodation = transformData(
     sortedCategoryAccommodation,
-    3,
+    1,
   );
-  const transformedActivity = transformData(sortedCategoryActivity, 20);
+  const transformedActivity = transformData(sortedCategoryActivity, 2);
 
   const CategoryAccommodation = transformedAccommodation
     ? transformedAccommodation.slice(0, displayCount)
@@ -91,10 +91,10 @@ const Main = () => {
     : [];
 
   const handleAccommodation = () => {
-    navigate('/list/3');
+    navigate('/list/1');
   };
   const handleActivity = () => {
-    navigate('/list/20');
+    navigate('/list/2');
   };
 
   return (

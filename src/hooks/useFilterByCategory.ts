@@ -1,8 +1,8 @@
 const useFilterByCategory = (data: any) => {
   const categoryAccommodation =
-    data && data.filter((item: any) => item.categoryId === 3);
+    data && data.filter((item: any) => item.categoryId === 1);
   const categoryActivity =
-    data && data.filter((item: any) => item.categoryId === 20);
+    data && data.filter((item: any) => item.categoryId === 2);
 
   // 리뷰 개수가 3개 이상인 항목만 필터링하고 별점이 높은 순으로 정렬하는 함수
   const filterAndSortByReviews = (items: any) => {
