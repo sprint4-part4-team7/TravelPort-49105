@@ -65,3 +65,17 @@ export type CardListsType = {
     productImages: string[];
   };
 };
+
+export interface PresignedUrl {
+  url: string;
+  uniqueFileName: string;
+  originalFileName: string;
+}
+
+export interface PostData {
+  items: {
+    objectKey: string;
+    contentType: string;
+  }[];
+  bucketName: string;
+}

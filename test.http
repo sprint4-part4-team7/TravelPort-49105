@@ -1,0 +1,14 @@
+### Get Presigned URLs
+POST http://ec2-43-201-69-246.ap-northeast-2.compute.amazonaws.com/utility/presigned-urls
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwibmFtZSI6Iu2FjOyKpO2EsCIsImlzUGFydG5lciI6MCwicGhvbmUiOiIwMTAxMjM0NTY3OCIsInJlYWxOYW1lIjoi7YWM7Iqk7YSw7IiY7KCV65CoIiwiZGVzY3JpcHRpb24iOiIiLCJwcm9maWxlSW1hZ2UiOiIiLCJpYXQiOjE3MTc4Mjg0NDUsImV4cCI6MTcxNzg1MDA0NX0.SgSWAw0mb2-HHiOh5gstMfkKp8XrbrhDbUKhju6N7LE
+Content-Type: application/json
+
+{
+  "items": [
+    {
+      "objectKey": "image2.png",
+      "contentType": "image/png"
+    }
+  ],
+  "bucketName": "review-7team"
+}
