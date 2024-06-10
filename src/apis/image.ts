@@ -1,20 +1,16 @@
 import instance from '@/utils/axios';
-import { getCookie } from '@/utils/cookie';
 import axios from 'axios';
 
-interface ResponseData {
+interface PresignedUrl {
+  url: string;
   uniqueFileName: string;
-  presignedUrl: string;
+  originalFileName: string;
 }
 
 // presigned URL을 사용하여 S3에 파일을 업로드하는 함수
 const putImageS3 = async (url: string, file: File) => {
-  const response = await axios.put(url, file, {
-    headers: {
-      Authorization: `Bearer ${getCookie('accessToken')}`,
-    },
-  });
-  return response;
+  const response = await axios.put(url, file);
+  return response.data;
 };
 
 // 이미지 파일들을 받아 presigned URL을 요청하고, 해당 URL을 사용하여 S3에 업로드하는 함수
@@ -29,18 +25,21 @@ const postImage = async (data: File[], bucket: string) => {
     items: imageDatas,
     bucketName: bucket,
   });
-
+  if (!response.data) throw new Error('Failed to get presigned URL');
+  const { presignedUrls } = response.data;
+  // 파일명을 지정된 이름으로 변경
   await Promise.all(
-    response.data.map(async (res: ResponseData, index: number) => {
-      const newData = {
-        ...data[index],
-        name: response.data[index].res.uniqueFileName,
-      };
-      await putImageS3(res.presignedUrl, newData);
+    presignedUrls.map(async (responseData: PresignedUrl, index: number) => {
+      const blob = data[index].slice(0, data[index].size, data[index].type);
+      const newFile = new File([blob], responseData.uniqueFileName, {
+        type: data[index].type,
+      });
+      // S3에 파일 업로드
+      await putImageS3(responseData.url, newFile);
     }),
   );
-  return response.data.map((res: ResponseData) => {
-    return res.presignedUrl;
+  return presignedUrls.map((res: PresignedUrl) => {
+    return res.url.split('?')[0];
   });
 };
 
