@@ -44,8 +44,18 @@ const usePaymentWidget = (
 
     return () => {
       // 컴포넌트 언마운트 시 결제 위젯 정리
-      paymentMethodsWidgetRef.current?.destroy();
-      agreementWidgetRef.current?.destroy();
+      if (
+        paymentMethodsWidgetRef.current &&
+        typeof paymentMethodsWidgetRef.current.destroy === 'function'
+      ) {
+        paymentMethodsWidgetRef.current.destroy();
+      }
+      if (
+        agreementWidgetRef.current &&
+        typeof agreementWidgetRef.current.destroy === 'function'
+      ) {
+        agreementWidgetRef.current.destroy();
+      }
       paymentWidgetRef.current = null;
     };
   }, [value, productName, customerName, customerEmail]);
