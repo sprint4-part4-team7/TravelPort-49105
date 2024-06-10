@@ -19,7 +19,7 @@ const ProductType = () => {
   // ];
 
   return (
-    <div className="p-24 shadow-[0_0_10px_0_rgba(0,0,0,0.2)] flex flex-col gap-32 justify-center items-start rounded-24">
+    <div className="p-24 shadow-[0_0_10px_0_rgba(0,0,0,0.2)] flex flex-col gap-32 justify-center items-start rounded-24 bg-white">
       <h1 className="text-16">숙박 종류 선택</h1>
       <div>
         {hotelTypes.map((type, idx) => {

@@ -24,7 +24,7 @@ const PriceRange = () => {
     ((rangeMaxValue - fixedMinPrice) / (fixedMaxPrice - fixedMinPrice)) * 100;
 
   return (
-    <div className="flex flex-col p-24 rounded-24 shadow-[0_0_10px_0_rgba(0,0,0,0.2)] z-[99]">
+    <div className="flex flex-col p-24 rounded-24 shadow-[0_0_10px_0_rgba(0,0,0,0.2)] bg-white">
       <h1 className="text-16 mb-32 ">1박당 요금</h1>
       <div className="slideWrapper">
         <input
@@ -56,6 +56,7 @@ const PriceRange = () => {
 
       <div className="mt-42 flex shrink gap-40 mobile:w-full">
         <InputBox
+          id="최소금액"
           label="최소 금액"
           value={rangeMinValue.toLocaleString()}
           onChange={(e) => {
@@ -67,6 +68,7 @@ const PriceRange = () => {
           }}
         />
         <InputBox
+          id="최대금액"
           label="최대 금액"
           value={rangeMaxValue.toLocaleString()}
           onChange={(e) => {

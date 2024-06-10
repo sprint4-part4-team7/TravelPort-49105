@@ -26,7 +26,7 @@ const HotelCard = ({
 
   return (
     <Link to={link}>
-      <div className="flex max-w-928 h-200 overflow-hidden rounded-12 border-1 border-solid border-black-4 mx-auto px-16 py-20 hover:bg-blue-1 mobile:max-w-500">
+      <div className="flex max-w-928 min-w-462 h-200 overflow-hidden rounded-12 border-1 border-solid border-black-4 mx-auto px-16 py-20 hover:bg-blue-1 mobile:max-w-500">
         <img src={image} alt="예시사진" className="w-160 h-160 object-cover" />
         <div className="px-16">
           <h2 className="text-black-12 mt-4 mb-5 text-22 font-semibold leading-20 truncate mobile:text-17">
@@ -49,11 +49,13 @@ const HotelCard = ({
           <p className="text-black-13 text-17 font-bold mb-8 mobile:text-14">
             {price.toLocaleString()}원 / 1박
           </p>
-          <Button
-            text="상세보기"
-            outlined
-            buttonStyle="w-74 text-13 py-8 px-12 font-medium mobile:flex"
-          />
+          <div className="w-74">
+            <Button
+              text="상세보기"
+              outlined
+              buttonStyle="text-13 py-8 px-12 font-medium mobile:flex"
+            />
+          </div>
         </div>
       </div>
     </Link>
