@@ -20,11 +20,11 @@ const CheckoutPage = () => {
   return (
     <div className="flex flex-col items-center w-full p-6 overflow-auto">
       <Layout>
-        <div className="w-[54rem] text-2xl text-white bg-pink-600 p-10 rounded-2xl">
+        <div className="p-10 text-2xl text-white bg-pink-600 w-570 rounded-2xl">
           상품이름: {productName}
         </div>
         <br />
-        <div className="w-[54rem] text-2xl text-white bg-pink-600 p-10 rounded-2xl">
+        <div className="p-10 text-2xl text-white bg-pink-600 w-570 rounded-2xl">
           가격: {paymentAmount}원
         </div>
         <br />

@@ -3,10 +3,9 @@ import React from 'react';
 const Pay = ({ requestPayment }: any) => {
   return (
     <div>
-      {' '}
-      <div className="max-w-[54rem] w-full">
-        <div id="payment-method" className="w-full" />
-        <div id="agreement" className="w-full" />
+      <div className="w-full max-w-600">
+        <div id="payment-method" />
+        <div id="agreement" />
         <div className="w-full px-6">
           <button
             type="button"
