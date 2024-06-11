@@ -3,11 +3,13 @@ import { useEffect, useState } from 'react';
 import { getMyReservation } from '@/apis/myReservation';
 import { useUserStore } from '@/utils/zustand';
 import { Reservation } from '@/constants/types';
+import useModal from '@/hooks/useModal';
 import ReservationCard from '@/components/common/reservPagination/ResevationCard';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
 import ReservChips from '@/components/myPage/ReservChips';
 import ReservButton from '@/components/myPage/ReservButton';
 import ReservButtonOutlined from './ReservButtonOutlined';
+import Modal from '../common/Modal';
 
 const MyResevation = ({ isExpired = false }: { isExpired?: boolean }) => {
   const [pageNum, setPageNum] = useState(1);
@@ -18,6 +20,8 @@ const MyResevation = ({ isExpired = false }: { isExpired?: boolean }) => {
   const start = (pageNum - 1) * limit;
   const end = start + limit;
   const slicedChildren = myReservation.slice(start, end);
+  const [cancelMsg, setCancelMsg] = useState<string>('');
+  const { isModalOpen, closeModal, openModal } = useModal();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,11 +48,21 @@ const MyResevation = ({ isExpired = false }: { isExpired?: boolean }) => {
               id={reservation.id}
               date={reservation.timeTable?.targetDate}
               option={reservation.productOption?.optionName}
-              title={reservation.productOption?.optionName}
-              upperRight={<ReservChips status={reservation.reservationState} />}
+              title={reservation.productOption.product.name}
+              upperRight={
+                isExpired ? null : (
+                  <ReservChips status={reservation.reservationState} />
+                )
+              }
               lowerRight={
                 reservation.reservationState === 'rejected' ? (
-                  <ReservButton status={reservation.reservationState} />
+                  <ReservButton
+                    onClick={() => {
+                      openModal();
+                      setCancelMsg(reservation.cancelMsg || '');
+                    }}
+                    status={reservation.reservationState}
+                  />
                 ) : (
                   <ReservButtonOutlined />
                 )
@@ -61,6 +75,9 @@ const MyResevation = ({ isExpired = false }: { isExpired?: boolean }) => {
           예약 목록이 없습니다.
         </div>
       )}
+      <Modal isOpen={isModalOpen} closeModal={closeModal}>
+        <div>{cancelMsg}</div>
+      </Modal>
     </div>
   );
 };

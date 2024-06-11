@@ -5,6 +5,10 @@ interface ReservationCardProps {
   id: number;
   title?: string;
   date: string;
+  time?: {
+    startTimeOnly: string;
+    endTimeOnly: string;
+  };
   option?: string;
   schedule?: string;
   userInfo?: string;
@@ -16,6 +20,7 @@ const ReservationCard = ({
   id,
   title,
   date,
+  time,
   option,
   schedule,
   userInfo,
@@ -23,6 +28,10 @@ const ReservationCard = ({
   lowerRight,
 }: ReservationCardProps) => {
   const formattedDate = getDate(date);
+  const duration =
+    time?.startTimeOnly && time.endTimeOnly
+      ? `${time?.startTimeOnly} ~ ${time?.endTimeOnly}`
+      : time?.startTimeOnly || time?.endTimeOnly || '';
 
   return (
     <div
@@ -42,7 +51,7 @@ const ReservationCard = ({
           <div className="text-16 font-medium">{userInfo}</div>
         </div>
         <div className="flex flex-row justify-between items-center">
-          <div className="text-16">{formattedDate}</div>
+          <div className="text-16">{`${formattedDate} ${duration}`}</div>
           {lowerRight}
         </div>
       </div>

@@ -109,6 +109,9 @@ export interface Reservation {
   };
   productOption: {
     optionName: string;
+    product: {
+      name: string;
+    };
   };
   timeTable: {
     targetDate: string;
