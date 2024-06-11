@@ -13,6 +13,8 @@ type InputBoxProps = {
   register?: any;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void | undefined;
   disabled?: boolean;
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void | undefined;
+  onClick?: (e: React.MouseEvent<HTMLInputElement>) => void | undefined;
 };
 
 const InputBox = ({
@@ -27,6 +29,8 @@ const InputBox = ({
   register,
   onChange = undefined,
   disabled = false,
+  onFocus = undefined,
+  onClick = undefined,
 }: InputBoxProps) => {
   const inputboxBasic = `p-12 rounded text-16 outline-none border-solid border-1 border-black-5 ${direction === 'col' ? '' : 'w-full max-w-335 mobile:max-w-none'}`;
   const focusDesign = 'focus:border-blue-6 focus:border-1';
@@ -55,6 +59,8 @@ const InputBox = ({
         onChange={onChange}
         disabled={disabled}
         {...register}
+        onFocus={onFocus}
+        onClick={onClick}
       />
       {error && (
         <div className="text-system-error text-12">{error.message}</div>
