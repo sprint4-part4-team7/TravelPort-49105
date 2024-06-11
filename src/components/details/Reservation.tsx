@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
 import useCalendar from '@/hooks/useCalendar';
@@ -17,18 +18,18 @@ interface ReservationProps {
 
 const Reservation = ({ product, options }: ReservationProps) => {
   const { selectedDate, setSelectedDate } = useCalendar();
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState(0);
   const [optionId, setOptionId] = useState(0);
   const [ticketNum, setTicketNum] = useState(0);
 
   console.log(optionId);
 
-  const handleClick = (optionName: string) => {
-    setSelectedOption(optionName);
+  const handleClick = (id: number) => {
+    setSelectedOption(id);
   };
 
   const filteredOption = options.filter(
-    (option) => option.optionName === selectedOption,
+    (option) => option.id === selectedOption,
   );
 
   const handleTicketMinus = () => {
@@ -76,7 +77,10 @@ const Reservation = ({ product, options }: ReservationProps) => {
         {options.map((option) => {
           if (option.userCount === 0) {
             return (
-              <div className="line flex flex-col justify-center items-center bg-black-3 text-black-6 border-black-4 border-1 rounded-4 h-60">
+              <div
+                key={option.id}
+                className="line flex flex-col justify-center items-center bg-black-3 text-black-6 border-black-4 border-1 rounded-4 h-60"
+              >
                 <div>{option.optionName}</div>
                 <div className="font-normal">마감</div>
               </div>
@@ -84,9 +88,10 @@ const Reservation = ({ product, options }: ReservationProps) => {
           }
           return (
             <div
-              className={`flex justify-center items-center border-black-4 border-1 rounded-4 h-60 flex-1 ${selectedOption === option.optionName ? 'bg-blue-6 text-white' : ''}`}
+              key={option.id}
+              className={`flex justify-center items-center border-black-4 border-1 rounded-4 h-60 flex-1 ${selectedOption === option.id ? 'bg-blue-6 text-white' : ''}`}
               onClick={() => {
-                handleClick(option.optionName);
+                handleClick(option.id);
                 setTicketNum(0);
                 setOptionId(option.id);
               }}
@@ -112,7 +117,7 @@ const Reservation = ({ product, options }: ReservationProps) => {
           <div className="flex justify-end">
             <div
               onClick={() => handleTicketMinus()}
-              className="w-40 h-40 flex justify-center items-center border-solid border-1 border-black-4 rounded-l-4 hover:bg-blue-6"
+              className="w-40 h-40 flex justify-center items-center border-solid border-1 border-black-4 rounded-l-4 hover:bg-blue-6 cursor-pointer"
             >
               <img src={minus} alt="마이너스아이콘" />
             </div>
@@ -121,7 +126,7 @@ const Reservation = ({ product, options }: ReservationProps) => {
             </div>
             <div
               onClick={() => handleTicketPlus()}
-              className="w-40 h-40 flex justify-center items-center border-solid border-1 border-black-4 rounded-r-4 hover:bg-blue-6"
+              className="w-40 h-40 flex justify-center items-center border-solid border-1 border-black-4 rounded-r-4 hover:bg-blue-6 cursor-pointer"
             >
               <img src={plus} alt="플러스아이콘" />
             </div>
