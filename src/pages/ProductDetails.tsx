@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/button-has-type */
@@ -6,6 +7,7 @@ import useFetchDetails from '@/hooks/useFetchDetails';
 import getMinPrice from '@/utils/getMinPrice';
 import { useState } from 'react';
 import useProductReview from '@/hooks/useProductReview';
+import { useNavigate, useParams } from 'react-router-dom';
 import LocationMap from '@/components/details/LocationMap';
 import SalesPeriod from '@/components/details/SalesPeriod';
 import Reservation from '@/components/details/Reservation';
@@ -14,14 +16,24 @@ import Review from '@/components/Review';
 import ReviewAverage from '@/components/review/ReviewAverage';
 
 const ProductDetails = () => {
-  const productId = 2;
-  const { product, options } = useFetchDetails(productId);
+  const { productId } = useParams();
+  const navigate = useNavigate();
+  const productIdNum = Number(productId);
+
+  const { product, options } = useFetchDetails(productIdNum);
+
+  // productId 없으면 메인페이지로 redirect
+  if (!product || (product && !productId?.includes(String(product.id)))) {
+    navigate('/');
+  }
+
   const [activeTab, setActiveTab] = useState('');
 
-  const { productReviews } = useProductReview(productId);
+  const { productReviews } = useProductReview(productIdNum);
 
   const handleTabClick = (tab: string) => setActiveTab(tab);
 
+  // 캐러셀에 사용할 이미지: 썸네일 + productImages
   let newUrls;
   if (product?.productImages)
     newUrls = [product?.thumbnail].concat(product?.productImages);
@@ -70,7 +82,7 @@ const ProductDetails = () => {
         )}
         {activeTab === 'review' && (
           <div className="mt-60">
-            <ReviewAverage productId={productId} />
+            <ReviewAverage productId={productIdNum} />
             <h1 className="text-18 font-semibold py-16">
               리뷰
               <span className="text-blue-6 pl-11">
