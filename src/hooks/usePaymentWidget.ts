@@ -7,6 +7,9 @@ interface PaymentWidget {
   requestPayment: (options: any) => any;
 }
 
+const generateRandomString = () =>
+  window.btoa(Math.random().toString()).slice(0, 20);
+
 const usePaymentWidget = (
   value: number,
   productName: string,
@@ -20,11 +23,11 @@ const usePaymentWidget = (
   useEffect(() => {
     const initializeWidget = async () => {
       const paymentWidget = await loadPaymentWidget(
-        process.env.REACT_APP_PAYMENT_WIDGET_KEY!,
+        process.env.REACT_APP_PAYMENT_WIDGET_KEY!, // 이 값이 문자열인지 확인
         ANONYMOUS,
       );
 
-      // 결제창 렌더링, value(paymentAmount) 사용
+      // 결제창 렌더링, value(paymentAmount)가 숫자인지 확인
       paymentMethodsWidgetRef.current = paymentWidget.renderPaymentMethods(
         '#payment-method',
         { value },
@@ -62,7 +65,7 @@ const usePaymentWidget = (
 
   const requestPayment = async () => {
     const paymentOptions = {
-      orderId: 'CODEIT0001',
+      orderId: generateRandomString(),
       orderName: productName,
       customerName,
       customerEmail,

@@ -1,18 +1,25 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import './Payments.css';
 import useReservationMutation from '@/hooks/reactQuery/reservation/useReservationMutation';
 import { useEffect } from 'react';
+import usePaymentPutMutation from '@/hooks/reactQuery/payment/usePaymentPutMutation';
 import Layout from '@/components/common/layout/Layout';
 
 const SuccessPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [searchParams] = useSearchParams();
+  const paymentKey = searchParams.get('paymentKey') ?? '';
+  const orderId = searchParams.get('orderId') ?? '';
+  const amount = parseInt(searchParams.get('amount') ?? '0', 10);
+
   function confirm() {
     navigate('/');
   }
 
   const { mutate: createReservation, isLoading } = useReservationMutation();
+  const { mutate: sendPayments } = usePaymentPutMutation();
 
   const reservationPost = async () => {
     createReservation({
@@ -26,9 +33,19 @@ const SuccessPage = () => {
     });
   };
 
+  const paymentPut = async () => {
+    sendPayments({
+      paymentId: 3,
+      paymentKey,
+      orderId,
+      amount,
+    });
+  };
+
   useEffect(() => {
     if (location.pathname === '/payments/success' && location.search) {
       reservationPost();
+      paymentPut();
     }
   }, []);
 
