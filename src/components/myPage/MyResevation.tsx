@@ -1,5 +1,8 @@
-import { useState } from 'react';
-import info from '@/mocks/resevationInfo.json';
+import { useEffect, useState } from 'react';
+// import info from '@/mocks/resevationInfo.json';
+import { getMyReservation } from '@/apis/myReservation';
+import { useUserStore } from '@/utils/zustand';
+import { Reservation } from '@/constants/types';
 import ReservationCard from '@/components/common/reservPagination/ResevationCard';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
 import ReservChips from '@/components/myPage/ReservChips';
@@ -8,32 +11,44 @@ import ReservButtonOutlined from './ReservButtonOutlined';
 
 const MyResevation = () => {
   const [pageNum, setPageNum] = useState(1);
+  const userInfo = useUserStore((state) => state.userInfo);
+  const [myReservation, setMyReservation] = useState<Reservation[]>([]); // [Reservation
 
   const limit = 4;
   const start = (pageNum - 1) * limit;
   const end = start + limit;
-  const slicedChildren = info.slice(start, end);
+  const slicedChildren = myReservation.slice(start, end);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (userInfo.id) {
+        const response = await getMyReservation(userInfo.id);
+        setMyReservation(response);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="flex flex-col gap-48 w-full">
       <div className="text-20 font-semibold">예약 목록</div>
-      {info.length > 0 ? (
+      {myReservation.length > 0 ? (
         <ReservPagination
           limit={limit}
           pageNum={pageNum}
           setPageNum={setPageNum}
-          allCardNum={info.length}
+          allCardNum={myReservation.length}
         >
           {slicedChildren.map((reservation) => (
             <ReservationCard
               id={reservation.id}
-              date={reservation.date}
-              option={reservation.option}
-              title={reservation.title}
-              upperRight={<ReservChips status={reservation.status} />}
+              date={reservation.timeTable?.targetDate}
+              option={reservation.productOption?.optionName}
+              title={reservation.productOption?.optionName}
+              upperRight={<ReservChips status={reservation.reservationState} />}
               lowerRight={
-                reservation.status === 'rejected' ? (
-                  <ReservButton status={reservation.status} />
+                reservation.reservationState === 'rejected' ? (
+                  <ReservButton status={reservation.reservationState} />
                 ) : (
                   <ReservButtonOutlined />
                 )

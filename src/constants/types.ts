@@ -90,3 +90,29 @@ export interface UserInfo {
   profileImage?: string;
   description?: string;
 }
+
+export interface Reservation {
+  id: number;
+  userId: number;
+  productOptionId: number;
+  paymentId: number;
+  timeTableId: number;
+  reservationState: string;
+  reservationPrice?: string;
+  ticketCount?: number;
+  cancelMsg?: string;
+  createdAt: string;
+  user: {
+    name: string;
+    realName?: string;
+    phone?: string;
+  };
+  productOption: {
+    optionName: string;
+  };
+  timeTable: {
+    targetDate: string;
+    startTimeOnly: string;
+    endTimeOnly: string;
+  };
+}

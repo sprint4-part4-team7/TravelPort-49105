@@ -1,8 +1,9 @@
+import getDate from '@/utils/getDate';
 import { ReactNode } from 'react';
 
 interface ReservationCardProps {
   id: number;
-  title: string;
+  title?: string;
   date: string;
   option?: string;
   schedule?: string;
@@ -21,6 +22,8 @@ const ReservationCard = ({
   upperRight,
   lowerRight,
 }: ReservationCardProps) => {
+  const formattedDate = getDate(date);
+
   return (
     <div
       id={id.toString()}
@@ -39,7 +42,7 @@ const ReservationCard = ({
           <div className="text-16 font-medium">{userInfo}</div>
         </div>
         <div className="flex flex-row justify-between items-center">
-          <div className="text-12 font-medium text-black-6">{date}</div>
+          <div className="text-16">{formattedDate}</div>
           {lowerRight}
         </div>
       </div>
