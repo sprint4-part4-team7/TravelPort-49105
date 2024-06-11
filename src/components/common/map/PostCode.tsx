@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useForm } from 'react-hook-form';
 import saveImage from '@/assets/icons/check-circle-broken.svg';
+import searchImage from '@/assets/icons/search-pr.svg';
 import CheckButton from '@/pages/productRegist/CheckButton';
 import Button from '@/components/common/Button';
 
@@ -123,18 +124,21 @@ const PostCode = ({ setX, setY, setBuilding }: PostCodeProps) => {
       <div className="mx-40 flex flex-col gap-24">
         <label className="flex gap-12 flex-col" htmlFor="address">
           <p className="text-17">기본 주소 검색</p>
-          <input
-            className="h-48 p-12 rounded text-16 outline-none border-solid border-1 border-black-5 w-full focus:border-blue-6 focus:border-1 mobile:max-w-none"
-            {...register('address', {
-              required: '주소를 다시 검색해주세요.',
-            })}
-            placeholder="클릭해서 주소를 검색해주세요."
-            id="address"
-            type="text"
-            onClick={handleClick}
-            onFocus={changeBuildingName}
-            readOnly // 검색으론 쓸수있지만 직접 텍스트입력은 못함
-          />
+          <div className="flex justify-between h-48 p-12 rounded border-solid border-1 border-black-5 w-full has-[:focus]:border-blue-6 focus:border-1 mobile:max-w-none">
+            <input
+              className="outline-none text-16 "
+              {...register('address', {
+                required: '주소를 다시 검색해주세요.',
+              })}
+              placeholder="클릭해서 주소를 검색해주세요."
+              id="address"
+              type="text"
+              onClick={handleClick}
+              onFocus={changeBuildingName}
+              readOnly // 검색으론 쓸수있지만 직접 텍스트입력은 못함
+            />
+            <img src={searchImage} alt="검색아이콘" />
+          </div>
         </label>
         <label className="flex gap-12 flex-col" htmlFor="sideAddress">
           <p className="text-17">상세 주소 입력</p>

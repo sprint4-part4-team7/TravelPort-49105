@@ -1,9 +1,15 @@
 import { useForm } from 'react-hook-form';
 import NumberInputBox from '@/components/common/NumberInputBox';
+// import CheckButton from './CheckButton';
 
 type OptionForm = {
   title: string;
   content: string;
+  minimum: number;
+  maximum: number;
+  price: number;
+  start: number;
+  end: number;
 };
 
 const Option = () => {
@@ -11,28 +17,72 @@ const Option = () => {
   return (
     <form>
       <div className="mx-40 flex flex-col gap-12">
-        <div className="flex gap-12">
+        <div className="flex gap-12 items-center">
           <label className="flex gap-12 flex-col" htmlFor="title">
-            <p className="text-17">세부 상품명</p>
+            <p className="text-14">세부 상품명</p>
             <input
-              className="h-48 p-12 rounded text-16 outline-none border-solid border-1 border-black-5 w-full focus:border-blue-6 focus:border-1 mobile:max-w-none"
+              className="h-48 p-12 rounded text-16 outline-none border-solid border-1 border-black-5 w-239 focus:border-blue-6 focus:border-1 mobile:max-w-none"
               {...register('title')}
-              placeholder="등록할 상품옵션의 이름을 적어주세요."
+              placeholder="상품옵션의 이름을 적어주세요."
               id="title"
               type="text"
             />
           </label>
-          <NumberInputBox numberBox="명" unit="최대 인원" placeholder="232" />
-          <NumberInputBox numberBox="원" unit="가격" placeholder="2" />
           {/* 체험만 필요 */}
-          <NumberInputBox numberBox="명" unit="최소 인원" placeholder="2" />
-          <NumberInputBox numberBox="시" unit="시작 시간" placeholder="19" />
-          <NumberInputBox numberBox="시" unit="종료 시간" placeholder="19" />
+          <NumberInputBox
+            {...register('minimum')}
+            labelname="최소 인원"
+            inputstyle="w-47"
+            divstyle="w-90"
+            numberBox="minimum"
+            unit="명"
+            placeholder="2"
+          />
+          <NumberInputBox
+            {...register('maximum')}
+            labelname="최대 인원"
+            inputstyle="w-47"
+            divstyle="w-90"
+            numberBox="maximum"
+            unit="명"
+            placeholder="232"
+          />
+          <NumberInputBox
+            {...register('price')}
+            labelname="가격"
+            inputstyle="w-77 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            divstyle="w-120"
+            numberBox="price"
+            unit="원"
+            placeholder="20000"
+          />
+          {/* 체험만 필요 */}
+          <NumberInputBox
+            {...register('start')}
+            labelname="시작 시간"
+            inputstyle="w-37"
+            divstyle="w-80"
+            numberBox="start"
+            unit="시"
+            placeholder="19"
+            max={23}
+          />
+          {/* 체험만 필요 */}
+          <NumberInputBox
+            {...register('end')}
+            labelname="종료 시간"
+            inputstyle="w-37"
+            divstyle="w-80"
+            numberBox="end"
+            unit="시"
+            placeholder="19"
+            max={23}
+          />
         </div>
         <label className="flex gap-12 flex-col" htmlFor="content">
-          <p className="text-17">상품 설명</p>
+          <p className="text-14">세부 상품 설명</p>
           <textarea
-            className="h-48 p-12 rounded text-16 outline-none border-solid border-1 border-black-5 w-full focus:border-blue-6 focus:border-1 mobile:max-w-none"
+            className="resize-none h-48 p-12 rounded text-16 outline-none border-solid border-1 border-black-5 w-full focus:border-blue-6 focus:border-1 mobile:max-w-none"
             {...register('content')}
             placeholder="등록할 상품옵션의 설명을 적어주세요.(300자)"
             id="content"
@@ -40,6 +90,7 @@ const Option = () => {
           />
         </label>
       </div>
+      {/* <CheckButton /> */}
     </form>
   );
 };

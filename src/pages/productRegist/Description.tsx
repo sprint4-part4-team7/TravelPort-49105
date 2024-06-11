@@ -24,7 +24,7 @@ const Description = () => {
         <label className="flex gap-12 flex-col" htmlFor="content">
           <p className="text-17">내용</p>
           <textarea
-            className="h-216 p-12 rounded text-16 outline-none border-solid border-1 border-black-5 w-full focus:border-blue-6 focus:border-1 mobile:max-w-none"
+            className="resize-none h-216 p-12 rounded text-16 outline-none border-solid border-1 border-black-5 w-full focus:border-blue-6 focus:border-1 mobile:max-w-none"
             {...register('content')}
             placeholder="등록할 상품의 전체적인 설명을 적어주세요.(1,000자)"
             id="content"
