@@ -23,13 +23,13 @@ const SuccessPage = () => {
 
   const reservationPost = async () => {
     createReservation({
-      userId: 0,
-      productOptionId: 0,
-      timeTableId: 0,
-      reservationState: 0,
-      reservationPrice: 0,
+      userId: 1,
+      productOptionId: 1,
+      timeTableId: 1,
+      reservationState: '예약 완료',
+      reservationPrice: 30000,
       ticketCount: 0,
-      cancelMsg: 'hihi',
+      cancelMsg: '오꼐이 ~!',
     });
   };
 
