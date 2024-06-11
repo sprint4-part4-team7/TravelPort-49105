@@ -121,7 +121,7 @@ const PostCode = ({ setX, setY, setBuilding }: PostCodeProps) => {
   return (
     <form>
       <div className="mx-40 flex flex-col gap-24">
-        <label htmlFor="address" className="flex gap-8 flex-col">
+        <label className="flex gap-12 flex-col" htmlFor="address">
           <p className="text-17">기본 주소 검색</p>
           <input
             className="h-48 p-12 rounded text-16 outline-none border-solid border-1 border-black-5 w-full focus:border-blue-6 focus:border-1 mobile:max-w-none"
@@ -136,7 +136,7 @@ const PostCode = ({ setX, setY, setBuilding }: PostCodeProps) => {
             readOnly // 검색으론 쓸수있지만 직접 텍스트입력은 못함
           />
         </label>
-        <label htmlFor="sideAddress" className="flex gap-8 flex-col">
+        <label className="flex gap-12 flex-col" htmlFor="sideAddress">
           <p className="text-17">상세 주소 입력</p>
           {/* input엔 빌딩이름이 기본적으로 존재하면 들어가고, 파트너가 바꾸고 싶다면 변경가능하게 구현 */}
           <input
