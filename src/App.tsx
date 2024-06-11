@@ -37,7 +37,7 @@ const App = () => {
           <Route path="user" element={<UserSignup />} />
           <Route path="partner" element={<PartnerSignup />} />
         </Route>
-        <Route path="list">
+        <Route path="list/:categoryId">
           <Route index element={<List />} />
         </Route>
         <Route path="details">
