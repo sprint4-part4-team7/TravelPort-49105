@@ -1,6 +1,7 @@
 import usePaymentWidget from '@/hooks/usePaymentWidget';
 import './Payments.css';
 import useProductOptionQuery from '@/hooks/reactQuery/product/useProductionOptionQuery';
+import useTilmeTabaleOptionQuery from '@/hooks/reactQuery/timeTable/useTilmeTabaleOptionQuery';
 import Layout from '@/components/common/layout/Layout';
 import Footer from '@/components/common/Footer';
 import Pay from '@/components/Pay';
@@ -23,6 +24,10 @@ const CheckoutPage = () => {
     isLoading,
     error,
   } = useProductOptionQuery(optionId);
+  // console.log(productOptionData);
+
+  const { data: timeTableOptionData } = useTilmeTabaleOptionQuery(optionId);
+  console.log(timeTableOptionData);
 
   if (isLoading) return <h1>loading...</h1>;
   if (error) return <h1>error...</h1>;
@@ -33,11 +38,9 @@ const CheckoutPage = () => {
         <div className="p-10 text-2xl text-white bg-pink-600 w-570 rounded-2xl">
           상품이름: {productOptionData?.product.name}
         </div>
-        <br />
         <div className="p-10 text-2xl text-white bg-pink-600 w-570 rounded-2xl">
           가격: {productOptionData?.optionPrice}원
         </div>
-        <br />
         <Pay requestPayment={requestPayment} />
       </Layout>
       <Footer />
