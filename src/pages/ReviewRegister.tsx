@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import { useForm } from 'react-hook-form';
@@ -29,6 +30,7 @@ const ReviewRegister = () => {
 
   const [option, setOption] = useState('');
   const [product, setProduct] = useState('');
+  const [postImages, setPostImages] = useState<(null | File)[]>([]);
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
@@ -47,7 +49,10 @@ const ReviewRegister = () => {
     // } catch (error) {
     //   console.log(error);
     // }
+    const filteredPostImages = postImages.filter((image) => image !== null);
+    data.reviewImages = filteredPostImages;
     console.log({ ...data });
+    closeModal();
   };
 
   const handleScoreChange = React.useCallback((selectedScore: number) => {
@@ -67,8 +72,12 @@ const ReviewRegister = () => {
     if (e.target.value) clearErrors('reviewContent');
   };
 
-  const handleImageChange = (selectedImages: string[]) => {
+  const handleImageChange = (
+    selectedImages: string[],
+    postImageArr: (null | File)[],
+  ) => {
     setValue('reviewImages', selectedImages);
+    setPostImages(postImageArr);
   };
 
   const handleFormSubmit = () => {
@@ -98,9 +107,7 @@ const ReviewRegister = () => {
         <h1 className="mb-20">STEP1 별점을 입력해주세요</h1>
         <ReviewStar onChange={handleScoreChange} />
         {errors.score && (
-          <p className="text-[#FF4D4F] text-[1.2rem] mt-[0.4rem]">
-            {errors.score.message}
-          </p>
+          <p className="text-[#FF4D4F] text-12 mt-4">{errors.score.message}</p>
         )}
       </div>
       <div className="mb-40">
@@ -124,17 +131,18 @@ const ReviewRegister = () => {
       </h1>
       <ImageUpload onChange={handleImageChange} />
       <div className="mt-60">
-        <Button
-          onClick={() => {
-            handleSubmit(onSubmit)();
-            if (!errors.score && !errors.reviewContent) openModal();
-          }}
-        >
-          등록하기
-        </Button>
+        <Button buttonType="submit">등록하기</Button>
       </div>
       <Modal isOpen={isModalOpen} closeModal={closeModal}>
         <div className="p-16">리뷰를 등록하시겠습니까?</div>
+        <Button
+          onClick={() => {
+            handleSubmit(onSubmit)();
+            closeModal();
+          }}
+        >
+          확인
+        </Button>
       </Modal>
     </form>
   );

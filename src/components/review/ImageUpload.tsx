@@ -1,18 +1,16 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-undef */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import plusUpload from '@/assets/icons/plusUpload.svg';
 
 type ImageUploadProps = {
-  onChange: (selectedImages: string[]) => void;
+  onChange: (selectedImages: string[], postImages: (null | File)[]) => void;
 };
 
 const ImageUpload = ({ onChange }: ImageUploadProps): any => {
   const [showImages, setShowImages] = useState<string[]>(Array(5).fill(''));
   const [images, setImages] = useState<(null | File)[]>(Array(5).fill(null));
-  const postImages = images.filter((image) => image !== null);
-  console.log(postImages);
 
   // 이미지 상대경로 저장
   const handleAddImages = (
@@ -34,12 +32,9 @@ const ImageUpload = ({ onChange }: ImageUploadProps): any => {
 
       setShowImages(updatedShowImages);
       setImages(updatedImages);
+      onChange(updatedShowImages, updatedImages);
     }
   };
-
-  useEffect(() => {
-    onChange(showImages);
-  }, [showImages]);
 
   // 클릭 시 이미지 삭제
   const handleDeleteImage = (boxIdx: number) => {
