@@ -1,9 +1,10 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable eqeqeq */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable prefer-const */
 /* eslint-disable no-undef */
 // import useSearchData from '@/hooks/useSearchData';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import useProductAll from '@/hooks/reactQuery/product/useProductAll';
 import uniqueProduct from '@/utils/uniqueProduct';
 import arrowDown from '@/assets/icons/arrowDown.svg';
@@ -11,7 +12,7 @@ import search from '@/assets/icons/search.svg';
 import useCalendar from '@/hooks/useCalendar';
 import { useParams } from 'react-router-dom';
 import useOutsideClick from '@/hooks/useOutsideClick';
-// import axios from 'axios';
+import instance from '@/utils/axios';
 import SearchBar from '../components/common/SearchBar';
 import Layout from '@/components/common/layout/Layout';
 import HotelCard from '@/components/common/card/HotelCard';
@@ -31,7 +32,7 @@ const List = () => {
   const [filterTab, setFilterTab] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [pageNum, setPageNum] = useState(1);
-  // const [dataByPage, setDataByPage] = useState<any>();
+  const [dataByPage, setDataByPage] = useState<any>();
 
   const { optionAll } = useProductAll();
   const { selectedDate, setSelectedDate } = useCalendar();
@@ -39,8 +40,8 @@ const List = () => {
   const categoryName = Number(categoryId) === 1 ? '숙박' : '체험';
   const filterings = ['날짜', '인원수', '가격대', `${categoryName} 종류`];
   const filterSearch = window.innerWidth > 767 ? '어디로 떠날까요?' : '검색';
-  // const LIMIT = categoryId === '1' ? 3 : 6;
-  // const offset = pageNum - 1;
+  const LIMIT = categoryId === '1' ? 3 : 6;
+  const offset = pageNum - 1;
 
   // productId 같은 경우 하나만 나오도록
   const uniqueOptionAll = uniqueProduct(optionAll);
@@ -52,15 +53,15 @@ const List = () => {
       (item: any) => item.product.categoryId === Number(categoryId),
     );
 
-  // useEffect(() => {
-  //   const fetchByOffset = async (offsetNum: number) => {
-  //     const response = axios.get(
-  //       `/product/all?offset=${offsetNum}&limit=${LIMIT}`,
-  //     );
-  //     setDataByPage(response); //! !!api 수정되면 확인하기
-  //   };
-  //   fetchByOffset(offset);
-  // }, [offset]);
+  useEffect(() => {
+    const fetchByOffset = async (offsetNum: number) => {
+      const response = await instance.get(
+        `/product/all?offset=${offsetNum}&limit=${LIMIT}`,
+      );
+      setDataByPage(response.data);
+    };
+    fetchByOffset(offset);
+  }, [offset]);
 
   const cards = filteredData || allByCategory; //! !!수정하기
 
@@ -89,6 +90,11 @@ const List = () => {
 
     setIsSearchBarOpen(false);
   };
+
+  const listClass =
+    categoryId === '1'
+      ? 'flex flex-col gap-24 mb-64 w-full mobile:mx-auto mobile:w-fit'
+      : 'grid grid-cols-3 gap-24 w-fit mx-auto mb-64 mobile:grid-cols-1';
 
   return (
     <>
@@ -175,35 +181,36 @@ const List = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-24 mb-64 w-full mobile:mx-auto mobile:w-fit">
-            {cards.map((item: any) => {
-              //! !!dataByPage로 수정
-              // const { avg, length } = useScoreAvg(item.id);
 
-              return categoryId === '1' ? (
-                <HotelCard
-                  key={item.id}
-                  title={item.product.name}
-                  location={item.product.productAddress}
-                  price={item.optionPrice}
-                  score={1} //! !!평점 받기
-                  review={5} //! !!리뷰수 받기
-                  image={item.product.productImages[0]}
-                  link={`/details/${item.product.id}`}
-                />
-              ) : (
-                <Card
-                  key={item.id}
-                  title={item.product.name}
-                  location={item.product.productAddress}
-                  price={item.optionPrice}
-                  score={1}
-                  review={5}
-                  image={item.product.productImages[0]}
-                  link={`/details/${item.product.id}`}
-                />
-              );
-            })}
+          <div className={`${listClass}`}>
+            {dataByPage &&
+              dataByPage.map((item: any) => {
+                // const { avg, length } = useScoreAvg(item.id);
+
+                return categoryId === '1' ? (
+                  <HotelCard
+                    key={item.id}
+                    title={item.name}
+                    location={item.productAddress}
+                    price={10000}
+                    score={1} //! !!평점 받기
+                    review={5} //! !!리뷰수 받기
+                    image={item.thumbnail}
+                    link={`/details/${item.id}`}
+                  />
+                ) : (
+                  <Card
+                    key={item.id}
+                    title={item.name}
+                    location={item.productAddress}
+                    price={10000}
+                    score={1}
+                    review={5}
+                    image={item.thumbnail}
+                    link={`/details/${item.id}`}
+                  />
+                );
+              })}
           </div>
         </div>
         <div className="w-fit mx-auto">

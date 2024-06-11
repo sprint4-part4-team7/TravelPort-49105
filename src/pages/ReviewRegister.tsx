@@ -23,7 +23,7 @@ const ReviewRegister = () => {
     defaultValues: {
       reviewContent: '',
       score: 0,
-      reviewImages: [] as any,
+      reviewImages: [] as string[],
     },
   });
 
@@ -39,7 +39,7 @@ const ReviewRegister = () => {
       setProduct(productName);
     };
     fetchDefaultOption(1);
-  }, [option, product]);
+  }, []);
 
   const onSubmit = async (data: any) => {
     // try {
@@ -71,8 +71,18 @@ const ReviewRegister = () => {
     setValue('reviewImages', selectedImages);
   };
 
+  const handleFormSubmit = () => {
+    // 입력 검증이 성공하면 모달창을 엽니다.
+    if (!errors.score && !errors.reviewContent) {
+      openModal();
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="mt-40 max-w-784 mx-auto">
+    <form
+      onSubmit={handleSubmit(handleFormSubmit)}
+      className="mt-40 max-w-784 mx-auto"
+    >
       <h1 className="py-20 text-24 font-bold">리뷰 작성하기</h1>
       <hr />
       <div className="my-20 flex flex-col gap-20">
@@ -116,8 +126,8 @@ const ReviewRegister = () => {
       <div className="mt-60">
         <Button
           onClick={() => {
-            handleSubmit(onSubmit);
-            openModal();
+            handleSubmit(onSubmit)();
+            if (!errors.score && !errors.reviewContent) openModal();
           }}
         >
           등록하기
