@@ -1,14 +1,16 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable prefer-const */
 /* eslint-disable no-undef */
-import useSearchData from '@/hooks/useSearchData';
-import { useState } from 'react';
+// import useSearchData from '@/hooks/useSearchData';
+import { useRef, useState } from 'react';
 import useProductAll from '@/hooks/reactQuery/product/useProductAll';
-// import useScoreAvg from '@/hooks/useScoreAvg';
 import uniqueProduct from '@/utils/uniqueProduct';
 import arrowDown from '@/assets/icons/arrowDown.svg';
 import search from '@/assets/icons/search.svg';
 import useCalendar from '@/hooks/useCalendar';
+import { useParams } from 'react-router-dom';
+import useOutsideClick from '@/hooks/useOutsideClick';
 import SearchBar from '../components/common/SearchBar';
 import Layout from '@/components/common/layout/Layout';
 import HotelCard from '@/components/common/card/HotelCard';
@@ -19,43 +21,54 @@ import ProductType from '@/components/common/filter/ProductType';
 import Footer from '@/components/common/Footer';
 
 const List = () => {
+  const { categoryId } = useParams();
+
   const [filteredData, setFilteredData] = useState();
-  console.log(filteredData);
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
   const [filterTab, setFilterTab] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
 
   const { optionAll } = useProductAll();
   const { selectedDate, setSelectedDate } = useCalendar();
 
-  const allByCategory =
-    optionAll && optionAll.filter((item: any) => item.product.categoryId === 1);
-
-  const filterings = ['날짜', '인원수', '가격대', '숙소 종류'];
+  const categoryName = Number(categoryId) === 1 ? '숙박' : '체험';
+  const filterings = ['날짜', '인원수', '가격대', `${categoryName} 종류`];
+  const filterSearch = window.innerWidth > 767 ? '어디로 떠날까요?' : '검색';
 
   // productId 같은 경우 하나만 나오도록
   const uniqueOptionAll = uniqueProduct(optionAll);
 
-  // 평점 구하기
-  // useScoreAvg() 괄호 안에 productOptionId 보내면 됩니다 !
-  // const { avg, length } = useScoreAvg(1);
+  // 특정 카테고리의 전체 productoption 데이터 중 unique
+  const allByCategory =
+    uniqueOptionAll &&
+    uniqueOptionAll.filter(
+      (item: any) => item.product.categoryId === Number(categoryId),
+    );
 
-  const { filteredTitles } = useSearchData(uniqueOptionAll);
+  const cards = filteredData || allByCategory;
 
-  const cards = allByCategory || filteredTitles;
-
-  const filterSearch = window.innerWidth > 767 ? '어디로 떠날까요?' : '검색';
+  const outsideRef = useRef<HTMLDivElement>(null);
+  useOutsideClick(outsideRef, () => {
+    setIsOpen(false);
+  });
 
   const handleSearchBar = () => {
-    if (isSearchBarOpen) setIsSearchBarOpen(false);
-    else {
+    if (isSearchBarOpen) {
+      setIsSearchBarOpen(false);
+    } else {
       setIsSearchBarOpen(true);
       setFilterTab('');
     }
   };
 
   const handleFilterTab = (tab: string) => {
-    if (filterTab === tab) setFilterTab('');
-    else setFilterTab(tab);
+    if (filterTab === tab) {
+      setFilterTab('');
+      setIsOpen(false);
+    } else {
+      setFilterTab(tab);
+      setIsOpen(true);
+    }
 
     setIsSearchBarOpen(false);
   };
@@ -79,8 +92,11 @@ const List = () => {
               </p>
             ))}
 
-            {filterTab === '날짜' && (
-              <div className="absolute top-80 left-20 right-20 max-w-500">
+            {filterTab === '날짜' && isOpen && (
+              <div
+                className="absolute top-80 left-20 right-20 max-w-500"
+                ref={outsideRef}
+              >
                 <CalendarCustom
                   selectedDate={selectedDate}
                   setSelectedDate={setSelectedDate}
@@ -88,19 +104,31 @@ const List = () => {
                 />
               </div>
             )}
-            {filterTab === '인원수' && (
-              <div className="absolute w-2/5 top-80 left-0 mobile:w-full">
+            {filterTab === '인원수' && isOpen && (
+              <div
+                className="absolute w-2/5 top-80 left-0 mobile:w-full"
+                ref={outsideRef}
+              >
                 <HeadCount />
               </div>
             )}
-            {filterTab === '가격대' && (
-              <div className="absolute w-3/5 top-80 left-0 tablet:w-full mobile:w-full">
+            {filterTab === '가격대' && isOpen && (
+              <div
+                className="absolute w-3/5 top-80 left-0 tablet:w-full mobile:w-full"
+                ref={outsideRef}
+              >
                 <PriceRange />
               </div>
             )}
-            {filterTab === '숙소 종류' && (
-              <div className="absolute w-2/5 top-80 right-0 mobile:w-full z-50">
-                <ProductType />
+            {filterTab === `${categoryName} 종류` && isOpen && (
+              <div
+                className="absolute w-2/5 top-80 right-0 mobile:w-full z-50"
+                ref={outsideRef}
+              >
+                <ProductType
+                  category={Number(categoryId)}
+                  categoryName={categoryName}
+                />
               </div>
             )}
 
