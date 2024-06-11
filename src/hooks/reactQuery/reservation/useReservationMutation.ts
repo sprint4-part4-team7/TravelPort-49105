@@ -5,7 +5,7 @@ interface PostReservationProp {
   userId: number;
   productOptionId: number;
   timeTableId: number;
-  reservationState: number;
+  reservationState: string;
   reservationPrice: number;
   ticketCount: number;
   cancelMsg: string;
@@ -38,7 +38,6 @@ const useReservationMutation = () => {
       queryClient.invalidateQueries({
         queryKey: [reservationApi.postReservation],
       });
-      alert('성공 !');
     },
   });
 
