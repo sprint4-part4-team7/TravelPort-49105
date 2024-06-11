@@ -14,7 +14,8 @@ const useQuery = () => {
 
 const SearchResultPage = () => {
   const query = useQuery();
-  const search = query.get('query')?.toLowerCase() || '';
+  const searchQuery = query.get('query') || '';
+  const search = searchQuery.toLowerCase();
   const { productAll } = useProductAll();
   const [selectedTab, setSelectedTab] = useState('all');
   const { optionAll } = useProductAll();
@@ -50,8 +51,8 @@ const SearchResultPage = () => {
       const allProducts = productAll.data.filter(
         (product: any) =>
           (product.categoryId === 1 || product.categoryId === 2) &&
-          (product.name.toLowerCase().includes(search) ||
-            product.productAddress.toLowerCase().includes(search)),
+          (product.name?.toLowerCase().includes(search) ||
+            product.productAddress?.toLowerCase().includes(search)),
       );
       const accommodationCount = allProducts.filter(
         (product: any) => product.categoryId === 1,

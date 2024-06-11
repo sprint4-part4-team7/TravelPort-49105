@@ -60,7 +60,6 @@ const useProductsWithMinPrice = (
         return { ...product, minPrice, totalReviews, averageScore };
       })
       .filter((product: any) => {
-        console.log(product);
         const nameMatch =
           product.name &&
           product.name.toLowerCase().includes(search.toLowerCase());
