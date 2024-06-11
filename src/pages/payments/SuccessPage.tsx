@@ -3,7 +3,9 @@ import './Payments.css';
 import useReservationMutation from '@/hooks/reactQuery/reservation/useReservationMutation';
 import { useEffect } from 'react';
 import usePaymentPutMutation from '@/hooks/reactQuery/payment/usePaymentPutMutation';
+import check from '@/assets/icons/check-circle-broken-pay.svg';
 import Layout from '@/components/common/layout/Layout';
+import Button from '@/components/common/Button';
 
 const SuccessPage = () => {
   const navigate = useNavigate();
@@ -56,23 +58,19 @@ const SuccessPage = () => {
       <div className="w-full">
         <div className="flex flex-col items-center w-full max-w-xl mx-auto">
           <div className="flex flex-col items-center">
-            <h2 className="text-2xl font-semibold text-center">
-              결제 요청까지 성공했어요.
-            </h2>
-            <br />
-            <h4 className="text-lg text-center">
-              <div>상품이름 : 7팀의 개멋찐 여행 상품</div>
-              <br />
-              <div>금액: 10,000원</div>
-            </h4>
-            <br />
-            <button
-              type="button"
-              className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded cursor-pointer btn"
-              onClick={confirm}
-            >
-              결제 승인 버튼 클릭
-            </button>
+            <img src={check} alt="성공 아이콘" />
+            <div className="mt-32 font-bold text-32">결제가 완료되었습니다</div>
+            <div className="flex w-full gap-28 mt-100 mobile:flex-col">
+              <Button outlined buttonStyle="w-320 h-48 text-16 font-normal">
+                내 예약 현황으로
+              </Button>
+              <Button
+                buttonStyle="w-320 h-48 text-16 font-normal"
+                onClick={() => confirm()}
+              >
+                더 둘러보기
+              </Button>
+            </div>
           </div>
         </div>
       </div>
