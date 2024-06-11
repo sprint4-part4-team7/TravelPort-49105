@@ -10,7 +10,9 @@ type ImageUploadProps = {
 
 const ImageUpload = ({ onChange }: ImageUploadProps): any => {
   const [showImages, setShowImages] = useState<string[]>(Array(5).fill(''));
-  const uploadArray = [0, 1, 2, 3, 4];
+  const [images, setImages] = useState<(null | File)[]>(Array(5).fill(null));
+  const postImages = images.filter((image) => image !== null);
+  console.log(postImages);
 
   // 이미지 상대경로 저장
   const handleAddImages = (
@@ -22,11 +24,16 @@ const ImageUpload = ({ onChange }: ImageUploadProps): any => {
     if (imageLists && imageLists.length > 0) {
       const currentImageUrl = URL.createObjectURL(imageLists[0]);
 
-      const updatedImages = showImages.map((image, imageIdx) =>
+      const updatedShowImages = showImages.map((image, imageIdx) =>
         imageIdx === idx ? currentImageUrl : image,
       );
 
-      setShowImages(updatedImages);
+      const updatedImages = images.map((image, imageIdx) =>
+        imageIdx === idx ? imageLists[0] : image,
+      );
+
+      setShowImages(updatedShowImages);
+      setImages(updatedImages);
     }
   };
 
@@ -36,15 +43,19 @@ const ImageUpload = ({ onChange }: ImageUploadProps): any => {
 
   // 클릭 시 이미지 삭제
   const handleDeleteImage = (boxIdx: number) => {
-    const updatedImages = showImages.map((image, idx) =>
+    const updatedShowImages = showImages.map((image, idx) =>
       idx === boxIdx ? '' : image,
     );
-    setShowImages(updatedImages);
+    const updatedImages = images.map((image, idx) =>
+      idx === boxIdx ? null : image,
+    );
+    setShowImages(updatedShowImages);
+    setImages(updatedImages);
   };
 
   return (
     <div className="flex gap-12 flex-wrap">
-      {uploadArray.map((_, idx) => {
+      {showImages.map((image, idx) => {
         return (
           <div
             key={idx}
@@ -57,7 +68,7 @@ const ImageUpload = ({ onChange }: ImageUploadProps): any => {
                 className="hidden"
                 onChange={(e) => handleAddImages(e, idx)}
               />
-              {!showImages[idx].length && (
+              {image === '' && (
                 <div className="flex flex-col gap-8">
                   <img
                     src={plusUpload}
@@ -70,16 +81,12 @@ const ImageUpload = ({ onChange }: ImageUploadProps): any => {
               )}
             </label>
             {/* 저장해둔 이미지들을 순회하면서 화면에 이미지 출력 */}
-            {showImages[idx] && (
+            {image !== '' && (
               <div
                 className="absolute top-0 left-0"
                 onClick={() => handleDeleteImage(idx)}
               >
-                <img
-                  src={showImages[idx]}
-                  alt={`uploaded-${idx}`}
-                  className="h-120"
-                />
+                <img src={image} alt={`uploaded-${idx}`} className="h-120" />
               </div>
             )}
           </div>
