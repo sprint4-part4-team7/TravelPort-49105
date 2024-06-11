@@ -46,7 +46,7 @@ const Card = ({
           alt="예시사진"
           className="w-265 h-267 object-cover tablet:w-229 tablet:h-231 mobile:w-158 mobile:h-198"
         />
-        <div className="w-265 h-133 bg-white px-16 py-20 hover:bg-blue-1 tablet:w-229 tablet:h-119 mobile:w-177 mobile:h-198">
+        <div className="w-265 h-133 bg-white px-16 py-20 hover:bg-blue-1 tablet:w-229 mobile:w-177 mobile:h-198">
           <h2 className="text-black-12 mb-5 text-20 py-4 h-28 font-semibold leading-20 truncate">
             {title}
           </h2>

@@ -3,6 +3,6 @@ const getMinPrice = (array: any) => {
   array.forEach((optionInfo: any) => prices.push(optionInfo.optionPrice));
   const minPrice = Math.min(...prices);
 
-  return minPrice;
+  return minPrice === Infinity ? 0 : minPrice;
 };
 export default getMinPrice;

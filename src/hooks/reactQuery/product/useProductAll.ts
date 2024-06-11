@@ -3,13 +3,14 @@ import { getProductAll, getProductOptionAll } from '@/apis/productAll';
 
 const useProductAll = () => {
   const {
-    data: productAll,
+    data: productAllResponse,
     isLoading: isLoadingProducts,
     error: productsError,
   } = useQuery({
     queryKey: ['getProductAll'],
     queryFn: getProductAll,
   });
+  const productAll = productAllResponse?.data;
 
   const {
     data: optionAllResponse,

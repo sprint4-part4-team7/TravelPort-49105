@@ -26,11 +26,13 @@ const LocationMap = ({ product }: LocationMapProps) => {
         <img src={arrowRightUp} alt="대각선화살표" className="inline" />
       </span>
       <Modal isOpen={isModalOpen} closeModal={closeModal}>
-        <KakaoMap
-          x={product?.productSiteLat}
-          y={product?.productSiteLng}
-          building={product?.buildingName || ''}
-        />
+        <div className="w-600">
+          <KakaoMap
+            x={product?.productSiteLat}
+            y={product?.productSiteLng}
+            building={product?.buildingName || ''}
+          />
+        </div>
       </Modal>
     </>
   );
