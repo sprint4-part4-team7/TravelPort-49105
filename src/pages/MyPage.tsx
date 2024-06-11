@@ -21,8 +21,9 @@ const MyPage = ({ isPartner = false }: { isPartner?: boolean }) => {
     <Layout>
       <MyPageSideBar isPartner={isPartner}>
         {status === 'edit-info' && <EditInfo isPartner={isPartner} />}
-        {status === 'reservation' && <MyResevation />}
+        {status === 'reservation-status' && <MyResevation />}
         {isPartner && status === 'manage' && <ReservationManagement />}
+        {status === 'reservation-history' && <MyResevation isExpired />}
       </MyPageSideBar>
     </Layout>
   );

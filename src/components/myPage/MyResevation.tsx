@@ -9,7 +9,7 @@ import ReservChips from '@/components/myPage/ReservChips';
 import ReservButton from '@/components/myPage/ReservButton';
 import ReservButtonOutlined from './ReservButtonOutlined';
 
-const MyResevation = () => {
+const MyResevation = ({ isExpired = false }: { isExpired?: boolean }) => {
   const [pageNum, setPageNum] = useState(1);
   const userInfo = useUserStore((state) => state.userInfo);
   const [myReservation, setMyReservation] = useState<Reservation[]>([]); // [Reservation
@@ -22,7 +22,7 @@ const MyResevation = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (userInfo.id) {
-        const response = await getMyReservation(userInfo.id);
+        const response = await getMyReservation(userInfo.id, isExpired);
         setMyReservation(response);
       }
     };

@@ -3,8 +3,11 @@ import instance from '@/utils/axios';
 
 export const getMyReservation = async (
   userId: number,
+  isExpired?: boolean,
 ): Promise<Reservation[]> => {
-  const response = await instance.get(`/reservation/user/${userId}`);
+  const response = await instance.get(
+    `/reservation/user/${userId}?isExpired=${isExpired}`,
+  );
   return response.data;
 };
 
