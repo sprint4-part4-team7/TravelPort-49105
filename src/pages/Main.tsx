@@ -48,28 +48,22 @@ const carousel: ImageItem[] = [
 
 const Main = () => {
   const navigate = useNavigate();
-  const { productAll, optionAll } = useProductAll();
-  const { data: reviewAll } = useReviewAllQuery();
-  // 카드에 들어가는 데이터
-  const combinedData = useProductOptionsReviews(
-    productAll,
-    optionAll,
-    reviewAll,
-  );
+  const { productAll } = useProductAll();
+
   // 카테고리로 분류
   const { sortedCategoryAccommodation, sortedCategoryActivity } =
-    useFilterByCategory(combinedData);
+    useFilterByCategory(productAll);
 
   const transformData = (data: any, categoryId: number) => {
     return (
       data &&
       data.map((item: any) => ({
         url: item.thumbnail,
-        text: item.name,
-        path: `detail/${categoryId}/${item.id}`,
+        text: item.productName,
+        path: `detail/${categoryId}/${item.productId}`,
         location: item.productAddress,
         price: item.minPrice,
-        score: item.averageScore,
+        score: item.reviewAvg.toFixed(1),
         review: item.reviewCount,
       }))
     );
