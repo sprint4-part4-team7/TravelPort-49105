@@ -1,16 +1,20 @@
 import ARROW from '@/assets/icons/arrowDown.svg';
 import { useEffect, useState } from 'react';
 import instance from '@/utils/axios';
+import { useUserStore } from '@/utils/zustand';
 import SearchBar from '@/components/common/SearchBar';
 import ReservedManageCard from '@/components/ReservedManageCard';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
 
 const ReservationManagement = () => {
+  const { userInfo } = useUserStore();
   const [isNew, setIsNew] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
   const [lodgeData, setLodgeData] = useState<any[]>([]);
   const [activityData, setActivityData] = useState<any[]>([]);
   const [allData, setAllData] = useState<any[]>([]);
+
+  console.log(userInfo);
 
   const toggleDropdown = () => {
     setIsNew(!isNew);
@@ -20,7 +24,10 @@ const ReservationManagement = () => {
     setSelectedCategory(category);
   };
 
-  const getReservedData = async (partnerId: number, categoryId: number) => {
+  const getReservedData = async (
+    partnerId: number | undefined,
+    categoryId: number,
+  ) => {
     try {
       const res = await instance.get(
         `/reservation/partner/${partnerId}/category/${categoryId}`,
@@ -35,8 +42,8 @@ const ReservationManagement = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const lodge = await getReservedData(1, 1);
-      const activity = await getReservedData(1, 2);
+      const lodge = await getReservedData(userInfo.id, 1);
+      const activity = await getReservedData(userInfo.id, 2);
       setLodgeData(lodge);
       setActivityData(activity);
       setAllData([...lodge, ...activity]);
