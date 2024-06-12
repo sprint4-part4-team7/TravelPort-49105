@@ -46,11 +46,11 @@ const Category = ({ setPage }: CategoryIdProps) => {
 
   return (
     <div className="flex flex-col gap-32">
-      <h3 className="mb-5 text-17 font-semiblod text-black-10">
+      <h3 className="mx-40 mb-5 text-17 font-semiblod text-black-10">
         상품 유형을 골라주세요.
       </h3>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <ul className="grid w-full gap-20 md:grid-cols-2">
+        <ul className="mx-40 grid gap-20 md:grid-cols-2">
           <li>
             <label
               htmlFor="accommodation"
