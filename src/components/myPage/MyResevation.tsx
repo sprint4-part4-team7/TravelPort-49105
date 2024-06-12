@@ -8,10 +8,10 @@ import ReservationCard from '@/components/common/reservPagination/ResevationCard
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
 import ReservChips from '@/components/myPage/ReservChips';
 import ReservButton from '@/components/myPage/ReservButton';
-import ReservButtonOutlined from './ReservButtonOutlined';
-import Modal from '../common/Modal';
-import CancelMessage from './CancelMessage';
-import ReservChipsExpired from './ReservChipsExpired';
+import ReservButtonOutlined from '@/components/myPage/ReservButtonOutlined';
+import Modal from '@/components/common/Modal';
+import CancelMessage from '@/components/myPage/CancelMessage';
+import ReservChipsExpired from '@/components/myPage/ReservChipsExpired';
 
 const MyResevation = ({
   isExpired = 'false',

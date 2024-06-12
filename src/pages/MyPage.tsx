@@ -6,7 +6,7 @@ import MyPageSideBar from '@/components/myPage/MyPageSideBar';
 import MyResevation from '@/components/myPage/MyResevation';
 import ReservationManagement from './ReservationManagement';
 import Footer from '@/components/common/Footer';
-// import Layout from '@/components/common/layout/Layout';
+import Layout from '@/components/common/layout/Layout';
 
 const MyPage = ({ isPartner = false }: { isPartner?: boolean }) => {
   const { status } = useParams();
@@ -20,14 +20,16 @@ const MyPage = ({ isPartner = false }: { isPartner?: boolean }) => {
 
   return (
     <>
-      {/* <Layout> */}
-      <MyPageSideBar isPartner={isPartner}>
-        {status === 'edit-info' && <EditInfo isPartner={isPartner} />}
-        {status === 'reservation-status' && <MyResevation />}
-        {status === 'reservation-history' && <MyResevation isExpired="true" />}
-        {status === 'manage' && <ReservationManagement />}
-      </MyPageSideBar>
-      {/* </Layout> */}
+      <Layout>
+        <MyPageSideBar isPartner={isPartner}>
+          {status === 'edit-info' && <EditInfo isPartner={isPartner} />}
+          {status === 'reservation-status' && <MyResevation />}
+          {status === 'reservation-history' && (
+            <MyResevation isExpired="true" />
+          )}
+          {status === 'manage' && <ReservationManagement />}
+        </MyPageSideBar>
+      </Layout>
       <Footer />
     </>
   );
