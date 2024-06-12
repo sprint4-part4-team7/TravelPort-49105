@@ -1,96 +1,10 @@
-import APPROVE from '@/assets/icons/check-circle.svg';
-import DENIED from '@/assets/icons/x-square-red.svg';
 import ARROW from '@/assets/icons/arrowDown.svg';
 import { useEffect, useState } from 'react';
 import instance from '@/utils/axios';
 import Footer from '@/components/common/Footer';
 // import Layout from '@/components/common/layout/Layout';
 import SearchBar from '@/components/common/SearchBar';
-import Button from '@/components/common/Button';
-
-type ReserveProps = {
-  id: number;
-  reservationState:
-    | '예약 대기'
-    | '예약 완료'
-    | '예약 취소'
-    | '예약 거절'
-    | 'string';
-  productOption: {
-    optionName: string;
-    product: {
-      name: string;
-    };
-  };
-  user: { name: string; phone: string };
-  reserveDate: string;
-  timeTable: {
-    targetDate: string;
-    startTimeOnly: string;
-    endTimeOnly: string;
-  };
-};
-
-const ReserveComponent = ({
-  id,
-  reservationState = '예약 대기',
-  productOption = {
-    optionName: '',
-    product: {
-      name: '',
-    },
-  },
-  user = { name: '', phone: '' },
-  reserveDate = '',
-  timeTable = { targetDate: '', startTimeOnly: '', endTimeOnly: '' },
-}: ReserveProps) => {
-  return (
-    <div
-      id={id.toString()}
-      className="flex gap-12 p-16 justify-between items-center
-                  border-1 border-solid border-black-6 rounded-8"
-    >
-      <div className="flex flex-col gap-12 ">
-        <div className="text-20 font-semibold">
-          상품명 : {productOption.product.name}
-        </div>
-        <div className="text-14 text-black-10">
-          옵션명 : {productOption.optionName}, 일정 : {timeTable.targetDate},{' '}
-          {timeTable.startTimeOnly} ~ {timeTable.endTimeOnly}
-        </div>
-        <div className="text-16 font-medium">
-          예약자명 : {user.name} / 전화번호 : {user.phone}
-        </div>
-        <div className="text-12 font-medium text-black-6">
-          예약일시 : {reserveDate}
-        </div>
-      </div>
-      {(reservationState === '예약 대기' || reservationState === 'string') && (
-        <div className="flex gap-8 items-center">
-          <Button
-            variant="default"
-            outlined
-            buttonStyle="flex gap-4 text-14 px-12 h-fit py-8 font-semibold rounded-8"
-          >
-            승인하기
-            <img alt="승인" src={APPROVE} width={16} height={16} />
-          </Button>
-          <Button
-            variant="default"
-            outlined
-            buttonStyle="flex gap-4 text-14 px-12 py-8 h-fit 
-                      text-system-error font-semibold border-system-error rounded-8
-                      hover:border-system-error hover:text-system-error-bg
-                      active:border-system-error active:text-system-error"
-          >
-            거절하기
-            <img alt="거절" src={DENIED} width={16} height={16} />
-          </Button>
-        </div>
-      )}
-    </div>
-  );
-};
+import ReservedManageCard from '@/components/ReservedManageCard';
 
 const ReservationManagement = () => {
   const [isNew, setIsNew] = useState<boolean>(false);
@@ -214,7 +128,7 @@ const ReservationManagement = () => {
               {selectedCategory === '전체' &&
                 (allData.length !== 0 ? (
                   allData.map((item) => (
-                    <ReserveComponent
+                    <ReservedManageCard
                       key={item.id}
                       id={item.id}
                       reservationState={item.reservationState}
@@ -232,7 +146,7 @@ const ReservationManagement = () => {
               {selectedCategory === '숙박' &&
                 (lodgeData.length !== 0 ? (
                   lodgeData.map((item) => (
-                    <ReserveComponent
+                    <ReservedManageCard
                       key={item.id}
                       id={item.id}
                       reservationState={item.reservationState}
@@ -250,7 +164,7 @@ const ReservationManagement = () => {
               {selectedCategory === '체험' &&
                 (activityData.length !== 0 ? (
                   activityData.map((item) => (
-                    <ReserveComponent
+                    <ReservedManageCard
                       key={item.id}
                       id={item.id}
                       reservationState={item.reservationState}
