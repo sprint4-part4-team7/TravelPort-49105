@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getMyReservation } from '@/apis/myReservation';
 import { useUserStore } from '@/utils/zustand';
 import { Reservation } from '@/constants/types';
 import useModal from '@/hooks/useModal';
+import { useQuery } from '@tanstack/react-query';
 import ReservationCard from '@/components/common/reservPagination/ResevationCard';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
 import ReservChips from '@/components/myPage/ReservChips';
@@ -17,39 +18,33 @@ const MyResevation = ({
 }: {
   isExpired?: 'true' | 'false';
 }) => {
-  const [pageNum, setPageNum] = useState(1);
   const userInfo = useUserStore((state) => state.userInfo);
-  const [myReservation, setMyReservation] = useState<Reservation[]>([]); // [Reservation
-
-  const isReservExpired = isExpired === 'true';
-  const limit = 4;
-  const start = (pageNum - 1) * limit;
-  const end = start + limit;
-  const slicedChildren = myReservation.slice(start, end);
   const [cancelMsg, setCancelMsg] = useState<string>('');
   const { isModalOpen, closeModal, openModal } = useModal();
+  const [pageNum, setPageNum] = useState(1);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (userInfo.id) {
-        const response = await getMyReservation(userInfo.id, isExpired);
-        setMyReservation(response);
-      }
-    };
-    fetchData();
-  }, []);
+  const limit = 5;
+  const isReservExpired = isExpired === 'true';
+
+  const myReservation = useQuery({
+    queryKey: ['myReservation', userInfo.id, pageNum, isExpired],
+    queryFn: () => getMyReservation(userInfo.id, isExpired, limit, pageNum),
+    enabled: !!userInfo.id,
+  });
+
+  const myReservationData = myReservation.data as Reservation[];
 
   return (
     <div className="flex flex-col gap-48 w-full">
       <div className="text-20 font-semibold">예약 목록</div>
-      {myReservation.length > 0 ? (
+      {myReservationData?.length > 0 ? (
         <ReservPagination
           limit={limit}
           pageNum={pageNum}
           setPageNum={setPageNum}
-          allCardNum={myReservation.length}
+          allCardNum={myReservationData.length}
         >
-          {slicedChildren.map((reservation) => (
+          {myReservationData.map((reservation) => (
             <ReservationCard
               id={reservation.id}
               date={reservation.timeTable?.targetDate}

@@ -81,7 +81,7 @@ export interface PostData {
 }
 
 export interface UserInfo {
-  id?: number;
+  id: number;
   name: string;
   email?: string;
   isPartner?: number;
