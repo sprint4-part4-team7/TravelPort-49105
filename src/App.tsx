@@ -14,9 +14,8 @@ import UserSignup from '@/pages/auth/signup/UserSignup';
 import ProductDetails from '@/pages/ProductDetails';
 import ProductRegist from '@/pages/productRegist/ProductRegist';
 import SearchResultPage from '@/pages/SearchResultPage';
-import ReviewRegist from './pages/ReviewRegist';
-import ReservationManagement from '@/pages/ReservationManagement';
-import PartnerMain from './pages/PartnerMain';
+import ReviewRegist from '@/pages/ReviewRegist';
+import PartnerMain from '@/pages/PartnerMain';
 
 const App = () => {
   return (
@@ -61,9 +60,6 @@ const App = () => {
         </Route>
         <Route path="search">
           <Route index element={<SearchResultPage />} />
-        </Route>
-        <Route path="manage">
-          <Route index element={<ReservationManagement />} />
         </Route>
       </Routes>
     </BrowserRouter>
