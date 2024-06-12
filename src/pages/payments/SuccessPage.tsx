@@ -4,6 +4,7 @@ import useReservationMutation from '@/hooks/reactQuery/reservation/useReservatio
 import { useEffect } from 'react';
 import usePaymentPutMutation from '@/hooks/reactQuery/payment/usePaymentPutMutation';
 import check from '@/assets/icons/check-circle-broken-pay.svg';
+import { useReservationStore } from '@/utils/zustand';
 import Layout from '@/components/common/layout/Layout';
 import Button from '@/components/common/Button';
 
@@ -11,6 +12,7 @@ const SuccessPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const { reservationInfo } = useReservationStore();
   const [searchParams] = useSearchParams();
   const paymentKey = searchParams.get('paymentKey') ?? '';
   const orderId = searchParams.get('orderId') ?? '';
@@ -20,18 +22,24 @@ const SuccessPage = () => {
     navigate('/');
   }
 
-  const { mutate: createReservation, isLoading } = useReservationMutation();
+  const {
+    mutate: createReservation,
+    isLoading,
+    reservationResponse,
+  } = useReservationMutation();
+  // TODO: reservationResponse에서 paymentId 꺼내기 (지금은 대이터가 다 날아가서 확인 불가)
+  console.log(reservationResponse);
   const { mutate: sendPayments } = usePaymentPutMutation();
 
   const reservationPost = async () => {
     createReservation({
-      userId: 1,
-      productOptionId: 1,
-      timeTableId: 1,
-      reservationState: '예약 완료',
-      reservationPrice: 30000,
-      ticketCount: 0,
-      cancelMsg: '오꼐이 ~!',
+      userId: reservationInfo?.userId,
+      productOptionId: reservationInfo?.productOptionId,
+      timeTableId: reservationInfo?.timeTableId,
+      reservationState: reservationInfo?.reservationState,
+      reservationPrice: reservationInfo?.reservationPrice,
+      ticketCount: reservationInfo?.ticketCount,
+      cancelMsg: reservationInfo?.cancelMsg || '',
     });
   };
 
