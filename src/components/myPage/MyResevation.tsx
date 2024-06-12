@@ -12,11 +12,16 @@ import Modal from '../common/Modal';
 import CancelMessage from './CancelMessage';
 import ReservChipsExpired from './ReservChipsExpired';
 
-const MyResevation = ({ isExpired = false }: { isExpired?: boolean }) => {
+const MyResevation = ({
+  isExpired = 'false',
+}: {
+  isExpired?: 'true' | 'false';
+}) => {
   const [pageNum, setPageNum] = useState(1);
   const userInfo = useUserStore((state) => state.userInfo);
   const [myReservation, setMyReservation] = useState<Reservation[]>([]); // [Reservation
 
+  const isReservExpired = isExpired === 'true';
   const limit = 4;
   const start = (pageNum - 1) * limit;
   const end = start + limit;
@@ -51,7 +56,7 @@ const MyResevation = ({ isExpired = false }: { isExpired?: boolean }) => {
               option={reservation.productOption?.optionName}
               title={reservation.productOption.product.name}
               upperRight={
-                isExpired ? (
+                isReservExpired ? (
                   <ReservChipsExpired status={reservation.reservationState} />
                 ) : (
                   <ReservChips status={reservation.reservationState} />

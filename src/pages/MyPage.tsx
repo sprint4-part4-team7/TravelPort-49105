@@ -18,14 +18,13 @@ const MyPage = ({ isPartner = false }: { isPartner?: boolean }) => {
   }, [status]);
 
   return (
-    <Layout>
-      <MyPageSideBar isPartner={isPartner}>
-        {status === 'edit-info' && <EditInfo isPartner={isPartner} />}
-        {status === 'reservation-status' && <MyResevation />}
-        {isPartner && status === 'manage' && <ReservationManagement />}
-        {status === 'reservation-history' && <MyResevation isExpired />}
-      </MyPageSideBar>
-    </Layout>
+    // <Layout>
+    <MyPageSideBar isPartner={isPartner}>
+      {status === 'edit-info' && <EditInfo isPartner={isPartner} />}
+      {status === 'reservation-status' && <MyResevation />}
+      {status === 'reservation-history' && <MyResevation isExpired="true" />}
+    </MyPageSideBar>
+    // </Layout>
   );
 };
 
