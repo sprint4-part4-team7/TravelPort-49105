@@ -15,7 +15,7 @@ const useProductOptionsReviews = (
           // 해당 제품의 옵션 찾기
           const productOptions =
             optionAll &&
-            optionAll.productOptions?.filter(
+            optionAll?.filter(
               (option: any) => option?.productId === product.id,
             );
 

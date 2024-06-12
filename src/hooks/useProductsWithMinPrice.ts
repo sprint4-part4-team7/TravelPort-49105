@@ -13,9 +13,7 @@ const useProductsWithMinPrice = (
     if (!options) return 0;
     const filteredOptions =
       options &&
-      options.productOptions.filter(
-        (option: any) => option.productId === productId,
-      );
+      options.filter((option: any) => option.productId === productId);
     const prices =
       filteredOptions &&
       filteredOptions.map((option: any) => option.optionPrice);
@@ -32,7 +30,7 @@ const useProductsWithMinPrice = (
     if (!options || !reviews) return { totalReviews: 0, averageScore: 0 };
     const optionIds =
       options &&
-      options.productOptions
+      options
         .filter((option: any) => option.productId === productId)
         .map((option: any) => option.id);
     const relevantReviews =

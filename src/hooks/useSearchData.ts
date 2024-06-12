@@ -22,5 +22,4 @@ const useSearchData = (cardLists: CardListsType[]) => {
     setSearch,
   };
 };
-
 export default useSearchData;

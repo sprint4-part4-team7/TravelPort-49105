@@ -12,7 +12,7 @@ interface PostReservationProps {
   userId: number;
   productOptionId: number;
   timeTableId: number;
-  reservationState: number;
+  reservationState: string;
   reservationPrice: number;
   ticketCount: number;
   cancelMsg: string;
