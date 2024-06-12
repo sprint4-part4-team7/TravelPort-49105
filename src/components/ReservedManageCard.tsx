@@ -11,6 +11,7 @@ import changeDateForm from '@/utils/changeDateForm';
 import Button from '@/components/common/Button';
 import ReservationCard from './common/reservPagination/ResevationCard';
 import ReservChips from './myPage/ReservChips';
+import ReservButtonOutlined from './myPage/ReservButtonOutlined';
 
 type ReserveProps = {
   id: number;
@@ -66,7 +67,7 @@ const ReservedManageCard = ({
               대기중
             </div>
             <div className="flex gap-8 items-end tablet:flex-col mobile:justify-between">
-              <Button
+              {/* <Button
                 variant="default"
                 outlined
                 buttonStyle="flex gap-4 text-14 px-12 min-w-96 py-8 font-semibold rounded-8"
@@ -74,8 +75,12 @@ const ReservedManageCard = ({
               >
                 승인하기
                 <img alt="승인" src={APPROVE} width={16} height={16} />
-              </Button>
-              <Button
+              </Button> */}
+              <ReservButtonOutlined
+                status="예약 완료"
+                onClick={handleApprove}
+              />
+              {/* <Button
                 variant="default"
                 outlined
                 buttonStyle="flex gap-4 text-14 px-12 py-8 min-w-96 h-fit 
@@ -86,7 +91,8 @@ const ReservedManageCard = ({
               >
                 거절하기
                 <img alt="거절" src={DENIED} width={16} height={16} />
-              </Button>
+              </Button> */}
+              <ReservButtonOutlined status="예약 거절" onClick={handleReject} />
             </div>
           </div>
         ) : reservationState === '예약 완료' ? (
@@ -104,7 +110,7 @@ const ReservedManageCard = ({
                 취소하기
                 <img alt="취소" src={CANCEL} width={16} height={16} />
               </Button>
-              <Button
+              {/* <Button
                 variant="default"
                 outlined
                 buttonStyle="flex gap-4 text-14 px-12 py-8 h-fit 
@@ -115,7 +121,8 @@ const ReservedManageCard = ({
               >
                 거절하기
                 <img alt="거절" src={DENIED} width={16} height={16} />
-              </Button>
+              </Button> */}
+              <ReservButtonOutlined status="예약 거절" onClick={handleReject} />
             </div>
           </div>
         ) : reservationState === '예약 거절' ? (

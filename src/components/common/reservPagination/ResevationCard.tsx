@@ -17,7 +17,7 @@ interface ReservationCardProps {
 }
 
 const ReservationCard = ({
-  id,
+  id = 0,
   title,
   date,
   time,

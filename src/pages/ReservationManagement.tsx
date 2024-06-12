@@ -14,8 +14,6 @@ const ReservationManagement = () => {
   const [activityData, setActivityData] = useState<any[]>([]);
   const [allData, setAllData] = useState<any[]>([]);
 
-  console.log(userInfo);
-
   const toggleDropdown = () => {
     setIsNew(!isNew);
   };
