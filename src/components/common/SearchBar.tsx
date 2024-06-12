@@ -40,22 +40,26 @@ const SearchBar = ({
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      const filteredData = cardLists.filter(
+      const filteredData = cardLists?.filter(
         (cardList) =>
-          cardList.product.name.includes(search) ||
-          cardList.product.productAddress.includes(search),
+          (cardList?.product.name && cardList.product.name.includes(search)) ||
+          (cardList?.product.productAddress &&
+            cardList.product.productAddress.includes(search)),
       );
       setFilteredData && setFilteredData(filteredData);
       navigate(`/${path}search?query=${search}`);
     }
   };
+
   const handleSuggestionClick = (suggestion: string) => {
     setSearch(suggestion);
     setIsOpen(false);
-    const filteredData = cardLists.filter(
+    const filteredData = cardLists?.filter(
       (cardList) =>
-        cardList.product.name.includes(suggestion) ||
-        cardList.product.productAddress.includes(suggestion),
+        (cardList?.product.name &&
+          cardList.product.name.includes(suggestion)) ||
+        (cardList?.product.productAddress &&
+          cardList.product.productAddress.includes(suggestion)),
     );
     setFilteredData && setFilteredData(filteredData);
     navigate(`/${path}search?query=${suggestion}`);
