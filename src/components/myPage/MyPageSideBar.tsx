@@ -53,9 +53,15 @@ const MyPageSideBar = ({ children, isPartner = false }: MyPageSideBarProps) => {
             <MyPageButton setStatus={changeStatus} page="edit-info">
               정보 수정
             </MyPageButton>
-            <MyPageButton setStatus={changeStatus} page="reservation">
-              예약 내역
-            </MyPageButton>
+            {isPartner ? (
+              <MyPageButton setStatus={changeStatus} page="manage">
+                예약 관리
+              </MyPageButton>
+            ) : (
+              <MyPageButton setStatus={changeStatus} page="reservation">
+                예약 내역
+              </MyPageButton>
+            )}
           </div>
         </div>
         <Button
