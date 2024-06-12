@@ -8,14 +8,18 @@ import { format, getDay } from 'date-fns';
 
 type DatePickerProps = {
   startDate: Date;
-  endDate: Date | null;
-  onChange: (dates: any) => void;
+  setStartDate: React.Dispatch<React.SetStateAction<Date>>;
+  endDate?: Date | null;
+  setEndDate: React.Dispatch<React.SetStateAction<Date | null>>;
+  categoryId: number;
 };
 
 const DatePickerCustom = ({
   startDate,
+  setStartDate,
   endDate,
-  onChange,
+  setEndDate,
+  categoryId,
 }: DatePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -27,6 +31,21 @@ const DatePickerCustom = ({
   const isWeekday = (date: any) => {
     const day = getDay(date);
     return day !== 3 && day !== 6;
+  };
+
+  if (categoryId !== 1) setEndDate(null);
+
+  console.log(startDate, endDate); // 시작날짜, 종료날짜
+
+  const handleDateChange = (dates: [Date | null, Date | null] | Date) => {
+    if (Array.isArray(dates)) {
+      const [start, end] = dates;
+      setStartDate(start as Date);
+      setEndDate(end);
+    } else {
+      setStartDate(dates as Date);
+      setEndDate(null);
+    }
   };
 
   return (
@@ -44,8 +63,9 @@ const DatePickerCustom = ({
             <DatePicker
               locale={ko}
               selected={startDate}
-              onChange={onChange}
-              selectsRange
+              onChange={handleDateChange}
+              selectsRange={categoryId === 1}
+              selectsStart={categoryId !== 1}
               startDate={startDate}
               endDate={endDate}
               inline
@@ -53,7 +73,16 @@ const DatePickerCustom = ({
               dateFormatCalendar="yyyy년 MM월"
               placeholderText="날짜를 선택하세요."
               filterDate={isWeekday}
-              highlightDates={[new Date()]}
+              showMonthDropdown
+              useShortMonthInDropdown
+              showYearDropdown
+              scrollableYearDropdown
+              dropdownMode="select"
+              // includeDateIntervals={[
+              //   { start: subDays(new Date(), 5), end: addDays(new Date(), 5) },
+              // ]}
+              // minDate={}
+              // maxDate={}
             />
           )}
         </div>

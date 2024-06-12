@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const useDatePicker = () => {
   const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
   const onChange = (dates: any) => {
     const [start, end] = dates;

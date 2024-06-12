@@ -35,7 +35,7 @@ const List = () => {
   const [dataByPage, setDataByPage] = useState<any>();
 
   const { optionAll } = useProductAll();
-  const { startDate, endDate, onChange } = useDatePicker();
+  const { startDate, setStartDate, endDate, setEndDate } = useDatePicker();
 
   const categoryName = Number(categoryId) === 1 ? '숙박' : '체험';
   const filterings = ['날짜', '인원수', '가격대', `${categoryName} 종류`];
@@ -123,10 +123,10 @@ const List = () => {
                 >
                   <DatePickerCustom
                     startDate={startDate}
-                    // setStartDate={setStartDate}
+                    setStartDate={setStartDate}
                     endDate={endDate}
-                    // setEndDate={setEndDate}
-                    onChange={onChange}
+                    setEndDate={setEndDate}
+                    categoryId={Number(categoryId)}
                   />
                 </div>
               )}
