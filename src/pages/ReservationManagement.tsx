@@ -2,7 +2,7 @@ import ARROW from '@/assets/icons/arrowDown.svg';
 import { useEffect, useState } from 'react';
 import instance from '@/utils/axios';
 import Footer from '@/components/common/Footer';
-// import Layout from '@/components/common/layout/Layout';
+import Layout from '@/components/common/layout/Layout';
 import SearchBar from '@/components/common/SearchBar';
 import ReservedManageCard from '@/components/ReservedManageCard';
 
@@ -69,126 +69,126 @@ const ReservationManagement = () => {
 
   return (
     <>
-      {/* <Layout> */}
-      <div className="flex flex-col gap-60 mt-60">
-        <div className="flex flex-col gap-20">
-          <div className="font-bold text-24">예약 관리</div>
-          <SearchBar cardLists={[]} />
-        </div>
+      <Layout>
+        <div className="flex flex-col gap-60 mt-60">
+          <div className="flex flex-col gap-20">
+            <div className="font-bold text-24">예약 관리</div>
+            <SearchBar cardLists={[]} />
+          </div>
 
-        <div>
-          <div className="flex justify-between py-24">
-            <div className="flex">
-              {['전체', '숙박', '체험', '교통'].map((category) => (
-                <button
-                  type="button"
-                  key={category}
-                  className={getButtonClassNames(category)}
-                  onClick={() => handleCategoryClick(category)}
-                >
-                  {`${category} (${getCategoryCount(category)})`}
-                </button>
-              ))}
-            </div>
+          <div>
+            <div className="flex justify-between py-24">
+              <div className="flex">
+                {['전체', '숙박', '체험', '교통'].map((category) => (
+                  <button
+                    type="button"
+                    key={category}
+                    className={getButtonClassNames(category)}
+                    onClick={() => handleCategoryClick(category)}
+                  >
+                    {`${category} (${getCategoryCount(category)})`}
+                  </button>
+                ))}
+              </div>
 
-            <button
-              type="button"
-              className="flex items-center justify-center gap-4 
+              <button
+                type="button"
+                className="flex items-center justify-center gap-4 
                 px-12 py-8 text-16 font-semibold
                 border-1 border-solid border-black-5 rounded-8"
-              onClick={toggleDropdown}
-            >
-              {isNew ? (
-                <>
-                  최신순
-                  <img
-                    className=""
-                    width="14px"
-                    height="14px"
-                    alt="new"
-                    src={ARROW}
-                  />
-                </>
-              ) : (
-                <>
-                  과거순
-                  <img
-                    className="-scale-y-100"
-                    width="14px"
-                    height="14px"
-                    alt="old"
-                    src={ARROW}
-                  />
-                </>
-              )}
-            </button>
-          </div>
-          <div className="flex flex-col gap-24 border-1 border-solid border-black-7 rounded-8 p-16">
-            <div className="flex flex-col gap-16 ">
-              {selectedCategory === '전체' &&
-                (allData.length !== 0 ? (
-                  allData.map((item) => (
-                    <ReservedManageCard
-                      key={item.id}
-                      id={item.id}
-                      reservationState={item.reservationState}
-                      productOption={item.productOption}
-                      user={item.user}
-                      reserveDate={item.createdAt}
-                      timeTable={item.timeTable}
+                onClick={toggleDropdown}
+              >
+                {isNew ? (
+                  <>
+                    최신순
+                    <img
+                      className=""
+                      width="14px"
+                      height="14px"
+                      alt="new"
+                      src={ARROW}
                     />
-                  ))
+                  </>
                 ) : (
-                  <div className="flex items-center justify-center text-24 font-medium">
-                    예약 내역이 없습니다.
-                  </div>
-                ))}
-              {selectedCategory === '숙박' &&
-                (lodgeData.length !== 0 ? (
-                  lodgeData.map((item) => (
-                    <ReservedManageCard
-                      key={item.id}
-                      id={item.id}
-                      reservationState={item.reservationState}
-                      productOption={item.productOption}
-                      user={item.user}
-                      reserveDate={item.createdAt}
-                      timeTable={item.timeTable}
+                  <>
+                    과거순
+                    <img
+                      className="-scale-y-100"
+                      width="14px"
+                      height="14px"
+                      alt="old"
+                      src={ARROW}
                     />
-                  ))
-                ) : (
+                  </>
+                )}
+              </button>
+            </div>
+            <div className="flex flex-col gap-24 border-1 border-solid border-black-7 rounded-8 p-16">
+              <div className="flex flex-col gap-16 ">
+                {selectedCategory === '전체' &&
+                  (allData.length !== 0 ? (
+                    allData.map((item) => (
+                      <ReservedManageCard
+                        key={item.id}
+                        id={item.id}
+                        reservationState={item.reservationState}
+                        productOption={item.productOption}
+                        user={item.user}
+                        reserveDate={item.createdAt}
+                        timeTable={item.timeTable}
+                      />
+                    ))
+                  ) : (
+                    <div className="flex items-center justify-center text-24 font-medium">
+                      예약 내역이 없습니다.
+                    </div>
+                  ))}
+                {selectedCategory === '숙박' &&
+                  (lodgeData.length !== 0 ? (
+                    lodgeData.map((item) => (
+                      <ReservedManageCard
+                        key={item.id}
+                        id={item.id}
+                        reservationState={item.reservationState}
+                        productOption={item.productOption}
+                        user={item.user}
+                        reserveDate={item.createdAt}
+                        timeTable={item.timeTable}
+                      />
+                    ))
+                  ) : (
+                    <div className="flex items-center justify-center text-24 font-medium">
+                      예약 내역이 없습니다.
+                    </div>
+                  ))}
+                {selectedCategory === '체험' &&
+                  (activityData.length !== 0 ? (
+                    activityData.map((item) => (
+                      <ReservedManageCard
+                        key={item.id}
+                        id={item.id}
+                        reservationState={item.reservationState}
+                        productOption={item.productOption}
+                        user={item.user}
+                        reserveDate={item.createdAt}
+                        timeTable={item.timeTable}
+                      />
+                    ))
+                  ) : (
+                    <div className="flex items-center justify-center text-24 font-medium">
+                      예약 내역이 없습니다.
+                    </div>
+                  ))}
+                {selectedCategory === '교통' && (
                   <div className="flex items-center justify-center text-24 font-medium">
-                    예약 내역이 없습니다.
+                    추후 구현 예정입니다
                   </div>
-                ))}
-              {selectedCategory === '체험' &&
-                (activityData.length !== 0 ? (
-                  activityData.map((item) => (
-                    <ReservedManageCard
-                      key={item.id}
-                      id={item.id}
-                      reservationState={item.reservationState}
-                      productOption={item.productOption}
-                      user={item.user}
-                      reserveDate={item.createdAt}
-                      timeTable={item.timeTable}
-                    />
-                  ))
-                ) : (
-                  <div className="flex items-center justify-center text-24 font-medium">
-                    예약 내역이 없습니다.
-                  </div>
-                ))}
-              {selectedCategory === '교통' && (
-                <div className="flex items-center justify-center text-24 font-medium">
-                  추후 구현 예정입니다
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* </Layout> */}
+      </Layout>
       <Footer />
     </>
   );
