@@ -33,7 +33,7 @@ const ProductRegist = () => {
             <li>
               <div
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                onClick={() => setPage(<Description />)}
+                onClick={() => setPage(<Description setPage={setPage} />)}
               >
                 <div className="step-number">2</div>
                 <span className="flex-1 ms-3 whitespace-nowrap">
@@ -44,7 +44,7 @@ const ProductRegist = () => {
             <li>
               <div
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                onClick={() => setPage(<Location />)}
+                onClick={() => setPage(<Location setPage={setPage} />)}
               >
                 <div className="step-number">3</div>
                 <span className="flex-1 ms-3 whitespace-nowrap">위치</span>
@@ -53,7 +53,7 @@ const ProductRegist = () => {
             <li>
               <div
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                onClick={() => setPage(<Date />)}
+                onClick={() => setPage(<Date setPage={setPage} />)}
               >
                 <div className="step-number">4</div>
                 <span className="flex-1 ms-3 whitespace-nowrap">날짜</span>

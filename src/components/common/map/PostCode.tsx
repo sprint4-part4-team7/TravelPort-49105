@@ -6,6 +6,7 @@ import saveImage from '@/assets/icons/check-circle-broken.svg';
 import searchImage from '@/assets/icons/search-pr.svg';
 import CheckButton from '@/pages/productRegist/CheckButton';
 import Button from '@/components/common/Button';
+import Date from '@/pages/productRegist/Date';
 
 type PostCodeForm = {
   address: string;
@@ -13,12 +14,13 @@ type PostCodeForm = {
 };
 
 type PostCodeProps = {
+  setPage: React.Dispatch<React.SetStateAction<React.ReactNode>>;
   setX: React.Dispatch<React.SetStateAction<number>>;
   setY: React.Dispatch<React.SetStateAction<number>>;
   setBuilding: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const PostCode = ({ setX, setY, setBuilding }: PostCodeProps) => {
+const PostCode = ({ setPage, setX, setY, setBuilding }: PostCodeProps) => {
   // 여기서의 set들은 kakao에 있는변수로 상위로 끌어쓰기위한 useState
   const { register, handleSubmit, setValue } = useForm<PostCodeForm>({
     mode: 'onChange',
@@ -94,7 +96,7 @@ const PostCode = ({ setX, setY, setBuilding }: PostCodeProps) => {
   };
 
   useEffect(() => {
-    if (sideAddress.length > 0) {
+    if (sideAddress.length > 0 && address.addressName.length > 0) {
       setDisabledSave(false);
     } else {
       setDisabledSave(true);
@@ -168,7 +170,10 @@ const PostCode = ({ setX, setY, setBuilding }: PostCodeProps) => {
           </div>
         </div>
       </div>
-      <CheckButton disabled={disabled} />
+      <CheckButton
+        disabled={disabled}
+        onClick={() => setPage(<Date setPage={setPage} />)}
+      />
     </form>
   );
 };

@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import PostCode from '@/components/common/map/PostCode';
 import KakaoMap from '@/components/common/map/KakaoMap';
+import { PageIdProps } from './productPage';
 
-const Location = () => {
+const Location = ({ setPage }: PageIdProps) => {
   const [x, setX] = useState(33.5563);
   const [y, setY] = useState(126.79581);
   const [building, setBuilding] = useState('');
@@ -12,7 +13,12 @@ const Location = () => {
   return (
     <div>
       <div>
-        <PostCode setX={setX} setY={setY} setBuilding={setBuilding} />
+        <PostCode
+          setPage={setPage}
+          setX={setX}
+          setY={setY}
+          setBuilding={setBuilding}
+        />
       </div>
       <div className="mx-40">
         <KakaoMap x={x} y={y} building={building} />
