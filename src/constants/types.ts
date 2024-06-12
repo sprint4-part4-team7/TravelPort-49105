@@ -56,6 +56,8 @@ export type CardListsType = {
   optionPrice: number;
   optionName: string;
   userCount: number;
+  optionDesc: string;
+  optionImages: string[];
   product: {
     id: string;
     buildingName: string;
