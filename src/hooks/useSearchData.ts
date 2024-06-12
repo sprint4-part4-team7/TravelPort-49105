@@ -9,18 +9,10 @@ const useSearchData = (cardLists: CardListsType[]) => {
     setSearch(e.target.value);
 
   const filteredTitles = cardLists.filter((filtered) => {
-    if (
-      filtered &&
-      filtered.product &&
-      typeof filtered.product.name === 'string' &&
-      typeof filtered.product.productAddress === 'string'
-    ) {
-      return (
-        filtered.product.name.includes(search.trim()) ||
-        filtered.product.productAddress.includes(search.trim())
-      );
-    }
-    return false;
+    return (
+      filtered.product.name.includes(search.trim()) ||
+      filtered.product.productAddress.includes(search.trim())
+    );
   });
 
   return {
@@ -30,5 +22,4 @@ const useSearchData = (cardLists: CardListsType[]) => {
     setSearch,
   };
 };
-
 export default useSearchData;
