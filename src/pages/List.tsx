@@ -9,20 +9,20 @@ import useProductAll from '@/hooks/reactQuery/product/useProductAll';
 import uniqueProduct from '@/utils/uniqueProduct';
 import arrowDown from '@/assets/icons/arrowDown.svg';
 import search from '@/assets/icons/search.svg';
-import useCalendar from '@/hooks/useCalendar';
 import { useParams } from 'react-router-dom';
 import useOutsideClick from '@/hooks/useOutsideClick';
 import instance from '@/utils/axios';
+import useDatePicker from '@/hooks/useDatePicker';
 import SearchBar from '../components/common/SearchBar';
 import Layout from '@/components/common/layout/Layout';
 import HotelCard from '@/components/common/card/HotelCard';
-import CalendarCustom from '@/components/common/CalendarCustom';
 import HeadCount from '@/components/common/filter/HeadCount';
 import PriceRange from '@/components/common/filter/PriceRange';
 import ProductType from '@/components/common/filter/ProductType';
 import Footer from '@/components/common/Footer';
 import Card from '@/components/common/card/Card';
 import Pagination from '@/components/common/Pagination';
+import DatePickerCustom from '@/components/details/DatePickerCustom';
 
 const List = () => {
   const { categoryId } = useParams();
@@ -35,7 +35,7 @@ const List = () => {
   const [dataByPage, setDataByPage] = useState<any>();
 
   const { optionAll } = useProductAll();
-  const { selectedDate, setSelectedDate } = useCalendar();
+  const { startDate, endDate, onChange } = useDatePicker();
 
   const categoryName = Number(categoryId) === 1 ? '숙박' : '체험';
   const filterings = ['날짜', '인원수', '가격대', `${categoryName} 종류`];
@@ -121,10 +121,12 @@ const List = () => {
                   className="absolute top-80 left-20 right-20 max-w-500"
                   ref={outsideRef}
                 >
-                  <CalendarCustom
-                    selectedDate={selectedDate}
-                    setSelectedDate={setSelectedDate}
-                    holiday={[]}
+                  <DatePickerCustom
+                    startDate={startDate}
+                    // setStartDate={setStartDate}
+                    endDate={endDate}
+                    // setEndDate={setEndDate}
+                    onChange={onChange}
                   />
                 </div>
               )}
