@@ -34,7 +34,7 @@ const ReservationManagement = () => {
 
       return result;
     } catch (e: any) {
-      return e.message;
+      return '';
     }
   };
 
@@ -77,7 +77,7 @@ const ReservationManagement = () => {
   const end = start + limit;
 
   return (
-    <div className="mx-10 my-0">
+    <div className="mx-10 my-0 w-1000">
       <div className="flex flex-col gap-60 mt-60">
         <div className="flex flex-col gap-20">
           <div className="font-bold text-24">예약 관리</div>
