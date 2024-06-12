@@ -4,8 +4,7 @@ import { useEffect } from 'react';
 import EditInfo from '@/components/myPage/EditInfo';
 import MyPageSideBar from '@/components/myPage/MyPageSideBar';
 import MyResevation from '@/components/myPage/MyResevation';
-import Layout from '@/components/common/layout/Layout';
-import ReservationManagement from './ReservationManagement';
+// import Layout from '@/components/common/layout/Layout';
 
 const MyPage = ({ isPartner = false }: { isPartner?: boolean }) => {
   const { status } = useParams();

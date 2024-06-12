@@ -1,4 +1,4 @@
-import getDate from '@/utils/getDate';
+import { getDate } from '@/utils/getDate';
 import { ReactNode } from 'react';
 
 interface ReservationCardProps {
