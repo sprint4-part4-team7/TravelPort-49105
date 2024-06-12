@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import useProductAll from '@/hooks/reactQuery/product/useProductAll';
 import useProductsWithMinPrice from '@/hooks/useProductsWithMinPrice';
-import useReviewAllQuery from '@/hooks/reactQuery/review/useReviewAllQuery';
 import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
 import SearchResultSection from '@/components/SearchResultSection';
@@ -18,20 +17,18 @@ const SearchResultPage = () => {
   const search = searchQuery.toLowerCase();
   const { productAll } = useProductAll();
   const [selectedTab, setSelectedTab] = useState('all');
-  const { optionAll } = useProductAll();
-  const { data: reviewAll } = useReviewAllQuery();
   const [pageNum, setPageNum] = useState(1);
   const itemsPerPage = 10;
 
-  const filteredProducts = productAll?.data?.filter((product: any) => {
+  const filteredProducts = productAll?.filter((product: any) => {
     if (selectedTab === 'all') return true;
-    return product.categoryId === (selectedTab === 'accommodation' ? 1 : 2);
+    return (
+      product.product_categoryId === (selectedTab === 'accommodation' ? 1 : 2)
+    );
   });
 
   const productsWithMinPrice = useProductsWithMinPrice(
     filteredProducts,
-    optionAll,
-    reviewAll,
     search,
   );
 
@@ -47,26 +44,30 @@ const SearchResultPage = () => {
   });
 
   useEffect(() => {
-    if (productAll?.data) {
-      const allProducts = productAll.data.filter(
+    if (productAll) {
+      const allProducts = productAll.filter(
         (product: any) =>
-          (product.categoryId === 1 || product.categoryId === 2) &&
-          (product.name?.toLowerCase().includes(search) ||
+          (product.product_categoryId === 1 ||
+            product.product_categoryId === 2) &&
+          (product.productName?.toLowerCase().includes(search) ||
             product.productAddress?.toLowerCase().includes(search)),
       );
+
       const accommodationCount = allProducts.filter(
-        (product: any) => product.categoryId === 1,
+        (product: any) => product.product_categoryId === 1,
       ).length;
+
       const experienceCount = allProducts.filter(
-        (product: any) => product.categoryId === 2,
+        (product: any) => product.product_categoryId === 2,
       ).length;
+
       setCategoryCounts({
         all: allProducts.length,
         accommodation: accommodationCount,
         experience: experienceCount,
       });
     }
-  }, [productAll?.data, search]);
+  }, [productAll, search]);
 
   useEffect(() => {
     setPageNum(1);
@@ -82,21 +83,33 @@ const SearchResultPage = () => {
         <div className="text-20 text-black-5 my-28">
           <button
             type="button"
-            className={`tab-btn ${selectedTab === 'all' ? 'active text-black-12 border-b-2 border-black-12 border-solid' : ''} p-10 `}
+            className={`tab-btn ${
+              selectedTab === 'all'
+                ? 'active text-black-12 border-b-2 border-black-12 border-solid'
+                : ''
+            } p-10 `}
             onClick={() => setSelectedTab('all')}
           >
             전체({categoryCounts.all})
           </button>
           <button
             type="button"
-            className={`tab-btn ${selectedTab === 'accommodation' ? 'active text-black-12 border-b-2 border-black-12 border-solid' : ''} p-10 `}
+            className={`tab-btn ${
+              selectedTab === 'accommodation'
+                ? 'active text-black-12 border-b-2 border-black-12 border-solid'
+                : ''
+            } p-10 `}
             onClick={() => setSelectedTab('accommodation')}
           >
             숙박({categoryCounts.accommodation})
           </button>
           <button
             type="button"
-            className={`tab-btn ${selectedTab === 'experience' ? 'active text-black-12 border-b-2 border-black-12 border-solid' : ''} p-10 `}
+            className={`tab-btn ${
+              selectedTab === 'experience'
+                ? 'active text-black-12 border-b-2 border-black-12 border-solid'
+                : ''
+            } p-10 `}
             onClick={() => setSelectedTab('experience')}
           >
             체험({categoryCounts.experience})
