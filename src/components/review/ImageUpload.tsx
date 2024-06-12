@@ -46,6 +46,7 @@ const ImageUpload = ({ onChange }: ImageUploadProps): any => {
     );
     setShowImages(updatedShowImages);
     setImages(updatedImages);
+    onChange(updatedShowImages, updatedImages);
   };
 
   return (
