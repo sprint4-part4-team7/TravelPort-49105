@@ -35,8 +35,6 @@ const DatePickerCustom = ({
 
   if (categoryId !== 1) setEndDate(null);
 
-  console.log(startDate, endDate); // 시작날짜, 종료날짜
-
   const handleDateChange = (dates: [Date | null, Date | null] | Date) => {
     if (Array.isArray(dates)) {
       const [start, end] = dates;

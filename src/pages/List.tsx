@@ -33,9 +33,11 @@ const List = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [pageNum, setPageNum] = useState(1);
   const [dataByPage, setDataByPage] = useState<any>();
+  const [count, setCount] = useState(0); // 인원수
 
   const { optionAll } = useProductAll();
   const { startDate, setStartDate, endDate, setEndDate } = useDatePicker();
+  console.log(startDate, endDate); // 시작날짜, 종료날짜
 
   const categoryName = Number(categoryId) === 1 ? '숙박' : '체험';
   const filterings = ['날짜', '인원수', '가격대', `${categoryName} 종류`];
@@ -135,7 +137,7 @@ const List = () => {
                   className="absolute w-2/5 top-80 left-0 mobile:w-full"
                   ref={outsideRef}
                 >
-                  <HeadCount />
+                  <HeadCount count={count} setCount={setCount} />
                 </div>
               )}
               {filterTab === '가격대' && isOpen && (
