@@ -24,7 +24,6 @@ const MainCard: React.FC<PopularAccommodationsProps> = ({
   title,
   onclick,
 }) => {
-  console.log(images);
   return (
     <div className="">
       <div className="flex justify-between mb-18">
