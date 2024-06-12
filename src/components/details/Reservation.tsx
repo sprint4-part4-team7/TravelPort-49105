@@ -6,7 +6,9 @@ import { CardListsType, DetailData } from '@/constants/types';
 import minus from '@/assets/icons/minus.svg';
 import plus from '@/assets/icons/plus.svg';
 import { useState } from 'react';
-import getDate from '@/utils/getDate';
+import { getDate, formatDate } from '@/utils/getDate';
+import { useReservationStore } from '@/utils/zustand';
+import useTimeTable from '@/hooks/useTimeTable';
 import CalendarCustom from '../common/CalendarCustom';
 import Button from '../common/Button';
 import '@/styles/ProductDetails.css';
@@ -17,12 +19,21 @@ interface ReservationProps {
 }
 
 const Reservation = ({ product, options }: ReservationProps) => {
-  const { selectedDate, setSelectedDate } = useCalendar();
   const [selectedOption, setSelectedOption] = useState(0);
   const [optionId, setOptionId] = useState(0);
   const [ticketNum, setTicketNum] = useState(0);
+  const { selectedDate, setSelectedDate } = useCalendar();
+  const { table } = useTimeTable(optionId);
 
-  console.log(optionId);
+  const getTableId = (timeTable: any) => {
+    if (!timeTable) return 0;
+
+    for (let i = 0; i < timeTable?.length; i++) {
+      if (timeTable[i].targetDate.includes(formatDate(selectedDate)))
+        return timeTable[i].id;
+    }
+    return 0;
+  };
 
   const handleClick = (id: number) => {
     setSelectedOption(id);
@@ -56,6 +67,23 @@ const Reservation = ({ product, options }: ReservationProps) => {
     endDateArray &&
     new Date(endDateArray[0], endDateArray[1] - 1, endDateArray[2]);
   const holiday = product ? product?.closedDay.map(Number) : [];
+
+  // 상태관리
+  const setReservationInfo = useReservationStore(
+    (state) => state.setReservationInfo,
+  );
+  const handleUpdate = () => {
+    const newReservationInfo = {
+      userId: 1,
+      productOptionId: optionId,
+      timeTableId: getTableId(table),
+      reservationState: '예약 대기',
+      reservationPrice: filteredOption[0].optionPrice * ticketNum,
+      ticketCount: ticketNum,
+      cancelMsg: '',
+    };
+    setReservationInfo(newReservationInfo);
+  };
 
   return (
     <div className="mt-40">
@@ -143,7 +171,7 @@ const Reservation = ({ product, options }: ReservationProps) => {
           <Button outlined>장바구니 담기</Button>
         </div>
         <div className="w-2/3">
-          <Button>결제하기</Button>
+          <Button onClick={handleUpdate}>결제하기</Button>
         </div>
       </div>
     </div>

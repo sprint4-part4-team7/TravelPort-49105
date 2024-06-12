@@ -42,3 +42,36 @@ export const useUserMypageStore = create(
     },
   ),
 );
+
+interface ReservationInfo {
+  userId: number;
+  productOptionId: number;
+  timeTableId: number;
+  reservationState: string;
+  reservationPrice: number;
+  ticketCount: number;
+  cancelMsg?: string;
+}
+interface ReservationStore {
+  reservationInfo: ReservationInfo;
+  setReservationInfo: (reservationInfo: ReservationInfo) => void;
+}
+export const useReservationStore = create(
+  persist<ReservationStore>(
+    (set) => ({
+      reservationInfo: {
+        userId: 0,
+        productOptionId: 0,
+        timeTableId: 0,
+        reservationState: '',
+        reservationPrice: 0,
+        ticketCount: 0,
+        cancelMsg: '',
+      },
+      setReservationInfo: (reservationInfo) => set({ reservationInfo }),
+    }),
+    {
+      name: 'reservation',
+    },
+  ),
+);

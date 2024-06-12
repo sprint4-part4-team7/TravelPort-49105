@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { getDefaultOption } from '@/apis/review';
 import React, { useEffect, useState } from 'react';
 import useModal from '@/hooks/useModal';
+import { useNavigate } from 'react-router-dom';
 import TextBox from '@/components/common/TextBox';
 import ReviewStar from '@/components/review/ReviewStar';
 import Button from '@/components/common/Button';
@@ -33,6 +34,7 @@ const ReviewRegister = () => {
   const [postImages, setPostImages] = useState<(null | File)[]>([]);
 
   const { isModalOpen, openModal, closeModal } = useModal();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDefaultOption = async (optionId: number) => {
@@ -40,10 +42,11 @@ const ReviewRegister = () => {
       setOption(optionName);
       setProduct(productName);
     };
-    fetchDefaultOption(1);
+    fetchDefaultOption(1); // 추후 옵션아이디로 변경 예정
   }, []);
 
   const onSubmit = async (data: any) => {
+    // post 정상적으로 작동됨. 추후 userId, optionId로 변경 예정
     // try {
     //   await postReview(1, 1, data); // 임시
     // } catch (error) {
@@ -81,7 +84,7 @@ const ReviewRegister = () => {
   };
 
   const handleFormSubmit = () => {
-    // 입력 검증이 성공하면 모달창을 엽니다.
+    // 입력 검증이 성공하면 모달창 열기
     if (!errors.score && !errors.reviewContent) {
       openModal();
     }
@@ -139,6 +142,7 @@ const ReviewRegister = () => {
           onClick={() => {
             handleSubmit(onSubmit)();
             closeModal();
+            navigate('/');
           }}
         >
           확인
