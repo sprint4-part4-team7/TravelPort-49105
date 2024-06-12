@@ -1,8 +1,6 @@
 import ARROW from '@/assets/icons/arrowDown.svg';
 import { useEffect, useState } from 'react';
 import instance from '@/utils/axios';
-// import Footer from '@/components/common/Footer';
-// import Layout from '@/components/common/layout/Layout';
 import SearchBar from '@/components/common/SearchBar';
 import ReservedManageCard from '@/components/ReservedManageCard';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
@@ -12,7 +10,7 @@ const ReservationManagement = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
   const [lodgeData, setLodgeData] = useState<any[]>([]);
   const [activityData, setActivityData] = useState<any[]>([]);
-  let allData = [];
+  const [allData, setAllData] = useState<any[]>([]);
 
   const toggleDropdown = () => {
     setIsNew(!isNew);
@@ -41,11 +39,10 @@ const ReservationManagement = () => {
       const activity = await getReservedData(1, 2);
       setLodgeData(lodge);
       setActivityData(activity);
+      setAllData([...lodge, ...activity]);
     };
     fetchData();
   }, []);
-
-  allData = [...lodgeData, ...activityData];
 
   const getCategoryCount = (category: string) => {
     switch (category) {
@@ -75,7 +72,7 @@ const ReservationManagement = () => {
   const end = start + limit;
 
   return (
-    <div className="mx-10 my-0 min-w-780">
+    <div className="mx-10 my-0">
       <div className="flex flex-col gap-60 mt-60">
         <div className="flex flex-col gap-20">
           <div className="font-bold text-24">예약 관리</div>
@@ -209,7 +206,7 @@ const ReservationManagement = () => {
 
               {selectedCategory === '교통' && (
                 <div className="flex items-center justify-center text-24 font-medium">
-                  추후 구현 예정입니다
+                  추후 서비스 예정입니다
                 </div>
               )}
             </div>
