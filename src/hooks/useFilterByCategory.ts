@@ -1,8 +1,8 @@
 const useFilterByCategory = (data: any) => {
   const categoryAccommodation =
-    data && data.filter((item: any) => item.categoryId === 1);
+    data && data.filter((item: any) => item.product_categoryId === 1);
   const categoryActivity =
-    data && data.filter((item: any) => item.categoryId === 2);
+    data && data.filter((item: any) => item.product_categoryId === 2);
 
   // 리뷰 개수가 3개 이상인 항목만 필터링하고 별점이 높은 순으로 정렬하는 함수
   const filterAndSortByReviews = (items: any) => {
@@ -10,7 +10,7 @@ const useFilterByCategory = (data: any) => {
       items &&
       items
         .filter((item: any) => item.reviewCount >= 3) // 리뷰 개수가 3개 이상인 항목만 필터링
-        .sort((a: any, b: any) => b.averageScore - a.averageScore)
+        .sort((a: any, b: any) => b.reviewAvg - a.reviewAvg)
     ); // 별점이 높은 순으로 정렬
   };
 

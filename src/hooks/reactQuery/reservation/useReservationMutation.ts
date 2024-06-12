@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import reservationApi from '@/apis/reservation';
+import { useState } from 'react';
 
 interface PostReservationProp {
   userId: number;
@@ -13,6 +14,7 @@ interface PostReservationProp {
 
 const useReservationMutation = () => {
   const queryClient = useQueryClient();
+  const [reservationResponse, setReservationResponse] = useState<any>(null);
 
   const mutation = useMutation({
     mutationFn: async ({
@@ -34,7 +36,8 @@ const useReservationMutation = () => {
         cancelMsg,
       });
     },
-    onSuccess() {
+    onSuccess(data) {
+      setReservationResponse(data);
       queryClient.invalidateQueries({
         queryKey: [reservationApi.postReservation],
       });
@@ -45,7 +48,7 @@ const useReservationMutation = () => {
   const isLoading = mutation.status === 'pending';
 
   // 'isLoading' 상태와 함께 'mutate' 함수도 함께 반환 !
-  return { mutate: mutation.mutate, isLoading };
+  return { mutate: mutation.mutate, isLoading, reservationResponse };
 };
 
 export default useReservationMutation;

@@ -1,4 +1,3 @@
-import useScoreAvg from '@/hooks/useScoreAvg';
 import React from 'react';
 import useFilterProducts from '@/hooks/useFilterProducts';
 import Card from './common/card/Card';
@@ -10,6 +9,9 @@ interface ProductCardProps {
   productAddress: string;
   thumbnail: string;
   minPrice: number;
+  reviewAvg: any;
+  reviewCount: number;
+  product_categoryId: number;
 }
 
 interface SearchResultSectionProps {
@@ -22,18 +24,20 @@ const ProductCard = ({
   productAddress,
   thumbnail,
   minPrice,
+  reviewAvg,
+  reviewCount,
+  product_categoryId,
 }: ProductCardProps) => {
-  const { avg, length } = useScoreAvg(id);
+  const scoreAvg = reviewAvg.toFixed(1);
   return (
     <Card
-      key={id}
       title={name}
       location={productAddress}
       price={minPrice}
-      score={avg}
-      review={length}
+      score={scoreAvg}
+      review={reviewCount}
       image={thumbnail}
-      link="/"
+      link={`/detail/${product_categoryId}/${id}`}
     />
   );
 };
@@ -48,7 +52,6 @@ const SearchResultSection = ({
   // 필터링 훅 구현
   const { sortedProducts, sortType, setSortType } =
     useFilterProducts(productsWithMinPrice);
-
   return (
     <div>
       <div className="flex items-center justify-between mb-16 font-semibold">
@@ -78,14 +81,17 @@ const SearchResultSection = ({
         </div>
       </div>
       <div className="grid gap-20 mb-3 mobile:grid-cols-1 tablet:grid-cols-4 desktop:grid-cols-5">
-        {sortedProducts.map((item) => (
+        {sortedProducts.map((item: any) => (
           <ProductCard
-            key={item.id}
-            id={item.id}
-            name={item.name}
+            key={item.productId}
+            id={item.productId}
+            name={item.productName}
             productAddress={item.productAddress}
             thumbnail={item.thumbnail}
             minPrice={item.minPrice}
+            reviewAvg={item.reviewAvg}
+            reviewCount={item.reviewCount}
+            product_categoryId={item.product_categoryId}
           />
         ))}
       </div>

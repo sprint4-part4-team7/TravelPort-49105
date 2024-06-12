@@ -4,14 +4,15 @@ import usePaymentWidget from '@/hooks/usePaymentWidget';
 import useProductOptionQuery from '@/hooks/reactQuery/product/useProductionOptionQuery';
 import useTilmeTabaleQuery from '@/hooks/reactQuery/timeTable/useTimeTableQuery';
 import useTilmeTabaleOptionQuery from '@/hooks/reactQuery/timeTable/useTilmeTabaleOptionQuery';
-import { useUserStore } from '@/utils/zustand';
+import { useReservationStore, useUserStore } from '@/utils/zustand';
 import Layout from '@/components/common/layout/Layout';
 import Footer from '@/components/common/Footer';
 import Pay from '@/components/Pay';
 import OrderSummary from '@/components/OrderSummary';
 
 const CheckoutPage = () => {
-  const optionId = 4;
+  const { reservationInfo } = useReservationStore();
+  const optionId = reservationInfo?.productOptionId;
 
   const { data: timeTableOptionData } = useTilmeTabaleOptionQuery(optionId);
   const { data: timeTableData } = useTilmeTabaleQuery(2);
