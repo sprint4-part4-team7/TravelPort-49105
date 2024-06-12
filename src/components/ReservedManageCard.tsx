@@ -7,10 +7,10 @@ import {
   ReserveStatusType,
 } from '@/constants/reserveType';
 import instance from '@/utils/axios';
-
-import { useEffect } from 'react';
+import changeDateForm from '@/utils/changeDateForm';
 import Button from '@/components/common/Button';
 import ReservationCard from './common/reservPagination/ResevationCard';
+import ReservChips from './myPage/ReservChips';
 
 type ReserveProps = {
   id: number;
@@ -46,25 +46,19 @@ const ReservedManageCard = ({
     instance.put(`/reservation/${id}`, { reservationState: '예약 거절' });
   };
 
-  // const handleCancel = () => {
-  //   instance.put(`/reservation/${id}`, { reservationState: '예약 취소' });
-  // };
-
   const handleStandby = () => {
     instance.put(`/reservation/${id}`, { reservationState: '예약 대기' });
   };
-
-  useEffect(() => {}, [reservationState]);
 
   return (
     <ReservationCard
       id={id}
       title={`상품명 : ${productOption.product.name}`}
-      date={`예약일시 : ${reserveDate}`}
+      date={`예약일시 : ${changeDateForm(reserveDate)}`}
       option={`옵션명 : ${productOption.optionName}`}
-      schedule={`일정 : ${timeTable.targetDate} ${timeTable.startTimeOnly} ~ ${timeTable.endTimeOnly}`}
+      schedule={`일정 : ${changeDateForm(timeTable.targetDate)}, ${timeTable.startTimeOnly} ~ ${timeTable.endTimeOnly}`}
       userInfo={`예약자명 : ${user.name} / 전화번호 : ${user.phone}`}
-      upperRight={reservationState}
+      upperRight={<ReservChips status={reservationState} />}
       lowerRight={
         reservationState === '예약 대기' ? (
           <div className="flex flex-col mobile:flex-row gap-8 justify-end">
