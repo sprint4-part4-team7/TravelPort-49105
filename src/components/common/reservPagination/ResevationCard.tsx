@@ -5,6 +5,8 @@ interface ReservationCardProps {
   title: string;
   date: string;
   option?: string;
+  schedule?: string;
+  userInfo?: string;
   upperRight?: ReactNode;
   lowerRight?: ReactNode;
 }
@@ -14,6 +16,8 @@ const ReservationCard = ({
   title,
   date,
   option,
+  schedule,
+  userInfo,
   upperRight,
   lowerRight,
 }: ReservationCardProps) => {
@@ -25,13 +29,17 @@ const ReservationCard = ({
       <div className="flex flex-col justify-between gap-32">
         <div className="flex flex-col gap-12">
           <div className="flex flex-row font-semibold justify-between">
-            <div className="text-20">{title}</div>
-            {upperRight}
+            <div className="text-20 font-semibold">{title}</div>
+            <div className="text-16 font-semibold">{upperRight}</div>
           </div>
-          <div className="text-16">{option}</div>
+          <div className="flex flex-col gap-6">
+            <div className="text-14 text-black-10">{option}</div>
+            <div className="text-14 text-black-10">{schedule}</div>
+          </div>
+          <div className="text-16 font-medium">{userInfo}</div>
         </div>
         <div className="flex flex-row justify-between items-center">
-          <div className="text-16">{date}</div>
+          <div className="text-12 font-medium text-black-6">{date}</div>
           {lowerRight}
         </div>
       </div>
