@@ -13,6 +13,7 @@ import { useParams } from 'react-router-dom';
 import useOutsideClick from '@/hooks/useOutsideClick';
 import instance from '@/utils/axios';
 import useDatePicker from '@/hooks/useDatePicker';
+import useTypeCheckbox from '@/hooks/useTypeCheckbox';
 import SearchBar from '../components/common/SearchBar';
 import Layout from '@/components/common/layout/Layout';
 import HotelCard from '@/components/common/card/HotelCard';
@@ -25,19 +26,31 @@ import Pagination from '@/components/common/Pagination';
 import DatePickerCustom from '@/components/details/DatePickerCustom';
 
 const List = () => {
-  const { categoryId } = useParams();
+  const { categoryId } = useParams(); // categoryId(string 형태)
 
-  const [filteredData, setFilteredData] = useState();
-  const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
-  const [filterTab, setFilterTab] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
-  const [pageNum, setPageNum] = useState(1);
+  const [filterTab, setFilterTab] = useState(''); // 선택된 탭
+  const [isOpen, setIsOpen] = useState(false); // 탭 open 여부
+  const [isSearchBarOpen, setIsSearchBarOpen] = useState(false); // 서치바 open 여부
+  const [pageNum, setPageNum] = useState(1); // 현재 클릭된 페이지 숫자
+  const [filteredData, setFilteredData] = useState(); // 필터링된 데이터
   const [dataByPage, setDataByPage] = useState<any>();
-  const [count, setCount] = useState(0); // 인원수
+
+  // 인원수 필터링
+  const [count, setCount] = useState(0);
+
+  // 가격 필터링
+  const fixedMinPrice = 0;
+  const fixedMaxPrice = 1000000;
+  const [rangeMinValue, setRangeMinValue] = useState(fixedMinPrice);
+  const [rangeMaxValue, setRangeMaxValue] = useState(fixedMaxPrice);
+
+  // 날짜 필터링
+  const { startDate, setStartDate, endDate, setEndDate } = useDatePicker();
+
+  // 종류 필터링
+  const { checkedList, checkHandler } = useTypeCheckbox();
 
   const { optionAll } = useProductAll();
-  const { startDate, setStartDate, endDate, setEndDate } = useDatePicker();
-  console.log(startDate, endDate); // 시작날짜, 종료날짜
 
   const categoryName = Number(categoryId) === 1 ? '숙박' : '체험';
   const filterings = ['날짜', '인원수', '가격대', `${categoryName} 종류`];
@@ -145,7 +158,14 @@ const List = () => {
                   className="absolute w-3/5 top-80 left-0 tablet:w-full mobile:w-full"
                   ref={outsideRef}
                 >
-                  <PriceRange />
+                  <PriceRange
+                    rangeMinValue={rangeMinValue}
+                    setRangeMinValue={setRangeMinValue}
+                    rangeMaxValue={rangeMaxValue}
+                    setRangeMaxValue={setRangeMaxValue}
+                    fixedMaxPrice={fixedMaxPrice}
+                    fixedMinPrice={fixedMinPrice}
+                  />
                 </div>
               )}
               {filterTab === `${categoryName} 종류` && isOpen && (
@@ -156,6 +176,8 @@ const List = () => {
                   <ProductType
                     category={Number(categoryId)}
                     categoryName={categoryName}
+                    checkedList={checkedList}
+                    checkHandler={checkHandler}
                   />
                 </div>
               )}

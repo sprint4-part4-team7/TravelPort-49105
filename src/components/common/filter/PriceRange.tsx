@@ -1,13 +1,25 @@
-import { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent } from 'react';
 import InputBox from '../InputBox';
 import '@/styles/PriceRange.css';
 
-const PriceRange = () => {
-  const fixedMinPrice = 0;
-  const fixedMaxPrice = 1000000;
+type PriceRangeProps = {
+  rangeMinValue: number;
+  rangeMaxValue: number;
+  setRangeMinValue: React.Dispatch<React.SetStateAction<number>>;
+  setRangeMaxValue: React.Dispatch<React.SetStateAction<number>>;
+  fixedMinPrice: number;
+  fixedMaxPrice: number;
+};
+
+const PriceRange = ({
+  rangeMinValue,
+  rangeMaxValue,
+  setRangeMinValue,
+  setRangeMaxValue,
+  fixedMinPrice,
+  fixedMaxPrice,
+}: PriceRangeProps) => {
   const priceGap = 1000;
-  const [rangeMinValue, setRangeMinValue] = useState(fixedMinPrice);
-  const [rangeMaxValue, setRangeMaxValue] = useState(fixedMaxPrice);
 
   const HandlePriceRangeMinValue = (e: ChangeEvent<HTMLInputElement>) => {
     const value = Math.min(Number(e.target.value), rangeMaxValue - priceGap);
