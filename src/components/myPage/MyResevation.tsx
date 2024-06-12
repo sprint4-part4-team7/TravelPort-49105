@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-// import info from '@/mocks/resevationInfo.json';
 import { getMyReservation } from '@/apis/myReservation';
 import { useUserStore } from '@/utils/zustand';
 import { Reservation } from '@/constants/types';
@@ -10,6 +9,8 @@ import ReservChips from '@/components/myPage/ReservChips';
 import ReservButton from '@/components/myPage/ReservButton';
 import ReservButtonOutlined from './ReservButtonOutlined';
 import Modal from '../common/Modal';
+import CancelMessage from './CancelMessage';
+import ReservChipsExpired from './ReservChipsExpired';
 
 const MyResevation = ({ isExpired = false }: { isExpired?: boolean }) => {
   const [pageNum, setPageNum] = useState(1);
@@ -50,12 +51,14 @@ const MyResevation = ({ isExpired = false }: { isExpired?: boolean }) => {
               option={reservation.productOption?.optionName}
               title={reservation.productOption.product.name}
               upperRight={
-                isExpired ? null : (
+                isExpired ? (
+                  <ReservChipsExpired status={reservation.reservationState} />
+                ) : (
                   <ReservChips status={reservation.reservationState} />
                 )
               }
               lowerRight={
-                reservation.reservationState === 'rejected' ? (
+                reservation.reservationState === '예약 거절' ? (
                   <ReservButton
                     onClick={() => {
                       openModal();
@@ -64,7 +67,7 @@ const MyResevation = ({ isExpired = false }: { isExpired?: boolean }) => {
                     status={reservation.reservationState}
                   />
                 ) : (
-                  <ReservButtonOutlined />
+                  <ReservButtonOutlined status="예약 취소" />
                 )
               }
             />
@@ -76,7 +79,7 @@ const MyResevation = ({ isExpired = false }: { isExpired?: boolean }) => {
         </div>
       )}
       <Modal isOpen={isModalOpen} closeModal={closeModal}>
-        <div>{cancelMsg}</div>
+        <CancelMessage cancelMsg={cancelMsg} />
       </Modal>
     </div>
   );

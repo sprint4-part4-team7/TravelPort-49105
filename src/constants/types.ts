@@ -97,7 +97,7 @@ export interface Reservation {
   productOptionId: number;
   paymentId: number;
   timeTableId: number;
-  reservationState: string;
+  reservationState: ReservStatusType;
   reservationPrice?: string;
   ticketCount?: number;
   cancelMsg?: string;
@@ -119,3 +119,10 @@ export interface Reservation {
     endTimeOnly: string;
   };
 }
+
+export type ReservStatusType =
+  | '예약 대기'
+  | '예약 완료'
+  | '예약 취소'
+  | '예약 거절'
+  | string;
