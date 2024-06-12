@@ -9,9 +9,12 @@ const useSearchData = (cardLists: CardListsType[]) => {
     setSearch(e.target.value);
 
   const filteredTitles = cardLists.filter((filtered) => {
+    const productName = filtered.product.name || '';
+    const productAddress = filtered.product.productAddress || '';
+
     return (
-      filtered.product.name.includes(search.trim()) ||
-      filtered.product.productAddress.includes(search.trim())
+      productName.includes(search.trim()) ||
+      productAddress.includes(search.trim())
     );
   });
 

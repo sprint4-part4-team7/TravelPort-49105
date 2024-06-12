@@ -1,6 +1,6 @@
 import calendar from '@/assets/icons/calendar.svg';
 import { DetailData } from '@/constants/types';
-import getDate from '@/utils/getDate';
+import { getDate } from '@/utils/getDate';
 
 interface SalesPeriodProps {
   product?: DetailData;

@@ -1,9 +1,11 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import { useForm } from 'react-hook-form';
 import { getDefaultOption } from '@/apis/review';
 import React, { useEffect, useState } from 'react';
 import useModal from '@/hooks/useModal';
+import { useNavigate } from 'react-router-dom';
 import TextBox from '@/components/common/TextBox';
 import ReviewStar from '@/components/review/ReviewStar';
 import Button from '@/components/common/Button';
@@ -23,14 +25,16 @@ const ReviewRegister = () => {
     defaultValues: {
       reviewContent: '',
       score: 0,
-      reviewImages: [] as any,
+      reviewImages: [] as string[],
     },
   });
 
   const [option, setOption] = useState('');
   const [product, setProduct] = useState('');
+  const [postImages, setPostImages] = useState<(null | File)[]>([]);
 
   const { isModalOpen, openModal, closeModal } = useModal();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDefaultOption = async (optionId: number) => {
@@ -38,16 +42,20 @@ const ReviewRegister = () => {
       setOption(optionName);
       setProduct(productName);
     };
-    fetchDefaultOption(1);
-  }, [option, product]);
+    fetchDefaultOption(1); // 추후 옵션아이디로 변경 예정
+  }, []);
 
   const onSubmit = async (data: any) => {
+    // post 정상적으로 작동됨. 추후 userId, optionId로 변경 예정
     // try {
     //   await postReview(1, 1, data); // 임시
     // } catch (error) {
     //   console.log(error);
     // }
+    const filteredPostImages = postImages.filter((image) => image !== null);
+    data.reviewImages = filteredPostImages;
     console.log({ ...data });
+    closeModal();
   };
 
   const handleScoreChange = React.useCallback((selectedScore: number) => {
@@ -67,12 +75,26 @@ const ReviewRegister = () => {
     if (e.target.value) clearErrors('reviewContent');
   };
 
-  const handleImageChange = (selectedImages: string[]) => {
+  const handleImageChange = (
+    selectedImages: string[],
+    postImageArr: (null | File)[],
+  ) => {
     setValue('reviewImages', selectedImages);
+    setPostImages(postImageArr);
+  };
+
+  const handleFormSubmit = () => {
+    // 입력 검증이 성공하면 모달창 열기
+    if (!errors.score && !errors.reviewContent) {
+      openModal();
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="mt-40 max-w-784 mx-auto">
+    <form
+      onSubmit={handleSubmit(handleFormSubmit)}
+      className="mt-40 max-w-784 mx-auto"
+    >
       <h1 className="py-20 text-24 font-bold">리뷰 작성하기</h1>
       <hr />
       <div className="my-20 flex flex-col gap-20">
@@ -88,9 +110,7 @@ const ReviewRegister = () => {
         <h1 className="mb-20">STEP1 별점을 입력해주세요</h1>
         <ReviewStar onChange={handleScoreChange} />
         {errors.score && (
-          <p className="text-[#FF4D4F] text-[1.2rem] mt-[0.4rem]">
-            {errors.score.message}
-          </p>
+          <p className="text-[#FF4D4F] text-12 mt-4">{errors.score.message}</p>
         )}
       </div>
       <div className="mb-40">
@@ -114,17 +134,19 @@ const ReviewRegister = () => {
       </h1>
       <ImageUpload onChange={handleImageChange} />
       <div className="mt-60">
-        <Button
-          onClick={() => {
-            handleSubmit(onSubmit);
-            openModal();
-          }}
-        >
-          등록하기
-        </Button>
+        <Button buttonType="submit">등록하기</Button>
       </div>
       <Modal isOpen={isModalOpen} closeModal={closeModal}>
         <div className="p-16">리뷰를 등록하시겠습니까?</div>
+        <Button
+          onClick={() => {
+            handleSubmit(onSubmit)();
+            closeModal();
+            navigate('/');
+          }}
+        >
+          확인
+        </Button>
       </Modal>
     </form>
   );

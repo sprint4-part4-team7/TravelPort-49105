@@ -22,6 +22,8 @@
     border: 2px solid #356eff;
     background-color: white;
     -webkit-appearance: none;
+    position: relative;
+    z-index: 3;
   }
 
   pointer-events: none;
@@ -48,6 +50,7 @@
     border: 2px solid #356eff;
     background-color: white;
     -webkit-appearance: none;
-    z-index: 99;
+    position: relative;
+    z-index: 3;
   }
 }
