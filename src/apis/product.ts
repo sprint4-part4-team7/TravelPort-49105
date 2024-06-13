@@ -1,30 +1,80 @@
-/* eslint-disable consistent-return */
-/* eslint-disable prettier/prettier */
-import { CardListsType, DetailData } from '@/constants/types';
+// 상품 전체의 api
+import { ProductType } from '@/constants/types';
 import instance from '@/utils/axios';
 
-export const getProduct = async (productId: number): Promise<DetailData> => {
-  try {
-    const response = await instance.get(`/product/${productId}`);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+interface ProductProps {
+  name: string;
+  productType: string[];
+  productDesc: string;
+  productSiteLat: number;
+  productSiteLng: number;
+  productAddress: string;
+  buildingName: string;
+  thumbnail: string;
+  productImages: string[];
+  startDate: string;
+  endDate: string;
+  closedDay: string[];
+}
+
+const getProductAll = () => {
+  return instance({
+    url: '/product/all',
+    method: 'GET',
+  });
 };
 
-export const getProductOption = (productOptionId: number) => {
-  return instance.get(`/productOption/${productOptionId}`);
+const getProductById = (productId: number): Promise<ProductType> => {
+  return instance({
+    url: `/product/${productId}`,
+    method: 'GET',
+  });
 };
 
-export const getProductOptions = async (
+const putProduct = (
   productId: number,
-): Promise<CardListsType[]> => {
-  try {
-    const response = await instance.get(`/productOption/product/${productId}`);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+  userId: number,
+  categoryId: number,
+  productInfo: ProductProps,
+) => {
+  return instance({
+    url: `/product/${productId}`,
+    method: 'PUT',
+    data: {
+      userId,
+      categoryId,
+      ...productInfo,
+    },
+  });
+};
+
+const deleteProductById = (productId: number) => {
+  return instance({
+    url: `/product/${productId}`,
+    method: 'DELETE',
+  });
+};
+
+const postProduct = (
+  userId: number,
+  categoryId: number,
+  productInfo: ProductProps,
+) => {
+  return instance({
+    url: `/product`,
+    method: 'POST',
+    data: {
+      userId,
+      categoryId,
+      ...productInfo,
+    },
+  });
+};
+
+export default {
+  getProductAll,
+  getProductById,
+  putProduct,
+  deleteProductById,
+  postProduct,
 };
