@@ -42,7 +42,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const navagate = useNavigate();
   const { mutate: logout } = useLogoutMutation();
-  const { userInfo } = useUserStore();
+  const { userInfo, setUserInfo } = useUserStore();
 
   const defaultImages = [
     defaul1Img1,
@@ -79,6 +79,13 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
   });
 
   const clickLogoutButton = () => {
+    setUserInfo({
+      id: 0,
+      name: '',
+      email: '',
+      profileImage: '',
+      isPartner: 0,
+    });
     setIsLoggedIn(false);
     removeCookie('accessToken');
     removeCookie('refreshToken');
