@@ -29,7 +29,7 @@ const useProductOptionPostMutation = () => {
     },
     onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ['OptionPostMutationProps'],
+        queryKey: ['OptionPostMutation'],
       });
     },
   });
