@@ -2,7 +2,11 @@ import Google from '@/assets/images/google_login.png';
 import Kakao from '@/assets/images/kakao_login.svg';
 import Naver from '@/assets/images/naver_login.png';
 import { Link, useNavigate } from 'react-router-dom';
-import useOAuthLogin from '@/hooks/useOAuthLogin';
+import {
+  useGoogleLogin,
+  useKakaoLogin,
+  useNaverLogin,
+} from '@/hooks/useOAuthLogin';
 import { useForm } from 'react-hook-form';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
 import Logo from '@/assets/icons/travelPortLogo.svg';
@@ -24,9 +28,9 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginForm>({ mode: 'onChange' });
-  const googleLogin = useOAuthLogin('google');
-  const kakaoLogin = useOAuthLogin('kakao');
-  const naverLogin = useOAuthLogin('naver');
+  const googleLogin = useGoogleLogin();
+  const kakaoLogin = useKakaoLogin();
+  const naverLogin = useNaverLogin();
   const navigate = useNavigate();
   const setUserInfo = useUserStore((state) => state.setUserInfo);
   const { mutate } = useLoginMutation();
