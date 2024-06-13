@@ -3,9 +3,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable prefer-const */
 /* eslint-disable no-undef */
-// import useSearchData from '@/hooks/useSearchData';
 import { useRef, useState, useEffect } from 'react';
-import uniqueProduct from '@/utils/uniqueProduct';
 import arrowDown from '@/assets/icons/arrowDown.svg';
 import search from '@/assets/icons/search.svg';
 import { useParams } from 'react-router-dom';
@@ -13,7 +11,6 @@ import useOutsideClick from '@/hooks/useOutsideClick';
 import instance from '@/utils/axios';
 import useDatePicker from '@/hooks/useDatePicker';
 import useTypeCheckbox from '@/hooks/useTypeCheckbox';
-import useProductOptionAll from '@/hooks/reactQuery/productOption/useProductOptionAllQuery';
 import SearchBar from '../components/common/SearchBar';
 import Layout from '@/components/common/layout/Layout';
 import HotelCard from '@/components/common/card/HotelCard';
@@ -27,13 +24,12 @@ import DatePickerCustom from '@/components/details/DatePickerCustom';
 
 const List = () => {
   const { categoryId } = useParams(); // categoryId(string 형태)
-
   const [filterTab, setFilterTab] = useState(''); // 선택된 탭
   const [isOpen, setIsOpen] = useState(false); // 탭 open 여부
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false); // 서치바 open 여부
   const [pageNum, setPageNum] = useState(1); // 현재 클릭된 페이지 숫자
   const [filteredData, setFilteredData] = useState(); // 필터링된 데이터
-  const [dataByPage, setDataByPage] = useState<any>();
+  const [dataByPage, setDataByPage] = useState<any>(); // 페이지 별 데이터
 
   // 인원수 필터링
   const [count, setCount] = useState(0);
@@ -59,24 +55,13 @@ const List = () => {
     checkedList,
   );
 
-  const { optionAll } = useProductOptionAll();
-
   const categoryName = Number(categoryId) === 1 ? '숙박' : '체험';
   const filterings = ['날짜', '인원수', '가격대', `${categoryName} 종류`];
   const filterSearch = window.innerWidth > 767 ? '어디로 떠날까요?' : '검색';
   const LIMIT = categoryId === '1' ? 3 : 6;
   const offset = pageNum - 1;
 
-  // productId 같은 경우 하나만 나오도록
-  const uniqueOptionAll = uniqueProduct(optionAll);
-
-  // 특정 카테고리의 전체 productOption 데이터 중 unique
-  const allByCategory =
-    uniqueOptionAll &&
-    uniqueOptionAll.filter(
-      (item: any) => item.product.categoryId === Number(categoryId),
-    );
-
+  // 추후 categoryId 쿼리스트링에 추가
   useEffect(() => {
     const fetchByOffset = async (offsetNum: number) => {
       const response = await instance.get(
@@ -85,9 +70,9 @@ const List = () => {
       setDataByPage(response.data);
     };
     fetchByOffset(offset);
-  }, [offset]);
+  }, [offset, categoryId]);
 
-  const cards = filteredData || allByCategory; //! !!수정하기
+  const cards = filteredData || dataByPage; //! !!수정하기
 
   const outsideRef = useRef<HTMLDivElement>(null);
   useOutsideClick(outsideRef, () => {
@@ -220,7 +205,6 @@ const List = () => {
           <div className={`${listClass}`}>
             {dataByPage &&
               dataByPage.map((item: any) => {
-                console.log(item);
                 return categoryId === '1' ? (
                   <HotelCard
                     key={item.productId}
@@ -230,7 +214,7 @@ const List = () => {
                     score={item.reviewAvg}
                     review={item.reviewCount}
                     image={item.thumbnail}
-                    link={`/details/${item.productId}`}
+                    link={`/details/${Number(categoryId)}/${item.productId}`}
                   />
                 ) : (
                   <Card
@@ -241,7 +225,7 @@ const List = () => {
                     score={item.reviewAvg}
                     review={item.reviewCount}
                     image={item.thumbnail}
-                    link={`/details/${item.productId}`}
+                    link={`/details/${Number(categoryId)}/${item.productId}`}
                   />
                 );
               })}
@@ -251,7 +235,7 @@ const List = () => {
           <Pagination
             pageNum={pageNum}
             setPageNum={setPageNum}
-            allCardNum={cards.length}
+            allCardNum={cards?.length ? cards.length : 0}
             divNum={categoryId === '1' ? 3 : 6}
           />
         </div>
