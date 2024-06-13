@@ -64,7 +64,7 @@ const UnLoginUserHeaderBar = () => {
               outlined
               buttonStyle="text-14 p-8 font-semibold"
               onClick={() => {
-                navigate('/partner');
+                navigate('/signup/partner');
                 setIsMenuOpen(false);
               }}
             >
