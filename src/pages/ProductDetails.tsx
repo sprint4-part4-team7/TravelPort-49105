@@ -14,6 +14,7 @@ import Reservation from '@/components/details/Reservation';
 import DetailsCarousel from '@/components/details/DetailsCarousel';
 import Review from '@/components/Review';
 import ReviewAverage from '@/components/review/ReviewAverage';
+import DetailInfo from '@/components/details/DetailInfo';
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -80,6 +81,7 @@ const ProductDetails = () => {
         {activeTab === 'reservation' && (
           <Reservation product={product} options={options} />
         )}
+        {activeTab === 'details' && <DetailInfo options={options} />}
         {activeTab === 'review' && (
           <div className="mt-60">
             <ReviewAverage productId={productIdNum} />

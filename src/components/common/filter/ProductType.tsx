@@ -1,29 +1,21 @@
 /* eslint-disable react/no-array-index-key */
 
+import React from 'react';
+import { ActivityTypes, hotelTypes } from './CategoryTypes';
+
 type ProductTypeProps = {
   category: number;
   categoryName: string;
+  checkedList: string[];
+  checkHandler: (e: React.ChangeEvent<HTMLInputElement>, value: string) => void;
 };
 
-const ProductType = ({ category, categoryName }: ProductTypeProps) => {
-  const hotelTypes = [
-    '호텔',
-    '게스트하우스',
-    '민박',
-    '캠핑장/야영장',
-    '풀빌라',
-    '펜션',
-    '기타',
-  ];
-  const ActivityTypes = [
-    '테마파크',
-    '수상 액티비티',
-    '레저스포츠',
-    '전시/공연',
-    '체험/클래스',
-    '기타',
-  ];
-
+const ProductType = ({
+  category,
+  categoryName,
+  checkedList,
+  checkHandler,
+}: ProductTypeProps) => {
   const categoryTypes = category === 1 ? hotelTypes : ActivityTypes;
 
   return (
@@ -33,7 +25,12 @@ const ProductType = ({ category, categoryName }: ProductTypeProps) => {
         {categoryTypes.map((type, idx) => {
           return (
             <div key={idx} className="flex gap-8 px-8 py-4 text-15">
-              <input type="checkbox" id={type} />
+              <input
+                type="checkbox"
+                id={type}
+                checked={checkedList.includes(type)}
+                onChange={(e) => checkHandler(e, type)}
+              />
               <label htmlFor={type}>{type}</label>
             </div>
           );

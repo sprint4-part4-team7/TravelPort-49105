@@ -9,33 +9,57 @@ import useProductAll from '@/hooks/reactQuery/product/useProductAll';
 import uniqueProduct from '@/utils/uniqueProduct';
 import arrowDown from '@/assets/icons/arrowDown.svg';
 import search from '@/assets/icons/search.svg';
-import useCalendar from '@/hooks/useCalendar';
 import { useParams } from 'react-router-dom';
 import useOutsideClick from '@/hooks/useOutsideClick';
 import instance from '@/utils/axios';
+import useDatePicker from '@/hooks/useDatePicker';
+import useTypeCheckbox from '@/hooks/useTypeCheckbox';
 import SearchBar from '../components/common/SearchBar';
 import Layout from '@/components/common/layout/Layout';
 import HotelCard from '@/components/common/card/HotelCard';
-import CalendarCustom from '@/components/common/CalendarCustom';
 import HeadCount from '@/components/common/filter/HeadCount';
 import PriceRange from '@/components/common/filter/PriceRange';
 import ProductType from '@/components/common/filter/ProductType';
 import Footer from '@/components/common/Footer';
 import Card from '@/components/common/card/Card';
 import Pagination from '@/components/common/Pagination';
+import DatePickerCustom from '@/components/details/DatePickerCustom';
 
 const List = () => {
-  const { categoryId } = useParams();
+  const { categoryId } = useParams(); // categoryId(string 형태)
 
-  const [filteredData, setFilteredData] = useState();
-  const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
-  const [filterTab, setFilterTab] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
-  const [pageNum, setPageNum] = useState(1);
+  const [filterTab, setFilterTab] = useState(''); // 선택된 탭
+  const [isOpen, setIsOpen] = useState(false); // 탭 open 여부
+  const [isSearchBarOpen, setIsSearchBarOpen] = useState(false); // 서치바 open 여부
+  const [pageNum, setPageNum] = useState(1); // 현재 클릭된 페이지 숫자
+  const [filteredData, setFilteredData] = useState(); // 필터링된 데이터
   const [dataByPage, setDataByPage] = useState<any>();
 
+  // 인원수 필터링
+  const [count, setCount] = useState(0);
+
+  // 가격 필터링
+  const fixedMinPrice = 0;
+  const fixedMaxPrice = 1000000;
+  const [rangeMinValue, setRangeMinValue] = useState(fixedMinPrice);
+  const [rangeMaxValue, setRangeMaxValue] = useState(fixedMaxPrice);
+
+  // 날짜 필터링
+  const { startDate, setStartDate, endDate, setEndDate } = useDatePicker();
+
+  // 종류 필터링
+  const { checkedList, checkHandler } = useTypeCheckbox();
+
+  console.log(
+    count,
+    rangeMinValue,
+    rangeMaxValue,
+    startDate,
+    endDate,
+    checkedList,
+  );
+
   const { optionAll } = useProductAll();
-  const { selectedDate, setSelectedDate } = useCalendar();
 
   const categoryName = Number(categoryId) === 1 ? '숙박' : '체험';
   const filterings = ['날짜', '인원수', '가격대', `${categoryName} 종류`];
@@ -121,10 +145,12 @@ const List = () => {
                   className="absolute top-80 left-20 right-20 max-w-500"
                   ref={outsideRef}
                 >
-                  <CalendarCustom
-                    selectedDate={selectedDate}
-                    setSelectedDate={setSelectedDate}
-                    holiday={[]}
+                  <DatePickerCustom
+                    startDate={startDate}
+                    setStartDate={setStartDate}
+                    endDate={endDate}
+                    setEndDate={setEndDate}
+                    categoryId={Number(categoryId)}
                   />
                 </div>
               )}
@@ -133,7 +159,7 @@ const List = () => {
                   className="absolute w-2/5 top-80 left-0 mobile:w-full"
                   ref={outsideRef}
                 >
-                  <HeadCount />
+                  <HeadCount count={count} setCount={setCount} />
                 </div>
               )}
               {filterTab === '가격대' && isOpen && (
@@ -141,7 +167,14 @@ const List = () => {
                   className="absolute w-3/5 top-80 left-0 tablet:w-full mobile:w-full"
                   ref={outsideRef}
                 >
-                  <PriceRange />
+                  <PriceRange
+                    rangeMinValue={rangeMinValue}
+                    setRangeMinValue={setRangeMinValue}
+                    rangeMaxValue={rangeMaxValue}
+                    setRangeMaxValue={setRangeMaxValue}
+                    fixedMaxPrice={fixedMaxPrice}
+                    fixedMinPrice={fixedMinPrice}
+                  />
                 </div>
               )}
               {filterTab === `${categoryName} 종류` && isOpen && (
@@ -152,6 +185,8 @@ const List = () => {
                   <ProductType
                     category={Number(categoryId)}
                     categoryName={categoryName}
+                    checkedList={checkedList}
+                    checkHandler={checkHandler}
                   />
                 </div>
               )}

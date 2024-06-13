@@ -2,10 +2,14 @@ import plusActive from '@/assets/icons/plusActive.svg';
 import plusInactive from '@/assets/icons/plusInactive.svg';
 import minusInactive from '@/assets/icons/minusInactive.svg';
 import minusActive from '@/assets/icons/minusActive.svg';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-const HeadCount = () => {
-  const [count, setCount] = useState(0);
+type HeadCountProps = {
+  count: number;
+  setCount: React.Dispatch<React.SetStateAction<number>>;
+};
+
+const HeadCount = ({ count, setCount }: HeadCountProps) => {
   const [isMinusHovered, setIsMinusHovered] = useState(false);
   const [isPlusHovered, setIsPlusHovered] = useState(false);
 

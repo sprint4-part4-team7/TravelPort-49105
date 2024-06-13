@@ -1,3 +1,24 @@
+export type ProductType = {
+  id: number;
+  partnerId: null | number;
+  categoryId: number;
+  name: string;
+  productType: string[];
+  productDesc: string;
+  minPrice: number;
+  productSiteLat: number;
+  productSiteLng: number;
+  productAddress: string;
+  buildingName: string;
+  thumbnail: string;
+  productImages: string[];
+  startDate: string;
+  endDate: string;
+  closedDay: number[];
+  isDelete: boolean;
+  createdAt: string;
+};
+
 export type DetailData = {
   id: number;
   categoryId: number;
@@ -25,8 +46,10 @@ export type OptionData = {
 };
 
 export type ReviewInfoType = {
+  score: number;
+  reviewImages: string[];
   reviewContent: string;
-  reviewScore: number;
+  partnerAnswer: string;
 };
 
 export type GetReviewType = {
@@ -56,6 +79,8 @@ export type CardListsType = {
   optionPrice: number;
   optionName: string;
   userCount: number;
+  optionDesc: string;
+  optionImages: string[];
   product: {
     id: string;
     buildingName: string;

@@ -2,85 +2,91 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable consistent-return */
 import instance from '@/utils/axios';
-import {
-  DefaultOptionType,
-  GetReviewType,
-  ReviewData,
-  ReviewInfoType,
-} from '@/constants/types';
-import { getProduct } from './product';
+import { GetReviewType, ReviewData, ReviewInfoType } from '@/constants/types';
 
-export const postReview = async (
-  userId: number,
-  productOptionId: number,
-  reviewInfo: ReviewInfoType,
-) => {
-  try {
-    const response = await instance.post('/review', {
-      userId,
-      productOptionId,
-      ...reviewInfo,
-    });
-    console.log(response);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
-export const getReviewInfo = async (
-  reviewId: number,
-): Promise<GetReviewType> => {
-  try {
-    const response = await instance.get(`/review/${reviewId}`);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
-export const getProductReview = async (
-  productId: number,
-): Promise<ReviewData[]> => {
-  try {
-    const response = await instance.get(`/review/product/${productId}`);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
-export const deleteReviewInfo = async (reviewId: number) => {
-  try {
-    const response = await instance.delete(`/review/${reviewId}`);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
-export const getDefaultOption = async (
-  optionId: number,
-): Promise<DefaultOptionType> => {
-  try {
-    const response = await instance.get(`/productOption/${optionId}`);
-    const { optionName } = response.data;
-    const { productId } = response.data;
-    const productName = (await getProduct(productId)).name;
-    return { optionName, productName };
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
-export const getReviewAll = () => {
+const getReviewAll = () => {
   return instance({
     url: `/review/all`,
     method: 'GET',
   });
+};
+
+const getReviewInfo = async (reviewId: number): Promise<GetReviewType> => {
+  return instance({
+    url: `/review/${reviewId}`,
+    method: 'GET',
+  });
+};
+
+const putReview = async (
+  userId: number,
+  productOptionId: number,
+  reviewId: number,
+  reviewInfo: ReviewInfoType,
+) => {
+  return instance({
+    url: `/review/${reviewId}`,
+    method: 'POST',
+    data: {
+      userId,
+      productOptionId,
+      ...reviewInfo,
+    },
+  });
+};
+
+const deleteReview = async (reviewId: number) => {
+  return instance({
+    url: `/review/${reviewId}`,
+    method: 'DELETE',
+  });
+};
+
+const getProductReview = async (productId: number): Promise<ReviewData[]> => {
+  return instance({
+    url: `/review/product/${productId}`,
+    method: 'GET',
+  });
+};
+
+const postReview = async (
+  userId: number,
+  productOptionId: number,
+  productId: number,
+  reviewInfo: ReviewInfoType,
+) => {
+  return instance({
+    url: '/review',
+    method: 'POST',
+    data: {
+      userId,
+      productOptionId,
+      productId,
+      ...reviewInfo,
+    },
+  });
+};
+
+// const getDefaultOption = async (
+//   optionId: number,
+// ): Promise<DefaultOptionType> => {
+//   try {
+//     const response = await instance.get(`/productOption/${optionId}`);
+//     const { optionName } = response.data;
+//     const { productId } = response.data;
+//     const productName = (await product.getProductById(productId)).name;
+//     return { optionName, productName };
+//   } catch (error) {
+//     console.log(error);
+//     throw error;
+//   }
+// };
+
+export default {
+  getReviewAll,
+  getReviewInfo,
+  putReview,
+  deleteReview,
+  getProductReview,
+  postReview,
 };
