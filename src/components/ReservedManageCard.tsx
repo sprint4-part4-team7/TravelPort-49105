@@ -54,9 +54,9 @@ const ReservedManageCard = ({
   return (
     <ReservationCard
       id={id}
-      title={`상품명 : ${productOption.product.name}`}
+      title={productOption.product.name}
       date={`예약일시 : ${changeDateForm(reserveDate)}`}
-      option={`옵션명 : ${productOption.optionName}`}
+      option={productOption.optionName}
       schedule={`일정 : ${changeDateForm(timeTable.targetDate)}, ${timeTable.startTimeOnly} ~ ${timeTable.endTimeOnly}`}
       userInfo={`예약자명 : ${user.name} / 전화번호 : ${user.phone}`}
       upperRight={<ReservChips status={reservationState} />}
