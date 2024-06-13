@@ -22,4 +22,6 @@ const useOAuthLogin = (provider: Provider) => {
   return loginHandler;
 };
 
-export default useOAuthLogin;
+export const useGoogleLogin = () => useOAuthLogin('google');
+export const useKakaoLogin = () => useOAuthLogin('kakao');
+export const useNaverLogin = () => useOAuthLogin('naver');

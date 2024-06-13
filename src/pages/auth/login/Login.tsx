@@ -1,15 +1,17 @@
 import Google from '@/assets/images/google_login.png';
 import Kakao from '@/assets/images/kakao_login.svg';
 import Naver from '@/assets/images/naver_login.png';
-import { Link, useNavigate } from 'react-router-dom';
-import useOAuthLogin from '@/hooks/useOAuthLogin';
+import { Link } from 'react-router-dom';
+import {
+  useGoogleLogin,
+  useKakaoLogin,
+  useNaverLogin,
+} from '@/hooks/useOAuthLogin';
 import { useForm } from 'react-hook-form';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
 import Logo from '@/assets/icons/travelPortLogo.svg';
-import { postLogin } from '@/apis/auth';
-import { getCookie } from '@/utils/cookie';
-import jwtDecode from '@/utils/jwtDecode';
-import { useUserStore } from '@/utils/zustand';
+
+import useLoginMutation from '@/hooks/reactQuery/auth/useLoginMutation';
 import InputBox from '@/components/common/InputBox';
 import Button from '@/components/common/Button';
 
@@ -24,21 +26,13 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginForm>({ mode: 'onChange' });
-  const googleLogin = useOAuthLogin('google');
-  const kakaoLogin = useOAuthLogin('kakao');
-  const naverLogin = useOAuthLogin('naver');
-  const navigate = useNavigate();
-  const setUserInfo = useUserStore((state) => state.setUserInfo);
+  const googleLogin = useGoogleLogin();
+  const kakaoLogin = useKakaoLogin();
+  const naverLogin = useNaverLogin();
+  const { mutate } = useLoginMutation();
 
-  const handleLoginForm = async (data: LoginForm) => {
-    try {
-      await postLogin(data);
-      const accessToken = getCookie('accessToken');
-      if (accessToken) setUserInfo({ ...jwtDecode(accessToken) });
-      navigate('/', { replace: true });
-    } catch (error: any) {
-      alert(error.message);
-    }
+  const handleLoginForm = (data: LoginForm) => {
+    mutate(data);
   };
 
   return (

@@ -3,10 +3,11 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
 import Logo from '@/assets/icons/travelPortLogo.svg';
-import { postUserSignup, postVerifyEmail } from '@/apis/auth';
 import { getCookie } from '@/utils/cookie';
 import jwtDecode from '@/utils/jwtDecode';
+import useVerifyEmail from '@/hooks/reactQuery/auth/useVerifyEmail';
 import { useUserStore } from '@/utils/zustand';
+import useSignupMutation from '@/hooks/reactQuery/auth/useSignupMutation';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 
@@ -19,6 +20,8 @@ interface UserSignupData {
 interface UserSignupForm extends UserSignupData {
   passwordCheck: string;
 }
+
+type UserType = 'USER' | 'PARTNER';
 
 const UserSignup = () => {
   const {
@@ -35,6 +38,9 @@ const UserSignup = () => {
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [emailMessage, setEmailMessage] = useState('');
   const setUserInfo = useUserStore((state) => state.setUserInfo);
+  const { mutate: verifyEmail } = useVerifyEmail();
+  const { mutate: signUp } = useSignupMutation();
+
   const checkBtnBasic = 'absolute px-8 py-4 text-13 rounded top-44 right-12';
 
   let checkBtnClass = `${checkBtnBasic}`;
@@ -50,27 +56,38 @@ const UserSignup = () => {
 
   const handleCheckEmail = async () => {
     const email = watch('email');
-    try {
-      const data = await postVerifyEmail(email);
-      setIsEmailValid(data.result);
-      setEmailMessage(data.message);
-    } catch (e: any) {
-      setIsEmailValid(false);
-      setEmailMessage(e.message);
-    }
+    verifyEmail(email, {
+      onSuccess: (data) => {
+        setIsEmailValid(data.result);
+        setEmailMessage(data.message);
+      },
+      onError: (error: any) => {
+        setIsEmailValid(false);
+        if (error.response?.status === 400) {
+          setEmailMessage('이미 가입된 회원입니다.');
+        } else {
+          setEmailMessage(error.message);
+        }
+      },
+    });
   };
 
   const handleSignupForm = async (data: UserSignupData) => {
-    try {
-      await postUserSignup(data);
-      if (isEmailValid) {
-        const accessToken = getCookie('accessToken');
-        if (accessToken) setUserInfo({ ...jwtDecode(accessToken) });
-        navigate('/login', { replace: true });
-      }
-    } catch (e: any) {
-      alert(e.message);
-    }
+    const { nickname: name, email, password } = data;
+    const loginType: UserType = 'USER';
+    const signupData = { name, email, password, loginType };
+    signUp(signupData, {
+      onSuccess: () => {
+        if (isEmailValid) {
+          const accessToken = getCookie('accessToken');
+          if (accessToken) setUserInfo({ ...jwtDecode(accessToken) });
+          navigate('/login', { replace: true });
+        }
+      },
+      onError: (error: any) => {
+        alert(error.message);
+      },
+    });
   };
 
   return (

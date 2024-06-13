@@ -3,10 +3,11 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
 import Logo from '@/assets/icons/travelPortLogo.svg';
-import { postPartnerSignup, postVerifyEmail } from '@/apis/auth';
 import { useUserStore } from '@/utils/zustand';
 import { getCookie } from '@/utils/cookie';
 import jwtDecode from '@/utils/jwtDecode';
+import useVerifyEmail from '@/hooks/reactQuery/auth/useVerifyEmail';
+import useSignupMutation from '@/hooks/reactQuery/auth/useSignupMutation';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 
@@ -19,6 +20,8 @@ interface PartnerSignupData {
 interface PartnerSignupForm extends PartnerSignupData {
   passwordCheck: string;
 }
+
+type UserType = 'USER' | 'PARTNER';
 
 const PartnerSignup = () => {
   const {
@@ -35,6 +38,8 @@ const PartnerSignup = () => {
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [emailMessage, setEmailMessage] = useState('');
   const setUserInfo = useUserStore((state) => state.setUserInfo);
+  const { mutate: verifyEmail } = useVerifyEmail();
+  const { mutate: signUp } = useSignupMutation();
 
   const checkBtnBasic = 'absolute px-8 py-4 text-13 rounded top-44 right-12';
 
@@ -51,27 +56,38 @@ const PartnerSignup = () => {
 
   const handleCheckEmail = async () => {
     const email = watch('email');
-    try {
-      const data = await postVerifyEmail(email);
-      setIsEmailValid(data.result);
-      setEmailMessage(data.message);
-    } catch (e: any) {
-      setIsEmailValid(false);
-      setEmailMessage(e.message);
-    }
+    verifyEmail(email, {
+      onSuccess: (data) => {
+        setIsEmailValid(data.result);
+        setEmailMessage(data.message);
+      },
+      onError: (error: any) => {
+        setIsEmailValid(false);
+        if (error.response?.status === 400) {
+          setEmailMessage('이미 가입된 회원입니다.');
+        } else {
+          setEmailMessage(error.message);
+        }
+      },
+    });
   };
 
   const handleSignupForm = async (data: PartnerSignupData) => {
-    try {
-      await postPartnerSignup(data);
-      if (isEmailValid) {
-        const accessToken = getCookie('accessToken');
-        if (accessToken) setUserInfo({ ...jwtDecode(accessToken) });
-        navigate('/login', { replace: true });
-      }
-    } catch (e: any) {
-      alert(e.message);
-    }
+    const { company: name, email, password } = data;
+    const loginType: UserType = 'PARTNER';
+    const signupData = { name, email, password, loginType };
+    signUp(signupData, {
+      onSuccess: () => {
+        if (isEmailValid) {
+          const accessToken = getCookie('accessToken');
+          if (accessToken) setUserInfo({ ...jwtDecode(accessToken) });
+          navigate('/login', { replace: true });
+        }
+      },
+      onError: (error: any) => {
+        alert(error.message);
+      },
+    });
   };
 
   return (
@@ -95,7 +111,7 @@ const PartnerSignup = () => {
                 required: '이름 또는 법인명을 입력해주세요.',
               })}
             />
-            <div className="flex gap-10">
+            <div className="flex flex-col gap-10">
               <div className="relative">
                 <InputBox
                   id="email"

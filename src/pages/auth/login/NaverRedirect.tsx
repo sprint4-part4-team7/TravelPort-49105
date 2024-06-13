@@ -1,19 +1,15 @@
-import { getNaverLogin } from '@/apis/auth';
+import { useNaverLoginMutation } from '@/hooks/reactQuery/auth/useSocialLoginMutation';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const NaverRedirect = () => {
   const code = new URL(window.location.href).searchParams.get('code');
-  const navigate = useNavigate();
+  const { mutate } = useNaverLoginMutation();
 
   useEffect(() => {
-    try {
-      getNaverLogin(code);
-      navigate('/', { replace: true });
-    } catch (error: any) {
-      alert(error.message);
+    if (code) {
+      mutate(code);
     }
-  }, [code]);
+  }, [code, mutate]);
 
   return (
     <div>

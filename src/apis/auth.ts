@@ -1,29 +1,25 @@
 import instance from '@/utils/axios';
-import { setCookie } from '@/utils/cookie';
-import axios from 'axios';
 
 type LoginForm = {
   email: string;
   password: string;
 };
 
-type UserSignupForm = {
-  nickname: string;
+type SignupForm = {
+  name: string;
   email: string;
   password: string;
-};
-
-type PartnerSignupForm = {
-  company: string;
-  email: string;
-  password: string;
+  loginType: 'USER' | 'PARTNER';
 };
 
 /**
  * 로그아웃
  */
 export const postLogout = () => {
-  return instance.post('auth/logout');
+  return instance({
+    url: '/auth/logout',
+    method: 'POST',
+  });
 };
 
 /**
@@ -33,118 +29,63 @@ export const postLogout = () => {
 /**
  * 로그인 & 소셜 로그인(Google, Kakao, Naver), Access Token Cookie 저장
  */
-export const postLogin = async (data: LoginForm) => {
+export const postLogin = async (data: LoginForm): Promise<any> => {
   const { email, password } = data;
-  try {
-    const res = await instance.post('auth/login', {
+  return instance({
+    url: '/auth/login',
+    method: 'POST',
+    data: {
       email,
       password,
-    });
-    const result = res.data;
-    const ACCESS_TOKEN = result.accessToken;
-    setCookie('accessToken', ACCESS_TOKEN);
-  } catch (error: any) {
-    if (axios.isAxiosError(error) && error.response?.status === 401) {
-      throw new Error(error.response.data.message);
-    } else if (axios.isAxiosError(error) && error.response?.status === 500) {
-      throw new Error(error.response.data.message);
-    } else {
-      throw new Error(error.message);
-    }
-  }
+    },
+  });
 };
 
-export const getGoogleLogin = async (code: string | null) => {
-  try {
-    const res = await instance.get(`auth/google/callback?code=${code}`);
-    const ACCESS_TOKEN = res.data.accessToken;
-    setCookie('accessToken', ACCESS_TOKEN);
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response?.status === 500) {
-      throw new Error(error.response.data.message);
-    }
-  }
+export const getGoogleLogin = async (code: string | null): Promise<any> => {
+  return instance({
+    url: `/auth/google/callback?code=${code}`,
+    method: 'GET',
+  });
 };
 
-export const getKakaoLogin = async (code: string | null) => {
-  try {
-    const res = await instance.get(`auth/kakao/callback?code=${code}`);
-    const ACCESS_TOKEN = res.data.accessToken;
-    setCookie('accessToken', ACCESS_TOKEN);
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response?.status === 500) {
-      throw new Error(error.response.data.message);
-    }
-  }
+export const getKakaoLogin = async (code: string | null): Promise<any> => {
+  return instance({
+    url: `/auth/kakao/callback?code=${code}`,
+    method: 'GET',
+  });
 };
 
-export const getNaverLogin = async (code: string | null) => {
-  try {
-    const res = await instance.get(`auth/naver/callback?code=${code}`);
-    const ACCESS_TOKEN = res.data.accessToken;
-    setCookie('accessToken', ACCESS_TOKEN);
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response?.status === 500) {
-      throw new Error(error.response.data.message);
-    }
-  }
+export const getNaverLogin = async (code: string | null): Promise<any> => {
+  return instance({
+    url: `/auth/naver/callback?code=${code}`,
+    method: 'GET',
+  });
 };
 
 /**
- * 회원가입(유저(user), 파트너(partner))
+ * 회원가입(이메일 중복 확인, 회원가입 API)
  */
-export const postVerifyEmail = async (email: string) => {
-  try {
-    const res = await instance.post('auth/valid-email', { email });
-    const result = res.data;
-    return result;
-  } catch (error: any) {
-    if (axios.isAxiosError(error) && error.response?.status === 400) {
-      throw new Error(error.response.data.message);
-    } else {
-      throw new Error(error.message);
-    }
-  }
+
+export const postVerifyEmail = async (email: string): Promise<any> => {
+  return instance({
+    url: '/auth/valid-email',
+    method: 'POST',
+    data: {
+      email,
+    },
+  });
 };
 
-export const postUserSignup = async (data: UserSignupForm) => {
-  const { nickname: name, email, password } = data;
-  const loginType = 'USER';
-  try {
-    const res = await instance.post('auth/signup', {
+export const postSignup = async (data: SignupForm): Promise<any> => {
+  const { name, email, password, loginType } = data;
+  return instance({
+    url: '/auth/signup',
+    method: 'POST',
+    data: {
       name,
       email,
       password,
       loginType,
-    });
-    const result = res.data;
-    return result;
-  } catch (error: any) {
-    if (axios.isAxiosError(error) && error.response?.status === 400) {
-      throw new Error(error.response.data.message);
-    } else {
-      throw new Error(error.message);
-    }
-  }
-};
-
-export const postPartnerSignup = async (data: PartnerSignupForm) => {
-  const { company: name, email, password } = data;
-  const loginType = 'PARTNER';
-  try {
-    const res = await instance.post('auth/signup', {
-      name,
-      email,
-      password,
-      loginType,
-    });
-    const result = res.data;
-    return result;
-  } catch (error: any) {
-    if (axios.isAxiosError(error) && error.response?.status === 400) {
-      throw new Error(error.response.data.message);
-    } else {
-      throw new Error(error.message);
-    }
-  }
+    },
+  });
 };

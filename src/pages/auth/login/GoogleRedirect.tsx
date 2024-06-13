@@ -1,19 +1,15 @@
-import { getGoogleLogin } from '@/apis/auth';
+import { useGoogleLoginMutation } from '@/hooks/reactQuery/auth/useSocialLoginMutation';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const GoogleRedirect = () => {
   const code = new URL(window.location.href).searchParams.get('code');
-  const navigate = useNavigate();
+  const { mutate } = useGoogleLoginMutation();
 
   useEffect(() => {
-    try {
-      getGoogleLogin(code);
-      navigate('/', { replace: true });
-    } catch (error: any) {
-      alert(error.message);
+    if (code) {
+      mutate(code);
     }
-  }, [code]);
+  }, [code, mutate]);
 
   return (
     <div>
