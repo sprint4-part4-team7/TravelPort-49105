@@ -1,5 +1,4 @@
 import instance from '@/utils/axios';
-import { setCookie } from '@/utils/cookie';
 import axios from 'axios';
 
 type LoginForm = {
@@ -23,7 +22,10 @@ type PartnerSignupForm = {
  * 로그아웃
  */
 export const postLogout = () => {
-  return instance.post('auth/logout');
+  return instance({
+    url: '/auth/logout',
+    method: 'POST',
+  });
 };
 
 /**
@@ -45,40 +47,25 @@ export const postLogin = async (data: LoginForm): Promise<any> => {
   });
 };
 
-export const getGoogleLogin = async (code: string | null) => {
-  try {
-    const res = await instance.get(`auth/google/callback?code=${code}`);
-    const ACCESS_TOKEN = res.data.accessToken;
-    setCookie('accessToken', ACCESS_TOKEN);
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response?.status === 500) {
-      throw new Error(error.response.data.message);
-    }
-  }
+export const getGoogleLogin = async (code: string | null): Promise<any> => {
+  return instance({
+    url: `/auth/google/callback?code=${code}`,
+    method: 'GET',
+  });
 };
 
-export const getKakaoLogin = async (code: string | null) => {
-  try {
-    const res = await instance.get(`auth/kakao/callback?code=${code}`);
-    const ACCESS_TOKEN = res.data.accessToken;
-    setCookie('accessToken', ACCESS_TOKEN);
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response?.status === 500) {
-      throw new Error(error.response.data.message);
-    }
-  }
+export const getKakaoLogin = async (code: string | null): Promise<any> => {
+  return instance({
+    url: `/auth/kakao/callback?code=${code}`,
+    method: 'GET',
+  });
 };
 
-export const getNaverLogin = async (code: string | null) => {
-  try {
-    const res = await instance.get(`auth/naver/callback?code=${code}`);
-    const ACCESS_TOKEN = res.data.accessToken;
-    setCookie('accessToken', ACCESS_TOKEN);
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response?.status === 500) {
-      throw new Error(error.response.data.message);
-    }
-  }
+export const getNaverLogin = async (code: string | null): Promise<any> => {
+  return instance({
+    url: `/auth/naver/callback?code=${code}`,
+    method: 'GET',
+  });
 };
 
 /**
