@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable jsx-a11y/control-has-associated-label */
 import { useUserStore } from '@/utils/zustand';
 import { useForm } from 'react-hook-form';
 import useModal from '@/hooks/useModal';
@@ -8,6 +10,7 @@ import { UserInfo } from '@/constants/types';
 import { ChangeEventHandler, useState } from 'react';
 import postImages from '@/apis/image';
 import BUCKER_NAME from '@/constants/bucket';
+import { ReactComponent as Delete } from '@/assets/icons/x-circle-custom.svg';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 import Modal from '@/components/common/Modal';
@@ -16,7 +19,9 @@ import ChangePassword from '@/components/myPage/ChangePassword';
 const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
   const { userInfo, setUserInfo } = useUserStore();
   const { isModalOpen, openModal, closeModal } = useModal();
-  const [instantImg, setInstantImg] = useState<string | null>(null);
+  const [instantImg, setInstantImg] = useState<string | undefined>(
+    userInfo.profileImage,
+  );
   const [img, setImg] = useState<File[]>([]);
   const isUser = !isPartner;
 
@@ -43,8 +48,9 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
   const handleSave = async (data: UserInfo) => {
     if (img.length) {
       const response = await postImages(img, BUCKER_NAME.TEST);
-      // eslint-disable-next-line no-param-reassign
       data = { ...data, profileImage: response[0] };
+    } else {
+      data = { ...data, profileImage: '' };
     }
     const newData = { ...data };
     delete newData.isPartner;
@@ -68,12 +74,24 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
         onSubmit={handleSubmit(handleSave)}
       >
         <div className="flex flex-row gap-24 items-center">
-          {instantImg || userInfo?.profileImage?.length ? (
-            <img
-              src={instantImg || userInfo.profileImage}
-              className="rounded-full w-140 h-140 object-cover"
-              alt="profile"
-            />
+          {instantImg ? (
+            <div className="relative">
+              <img
+                src={instantImg}
+                className="rounded-full w-140 h-140 object-cover"
+                alt="profile"
+              />
+              <button
+                type="button"
+                className="absolute top-12 right-12 bg-white rounded-full"
+                onClick={() => {
+                  setInstantImg(undefined);
+                  setImg([]);
+                }}
+              >
+                <Delete stroke="#000000" />
+              </button>
+            </div>
           ) : (
             <div className="w-140 h-140 rounded-full relative bg-black-6">
               <div className="absolute text-64 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
