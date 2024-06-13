@@ -180,11 +180,13 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
             className="rounded-full cursor-pointer h-[3.2rem] w-[3.2rem]"
           />
         </button>
-        <img
-          className="h-[3.2rem] w-[3.2rem]"
-          src={cart}
-          alt="쇼핑 카트 아이콘"
-        />
+        {userInfo.isPartner === 0 && (
+          <img
+            className="h-[3.2rem] w-[3.2rem]"
+            src={cart}
+            alt="쇼핑 카트 아이콘"
+          />
+        )}
       </div>
       <div className="hidden mobile:flex">
         <button type="button" onClick={toggleSidebar}>
@@ -198,10 +200,10 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
       {isDropdownOpen && (
         <div
           ref={dropdownRef}
-          className="absolute mt-10 bg-white border border-gray-300 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] top-full rounded-[1.2rem] pt-[0.8rem] pb-[0.4rem]"
+          className="left-[-2rem] absolute mt-10 bg-white border border-gray-300 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] top-full rounded-[1.2rem] pt-[0.8rem] pb-[0.4rem]"
           style={{ marginLeft: '-1.5rem', width: 'auto' }}
         >
-          <ul className="w-[106px] text-[1.5rem] font-normal">
+          <ul className="w-[106px] text-[1.5rem] font-normal ">
             {/* 프로필 이미지랑 이름 */}
             <li className="items-center hidden p-2 mobile:flex px-[1.2rem] justify-between py-1.5 hover:bg-blue-50">
               <div className="flex items-center gap-[0.8rem]">
