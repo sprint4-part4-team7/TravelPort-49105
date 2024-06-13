@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Payments.css';
 import usePaymentWidget from '@/hooks/usePaymentWidget';
-import useProductOptionQuery from '@/hooks/reactQuery/productOption/useProductionOptionQuery';
+import useProductOptionQuery from '@/hooks/reactQuery/productOption/useProductOptionQuery';
 import useTilmeTabaleQuery from '@/hooks/reactQuery/timeTable/useTimeTableQuery';
 import useTilmeTabaleOptionQuery from '@/hooks/reactQuery/timeTable/useTilmeTabaleOptionQuery';
 import { useReservationStore, useUserStore } from '@/utils/zustand';
