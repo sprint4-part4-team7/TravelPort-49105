@@ -4,11 +4,10 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/no-array-index-key */
 import { useNavigate } from 'react-router-dom';
-import useProductAll from '@/hooks/reactQuery/product/useProductAll';
+import useProductAllQuery from '@/hooks/reactQuery/product/useProductAllQuery';
 import useFilterByCategory from '@/hooks/useFilterByCategory';
 import useDisplayCount from '@/hooks/useDispalyControl';
 import { useUserStore } from '@/utils/zustand';
-import { getCookie } from '@/utils/cookie';
 import Carousel from '@/components/Carousel';
 import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
@@ -48,7 +47,7 @@ const carousel: ImageItem[] = [
 
 const Main = () => {
   const navigate = useNavigate();
-  const { productAll } = useProductAll();
+  const { productAll } = useProductAllQuery();
   const { userInfo } = useUserStore();
 
   // 카테고리로 분류

@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import logo from '@/assets/icons/travelPortLogo.svg';
 import { useNavigate } from 'react-router-dom';
 import { getCookie } from '@/utils/cookie';
-import useProductAll from '@/hooks/reactQuery/product/useProductAll';
 import useSearchData from '@/hooks/useSearchData';
 import uniqueProduct from '@/utils/uniqueProduct';
 import { useUserStore } from '@/utils/zustand';
+import useProductOptionAll from '@/hooks/reactQuery/productOption/useProductOptionAllQuery';
 import LoginUserHeaderBar from './LoginUserHeaderBar';
 import UnLoginUserHeaderBar from './UnLoginUserHeaderBar';
 import SearchBar from '../SearchBar';
@@ -37,7 +37,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
   };
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
 
-  const { optionAll } = useProductAll();
+  const { optionAll } = useProductOptionAll();
 
   // productId 같은 경우 하나만 나오도록
   const uniqueOptionAll = uniqueProduct(optionAll);

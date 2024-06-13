@@ -5,7 +5,6 @@
 /* eslint-disable no-undef */
 // import useSearchData from '@/hooks/useSearchData';
 import { useRef, useState, useEffect } from 'react';
-import useProductAll from '@/hooks/reactQuery/product/useProductAll';
 import uniqueProduct from '@/utils/uniqueProduct';
 import arrowDown from '@/assets/icons/arrowDown.svg';
 import search from '@/assets/icons/search.svg';
@@ -14,6 +13,7 @@ import useOutsideClick from '@/hooks/useOutsideClick';
 import instance from '@/utils/axios';
 import useDatePicker from '@/hooks/useDatePicker';
 import useTypeCheckbox from '@/hooks/useTypeCheckbox';
+import useProductOptionAll from '@/hooks/reactQuery/productOption/useProductOptionAllQuery';
 import SearchBar from '../components/common/SearchBar';
 import Layout from '@/components/common/layout/Layout';
 import HotelCard from '@/components/common/card/HotelCard';
@@ -59,7 +59,7 @@ const List = () => {
     checkedList,
   );
 
-  const { optionAll } = useProductAll();
+  const { optionAll } = useProductOptionAll();
 
   const categoryName = Number(categoryId) === 1 ? '숙박' : '체험';
   const filterings = ['날짜', '인원수', '가격대', `${categoryName} 종류`];
@@ -123,12 +123,12 @@ const List = () => {
   return (
     <>
       <Layout main noSearch={false}>
-        <div className="mt-40 max-w-928 min-w-460 mx-auto ">
+        <div className="mx-auto mt-40 max-w-928 min-w-460 ">
           <div className="relative rounded-42 px-48 py-20 shadow-[0_0_12px_0_rgba(0,0,0,0.25)] mb-100">
-            <div className="flex gap-30 justify-between items-center cursor-pointer">
+            <div className="flex items-center justify-between cursor-pointer gap-30">
               {filterings.map((filtering) => (
                 <p
-                  className="text-13 font-medium"
+                  className="font-medium text-13"
                   onClick={() => handleFilterTab(filtering)}
                 >
                   {filtering} <span className="mobile:hidden">선택</span>
@@ -156,7 +156,7 @@ const List = () => {
               )}
               {filterTab === '인원수' && isOpen && (
                 <div
-                  className="absolute w-2/5 top-80 left-0 mobile:w-full"
+                  className="absolute left-0 w-2/5 top-80 mobile:w-full"
                   ref={outsideRef}
                 >
                   <HeadCount count={count} setCount={setCount} />
@@ -164,7 +164,7 @@ const List = () => {
               )}
               {filterTab === '가격대' && isOpen && (
                 <div
-                  className="absolute w-3/5 top-80 left-0 tablet:w-full mobile:w-full"
+                  className="absolute left-0 w-3/5 top-80 tablet:w-full mobile:w-full"
                   ref={outsideRef}
                 >
                   <PriceRange
@@ -179,7 +179,7 @@ const List = () => {
               )}
               {filterTab === `${categoryName} 종류` && isOpen && (
                 <div
-                  className="absolute w-2/5 top-80 right-0 mobile:w-full z-50"
+                  className="absolute right-0 z-50 w-2/5 top-80 mobile:w-full"
                   ref={outsideRef}
                 >
                   <ProductType
@@ -198,12 +198,12 @@ const List = () => {
                 }}
               >
                 <img src={search} alt="검색" className="mobile:w-10" />{' '}
-                <span className="text-blue-6 text-13 font-medium">
+                <span className="font-medium text-blue-6 text-13">
                   {filterSearch}
                 </span>
                 {isSearchBarOpen && (
                   <div
-                    className="absolute right-0 top-70 my-10 ml-10 w-full"
+                    className="absolute right-0 w-full my-10 ml-10 top-70"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <SearchBar
@@ -248,7 +248,7 @@ const List = () => {
               })}
           </div>
         </div>
-        <div className="w-fit mx-auto">
+        <div className="mx-auto w-fit">
           <Pagination
             pageNum={pageNum}
             setPageNum={setPageNum}

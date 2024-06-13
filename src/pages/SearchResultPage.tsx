@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import useProductAll from '@/hooks/reactQuery/product/useProductAll';
 import useProductsWithMinPrice from '@/hooks/useProductsWithMinPrice';
+import useProductAllQuery from '@/hooks/reactQuery/product/useProductAllQuery';
 import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
 import SearchResultSection from '@/components/SearchResultSection';
@@ -15,7 +15,7 @@ const SearchResultPage = () => {
   const query = useQuery();
   const searchQuery = query.get('query') || '';
   const search = searchQuery.toLowerCase();
-  const { productAll } = useProductAll();
+  const { productAll } = useProductAllQuery();
   const [selectedTab, setSelectedTab] = useState('all');
   const [pageNum, setPageNum] = useState(1);
   const itemsPerPage = 10;
