@@ -4,16 +4,16 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/no-array-index-key */
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import useProductAll from '@/hooks/reactQuery/product/useProductAll';
-import useReviewAllQuery from '@/hooks/reactQuery/review/useReviewAllQuery';
-import useProductOptionsReviews from '@/hooks/useProductOptionsReviews';
 import useFilterByCategory from '@/hooks/useFilterByCategory';
 import useDisplayCount from '@/hooks/useDispalyControl';
+import { useUserStore } from '@/utils/zustand';
+import { getCookie } from '@/utils/cookie';
 import Carousel from '@/components/Carousel';
 import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
 import MainCard from '@/components/MainCard';
+import PartnerMain from './PartnerMain';
 
 interface ImageItem {
   url: string;
@@ -49,6 +49,7 @@ const carousel: ImageItem[] = [
 const Main = () => {
   const navigate = useNavigate();
   const { productAll } = useProductAll();
+  const { userInfo } = useUserStore();
 
   // 카테고리로 분류
   const { sortedCategoryAccommodation, sortedCategoryActivity } =
@@ -91,6 +92,11 @@ const Main = () => {
     navigate('/list/2');
   };
 
+  if (userInfo) {
+    if (userInfo.isPartner === 1) {
+      return <PartnerMain />;
+    }
+  }
   return (
     <>
       <Layout main category noSearch={false}>

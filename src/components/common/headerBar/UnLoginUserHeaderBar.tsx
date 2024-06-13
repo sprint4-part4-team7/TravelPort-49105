@@ -64,7 +64,7 @@ const UnLoginUserHeaderBar = () => {
               outlined
               buttonStyle="text-14 p-8 font-semibold"
               onClick={() => {
-                navigate('./partner');
+                navigate('/signup/partner');
                 setIsMenuOpen(false);
               }}
             >
@@ -73,7 +73,7 @@ const UnLoginUserHeaderBar = () => {
             <Button
               buttonStyle="text-14 p-8 font-semibold"
               onClick={() => {
-                navigate('./login');
+                navigate('/login');
                 setIsMenuOpen(false);
               }}
             >
@@ -89,7 +89,7 @@ const UnLoginUserHeaderBar = () => {
           outlined
           buttonStyle="min-w-fit text-14 p-10 font-semibold"
           onClick={() => {
-            navigate('./partner');
+            navigate('/partner');
           }}
         >
           파트너 페이지
@@ -97,7 +97,7 @@ const UnLoginUserHeaderBar = () => {
         <Button
           buttonStyle="min-w-fit text-14 p-10 font-semibold"
           onClick={() => {
-            navigate('./login');
+            navigate('/login');
           }}
         >
           로그인 및 회원가입
