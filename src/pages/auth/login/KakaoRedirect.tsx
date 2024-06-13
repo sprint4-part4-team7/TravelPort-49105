@@ -1,19 +1,15 @@
-import { getKakaoLogin } from '@/apis/auth';
+import { useKakaoLoginMutation } from '@/hooks/reactQuery/auth/useSocialLoginMutation';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const KakaoRedirect = () => {
   const code = new URL(window.location.href).searchParams.get('code');
-  const navigate = useNavigate();
+  const { mutate } = useKakaoLoginMutation();
 
   useEffect(() => {
-    try {
-      getKakaoLogin(code);
-      navigate('/', { replace: true });
-    } catch (error: any) {
-      alert(error.message);
+    if (code) {
+      mutate(code);
     }
-  }, [code]);
+  }, [code, mutate]);
 
   return (
     <div>
