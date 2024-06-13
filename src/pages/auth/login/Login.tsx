@@ -1,7 +1,7 @@
 import Google from '@/assets/images/google_login.png';
 import Kakao from '@/assets/images/kakao_login.svg';
 import Naver from '@/assets/images/naver_login.png';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   useGoogleLogin,
   useKakaoLogin,
@@ -10,9 +10,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
 import Logo from '@/assets/icons/travelPortLogo.svg';
-import { getCookie } from '@/utils/cookie';
-import jwtDecode from '@/utils/jwtDecode';
-import { useUserStore } from '@/utils/zustand';
+
 import useLoginMutation from '@/hooks/reactQuery/auth/useLoginMutation';
 import InputBox from '@/components/common/InputBox';
 import Button from '@/components/common/Button';
@@ -31,21 +29,10 @@ const Login = () => {
   const googleLogin = useGoogleLogin();
   const kakaoLogin = useKakaoLogin();
   const naverLogin = useNaverLogin();
-  const navigate = useNavigate();
-  const setUserInfo = useUserStore((state) => state.setUserInfo);
   const { mutate } = useLoginMutation();
 
   const handleLoginForm = (data: LoginForm) => {
-    mutate(data, {
-      onSuccess: () => {
-        const token = getCookie('accessToken');
-        if (token) {
-          const userInfo = jwtDecode(token);
-          setUserInfo(userInfo);
-          navigate('/');
-        }
-      },
-    });
+    mutate(data);
   };
 
   return (
