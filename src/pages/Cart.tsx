@@ -14,7 +14,7 @@ const Cart = () => {
               <div className="px-8 py-16 font-semibold text-22">장바구니</div>
             </div>
             <div className="flex tablet:flex-col mobile:flex-col gap-90">
-              <div className="w-full">
+              <div className="w-full mb-100">
                 <CartList />
                 <CartList />
                 <CartList />
