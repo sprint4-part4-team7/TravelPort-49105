@@ -6,6 +6,13 @@ type LoginForm = {
   password: string;
 };
 
+type SignupForm = {
+  name: string;
+  email: string;
+  password: string;
+  loginType: 'USER' | 'PARTNER';
+};
+
 type UserSignupForm = {
   nickname: string;
   email: string;
@@ -78,6 +85,20 @@ export const postVerifyEmail = async (email: string): Promise<any> => {
     method: 'POST',
     data: {
       email,
+    },
+  });
+};
+
+export const postSignup = async (data: SignupForm): Promise<any> => {
+  const { name, email, password, loginType } = data;
+  return instance({
+    url: '/auth/signup',
+    method: 'POST',
+    data: {
+      name,
+      email,
+      password,
+      loginType,
     },
   });
 };
