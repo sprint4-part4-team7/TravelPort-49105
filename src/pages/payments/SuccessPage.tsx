@@ -7,6 +7,7 @@ import check from '@/assets/icons/check-circle-broken-pay.svg';
 import { useReservationStore } from '@/utils/zustand';
 import Layout from '@/components/common/layout/Layout';
 import Button from '@/components/common/Button';
+import Loading from '@/components/common/Loading';
 
 const SuccessPage = () => {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ const SuccessPage = () => {
     }
   }, []);
 
-  if (isLoading) return <h1>loading...</h1>;
+  if (isLoading) return <Loading />;
 
   return (
     <Layout>

@@ -6,6 +6,7 @@ import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
 import SearchResultSection from '@/components/SearchResultSection';
 import Pagination from '@/components/common/Pagination';
+import Loading from '@/components/common/Loading';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -15,7 +16,7 @@ const SearchResultPage = () => {
   const query = useQuery();
   const searchQuery = query.get('query') || '';
   const search = searchQuery.toLowerCase();
-  const { productAll } = useProductAllQuery();
+  const { productAll, isLoadingProducts } = useProductAllQuery();
   const [selectedTab, setSelectedTab] = useState('all');
   const [pageNum, setPageNum] = useState(1);
   const itemsPerPage = 10;
@@ -72,6 +73,8 @@ const SearchResultPage = () => {
   useEffect(() => {
     setPageNum(1);
   }, [selectedTab, search]);
+
+  if (isLoadingProducts) return <Loading />;
 
   return (
     <div>

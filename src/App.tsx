@@ -16,6 +16,8 @@ import ProductRegist from '@/pages/productRegist/ProductRegist';
 import SearchResultPage from '@/pages/SearchResultPage';
 import ReviewRegist from '@/pages/ReviewRegist';
 import PartnerMain from '@/pages/PartnerMain';
+import NoPage from './pages/NoPage';
+import PreparingPage from './pages/PreparingPage';
 
 const App = () => {
   return (
@@ -61,6 +63,9 @@ const App = () => {
         <Route path="search">
           <Route index element={<SearchResultPage />} />
         </Route>
+        <Route path="*" element={<NoPage />} />
+        {/* 서비스 준비중 페이지  */}
+        <Route path="preparing" element={<PreparingPage />} />
       </Routes>
     </BrowserRouter>
   );

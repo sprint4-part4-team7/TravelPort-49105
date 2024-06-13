@@ -33,7 +33,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
     navigate('/list/2');
   };
   const handleTraffic = () => {
-    navigate('/list/3');
+    navigate('/preparing');
   };
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
 
