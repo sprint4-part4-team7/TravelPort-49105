@@ -1,5 +1,5 @@
-import timeTableApi from '@/apis/timeTable';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import useTilmeTabaleOptionQuery from './reactQuery/timeTable/useTilmeTabaleOptionQuery';
 
 type TimeTable = {
   id: number;
@@ -16,13 +16,9 @@ type TimeTable = {
 const useTimeTable = (optionId: number) => {
   const [table, setTable] = useState<TimeTable[]>();
 
-  useEffect(() => {
-    const fetchTimeTable = async (optionIdNum: number) => {
-      const response = await timeTableApi.getTimeTable(optionIdNum);
-      setTable(response);
-    };
-    fetchTimeTable(optionId);
-  }, [optionId]);
+  const { data } = useTilmeTabaleOptionQuery(optionId);
+
+  setTable(data);
 
   return { table };
 };
