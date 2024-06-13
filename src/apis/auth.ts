@@ -33,25 +33,16 @@ export const postLogout = () => {
 /**
  * 로그인 & 소셜 로그인(Google, Kakao, Naver), Access Token Cookie 저장
  */
-export const postLogin = async (data: LoginForm) => {
+export const postLogin = async (data: LoginForm): Promise<any> => {
   const { email, password } = data;
-  try {
-    const res = await instance.post('auth/login', {
+  return instance({
+    url: '/auth/login',
+    method: 'POST',
+    data: {
       email,
       password,
-    });
-    const result = res.data;
-    const ACCESS_TOKEN = result.accessToken;
-    setCookie('accessToken', ACCESS_TOKEN);
-  } catch (error: any) {
-    if (axios.isAxiosError(error) && error.response?.status === 401) {
-      throw new Error(error.response.data.message);
-    } else if (axios.isAxiosError(error) && error.response?.status === 500) {
-      throw new Error(error.response.data.message);
-    } else {
-      throw new Error(error.message);
-    }
-  }
+    },
+  });
 };
 
 export const getGoogleLogin = async (code: string | null) => {
