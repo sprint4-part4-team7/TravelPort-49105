@@ -88,12 +88,13 @@ const ProductDetails = () => {
             <h1 className="text-18 font-semibold py-16">
               리뷰
               <span className="text-blue-6 pl-11">
-                {productReviews.length}개
+                {productReviews ? productReviews.length : 0}개
               </span>
             </h1>
-            {productReviews.map((review) => {
-              return <Review review={review} />;
-            })}
+            {productReviews &&
+              productReviews.map((review) => {
+                return <Review review={review} />;
+              })}
           </div>
         )}
       </div>
