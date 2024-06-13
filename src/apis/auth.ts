@@ -71,18 +71,15 @@ export const getNaverLogin = async (code: string | null): Promise<any> => {
 /**
  * 회원가입(유저(user), 파트너(partner))
  */
-export const postVerifyEmail = async (email: string) => {
-  try {
-    const res = await instance.post('auth/valid-email', { email });
-    const result = res.data;
-    return result;
-  } catch (error: any) {
-    if (axios.isAxiosError(error) && error.response?.status === 400) {
-      throw new Error(error.response.data.message);
-    } else {
-      throw new Error(error.message);
-    }
-  }
+
+export const postVerifyEmail = async (email: string): Promise<any> => {
+  return instance({
+    url: '/auth/valid-email',
+    method: 'POST',
+    data: {
+      email,
+    },
+  });
 };
 
 export const postUserSignup = async (data: UserSignupForm) => {
