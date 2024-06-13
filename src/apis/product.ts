@@ -1,5 +1,4 @@
 // 상품 전체의 api
-import { ProductType } from '@/constants/types';
 import instance from '@/utils/axios';
 
 interface ProductProps {
@@ -24,7 +23,7 @@ const getProductAll = () => {
   });
 };
 
-const getProductById = (productId: number): Promise<ProductType> => {
+const getProductById = (productId: number) => {
   return instance({
     url: `/product/${productId}`,
     method: 'GET',

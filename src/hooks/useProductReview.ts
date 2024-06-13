@@ -1,5 +1,5 @@
 import { ReviewData } from '@/constants/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useReviewByProductIdQuery from './reactQuery/review/useReviewByProductIdQuery';
 
 const useProductReview = (productId: number) => {
@@ -7,7 +7,9 @@ const useProductReview = (productId: number) => {
 
   const { reviewByProductIdResponse } = useReviewByProductIdQuery(productId);
 
-  setProductReviews(reviewByProductIdResponse);
+  useEffect(() => {
+    if (reviewByProductIdResponse) setProductReviews(reviewByProductIdResponse);
+  }, [reviewByProductIdResponse]);
 
   return { productReviews };
 };

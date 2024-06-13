@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useTilmeTabaleOptionQuery from './reactQuery/timeTable/useTilmeTabaleOptionQuery';
 
 type TimeTable = {
@@ -18,7 +18,9 @@ const useTimeTable = (optionId: number) => {
 
   const { data } = useTilmeTabaleOptionQuery(optionId);
 
-  setTable(data);
+  useEffect(() => {
+    if (data) setTable(data);
+  }, [data]);
 
   return { table };
 };

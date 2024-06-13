@@ -1,5 +1,4 @@
 import productApi from '@/apis/product';
-import { ProductType } from '@/constants/types';
 import { useQuery } from '@tanstack/react-query';
 
 const useProductByIdQuery = (productId: number) => {
@@ -7,13 +6,15 @@ const useProductByIdQuery = (productId: number) => {
     data: productByProductIdResponse,
     isLoading: isLoadingProducts,
     error: productsError,
-  } = useQuery<ProductType, Error>({
+  } = useQuery({
     queryKey: ['getProductById', productId, productApi.getProductById],
     queryFn: () => productApi.getProductById(productId),
   });
 
+  const productByProductId = productByProductIdResponse?.data;
+
   return {
-    productByProductIdResponse,
+    productByProductId,
     isLoadingProducts,
     productsError,
   };

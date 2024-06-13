@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useProductByIdQuery from './reactQuery/product/useProductByIdQuery';
 import useProductOptionQuery from './reactQuery/productOption/useProductOptionQuery';
 
@@ -6,11 +6,13 @@ const useFetchDetailsQuery = (productId: number) => {
   const [product, setProduct] = useState<any>();
   const [options, setOptions] = useState<any>([]);
 
-  const { productByProductIdResponse } = useProductByIdQuery(productId);
+  const { productByProductId } = useProductByIdQuery(productId);
   const { productOption } = useProductOptionQuery(productId);
 
-  setProduct(productByProductIdResponse);
-  setOptions(productOption);
+  useEffect(() => {
+    if (productByProductId) setProduct(productByProductId);
+    if (productOption) setOptions(productOption);
+  }, [productByProductId, productOption]);
 
   return { product, options };
 };
