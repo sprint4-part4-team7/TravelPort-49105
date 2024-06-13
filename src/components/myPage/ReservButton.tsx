@@ -17,7 +17,7 @@ const ReservButton = ({ status, onClick }: ReservButtonProps) => {
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      {status === 'rejected' ? (
+      {status === '예약 취소' ? (
         <>
           거절 사유 보기
           <LinkIcon stroke={isHover ? '#3065e8' : 'black'} />

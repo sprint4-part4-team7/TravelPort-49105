@@ -28,7 +28,6 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
     const newData = { ...data };
     delete newData.isPartner;
     delete newData.email;
-    delete newData.id;
     if (newData.isPartner) delete newData.realName;
     else delete newData.description;
     try {

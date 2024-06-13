@@ -81,7 +81,7 @@ export interface PostData {
 }
 
 export interface UserInfo {
-  id?: number;
+  id: number;
   name: string;
   email?: string;
   isPartner?: number;
@@ -90,3 +90,39 @@ export interface UserInfo {
   profileImage?: string;
   description?: string;
 }
+
+export interface Reservation {
+  id: number;
+  userId: number;
+  productOptionId: number;
+  paymentId: number;
+  timeTableId: number;
+  reservationState: ReservStatusType;
+  reservationPrice?: string;
+  ticketCount?: number;
+  cancelMsg?: string;
+  createdAt: string;
+  user: {
+    name: string;
+    realName?: string;
+    phone?: string;
+  };
+  productOption: {
+    optionName: string;
+    product: {
+      name: string;
+    };
+  };
+  timeTable: {
+    targetDate: string;
+    startTimeOnly: string;
+    endTimeOnly: string;
+  };
+}
+
+export type ReservStatusType =
+  | '예약 대기'
+  | '예약 완료'
+  | '예약 취소'
+  | '예약 거절'
+  | string;

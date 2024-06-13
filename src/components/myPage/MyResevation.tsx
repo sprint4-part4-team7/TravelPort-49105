@@ -1,41 +1,73 @@
 import { useState } from 'react';
-import info from '@/mocks/resevationInfo.json';
+import { getMyReservation } from '@/apis/myReservation';
+import { useUserStore } from '@/utils/zustand';
+import { Reservation } from '@/constants/types';
+import useModal from '@/hooks/useModal';
+import { useQuery } from '@tanstack/react-query';
 import ReservationCard from '@/components/common/reservPagination/ResevationCard';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
 import ReservChips from '@/components/myPage/ReservChips';
 import ReservButton from '@/components/myPage/ReservButton';
-import ReservButtonOutlined from './ReservButtonOutlined';
+import ReservButtonOutlined from '@/components/myPage/ReservButtonOutlined';
+import Modal from '@/components/common/Modal';
+import CancelMessage from '@/components/myPage/CancelMessage';
+import ReservChipsExpired from '@/components/myPage/ReservChipsExpired';
 
-const MyResevation = () => {
+const MyResevation = ({
+  isExpired = 'false',
+}: {
+  isExpired?: 'true' | 'false';
+}) => {
+  const userInfo = useUserStore((state) => state.userInfo);
+  const [cancelMsg, setCancelMsg] = useState<string>('');
+  const { isModalOpen, closeModal, openModal } = useModal();
   const [pageNum, setPageNum] = useState(1);
 
-  const limit = 4;
-  const start = (pageNum - 1) * limit;
-  const end = start + limit;
-  const slicedChildren = info.slice(start, end);
+  const limit = 5;
+  const isReservExpired = isExpired === 'true';
+
+  const myReservation = useQuery({
+    queryKey: ['myReservation', userInfo.id, pageNum, isExpired],
+    queryFn: () => getMyReservation(userInfo.id, isExpired, limit, pageNum),
+    enabled: !!userInfo.id,
+  });
+
+  const myReservationData = myReservation.data as Reservation[];
 
   return (
     <div className="flex flex-col gap-48 w-full">
       <div className="text-20 font-semibold">예약 목록</div>
-      {info.length > 0 ? (
+      {myReservationData?.length > 0 ? (
         <ReservPagination
           limit={limit}
           pageNum={pageNum}
           setPageNum={setPageNum}
-          allCardNum={info.length}
+          allCardNum={myReservationData.length}
         >
-          {slicedChildren.map((reservation) => (
+          {myReservationData.map((reservation) => (
             <ReservationCard
               id={reservation.id}
-              date={reservation.date}
-              option={reservation.option}
-              title={reservation.title}
-              upperRight={<ReservChips status={reservation.status} />}
-              lowerRight={
-                reservation.status === 'rejected' ? (
-                  <ReservButton status={reservation.status} />
+              date={reservation.timeTable?.targetDate}
+              option={reservation.productOption?.optionName}
+              title={reservation.productOption.product.name}
+              upperRight={
+                isReservExpired ? (
+                  <ReservChipsExpired status={reservation.reservationState} />
                 ) : (
-                  <ReservButtonOutlined />
+                  <ReservChips status={reservation.reservationState} />
+                )
+              }
+              lowerRight={
+                reservation.reservationState === '예약 거절' ? (
+                  <ReservButton
+                    onClick={() => {
+                      openModal();
+                      setCancelMsg(reservation.cancelMsg || '');
+                    }}
+                    status={reservation.reservationState}
+                  />
+                ) : (
+                  <ReservButtonOutlined status="예약 취소" />
                 )
               }
             />
@@ -46,6 +78,9 @@ const MyResevation = () => {
           예약 목록이 없습니다.
         </div>
       )}
+      <Modal isOpen={isModalOpen} closeModal={closeModal}>
+        <CancelMessage cancelMsg={cancelMsg} />
+      </Modal>
     </div>
   );
 };

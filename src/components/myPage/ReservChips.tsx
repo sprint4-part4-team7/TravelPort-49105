@@ -29,7 +29,7 @@ const ReservChips = ({ status }: { status: string }) => {
       text = '취소됨';
       break;
     default:
-      src = '';
+      src = pending;
       break;
   }
 
