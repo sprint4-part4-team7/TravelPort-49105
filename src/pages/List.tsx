@@ -220,29 +220,28 @@ const List = () => {
           <div className={`${listClass}`}>
             {dataByPage &&
               dataByPage.map((item: any) => {
-                // const { avg, length } = useScoreAvg(item.id);
-
+                console.log(item);
                 return categoryId === '1' ? (
                   <HotelCard
-                    key={item.id}
-                    title={item.name}
+                    key={item.productId}
+                    title={item.productName}
                     location={item.productAddress}
-                    price={10000}
-                    score={1} //! !!평점 받기
-                    review={5} //! !!리뷰수 받기
+                    price={item.minPrice}
+                    score={item.reviewAvg}
+                    review={item.reviewCount}
                     image={item.thumbnail}
-                    link={`/details/${item.id}`}
+                    link={`/details/${item.productId}`}
                   />
                 ) : (
                   <Card
-                    key={item.id}
-                    title={item.name}
+                    key={item.productId}
+                    title={item.productName}
                     location={item.productAddress}
-                    price={10000}
-                    score={1}
-                    review={5}
+                    price={item.minPrice}
+                    score={item.reviewAvg}
+                    review={item.reviewCount}
                     image={item.thumbnail}
-                    link={`/details/${item.id}`}
+                    link={`/details/${item.productId}`}
                   />
                 );
               })}

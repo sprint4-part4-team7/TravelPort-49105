@@ -1,6 +1,7 @@
 import MONTH from '@/constants/month';
 
 export const getDate = (timestamp: string) => {
+  if (!timestamp) return '';
   return timestamp.split('T')[0];
 };
 
