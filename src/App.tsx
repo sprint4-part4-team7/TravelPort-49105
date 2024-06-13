@@ -16,6 +16,7 @@ import ProductRegist from '@/pages/productRegist/ProductRegist';
 import SearchResultPage from '@/pages/SearchResultPage';
 import ReviewRegist from '@/pages/ReviewRegist';
 import PartnerMain from '@/pages/PartnerMain';
+import NoPage from './pages/NoPage';
 
 const App = () => {
   return (
@@ -61,6 +62,7 @@ const App = () => {
         <Route path="search">
           <Route index element={<SearchResultPage />} />
         </Route>
+        <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>
   );
