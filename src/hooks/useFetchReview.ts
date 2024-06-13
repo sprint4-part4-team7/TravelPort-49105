@@ -1,4 +1,4 @@
-import { getReviewInfo } from '@/apis/review';
+import reviewApi from '@/apis/review';
 import { ReviewData } from '@/constants/types';
 import { useEffect, useState } from 'react';
 
@@ -7,7 +7,7 @@ const useFetchReview = (curReviewId: number) => {
 
   useEffect(() => {
     const fetchReview = async (reviewId: number) => {
-      const reviewData = await getReviewInfo(reviewId);
+      const reviewData = await reviewApi.getReviewInfo(reviewId);
       setReview(reviewData.review);
     };
     fetchReview(curReviewId);

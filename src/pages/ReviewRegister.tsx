@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import { useForm } from 'react-hook-form';
-import { getDefaultOption } from '@/apis/review';
-import React, { useEffect, useState } from 'react';
+// import { getDefaultOption } from '@/apis/review';
+import React, { useState } from 'react';
 import useModal from '@/hooks/useModal';
 import { useNavigate } from 'react-router-dom';
 import TextBox from '@/components/common/TextBox';
@@ -36,14 +37,16 @@ const ReviewRegister = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchDefaultOption = async (optionId: number) => {
-      const { optionName, productName } = await getDefaultOption(optionId);
-      setOption(optionName);
-      setProduct(productName);
-    };
-    fetchDefaultOption(1); // 추후 옵션아이디로 변경 예정
-  }, []);
+  // 리액트 쿼리로 사용해야 해서 주석 처리 해놈 !
+  // useEffect(() => {
+  //   const fetchDefaultOption = async (optionId: number) => {
+  //     const { optionName, productName } =
+  //       await productOptionApi.getProductOptionByOptionId(optionId);
+  //     setOption(optionName);
+  //     setProduct(productName);
+  //   };
+  //   fetchDefaultOption(1); // 추후 옵션아이디로 변경 예정
+  // }, []);
 
   const onSubmit = async (data: any) => {
     // post 정상적으로 작동됨. 추후 userId, optionId로 변경 예정
@@ -93,20 +96,20 @@ const ReviewRegister = () => {
   return (
     <form
       onSubmit={handleSubmit(handleFormSubmit)}
-      className="mt-40 max-w-784 mx-auto"
+      className="mx-auto mt-40 max-w-784"
     >
-      <h1 className="py-20 text-24 font-bold">리뷰 작성하기</h1>
+      <h1 className="py-20 font-bold text-24">리뷰 작성하기</h1>
       <hr />
-      <div className="my-20 flex flex-col gap-20">
-        <div className="text-17 font-bold">
+      <div className="flex flex-col gap-20 my-20">
+        <div className="font-bold text-17">
           상품 이름 <span className="font-normal">{product}</span>
         </div>
-        <div className="text-17 font-bold">
+        <div className="font-bold text-17">
           옵션 <span className="font-normal">{option}</span>
         </div>
       </div>
       <hr />
-      <div className="text-18 font-bold my-40">
+      <div className="my-40 font-bold text-18">
         <h1 className="mb-20">STEP1 별점을 입력해주세요</h1>
         <ReviewStar onChange={handleScoreChange} />
         {errors.score && (
@@ -129,7 +132,7 @@ const ReviewRegister = () => {
           error={errors.reviewContent}
         />
       </div>
-      <h1 className="text-18 font-bold my-20">
+      <h1 className="my-20 font-bold text-18">
         STEP3 사진을 추가하기 (최대 5장)
       </h1>
       <ImageUpload onChange={handleImageChange} />

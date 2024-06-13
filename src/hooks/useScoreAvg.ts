@@ -1,4 +1,4 @@
-import { getProductReview } from '@/apis/review';
+import reviewApi from '@/apis/review';
 import { useEffect, useState } from 'react';
 
 const useScoreAvg = (id: number) => {
@@ -8,7 +8,7 @@ const useScoreAvg = (id: number) => {
   useEffect(() => {
     const fetchProductReview = async () => {
       let count = 0;
-      const response = await getProductReview(id);
+      const response = await reviewApi.getProductReview(id);
       for (let i = 0; i < response.length; i++) {
         count += response[i].score;
       }

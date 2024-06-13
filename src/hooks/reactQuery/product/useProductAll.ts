@@ -1,6 +1,6 @@
-import { getProductAll, getProductOptionAll } from '@/apis/product';
+import productApi from '@/apis/product';
+import productOptionApi from '@/apis/productOption';
 import { useQuery } from '@tanstack/react-query';
-// import { getProductAll, getProductOptionAll } from '@/apis/productAll';
 
 const useProductAll = () => {
   const {
@@ -9,7 +9,7 @@ const useProductAll = () => {
     error: productsError,
   } = useQuery({
     queryKey: ['getProductAll'],
-    queryFn: getProductAll,
+    queryFn: productApi.getProductAll,
   });
   const productAll = productAllResponse?.data;
 
@@ -19,7 +19,7 @@ const useProductAll = () => {
     error: optionsError,
   } = useQuery({
     queryKey: ['getProductOptionAll'],
-    queryFn: getProductOptionAll,
+    queryFn: productOptionApi.getProductOptionAll,
   });
   const optionAll = optionAllResponse
     ? optionAllResponse.data.productOptions

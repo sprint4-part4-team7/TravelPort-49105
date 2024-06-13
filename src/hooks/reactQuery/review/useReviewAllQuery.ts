@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { getReviewAll } from '@/apis/review';
+import reviewApi from '@/apis/review';
 
 function useReviewAllQuery() {
   return useQuery({
-    queryKey: [getReviewAll],
+    queryKey: ['getReviewAll'],
     queryFn: async () => {
-      const { data } = await getReviewAll();
+      const { data } = await reviewApi.getReviewAll();
       return data;
     },
   });
