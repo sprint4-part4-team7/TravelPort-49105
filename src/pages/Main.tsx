@@ -13,6 +13,7 @@ import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
 import MainCard from '@/components/MainCard';
 import PartnerMain from './PartnerMain';
+import Loading from '@/components/common/Loading';
 
 interface ImageItem {
   url: string;
@@ -47,7 +48,7 @@ const carousel: ImageItem[] = [
 
 const Main = () => {
   const navigate = useNavigate();
-  const { productAll } = useProductAllQuery();
+  const { productAll, isLoadingProducts } = useProductAllQuery();
   const { userInfo } = useUserStore();
 
   // 카테고리로 분류
@@ -96,6 +97,9 @@ const Main = () => {
       return <PartnerMain />;
     }
   }
+
+  if (isLoadingProducts) return <Loading />;
+
   return (
     <>
       <Layout main category noSearch={false}>
