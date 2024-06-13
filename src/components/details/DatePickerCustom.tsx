@@ -1,10 +1,11 @@
+/* eslint-disable prefer-const */
 /* eslint-disable react/button-has-type */
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './DatePickerCustom.css';
 import { ko } from 'date-fns/locale/ko';
-import { format, getDay } from 'date-fns';
+import { addDays, format, getDay, isBefore, subDays } from 'date-fns';
 
 type DatePickerProps = {
   startDate: Date;
@@ -12,6 +13,8 @@ type DatePickerProps = {
   endDate?: Date | null;
   setEndDate: React.Dispatch<React.SetStateAction<Date | null>>;
   categoryId: number;
+  maxStartDate?: Date | null;
+  minEndDate?: Date | null;
 };
 
 const DatePickerCustom = ({
@@ -20,6 +23,8 @@ const DatePickerCustom = ({
   endDate,
   setEndDate,
   categoryId,
+  maxStartDate = null,
+  minEndDate = null,
 }: DatePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,23 +33,52 @@ const DatePickerCustom = ({
     setIsOpen(!isOpen);
   };
 
-  const isWeekday = (date: any) => {
+  // 휴일
+  const isHoliday = (date: any) => {
     const day = getDay(date);
-    return day !== 3 && day !== 6;
+    return day === 3 || day === 6;
   };
 
-  if (categoryId !== 1) setEndDate(null);
+  // 오늘 이전 날
+  const isPastDate = (date: Date) => {
+    const today = new Date();
+    return isBefore(date, today);
+  };
 
-  const handleDateChange = (dates: [Date | null, Date | null] | Date) => {
+  // 휴일, 오늘 이전 날 제외한 날
+  const isWeekday = (date: Date) => {
+    return !isHoliday(date) && !isPastDate(date);
+  };
+
+  // 첫 번째 휴일 전 날
+  const findFirstHolidayBeforeEndDate = (start: Date, end: Date) => {
+    let current = start;
+    while (isBefore(current, end)) {
+      if (isHoliday(current)) {
+        return subDays(current, 1);
+      }
+      current = addDays(current, 1);
+    }
+    return end;
+  };
+
+  // start, end date update
+  const handleDateChange = (dates: [Date, Date | null] | Date) => {
     if (Array.isArray(dates)) {
-      const [start, end] = dates;
-      setStartDate(start as Date);
+      let [start, end] = dates;
+      if (categoryId === 1 && start && end) {
+        end = findFirstHolidayBeforeEndDate(start, end);
+      }
+      setStartDate(start);
       setEndDate(end);
     } else {
-      setStartDate(dates as Date);
+      setStartDate(dates);
       setEndDate(null);
     }
   };
+
+  // 숙박이 아닐 경우 endDate = null
+  if (categoryId !== 1) setEndDate(null);
 
   return (
     <div className="flex gap-10">
@@ -76,11 +110,8 @@ const DatePickerCustom = ({
               showYearDropdown
               scrollableYearDropdown
               dropdownMode="select"
-              // includeDateIntervals={[
-              //   { start: subDays(new Date(), 5), end: addDays(new Date(), 5) },
-              // ]}
-              // minDate={}
-              // maxDate={}
+              minDate={maxStartDate}
+              maxDate={minEndDate}
             />
           )}
         </div>
