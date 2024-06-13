@@ -9,6 +9,7 @@ import Layout from '@/components/common/layout/Layout';
 import Footer from '@/components/common/Footer';
 import Pay from '@/components/Pay';
 import OrderSummary from '@/components/OrderSummary';
+import Loading from '@/components/common/Loading';
 
 const CheckoutPage = () => {
   const { reservationInfo } = useReservationStore();
@@ -70,7 +71,7 @@ const CheckoutPage = () => {
     customerEmail,
   );
 
-  if (isLoading) return <h1>loading...</h1>;
+  if (isLoading) return <Loading />;
   if (error) return <h1>error...</h1>;
 
   return (
