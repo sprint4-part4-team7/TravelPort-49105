@@ -1,4 +1,4 @@
-import { getProduct, getProductOptions } from '@/apis/product';
+import { getProduct, getProductOptions } from '@/apis/productOption';
 import { CardListsType, DetailData } from '@/constants/types';
 import { useEffect, useState } from 'react';
 

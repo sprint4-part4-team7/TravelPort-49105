@@ -1,5 +1,3 @@
-// import { CardListsType } from '@/constants/types';
-
 const uniqueProduct = (array: any) => {
   const optionId: number[] = [];
   const uniqueOptionAll = [];

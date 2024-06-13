@@ -1,5 +1,6 @@
+import { getProductAll, getProductOptionAll } from '@/apis/product';
 import { useQuery } from '@tanstack/react-query';
-import { getProductAll, getProductOptionAll } from '@/apis/productAll';
+// import { getProductAll, getProductOptionAll } from '@/apis/productAll';
 
 const useProductAll = () => {
   const {
