@@ -1,5 +1,4 @@
 import instance from '@/utils/axios';
-import axios from 'axios';
 
 type LoginForm = {
   email: string;
@@ -11,18 +10,6 @@ type SignupForm = {
   email: string;
   password: string;
   loginType: 'USER' | 'PARTNER';
-};
-
-type UserSignupForm = {
-  nickname: string;
-  email: string;
-  password: string;
-};
-
-type PartnerSignupForm = {
-  company: string;
-  email: string;
-  password: string;
 };
 
 /**
@@ -76,7 +63,7 @@ export const getNaverLogin = async (code: string | null): Promise<any> => {
 };
 
 /**
- * 회원가입(유저(user), 파트너(partner))
+ * 회원가입(이메일 중복 확인, 회원가입 API)
  */
 
 export const postVerifyEmail = async (email: string): Promise<any> => {
@@ -101,46 +88,4 @@ export const postSignup = async (data: SignupForm): Promise<any> => {
       loginType,
     },
   });
-};
-
-export const postUserSignup = async (data: UserSignupForm) => {
-  const { nickname: name, email, password } = data;
-  const loginType = 'USER';
-  try {
-    const res = await instance.post('auth/signup', {
-      name,
-      email,
-      password,
-      loginType,
-    });
-    const result = res.data;
-    return result;
-  } catch (error: any) {
-    if (axios.isAxiosError(error) && error.response?.status === 400) {
-      throw new Error(error.response.data.message);
-    } else {
-      throw new Error(error.message);
-    }
-  }
-};
-
-export const postPartnerSignup = async (data: PartnerSignupForm) => {
-  const { company: name, email, password } = data;
-  const loginType = 'PARTNER';
-  try {
-    const res = await instance.post('auth/signup', {
-      name,
-      email,
-      password,
-      loginType,
-    });
-    const result = res.data;
-    return result;
-  } catch (error: any) {
-    if (axios.isAxiosError(error) && error.response?.status === 400) {
-      throw new Error(error.response.data.message);
-    } else {
-      throw new Error(error.message);
-    }
-  }
 };
