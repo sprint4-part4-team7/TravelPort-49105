@@ -23,7 +23,7 @@ const Button = ({
   children,
 }: ButtonProps) => {
   const styles = {
-    base: `flex justify-center items-center w-full rounded-4 ${buttonStyle}`,
+    base: `flex justify-center items-center w-full ${variant === 'floating' ? 'rounded-28' : 'rounded-4'} ${buttonStyle}`,
     default: 'bg-blue-6 text-white hover:bg-blue-5 active:bg-blue-7',
     outlined:
       'bg-white border-1 border-solid border-blue-6 text-blue-6 hover:border-blue-5 hover:text-blue-5 active:border-blue-7 active:text-blue-7',
