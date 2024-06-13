@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
-import Button from './common/Button';
-import Card from './common/card/Card';
+import Button from '@/components/common/Button';
+import Card from '@/components/common/card/Card';
 
 interface ImageItem {
   url: string;

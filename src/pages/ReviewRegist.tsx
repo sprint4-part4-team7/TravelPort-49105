@@ -1,5 +1,5 @@
 import Layout from '@/components/common/layout/Layout';
-import ReviewRegister from './ReviewRegister';
+import ReviewRegister from '@/pages/ReviewRegister';
 import Footer from '@/components/common/Footer';
 
 const ReviewRegist = () => {

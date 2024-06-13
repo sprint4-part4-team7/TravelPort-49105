@@ -1,7 +1,10 @@
 /* eslint-disable react/no-array-index-key */
 
 import React from 'react';
-import { ActivityTypes, hotelTypes } from './CategoryTypes';
+import {
+  ActivityTypes,
+  hotelTypes,
+} from '@/components/common/filter/CategoryTypes';
 
 type ProductTypeProps = {
   category: number;

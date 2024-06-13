@@ -9,8 +9,8 @@ import { useState } from 'react';
 import { getDate, formatDate } from '@/utils/getDate';
 import { useReservationStore } from '@/utils/zustand';
 import useTimeTable from '@/hooks/useTimeTable';
-import CalendarCustom from '../common/CalendarCustom';
-import Button from '../common/Button';
+import CalendarCustom from '@/components/common/CalendarCustom';
+import Button from '@/components/common/Button';
 import '@/styles/ProductDetails.css';
 
 interface ReservationProps {

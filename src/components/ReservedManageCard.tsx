@@ -9,9 +9,9 @@ import {
 import instance from '@/utils/axios';
 import changeDateForm from '@/utils/changeDateForm';
 import Button from '@/components/common/Button';
-import ReservationCard from './common/reservPagination/ResevationCard';
-import ReservChips from './myPage/ReservChips';
-import ReservButtonOutlined from './myPage/ReservButtonOutlined';
+import ReservationCard from '@/components/common/reservPagination/ResevationCard';
+import ReservChips from '@/components/myPage/ReservChips';
+import ReservButtonOutlined from '@/components/myPage/ReservButtonOutlined';
 
 type ReserveProps = {
   id: number;
