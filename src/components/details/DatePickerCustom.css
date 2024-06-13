@@ -138,6 +138,8 @@
   width: 2.5rem;
   height: 2.5rem;
   font-weight: 800;
+  background-color: white !important;
+  color: black !important;
 }
 .react-datepicker__day--highlighted,
 .react-datepicker__month-text--highlighted,

@@ -15,6 +15,7 @@ type DatePickerProps = {
   categoryId: number;
   maxStartDate?: Date | null;
   minEndDate?: Date | null;
+  holiday?: string[];
 };
 
 const DatePickerCustom = ({
@@ -25,6 +26,7 @@ const DatePickerCustom = ({
   categoryId,
   maxStartDate = null,
   minEndDate = null,
+  holiday = [],
 }: DatePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -36,7 +38,7 @@ const DatePickerCustom = ({
   // 휴일
   const isHoliday = (date: any) => {
     const day = getDay(date);
-    return day === 3 || day === 6;
+    return holiday.map(Number).includes(day);
   };
 
   // 오늘 이전 날
