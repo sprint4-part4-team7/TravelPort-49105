@@ -95,7 +95,7 @@ const PartnerSignup = () => {
                 required: '이름 또는 법인명을 입력해주세요.',
               })}
             />
-            <div className="flex gap-10">
+            <div className="flex flex-col gap-10">
               <div className="relative">
                 <InputBox
                   id="email"
