@@ -16,8 +16,7 @@ import ReviewAverage from '@/components/review/ReviewAverage';
 import DetailInfo from '@/components/details/DetailInfo';
 
 const ProductDetails = () => {
-  const { productId } = useParams();
-  const categoryId = 1;
+  const { categoryId, productId } = useParams();
   const navigate = useNavigate();
   const productIdNum = Number(productId);
 
@@ -80,7 +79,7 @@ const ProductDetails = () => {
           <Reservation
             product={product}
             options={options}
-            categoryId={categoryId}
+            categoryId={Number(categoryId)}
           />
         )}
         {activeTab === 'details' && <DetailInfo options={options} />}
