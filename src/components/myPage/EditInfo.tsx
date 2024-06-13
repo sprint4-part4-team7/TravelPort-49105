@@ -5,6 +5,9 @@ import uploadIcon from '@/assets/icons/upload.svg';
 import { putUserInfo } from '@/apis/editInfo';
 import { PHONE_NUMBER_REGEX } from '@/constants/InputType';
 import { UserInfo } from '@/constants/types';
+import { ChangeEventHandler, useState } from 'react';
+import postImages from '@/apis/image';
+import BUCKER_NAME from '@/constants/bucket';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 import Modal from '@/components/common/Modal';
@@ -12,6 +15,9 @@ import ChangePassword from '@/components/myPage/ChangePassword';
 
 const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
   const { userInfo, setUserInfo } = useUserStore();
+  const { isModalOpen, openModal, closeModal } = useModal();
+  const [instantImg, setInstantImg] = useState<string | null>(null);
+  const [img, setImg] = useState<File[]>([]);
   const isUser = !isPartner;
 
   const {
@@ -22,9 +28,24 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
     defaultValues: { ...userInfo },
   });
 
-  const { isModalOpen, openModal, closeModal } = useModal();
+  const handleImgUpload: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) {
+      alert('10mb 이하의 파일만 업로드 가능합니다');
+      return;
+    }
+    const instantUrl = URL.createObjectURL(file);
+    setInstantImg(instantUrl);
+    setImg([file]);
+  };
 
   const handleSave = async (data: UserInfo) => {
+    if (img.length) {
+      const response = await postImages(img, BUCKER_NAME.TEST);
+      // eslint-disable-next-line no-param-reassign
+      data = { ...data, profileImage: response[0] };
+    }
     const newData = { ...data };
     delete newData.isPartner;
     delete newData.email;
@@ -47,9 +68,9 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
         onSubmit={handleSubmit(handleSave)}
       >
         <div className="flex flex-row gap-24 items-center">
-          {userInfo?.profileImage?.length ? (
+          {instantImg || userInfo?.profileImage?.length ? (
             <img
-              src={userInfo.profileImage}
+              src={instantImg || userInfo.profileImage}
               className="rounded-full w-140 h-140 object-cover"
               alt="profile"
             />
@@ -63,16 +84,16 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
           <div className="flex flex-col gap-12">
             <label
               htmlFor="profileImg"
-              className="flex flex-row gap-8 rounded-30 w-fit border-1 border-blue-6 p-16 text-16 text-blue-6 font-normal"
+              className="flex flex-row gap-8 rounded-30 w-fit border-1 border-blue-6 p-16 text-16 cursor-pointer text-blue-6 font-normal"
             >
               <img src={uploadIcon} alt="upload" />
               프로필 사진 업로드
               <input
                 id="profileImg"
                 hidden
-                type="text"
+                type="file"
                 accept="image/*"
-                {...register('profileImage')}
+                onChange={handleImgUpload}
               />
             </label>
             <div>최대 10mb까지 업로드 가능합니다.</div>
