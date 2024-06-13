@@ -50,6 +50,15 @@ const List = () => {
   // 종류 필터링
   const { checkedList, checkHandler } = useTypeCheckbox();
 
+  console.log(
+    count,
+    rangeMinValue,
+    rangeMaxValue,
+    startDate,
+    endDate,
+    checkedList,
+  );
+
   const { optionAll } = useProductAll();
 
   const categoryName = Number(categoryId) === 1 ? '숙박' : '체험';

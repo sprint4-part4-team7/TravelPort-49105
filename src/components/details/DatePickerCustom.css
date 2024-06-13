@@ -223,6 +223,12 @@
   background-color: #a6bdf5;
   color: #fff;
 }
+.react-datepicker__day--disabled:hover,
+.react-datepicker__month-text--disabled:hover,
+.react-datepicker__quarter-text--disabled:hover,
+.react-datepicker__year-text--disabled:hover {
+  background-color: white;
+}
 
 .custom-input {
   border: none;
