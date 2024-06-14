@@ -27,7 +27,7 @@ const postCart = (
 
 const postCartReservation = (userId: number, cartId: number) => {
   return instance({
-    url: `/cart/${userId}`,
+    url: `/cart/reservation?userId=${userId}`,
     method: 'POST',
     data: {
       cartId,
