@@ -1,6 +1,4 @@
-/* eslint-disable no-unsafe-optional-chaining */
 import { useEffect, useState } from 'react';
-import useProductByIdQuery from './reactQuery/product/useProductByIdQuery';
 import useProductOptionQuery from './reactQuery/productOption/useProductOptionQuery';
 
 const useReviewDefaults = (optionId: number) => {
@@ -8,17 +6,15 @@ const useReviewDefaults = (optionId: number) => {
   const [productName, setProductName] = useState('');
 
   const { productOption } = useProductOptionQuery(optionId);
-  console.log(productOption);
 
-  const { productId, optionName } = productOption;
-  const { productByProductId } = useProductByIdQuery(productId);
+  const oName = productOption?.optionName;
 
   useEffect(() => {
-    if (productOption) setOptionTitle(optionName);
-    if (productByProductId) setProductName(productByProductId.name);
+    if (productOption) setOptionTitle(oName);
+    setProductName(productOption?.product.name);
   }, [optionTitle, productOption]);
 
-  return { optionTitle, productName };
+  return { productOption, optionTitle, productName };
 };
 
 export default useReviewDefaults;

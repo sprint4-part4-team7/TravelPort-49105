@@ -1,21 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import productOptionApi from '@/apis/productOption';
-// import { OptionbyIdData } from '@/constants/types';
 
 const useProductOptionQuery = (optionId: number) => {
-  const {
-    data: optionByOptionIdResponse,
-    isLoading: isLoadingOption,
-    error: optionError,
-  } = useQuery({
-    queryKey: ['getProductOptionByOptionId', optionId],
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['getProductOption', optionId],
     queryFn: () => productOptionApi.getProductOptionByOptionId(optionId),
   });
-  console.log(optionByOptionIdResponse);
 
-  const productOption = optionByOptionIdResponse?.data;
+  const productOption = data?.data;
 
-  return { productOption, isLoadingOption, optionError };
+  return { productOption, isLoading, error };
 };
 
 export default useProductOptionQuery;
