@@ -94,7 +94,7 @@
 .react-datepicker__day--selected,
 .react-datepicker__day--keyboard-selected {
   border-radius: 10% !important;
-  background-color: #297ef3 !important;
+  background-color: #3065e8 !important;
 }
 
 .react-datepicker__current-month,
@@ -119,7 +119,7 @@
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 0.2rem !important;
-  background-color: #a6bdf5 !important;
+  background-color: #3065e8 !important;
   color: #ffffff;
 }
 .react-datepicker__day:hover,
@@ -129,7 +129,7 @@
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 0.2rem !important;
-  background-color: #7d9ef1;
+  background-color: #3065e8;
 }
 .react-datepicker__day--today,
 .react-datepicker__month-text--today,
@@ -138,6 +138,8 @@
   width: 2.5rem;
   height: 2.5rem;
   font-weight: 800;
+  background-color: white !important;
+  color: black !important;
 }
 .react-datepicker__day--highlighted,
 .react-datepicker__month-text--highlighted,
@@ -153,7 +155,7 @@
 .react-datepicker__year-text--highlighted:hover {
   width: 2.5rem;
   height: 2.5rem;
-  background-color: #7d9ef1 !important;
+  background-color: #3065e8 !important;
 }
 .react-datepicker__day--selected:hover,
 .react-datepicker__day--in-selecting-range:hover,
@@ -169,7 +171,7 @@
 .react-datepicker__year-text--in-range:hover {
   width: 2.5rem;
   height: 2.5rem;
-  background-color: #7d9ef1 !important;
+  background-color: #3065e8 !important;
 }
 .react-datepicker__day--in-selecting-range:not(
     .react-datepicker__day--in-range,
@@ -197,13 +199,13 @@
   ) {
   width: 2.5rem;
   height: 2.5rem;
-  background-color: #7d9ef1;
+  background-color: #3065e8;
 }
 .react-datepicker__day--keyboard-selected:hover,
 .react-datepicker__month-text--keyboard-selected:hover,
 .react-datepicker__quarter-text--keyboard-selected:hover,
 .react-datepicker__year-text--keyboard-selected:hover {
-  background-color: #7d9ef1;
+  background-color: #3065e8;
 }
 .react-datepicker__day--selected,
 .react-datepicker__day--in-selecting-range,
@@ -220,7 +222,7 @@
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 0.2rem;
-  background-color: #a6bdf5;
+  background-color: #3065e8;
   color: #fff;
 }
 .react-datepicker__day--disabled:hover,
@@ -230,6 +232,12 @@
   background-color: white;
 }
 
+.react-datepicker__day--weekend:nth-child(1) {
+  color: red !important;
+}
+.react-datepicker__day--weekend:nth-child(1).react-datepicker__day--disabled {
+  color: #ccc !important;
+}
 .custom-input {
   border: none;
   background: none;

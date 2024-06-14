@@ -1,17 +1,13 @@
-import reviewApi from '@/apis/review';
-import { ReviewData } from '@/constants/types';
-import { useEffect, useState } from 'react';
+import { GetReviewType } from '@/constants/types';
+import { useState } from 'react';
+import useReviewByReviewIdQuery from './reactQuery/review/useReviewByReviewIdQuery';
 
 const useFetchReview = (curReviewId: number) => {
-  const [review, setReview] = useState<ReviewData>();
+  const [review, setReview] = useState<GetReviewType>();
 
-  useEffect(() => {
-    const fetchReview = async (reviewId: number) => {
-      const reviewData = await reviewApi.getReviewInfo(reviewId);
-      setReview(reviewData.review);
-    };
-    fetchReview(curReviewId);
-  });
+  const { reviewByReviewIdResponse } = useReviewByReviewIdQuery(curReviewId);
+
+  setReview(reviewByReviewIdResponse);
 
   return { review };
 };

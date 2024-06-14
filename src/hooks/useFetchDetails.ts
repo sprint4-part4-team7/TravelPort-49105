@@ -1,32 +1,20 @@
-import productApi from '@/apis/product';
-import productOptionApi from '@/apis/productOption';
-// import { CardListsType, DetailData } from '@/constants/types';
 import { useEffect, useState } from 'react';
+import useProductByIdQuery from './reactQuery/product/useProductByIdQuery';
+import useProductOptionByProductIdQuery from './reactQuery/productOption/useProductOptionByProductIdQuery';
 
-const useFetchDetails = (curProductId: number) => {
-  // const [product, setProduct] = useState<DetailData>();
-  // const [options, setOptions] = useState<CardListsType[]>([]);
+const useFetchDetailsQuery = (productId: number) => {
   const [product, setProduct] = useState<any>();
   const [options, setOptions] = useState<any>([]);
 
-  useEffect(() => {
-    const fetchDetails = async (productId: number) => {
-      const detailData = await productApi.getProductById(productId);
-      setProduct(detailData);
-    };
-    const fetchOptions = async (productId: number) => {
-      const optionsData =
-        await productOptionApi.getProductOptionByOptionId(productId);
-      setOptions(optionsData);
-    };
-    fetchDetails(curProductId);
-    fetchOptions(curProductId);
-  }, []);
+  const { productByProductId } = useProductByIdQuery(productId);
+  const { productOption } = useProductOptionByProductIdQuery(productId);
 
-  return {
-    product,
-    options,
-  };
+  useEffect(() => {
+    if (productByProductId) setProduct(productByProductId);
+    if (productOption) setOptions(productOption);
+  }, [productByProductId, productOption]);
+
+  return { product, options };
 };
 
-export default useFetchDetails;
+export default useFetchDetailsQuery;

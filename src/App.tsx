@@ -42,7 +42,7 @@ const App = () => {
         <Route path="list/:categoryId">
           <Route index element={<List />} />
         </Route>
-        <Route path="details/:productId">
+        <Route path="details/:categoryId/:productId">
           <Route index element={<ProductDetails />} />
         </Route>
         <Route path="product-regist">

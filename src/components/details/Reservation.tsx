@@ -1,35 +1,45 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
-import useCalendar from '@/hooks/useCalendar';
 import { CardListsType, DetailData } from '@/constants/types';
 import minus from '@/assets/icons/minus.svg';
 import plus from '@/assets/icons/plus.svg';
 import { useState } from 'react';
-import { getDate, formatDate } from '@/utils/getDate';
+import { formatDate } from '@/utils/getDate';
 import { useReservationStore } from '@/utils/zustand';
 import useTimeTable from '@/hooks/useTimeTable';
-import CalendarCustom from '@/components/common/CalendarCustom';
+import useDatePicker from '@/hooks/useDatePicker';
 import Button from '@/components/common/Button';
 import '@/styles/ProductDetails.css';
+import DatePickerCustom from './DatePickerCustom';
 
 interface ReservationProps {
-  product?: DetailData;
+  product: DetailData;
   options: CardListsType[];
+  categoryId: number;
 }
 
-const Reservation = ({ product, options }: ReservationProps) => {
+const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   const [selectedOption, setSelectedOption] = useState(0);
   const [optionId, setOptionId] = useState(0);
   const [ticketNum, setTicketNum] = useState(0);
-  const { selectedDate, setSelectedDate } = useCalendar();
+  console.log(options);
+  const {
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    maxStartDate,
+    minEndDate,
+  } = useDatePicker(product.id);
+  console.log(startDate, endDate, maxStartDate, minEndDate);
   const { table } = useTimeTable(optionId);
 
   const getTableId = (timeTable: any) => {
     if (!timeTable) return 0;
 
     for (let i = 0; i < timeTable?.length; i++) {
-      if (timeTable[i].targetDate.includes(formatDate(selectedDate)))
+      if (timeTable[i].targetDate.includes(formatDate(startDate)))
         return timeTable[i].id;
     }
     return 0;
@@ -56,18 +66,6 @@ const Reservation = ({ product, options }: ReservationProps) => {
     setTicketNum(ticketNum + 1);
   };
 
-  const startDateArray =
-    product && getDate(product.startDate).split('-').map(Number);
-  const startDate =
-    startDateArray &&
-    new Date(startDateArray[0], startDateArray[1] - 1, startDateArray[2]);
-  const endDateArray =
-    product && getDate(product.endDate).split('-').map(Number);
-  const endDate =
-    endDateArray &&
-    new Date(endDateArray[0], endDateArray[1] - 1, endDateArray[2]);
-  const holiday = product ? product?.closedDay.map(Number) : [];
-
   // 상태관리
   const setReservationInfo = useReservationStore(
     (state) => state.setReservationInfo,
@@ -90,12 +88,14 @@ const Reservation = ({ product, options }: ReservationProps) => {
       <h1 className="my-20 text-24 font-bold">일정을 선택하세요</h1>
       <hr className="mb-20" />
       <div className="w-full mb-60">
-        <CalendarCustom
+        <DatePickerCustom
           startDate={startDate}
+          setStartDate={setStartDate}
           endDate={endDate}
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-          holiday={holiday}
+          setEndDate={setEndDate}
+          categoryId={categoryId}
+          maxStartDate={maxStartDate}
+          minEndDate={minEndDate}
         />
       </div>
 
