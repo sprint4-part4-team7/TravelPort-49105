@@ -1,10 +1,27 @@
-import React from 'react';
+// Cart.tsx
+import React, { useState } from 'react';
+import useCartByUserIdQuery from '@/hooks/reactQuery/cart/useCartByUserIdQuery';
+import { useUserStore } from '@/utils/zustand';
 import Layout from '@/components/common/layout/Layout';
 import Footer from '@/components/common/Footer';
 import Button from '@/components/common/Button';
 import CartList from '@/components/CartList';
+import Loading from '@/components/common/Loading';
 
 const Cart = () => {
+  const { userInfo } = useUserStore();
+  const userId = userInfo?.id;
+  const { cartData, isLoading } = useCartByUserIdQuery(userId);
+  const [selectedTotal, setSelectedTotal] = useState(0);
+
+  if (isLoading) return <Loading />;
+
+  const handleSelect = (price: number, isSelected: boolean) => {
+    setSelectedTotal((prevTotal) =>
+      isSelected ? prevTotal + price : prevTotal - price,
+    );
+  };
+
   return (
     <div>
       <Layout>
@@ -15,19 +32,22 @@ const Cart = () => {
             </div>
             <div className="flex tablet:flex-col mobile:flex-col gap-90">
               <div className="w-full mb-100">
-                <CartList />
-                <CartList />
-                <CartList />
-                <CartList />
-                <CartList />
-                <CartList />
+                {cartData.map((item: any) => {
+                  return (
+                    <CartList
+                      key={item.id}
+                      item={item}
+                      onSelect={handleSelect}
+                    />
+                  );
+                })}
               </div>
               <div className="flex flex-col gap-16 w-322 tablet:w-full mobile:w-full">
                 <div className="flex flex-col p-16 gap-36 bg-black-3">
                   <div className="flex flex-col gap-20 font-normal text-16 ">
                     <div className="flex items-center justify-between">
                       <p>상품 금액</p>
-                      <p>100000원</p>
+                      <p>{selectedTotal.toLocaleString()}원</p>
                     </div>
                     <div className="flex items-center justify-between">
                       <p>상품 할인 금액</p>
@@ -36,7 +56,9 @@ const Cart = () => {
                   </div>
                   <div className="flex items-center justify-between">
                     <p className="font-normal text-16">결제 예정 금액</p>
-                    <p className="font-semibold text-20 ">100000원</p>
+                    <p className="font-semibold text-20 ">
+                      {selectedTotal.toLocaleString()}원
+                    </p>
                   </div>
                 </div>
                 <div>

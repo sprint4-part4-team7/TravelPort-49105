@@ -75,3 +75,35 @@ export const useReservationStore = create(
     },
   ),
 );
+
+interface CartInfo {
+  name: string;
+  option: string;
+  day: any;
+  count: number;
+  price: string | number;
+  maxCount: number;
+}
+interface CartStore {
+  cartInfo: CartInfo;
+  setCartInfo: (cartInfo: CartInfo) => void;
+}
+
+export const useCartStore = create(
+  persist<CartStore>(
+    (set) => ({
+      cartInfo: {
+        name: '',
+        option: '',
+        day: '',
+        count: 0,
+        price: 0,
+        maxCount: 0,
+      },
+      setCartInfo: (cartInfo) => set({ cartInfo }),
+    }),
+    {
+      name: 'cart',
+    },
+  ),
+);

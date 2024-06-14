@@ -3,12 +3,14 @@ import { useQuery } from '@tanstack/react-query';
 
 const useCartByUserIdQuery = (userId: number) => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ['getCartById', userId, cartApi.getCartById],
+    queryKey: ['getCartById', userId],
     queryFn: () => cartApi.getCartById(userId),
   });
 
+  const cartData = data?.data;
+
   return {
-    data,
+    cartData,
     isLoading,
     error,
   };
