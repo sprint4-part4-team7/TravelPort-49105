@@ -1,7 +1,8 @@
 import { useForm } from 'react-hook-form';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import CheckButton from '@/pages/productRegist/CheckButton';
-import Description from '@/pages/productRegist/Description';
+import React, { useEffect } from 'react';
+import CheckButton from './CheckButton';
+import Description from './Description';
+import { PageIdProps } from './productPage';
 
 type CategoryForm = {
   category: string;
