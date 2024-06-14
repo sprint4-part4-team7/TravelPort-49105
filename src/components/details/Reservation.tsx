@@ -23,6 +23,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   const [selectedOption, setSelectedOption] = useState(0);
   const [optionId, setOptionId] = useState(0);
   const [ticketNum, setTicketNum] = useState(0);
+  console.log(options);
   const {
     startDate,
     setStartDate,
