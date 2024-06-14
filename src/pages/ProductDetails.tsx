@@ -7,9 +7,10 @@
 import useFetchDetails from '@/hooks/useFetchDetails';
 import { useEffect, useState } from 'react';
 import useProductReview from '@/hooks/useProductReview';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import useReviewByProductIdQuery from '@/hooks/reactQuery/review/useReviewByProductIdQuery';
 import instance from '@/utils/axios';
+import useProductAllQuery from '@/hooks/reactQuery/product/useProductAllQuery';
 import LocationMap from '@/components/details/LocationMap';
 import SalesPeriod from '@/components/details/SalesPeriod';
 import Reservation from '@/components/details/Reservation';
@@ -18,13 +19,24 @@ import Review from '@/components/Review';
 import ReviewAverage from '@/components/review/ReviewAverage';
 import DetailInfo from '@/components/details/DetailInfo';
 import Pagination from '@/components/common/Pagination';
+import NoPage from './NoPage';
 
 const ProductDetails = () => {
   const { categoryId, productId } = useParams();
-  const navigate = useNavigate();
   const productIdNum = Number(productId);
 
   const { product, options } = useFetchDetails(productIdNum);
+  const { productAll } = useProductAllQuery();
+
+  // 모든 상품의 productId array 구하기
+  const idArray: number[] = [];
+  productAll &&
+    productAll.forEach((product: any) => {
+      if (!idArray.includes(product.productId)) idArray.push(product.productId);
+    });
+
+  // productId 없으면 404페이지
+  if (!productId || !idArray.includes(Number(productId))) return <NoPage />;
 
   const [pageNum, setPageNum] = useState(1); // 현재 클릭된 페이지 숫자
   const [dataByPage, setDataByPage] = useState<any>(); // 페이지 별 리뷰 데이터
@@ -41,11 +53,6 @@ const ProductDetails = () => {
     };
     fetchByOffset(productIdNum, offset);
   }, [offset, productIdNum]);
-
-  // productId 없으면 메인페이지로 redirect
-  if (!product || !productId?.includes(String(product.id))) {
-    navigate('/');
-  }
 
   const [activeTab, setActiveTab] = useState('');
 
