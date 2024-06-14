@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-vars */
@@ -9,13 +10,18 @@ import { useNavigate } from 'react-router-dom';
 import useReviewDefaults from '@/hooks/useReviewDefaults';
 import productOption from '@/apis/productOption';
 import useProductOptionQuery from '@/hooks/reactQuery/productOption/useProductOptionQuery';
+import useReviewPostMutation from '@/hooks/reactQuery/review/useReviewPostMutation';
 import TextBox from '@/components/common/TextBox';
 import ReviewStar from '@/components/review/ReviewStar';
 import Button from '@/components/common/Button';
 import ImageUpload from '@/components/review/ImageUpload';
 import Modal from '@/components/common/Modal';
+import Loading from '@/components/common/Loading';
 
-const ReviewRegister = () => {
+interface ReviewRegisterProps {
+  optionId: number;
+}
+const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
   const {
     register,
     handleSubmit,
@@ -36,15 +42,20 @@ const ReviewRegister = () => {
 
   const { isModalOpen, openModal, closeModal } = useModal();
   const navigate = useNavigate();
-  const { optionTitle, productName } = useReviewDefaults(1);
+  const { productOption, optionTitle, productName } =
+    useReviewDefaults(optionId);
+  const { mutate, isLoading } = useReviewPostMutation();
+  const userId = 3;
+
+  if (isLoading) return <Loading />;
 
   const onSubmit = async (data: any) => {
-    // post 정상적으로 작동됨. 추후 userId, optionId로 변경 예정
-    // try {
-    //   await postReview(1, 1, data); // 임시
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    // mutate({
+    //   userId,
+    //   productOptionId: optionId,
+    //   productId: productOption.product.productId,
+    //   reviewInfo: data,
+    // });
     const filteredPostImages = postImages.filter((image) => image !== null);
     data.reviewImages = filteredPostImages;
     console.log({ ...data });

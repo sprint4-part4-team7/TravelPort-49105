@@ -58,7 +58,7 @@ const App = () => {
           <Route path="success" element={<SuccessPage />} />
           <Route path="fail" element={<FailPage />} />
         </Route>
-        <Route path="review">
+        <Route path="review/:optionId">
           <Route index element={<ReviewRegist />} />
         </Route>
         <Route path="search">
