@@ -4,6 +4,7 @@ import { useUserStore } from '@/utils/zustand';
 import { Reservation } from '@/constants/types';
 import useModal from '@/hooks/useModal';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import ReservationCard from '@/components/common/reservPagination/ResevationCard';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
 import ReservChips from '@/components/myPage/ReservChips';
@@ -12,6 +13,7 @@ import ReservButtonOutlined from '@/components/myPage/ReservButtonOutlined';
 import Modal from '@/components/common/Modal';
 import CancelMessage from '@/components/myPage/CancelMessage';
 import ReservChipsExpired from '@/components/myPage/ReservChipsExpired';
+import CancelReserv from './CancelReserv';
 
 const MyResevation = ({
   isExpired = 'false',
@@ -20,8 +22,10 @@ const MyResevation = ({
 }) => {
   const userInfo = useUserStore((state) => state.userInfo);
   const [cancelMsg, setCancelMsg] = useState<string>('');
+  const [cancelReserv, setCancelReserv] = useState<number>(0);
   const { isModalOpen, closeModal, openModal } = useModal();
   const [pageNum, setPageNum] = useState(1);
+  const navigate = useNavigate();
 
   const limit = 5;
   const isReservExpired = isExpired === 'true';
@@ -31,16 +35,18 @@ const MyResevation = ({
     queryFn: () => getMyReservation(userInfo.id, isExpired, limit, pageNum - 1),
     enabled: !!userInfo.id,
   });
+  const myReservationData = myReservation.data as Reservation[];
 
   const handleShowCancelMsg = (msg: string) => {
     openModal();
     setCancelMsg(msg);
   };
-  const handleReview = () => {
-    alert('후기 작성');
+  const handleReview = (id: number) => {
+    navigate(`/review/${id}`);
   };
-  const handleCancel = () => {
-    alert('취소하기');
+  const handleCancel = (id: number) => {
+    openModal();
+    setCancelReserv(id);
   };
 
   const upperRightChip = (state: string) => {
@@ -51,7 +57,12 @@ const MyResevation = ({
     );
   };
 
-  const lowerRightButton = (state: string, cancelMessage: string) => {
+  const lowerRightButton = (
+    state: string,
+    cancelMessage: string,
+    cancelId: number,
+    reviewId?: number,
+  ) => {
     if (!isReservExpired) {
       return state === '예약 거절' ? (
         <ReservButton
@@ -59,24 +70,38 @@ const MyResevation = ({
           status={state}
         />
       ) : (
-        <ReservButtonOutlined status="예약 취소" onClick={handleCancel} />
+        <ReservButtonOutlined
+          status="예약 취소"
+          onClick={() => handleCancel(cancelId)}
+        />
       );
     }
+
     let buttonFnc;
     switch (state) {
       case '예약 완료':
-        buttonFnc = () => handleReview();
+        buttonFnc = () => handleReview(reviewId || 0);
         break;
       case '예약 거절':
         buttonFnc = () => handleShowCancelMsg(cancelMessage || '');
         break;
+      case '예약 취소':
+        buttonFnc = () => handleCancel(cancelId);
+        break;
       default:
         buttonFnc = () => {};
     }
-    return <ReservButton status={state} onClick={buttonFnc} />;
+
+    return state === '예약 대기' ? (
+      <ReservButtonOutlined
+        status="예약 취소"
+        onClick={() => handleCancel(cancelId)}
+      />
+    ) : (
+      <ReservButton status={state} onClick={buttonFnc} />
+    );
   };
 
-  const myReservationData = myReservation.data as Reservation[];
   return (
     <div className="flex flex-col gap-48 w-full">
       <div className="text-20 font-semibold">예약 목록</div>
@@ -102,6 +127,8 @@ const MyResevation = ({
               lowerRight={lowerRightButton(
                 reservation.reservationState || '예약 대기',
                 reservation.cancelMsg || '',
+                reservation.id,
+                reservation.productOptionId,
               )}
             />
           ))}
@@ -112,7 +139,12 @@ const MyResevation = ({
         </div>
       )}
       <Modal isOpen={isModalOpen} closeModal={closeModal}>
-        {!!cancelMsg && <CancelMessage cancelMsg={cancelMsg} />}
+        {!!cancelMsg && (
+          <CancelMessage cancelMsg={cancelMsg} closeModal={closeModal} />
+        )}
+        {!!cancelReserv && (
+          <CancelReserv id={cancelReserv} closeModal={closeModal} />
+        )}
       </Modal>
     </div>
   );
