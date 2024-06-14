@@ -8,6 +8,11 @@ interface GetReservationProductOptionProps {
   productOptionId: number;
 }
 
+interface GetReservationManageProps {
+  partnerId: number;
+  categoryId: number;
+}
+
 interface PostReservationProps {
   userId: number;
   productOptionId: number;
@@ -25,6 +30,16 @@ interface DeleteReservationProps {
 const getReservationUser = ({ userId }: GetReservationUserProps) => {
   return instance({
     url: `/reservation/use/${userId}`,
+    method: 'GET',
+  });
+};
+
+const getReservationManage = ({
+  partnerId,
+  categoryId,
+}: GetReservationManageProps) => {
+  return instance({
+    url: `/reservation/partner/${partnerId}/category/${categoryId}`,
     method: 'GET',
   });
 };
@@ -72,6 +87,7 @@ const deleteReservation = ({ reservationId }: DeleteReservationProps) => {
 export default {
   getReservationUser,
   getReservationProductOption,
+  getReservationManage,
   postReservation,
   deleteReservation,
 };
