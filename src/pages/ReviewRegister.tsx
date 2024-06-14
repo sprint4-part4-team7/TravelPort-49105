@@ -4,7 +4,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import { useForm } from 'react-hook-form';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useModal from '@/hooks/useModal';
 import { useNavigate } from 'react-router-dom';
 import useReviewDefaults from '@/hooks/useReviewDefaults';
@@ -26,6 +26,7 @@ const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
     register,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors },
     clearErrors,
     watch,
@@ -46,6 +47,14 @@ const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
     useReviewDefaults(optionId);
   const { mutate, isLoading } = useReviewPostMutation();
   const userId = 3; // 추후 받아올 예정
+
+  // 버튼 활성화 여부 조절
+  const [isDisableToSubmit, setIsDisableToSubmit] = useState(true);
+  useEffect(() => {
+    if (getValues('score') !== 0 && getValues('reviewContent') !== '')
+      setIsDisableToSubmit(false);
+    else setIsDisableToSubmit(true);
+  }, [errors, getValues('score'), getValues('reviewContent')]);
 
   if (isLoading) return <Loading />;
 
@@ -70,7 +79,6 @@ const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
       reviewInfo: data,
     });
     const postedImages = await handleUpload();
-    console.log(postedImages);
     data.reviewImages = postedImages;
     console.log({ ...data });
     closeModal();
@@ -152,7 +160,9 @@ const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
       </h1>
       <ImageUpload onChange={handleImageChange} />
       <div className="mt-60">
-        <Button buttonType="submit">등록하기</Button>
+        <Button buttonType="submit" disabled={isDisableToSubmit}>
+          등록하기
+        </Button>
       </div>
       <Modal isOpen={isModalOpen} closeModal={closeModal}>
         <div className="p-16">리뷰를 등록하시겠습니까?</div>
