@@ -19,6 +19,7 @@ import PartnerMain from '@/pages/PartnerMain';
 import NoPage from '@/pages/NoPage';
 import PreparingPage from '@/pages/PreparingPage';
 import Cart from '@/pages/Cart';
+import CheckoutCartPage from '@/pages/payments/CheckoutCartPage';
 
 const App = () => {
   return (
@@ -55,6 +56,7 @@ const App = () => {
         </Route>
         <Route path="payments">
           <Route index element={<CheckoutPage />} />
+          <Route path="cart" element={<CheckoutCartPage />} />
           <Route path="success" element={<SuccessPage />} />
           <Route path="fail" element={<FailPage />} />
         </Route>
