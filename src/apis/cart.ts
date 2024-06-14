@@ -25,13 +25,11 @@ const postCart = (
   });
 };
 
-const postCartReservation = (userId: number, cartId: number) => {
+const postCartReservation = (userId: number, cartIds: number) => {
   return instance({
     url: `/cart/reservation?userId=${userId}`,
     method: 'POST',
-    data: {
-      cartId,
-    },
+    data: cartIds,
   });
 };
 
