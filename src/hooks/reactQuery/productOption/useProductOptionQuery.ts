@@ -7,9 +7,9 @@ const useProductOptionQuery = (optionId: number) => {
     queryFn: () => productOptionApi.getProductOptionByOptionId(optionId),
   });
 
-  const productionOption = data?.data;
+  const productOption = data?.data;
 
-  return { productionOption, isLoading, error };
+  return { productOption, isLoading, error };
 };
 
 export default useProductOptionQuery;

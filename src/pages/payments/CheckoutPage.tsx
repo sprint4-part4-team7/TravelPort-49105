@@ -18,7 +18,7 @@ const CheckoutPage = () => {
   const { data: timeTableOptionData } = useTilmeTabaleOptionQuery(optionId);
   const { data: timeTableData } = useTilmeTabaleQuery(2);
   const {
-    productionOption: productOptionData,
+    productOption: productOptionData,
     isLoading,
     error,
   } = useProductOptionQuery(optionId);

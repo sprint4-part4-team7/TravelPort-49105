@@ -7,20 +7,38 @@ import STAR_FILL from '@/assets/images/star-fill.svg';
 import { useEffect, useState } from 'react';
 import instance from '@/utils/axios';
 import { ReviewData } from '@/constants/types';
+import useReviewByProductIdQuery from '@/hooks/reactQuery/review/useReviewByProductIdQuery';
+import Pagination from './common/Pagination';
 
 type ReviewProps = {
   review: ReviewData;
+  productId: number;
 };
 
-const Review = ({ review }: ReviewProps) => {
+const Review = ({ review, productId }: ReviewProps) => {
   const [isComment, setIsComment] = useState(false);
   const [reviewImages, setReviewImages] = useState<string[]>([]);
   const [reviewContent, setReviewContent] = useState('');
   const [score, setScore] = useState(0);
-  const [userId, setUserId] = useState<number>(0);
-  const [productOptionId, setProductOptionId] = useState<number>(0);
   const [partnerAnswer, setPartnerAnswer] = useState<string | null>();
   const [createdAt, setCreatedAt] = useState<string>();
+  const [pageNum, setPageNum] = useState(1); // 현재 클릭된 페이지 숫자
+  const [dataByPage, setDataByPage] = useState<any>(); // 페이지 별 데이터
+  console.log(dataByPage);
+  const { reviewByProductIdResponse } = useReviewByProductIdQuery(productId);
+  console.log(reviewByProductIdResponse);
+  const LIMIT = 3;
+  const offset = pageNum - 1;
+
+  useEffect(() => {
+    const fetchByOffset = async (offsetNum: number) => {
+      const response = await instance.get(
+        `/review/product/${productId}?offset=${offsetNum}&limit=${LIMIT}`,
+      );
+      setDataByPage(response.data);
+    };
+    fetchByOffset(offset);
+  }, [offset, productId]);
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
@@ -33,8 +51,6 @@ const Review = ({ review }: ReviewProps) => {
 
   const handleReview = () => {
     const reviewScore = review.score !== null ? Math.round(review.score) : 0;
-    setUserId(review.userId);
-    setProductOptionId(review.productOptionId);
     setReviewContent(review.reviewContent);
     setScore(reviewScore);
     setReviewImages(review.reviewImages);
@@ -46,26 +62,26 @@ const Review = ({ review }: ReviewProps) => {
   // 유저 정보를 확인할 수 있는 API 구현 시 추가 예정
   // const [profileImg, setProfileImg] = useState();
   // const [userName, setUserName] = useState();
-  const [productOption, setProductOption] = useState<string | null>();
-  const handleUserProduct = async (oId: number) => {
-    try {
-      const res = await instance.get(`/productOption/${oId}`);
-      const result = res.data;
-      const optionName = result.optionName !== null ? result.optionName : '';
-      setProductOption(optionName);
-    } catch (error: any) {
-      console.error(error.message);
-    }
-  };
+  // const [productOption, setProductOption] = useState<string | null>();
+  // const handleUserProduct = async (oId: number) => {
+  //   try {
+  //     const res = await instance.get(`/productOption/${oId}`);
+  //     const result = res.data;
+  //     const optionName = result.optionName !== null ? result.optionName : '';
+  //     setProductOption(optionName);
+  //   } catch (error: any) {
+  //     console.error(error.message);
+  //   }
+  // };
 
   useEffect(() => {
     handleReview();
   }, []);
-  useEffect(() => {
-    if (productOptionId > 0) {
-      handleUserProduct(productOptionId);
-    }
-  }, [productOptionId]);
+  // useEffect(() => {
+  //   if (productOptionId > 0) {
+  //     handleUserProduct(productOptionId);
+  //   }
+  // }, [productOptionId]);
 
   // 판매자 댓글 클릭 시, 댓글 내용이 보이게 하도록 하는 handler 함수
   const handleComment = () => {
@@ -73,25 +89,26 @@ const Review = ({ review }: ReviewProps) => {
   };
 
   // error 방지를 위한 임시 console.log(추후 삭제 예정)
-  console.log(reviewImages, userId);
+  console.log(reviewImages);
 
   return (
-    <div
-      className="inline-flex flex-col w-full min-w-335 gap-28 px-20 py-28
+    <>
+      <div
+        className="inline-flex flex-col w-full min-w-335 gap-28 px-20 py-28
     border-b-1 border-solid border-black-4
     text-14"
-    >
-      <div className="flex items-center gap-10 text-13 font-medium">
-        <img
-          className="border-1 border-solid rounded-full border-black-6"
-          alt="프로필 이미지"
-          width="32px"
-          height="32px"
-        />
-        프로필
-      </div>
-      <div className="flex overflow-x-auto w-full gap-4">
-        {/* {reviewImages &&
+      >
+        <div className="flex items-center gap-10 text-13 font-medium">
+          <img
+            className="border-1 border-solid rounded-full border-black-6"
+            alt="프로필 이미지"
+            width="32px"
+            height="32px"
+          />
+          프로필
+        </div>
+        <div className="flex overflow-x-auto w-full gap-4">
+          {/* {reviewImages &&
           reviewImages.length > 0 &&
           reviewImages.map((image, index) => (
             <>
@@ -105,101 +122,112 @@ const Review = ({ review }: ReviewProps) => {
               />
             </>
           ))} */}
-        <img
-          className="border-1 border-solid rounded-lg border-black-6"
-          alt="리뷰 이미지1"
-          width="90px"
-          height="90px"
-        />
-        <img
-          className="border-1 border-solid rounded-lg border-black-6"
-          alt="리뷰 이미지2"
-          width="90px"
-          height="90px"
-        />
-        <img
-          className="border-1 border-solid rounded-lg border-black-6"
-          alt="리뷰 이미지3"
-          width="90px"
-          height="90px"
-        />
-        <img
-          className="border-1 border-solid rounded-lg border-black-6"
-          alt="리뷰 이미지4"
-          width="90px"
-          height="90px"
-        />
-        <img
-          className="border-1 border-solid rounded-lg border-black-6"
-          alt="리뷰 이미지5"
-          width="90px"
-          height="90px"
-        />
-      </div>
-      <div>
-        <div className="flex flex-col gap-4">
-          <div className="flex">
-            {[...Array(5)].map((_, index) => {
-              return (
+          <img
+            className="border-1 border-solid rounded-lg border-black-6"
+            alt="리뷰 이미지1"
+            width="90px"
+            height="90px"
+          />
+          <img
+            className="border-1 border-solid rounded-lg border-black-6"
+            alt="리뷰 이미지2"
+            width="90px"
+            height="90px"
+          />
+          <img
+            className="border-1 border-solid rounded-lg border-black-6"
+            alt="리뷰 이미지3"
+            width="90px"
+            height="90px"
+          />
+          <img
+            className="border-1 border-solid rounded-lg border-black-6"
+            alt="리뷰 이미지4"
+            width="90px"
+            height="90px"
+          />
+          <img
+            className="border-1 border-solid rounded-lg border-black-6"
+            alt="리뷰 이미지5"
+            width="90px"
+            height="90px"
+          />
+        </div>
+        <div>
+          <div className="flex flex-col gap-4">
+            <div className="flex">
+              {[...Array(5)].map((_, index) => {
+                return (
+                  <img
+                    key={index}
+                    alt="star"
+                    width="16px"
+                    height="16px"
+                    src={index < score ? STAR_FILL : STAR_EMPTY}
+                  />
+                );
+              })}
+            </div>
+            <div className="flex flex-col gap-8">
+              <div className="w-full text-wrap text-14 font-semibold">
+                {reviewContent}
+              </div>
+              <div className="flex justify-between items-center">
+                <div
+                  className="border-1 border-solid border-black-5 rounded 
+                bg-black-3 text-11 px-8 py-4 text-black-12"
+                >
+                  {/* {productOption} */}
+                </div>
+                <div className="text-13 font-medium text-black-6">
+                  {createdAt}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {partnerAnswer && (
+          <div className="flex flex-col p-12">
+            <button
+              type="button"
+              className="inline-flex items-center gap-8 p-8 rounded w-fit hover:bg-black-3"
+              onClick={handleComment}
+            >
+              <div className="flex gap-4">
                 <img
-                  key={index}
-                  alt="star"
+                  alt="판매자 댓글 icon"
                   width="16px"
                   height="16px"
-                  src={index < score ? STAR_FILL : STAR_EMPTY}
+                  src={SMILE}
                 />
-              );
-            })}
-          </div>
-          <div className="flex flex-col gap-8">
-            <div className="w-full text-wrap text-14 font-semibold">
-              {reviewContent}
-            </div>
-            <div className="flex justify-between items-center">
-              <div
-                className="border-1 border-solid border-black-5 rounded 
-                bg-black-3 text-11 px-8 py-4 text-black-12"
-              >
-                {productOption}
+                <div className="text-13 text-blue-6 font-medium">
+                  판매자 댓글
+                </div>
               </div>
-              <div className="text-13 font-medium text-black-6">
-                {createdAt}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {partnerAnswer && (
-        <div className="flex flex-col p-12">
-          <button
-            type="button"
-            className="inline-flex items-center gap-8 p-8 rounded w-fit hover:bg-black-3"
-            onClick={handleComment}
-          >
-            <div className="flex gap-4">
-              <img
-                alt="판매자 댓글 icon"
-                width="16px"
-                height="16px"
-                src={SMILE}
-              />
-              <div className="text-13 text-blue-6 font-medium">판매자 댓글</div>
-            </div>
-            {isComment ? (
-              <img alt="화살표" width="16px" height="16px" src={ARROWDOWN} />
-            ) : (
-              <img alt="화살표" width="16px" height="16px" src={ARROWRIGHT} />
-            )}
-          </button>
+              {isComment ? (
+                <img alt="화살표" width="16px" height="16px" src={ARROWDOWN} />
+              ) : (
+                <img alt="화살표" width="16px" height="16px" src={ARROWRIGHT} />
+              )}
+            </button>
 
-          {isComment && (
-            <div className="p-8 w-full text-wrap text-13 font-medium">
-              {partnerAnswer}
-            </div>
-          )}
-        </div>
-      )}
-    </div>
+            {isComment && (
+              <div className="p-8 w-full text-wrap text-13 font-medium">
+                {partnerAnswer}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+      <div className="mx-auto w-fit">
+        <Pagination
+          pageNum={pageNum}
+          setPageNum={setPageNum}
+          allCardNum={0}
+          divNum={LIMIT}
+        />
+      </div>
+    </>
   );
 };
 

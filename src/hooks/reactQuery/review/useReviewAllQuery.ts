@@ -2,13 +2,22 @@ import { useQuery } from '@tanstack/react-query';
 import reviewApi from '@/apis/review';
 
 function useReviewAllQuery() {
-  return useQuery({
+  const {
+    data: reviewAllResponse,
+    isLoading: isLoadingReviews,
+    error: reviewsError,
+  } = useQuery({
     queryKey: ['getReviewAll'],
-    queryFn: async () => {
-      const { data } = await reviewApi.getReviewAll();
-      return data;
-    },
+    queryFn: reviewApi.getReviewAll,
   });
+
+  const reviewAll = reviewAllResponse?.data;
+
+  return {
+    reviewAll,
+    isLoadingReviews,
+    reviewsError,
+  };
 }
 
 export default useReviewAllQuery;

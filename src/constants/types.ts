@@ -64,12 +64,10 @@ export type DefaultOptionType = {
 
 export type ReviewData = {
   id: number;
-  userId: number;
-  productOptionId: number;
   score: number;
   reviewImages: string[];
   reviewContent: string;
-  partnerAnswer: string;
+  partnerAnswer?: string;
   createdAt: string;
 };
 

@@ -4,7 +4,6 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import useFetchDetails from '@/hooks/useFetchDetails';
-import getMinPrice from '@/utils/getMinPrice';
 import { useState } from 'react';
 import useProductReview from '@/hooks/useProductReview';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -17,7 +16,7 @@ import ReviewAverage from '@/components/review/ReviewAverage';
 import DetailInfo from '@/components/details/DetailInfo';
 
 const ProductDetails = () => {
-  const { productId } = useParams();
+  const { categoryId, productId } = useParams();
   const navigate = useNavigate();
   const productIdNum = Number(productId);
 
@@ -44,9 +43,7 @@ const ProductDetails = () => {
       <DetailsCarousel urls={newUrls} />
       <div className="flex flex-col gap-12 mt-32 mb-40 max-w-784 w-full mx-auto">
         <h1 className="text-20 font-bold">{product?.name}</h1>
-        <h2 className="text-20 font-bold mt-4">
-          {getMinPrice(options).toLocaleString()}원~
-        </h2>
+        <h2 className="text-20 font-bold mt-4">{product?.minPrice}원~</h2>
         <p className="text-16 mb-8">{product?.productDesc}</p>
 
         <div className="flex gap-8 text-17 font-semibold">
@@ -79,7 +76,11 @@ const ProductDetails = () => {
           </h1>
         </div>
         {activeTab === 'reservation' && (
-          <Reservation product={product} options={options} />
+          <Reservation
+            product={product}
+            options={options}
+            categoryId={Number(categoryId)}
+          />
         )}
         {activeTab === 'details' && <DetailInfo options={options} />}
         {activeTab === 'review' && (
@@ -88,12 +89,19 @@ const ProductDetails = () => {
             <h1 className="text-18 font-semibold py-16">
               리뷰
               <span className="text-blue-6 pl-11">
-                {productReviews.length}개
+                {productReviews?.length ? productReviews.length : 0}개
               </span>
             </h1>
-            {productReviews.map((review) => {
-              return <Review review={review} />;
-            })}
+            {!!productReviews?.length &&
+              productReviews.map((review) => {
+                return (
+                  <Review
+                    key={review.id}
+                    review={review}
+                    productId={productIdNum}
+                  />
+                );
+              })}
           </div>
         )}
       </div>
