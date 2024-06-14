@@ -22,12 +22,14 @@ import Pagination from '@/components/common/Pagination';
 import NoPage from './NoPage';
 import Layout from '@/components/common/layout/Layout';
 import Footer from '@/components/common/Footer';
+import Loading from '@/components/common/Loading';
 
 const ProductDetails = () => {
   const { categoryId, productId } = useParams();
   const productIdNum = Number(productId);
 
-  const { product, options } = useFetchDetails(productIdNum);
+  const { product, options, isLoadingProducts, isLoadingOptions } =
+    useFetchDetails(productIdNum);
   const { productAll } = useProductAllQuery();
 
   const [pageNum, setPageNum] = useState(1); // 현재 클릭된 페이지 숫자
@@ -63,6 +65,9 @@ const ProductDetails = () => {
     productAll.forEach((product: any) => {
       if (!idArray.includes(product.productId)) idArray.push(product.productId);
     });
+
+  // 로딩
+  if (isLoadingProducts || isLoadingOptions) return <Loading />;
 
   // productId 없으면 404페이지
   if (!productId || !idArray.includes(Number(productId))) return <NoPage />;
