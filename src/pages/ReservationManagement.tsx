@@ -1,19 +1,38 @@
 import ARROW from '@/assets/icons/arrowDown.svg';
 import { useEffect, useState } from 'react';
-import instance from '@/utils/axios';
 import { useUserStore } from '@/utils/zustand';
+import useReservationManageQuery from '@/hooks/reactQuery/reservation/useReservationManageQuery';
 import SearchBar from '@/components/common/SearchBar';
 import ReservedManageCard from '@/components/ReservedManageCard';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
 
 const ReservationManagement = () => {
   const { userInfo } = useUserStore();
-  const [isNew, setIsNew] = useState<boolean>(false);
+  const [isNew, setIsNew] = useState<boolean>(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
   const [lodgeData, setLodgeData] = useState<any[]>([]);
   const [activityData, setActivityData] = useState<any[]>([]);
   const [allData, setAllData] = useState<any[]>([]);
 
+  const { reservedData: lodge } = useReservationManageQuery({
+    partnerId: userInfo.id,
+    categoryId: 1,
+  });
+
+  const { reservedData: activity, error: acError } = useReservationManageQuery({
+    partnerId: userInfo.id,
+    categoryId: 2,
+  });
+
+  const sortData = (data: any[], postNew: boolean) => {
+    if (!Array.isArray(data)) return [];
+    return data.sort((a, b) => {
+      const timeA = new Date(a.createdAt).getTime();
+      const timeB = new Date(b.createdAt).getTime();
+      return postNew ? timeB - timeA : timeA - timeB;
+    });
+  };
+  console.log(acError);
   const toggleDropdown = () => {
     setIsNew(!isNew);
   };
@@ -21,33 +40,6 @@ const ReservationManagement = () => {
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(category);
   };
-
-  const getReservedData = async (
-    partnerId: number | undefined,
-    categoryId: number,
-  ) => {
-    try {
-      const res = await instance.get(
-        `/reservation/partner/${partnerId}/category/${categoryId}`,
-      );
-      const result = res.data;
-
-      return result;
-    } catch (e: any) {
-      return '';
-    }
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const lodge = await getReservedData(userInfo.id, 1);
-      const activity = await getReservedData(userInfo.id, 2);
-      setLodgeData(lodge);
-      setActivityData(activity);
-      setAllData([...lodge, ...activity]);
-    };
-    fetchData();
-  }, []);
 
   const getCategoryCount = (category: string) => {
     switch (category) {
@@ -68,13 +60,20 @@ const ReservationManagement = () => {
      text-20 font-semibold 
     ${selectedCategory === category ? 'border-solid border-b-1 border-black-12 text-black-12' : 'text-black-6'}`;
   };
-  console.log(allData);
 
   const [pageNum, setPageNum] = useState(1);
 
   const limit = 4;
   const start = (pageNum - 1) * limit;
   const end = start + limit;
+
+  useEffect(() => {
+    setLodgeData(sortData(lodge, isNew));
+    setActivityData(sortData(activity, isNew));
+    setAllData(sortData([...lodge, ...activity], isNew));
+  }, [isNew]);
+
+  sortData(activity, isNew);
 
   return (
     <div className="mx-10 my-0 w-1000">
