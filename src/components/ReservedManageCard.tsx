@@ -7,7 +7,6 @@ import {
   ReserveStatusType,
 } from '@/constants/reserveType';
 import instance from '@/utils/axios';
-import changeDateForm from '@/utils/changeDateForm';
 import Button from '@/components/common/Button';
 import ReservationCard from '@/components/common/reservPagination/ResevationCard';
 import ReservChips from '@/components/myPage/ReservChips';
@@ -55,9 +54,10 @@ const ReservedManageCard = ({
     <ReservationCard
       id={id}
       title={productOption.product.name}
-      date={`예약일시 : ${changeDateForm(reserveDate)}`}
+      date={reserveDate}
       option={productOption.optionName}
-      schedule={`일정 : ${changeDateForm(timeTable.targetDate)}, ${timeTable.startTimeOnly} ~ ${timeTable.endTimeOnly}`}
+      // schedule={`일정 : ${changeDateForm(timeTable.targetDate)}, ${timeTable.startTimeOnly} ~ ${timeTable.endTimeOnly}`}
+      time={timeTable}
       userInfo={`예약자명 : ${user.name} / 전화번호 : ${user.phone}`}
       upperRight={<ReservChips status={reservationState} />}
       lowerRight={

@@ -3,14 +3,14 @@ import { ReactNode } from 'react';
 
 interface ReservationCardProps {
   id: number;
-  title?: string;
+  title: string;
   date: string;
   time?: {
+    targetDate: string;
     startTimeOnly: string;
     endTimeOnly: string;
   };
   option?: string;
-  schedule?: string;
   userInfo?: string;
   upperRight?: ReactNode;
   lowerRight?: ReactNode;
@@ -22,7 +22,6 @@ const ReservationCard = ({
   date,
   time,
   option,
-  schedule,
   userInfo,
   upperRight,
   lowerRight,
@@ -32,7 +31,8 @@ const ReservationCard = ({
     time?.startTimeOnly && time.endTimeOnly
       ? `${time?.startTimeOnly} ~ ${time?.endTimeOnly}`
       : time?.startTimeOnly || time?.endTimeOnly || '';
-
+  const schedule = `일정 : ${formattedDate}${duration ? ', ' : ''}${duration}`;
+  const reservDate = `예약일시 : ${changeDateForm(date)}`;
   return (
     <div
       id={id ? id.toString() : 'undefined'}
@@ -51,7 +51,7 @@ const ReservationCard = ({
           <div className="text-16 font-medium">{userInfo}</div>
         </div>
         <div className="flex flex-row justify-between items-center">
-          <div className="text-16">{`일정 : ${formattedDate}${duration ? ', ' : ''}${duration}`}</div>
+          <div className="text-16">{reservDate}</div>
           {lowerRight}
         </div>
       </div>

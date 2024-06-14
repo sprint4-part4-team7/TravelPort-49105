@@ -11,6 +11,7 @@ import { ChangeEventHandler, useState } from 'react';
 import postImages from '@/apis/image';
 import BUCKER_NAME from '@/constants/bucket';
 import { ReactComponent as Delete } from '@/assets/icons/x-circle-custom.svg';
+import randomProfile from '@/utils/randomProfile';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 import Modal from '@/components/common/Modal';
@@ -35,6 +36,7 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
 
   const handleImgUpload: ChangeEventHandler<HTMLInputElement> = (e) => {
     const file = e.target.files?.[0];
+    console.log(file);
     if (!file) return;
     if (file.size > 10 * 1024 * 1024) {
       alert('10mb 이하의 파일만 업로드 가능합니다');
@@ -74,13 +76,13 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
         onSubmit={handleSubmit(handleSave)}
       >
         <div className="flex flex-row gap-24 items-center">
-          {instantImg ? (
-            <div className="relative">
-              <img
-                src={instantImg}
-                className="rounded-full w-140 h-140 object-cover"
-                alt="profile"
-              />
+          <div className="relative">
+            <img
+              src={instantImg || randomProfile}
+              className="rounded-full w-140 h-140 object-cover"
+              alt="profile"
+            />
+            {!!instantImg && (
               <button
                 type="button"
                 className="absolute top-12 right-12 bg-white rounded-full"
@@ -91,14 +93,13 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
               >
                 <Delete stroke="#000000" />
               </button>
-            </div>
-          ) : (
-            <div className="w-140 h-140 rounded-full relative bg-black-6">
-              <div className="absolute text-64 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                {userInfo.name[0]}
-              </div>
-            </div>
-          )}
+            )}
+          </div>
+          {/* // <div className="w-140 h-140 rounded-full relative bg-black-6">
+            //   <div className="absolute text-64 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            //     {userInfo.name[0]}
+            //   </div>
+            // </div> */}
           <div className="flex flex-col gap-12">
             <label
               htmlFor="profileImg"

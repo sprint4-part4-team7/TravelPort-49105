@@ -155,6 +155,10 @@ export interface Reservation {
     optionName: string;
     product: {
       name: string;
+      user: {
+        name: string;
+        phone: string;
+      };
     };
   };
   timeTable: {
