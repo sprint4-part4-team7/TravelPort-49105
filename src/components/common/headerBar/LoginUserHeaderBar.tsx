@@ -277,7 +277,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
             <div className="flex flex-col gap-16 px-24 border-solid py-28 border-b-1 border-black-3">
               <div className="flex items-center gap-13 ">
                 <img
-                  className="w-32 y-32"
+                  className="w-32 y-32 rounded-32"
                   src={user.image}
                   alt="프로필 이미지"
                 />
