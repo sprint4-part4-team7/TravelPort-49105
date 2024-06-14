@@ -25,6 +25,16 @@ const postCart = (
   });
 };
 
+const postCartReservation = (userId: number, cartId: number) => {
+  return instance({
+    url: `/cart/${userId}`,
+    method: 'POST',
+    data: {
+      cartId,
+    },
+  });
+};
+
 const deleteCartById = (cartId: number) => {
   return instance({
     url: `/cart/${cartId}`,
@@ -32,4 +42,4 @@ const deleteCartById = (cartId: number) => {
   });
 };
 
-export default { getCartById, postCart, deleteCartById };
+export default { getCartById, postCart, deleteCartById, postCartReservation };
