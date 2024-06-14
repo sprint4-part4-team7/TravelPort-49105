@@ -8,7 +8,7 @@ const ReviewRegist = () => {
   const oIdNum = Number(optionId);
   return (
     <>
-      <Layout main={false} category noSearch={false}>
+      <Layout>
         <ReviewRegister optionId={oIdNum} />
       </Layout>
       <Footer />

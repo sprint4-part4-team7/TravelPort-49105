@@ -20,6 +20,8 @@ import ReviewAverage from '@/components/review/ReviewAverage';
 import DetailInfo from '@/components/details/DetailInfo';
 import Pagination from '@/components/common/Pagination';
 import NoPage from './NoPage';
+import Layout from '@/components/common/layout/Layout';
+import Footer from '@/components/common/Footer';
 
 const ProductDetails = () => {
   const { categoryId, productId } = useParams();
@@ -27,16 +29,6 @@ const ProductDetails = () => {
 
   const { product, options } = useFetchDetails(productIdNum);
   const { productAll } = useProductAllQuery();
-
-  // 모든 상품의 productId array 구하기
-  const idArray: number[] = [];
-  productAll &&
-    productAll.forEach((product: any) => {
-      if (!idArray.includes(product.productId)) idArray.push(product.productId);
-    });
-
-  // productId 없으면 404페이지
-  if (!productId || !idArray.includes(Number(productId))) return <NoPage />;
 
   const [pageNum, setPageNum] = useState(1); // 현재 클릭된 페이지 숫자
   const [dataByPage, setDataByPage] = useState<any>(); // 페이지 별 리뷰 데이터
@@ -65,76 +57,91 @@ const ProductDetails = () => {
   if (product?.productImages)
     newUrls = [product?.thumbnail].concat(product?.productImages);
 
+  // 모든 상품의 productId array 구하기
+  const idArray: number[] = [];
+  productAll &&
+    productAll.forEach((product: any) => {
+      if (!idArray.includes(product.productId)) idArray.push(product.productId);
+    });
+
+  // productId 없으면 404페이지
+  if (!productId || !idArray.includes(Number(productId))) return <NoPage />;
+
   return (
-    <div className="max-w-784 mx-auto mt-100 mb-40 mobile:mt-40 mobile:px-20 tablet:px-20">
-      <DetailsCarousel urls={newUrls} />
-      <div className="flex flex-col gap-12 mt-32 mb-40 max-w-784 w-full mx-auto">
-        <h1 className="text-20 font-bold">{product?.name}</h1>
-        <h2 className="text-20 font-bold mt-4">{product?.minPrice}원~</h2>
-        <p className="text-16 mb-8">{product?.productDesc}</p>
+    <>
+      <Layout>
+        <div className="max-w-784 mx-auto mt-100 mb-40 mobile:mt-40 mobile:px-20 tablet:px-20">
+          <DetailsCarousel urls={newUrls} />
+          <div className="flex flex-col gap-12 mt-32 mb-40 max-w-784 w-full mx-auto">
+            <h1 className="text-20 font-bold">{product?.name}</h1>
+            <h2 className="text-20 font-bold mt-4">{product?.minPrice}원~</h2>
+            <p className="text-16 mb-8">{product?.productDesc}</p>
 
-        <div className="flex gap-8 text-17 font-semibold">
-          <SalesPeriod product={product} />
-        </div>
+            <div className="flex gap-8 text-17 font-semibold">
+              <SalesPeriod product={product} />
+            </div>
 
-        <div className="flex gap-8 text-17 font-semibold">
-          <LocationMap product={product} />
-        </div>
-      </div>
-      <div className="max-w-784 w-full mx-auto">
-        <div className="flex justify-center items-center my-20">
-          <h1
-            onClick={() => handleTabClick('reservation')}
-            className={`${activeTab === 'reservation' && 'rounded-8 bg-black-7 text-white'} p-12 text-14 font-semibold flex-1 text-center bg-black-3 cursor-pointer`}
-          >
-            예약하기
-          </h1>
-          <h1
-            onClick={() => handleTabClick('details')}
-            className={`${activeTab === 'details' && 'rounded-8 bg-black-7 text-white'} p-12 text-14 font-semibold flex-1 text-center bg-black-3 cursor-pointer`}
-          >
-            상세정보
-          </h1>
-          <h1
-            onClick={() => handleTabClick('review')}
-            className={`${activeTab === 'review' && 'rounded-8 bg-black-7 text-white'} p-12 text-14 font-semibold flex-1 text-center bg-black-3 cursor-pointer`}
-          >
-            리뷰
-          </h1>
-        </div>
-        {activeTab === 'reservation' && (
-          <Reservation
-            product={product}
-            options={options}
-            categoryId={Number(categoryId)}
-          />
-        )}
-        {activeTab === 'details' && <DetailInfo options={options} />}
-        {activeTab === 'review' && (
-          <div className="mt-60">
-            <ReviewAverage productId={productIdNum} />
-            <h1 className="text-18 font-semibold py-16">
-              리뷰
-              <span className="text-blue-6 pl-11">
-                {productReviews?.length ? productReviews.length : 0}개
-              </span>
-            </h1>
-            {!!dataByPage?.length &&
-              dataByPage.map((review: any) => {
-                return <Review key={review.id} review={review} />;
-              })}
-            <div className="mx-auto w-fit py-20">
-              <Pagination
-                pageNum={pageNum}
-                setPageNum={setPageNum}
-                allCardNum={reviewByProductId.length}
-                divNum={LIMIT}
-              />
+            <div className="flex gap-8 text-17 font-semibold">
+              <LocationMap product={product} />
             </div>
           </div>
-        )}
-      </div>
-    </div>
+          <div className="max-w-784 w-full mx-auto">
+            <div className="flex justify-center items-center my-20">
+              <h1
+                onClick={() => handleTabClick('reservation')}
+                className={`${activeTab === 'reservation' && 'rounded-8 bg-black-7 text-white'} p-12 text-14 font-semibold flex-1 text-center bg-black-3 cursor-pointer`}
+              >
+                예약하기
+              </h1>
+              <h1
+                onClick={() => handleTabClick('details')}
+                className={`${activeTab === 'details' && 'rounded-8 bg-black-7 text-white'} p-12 text-14 font-semibold flex-1 text-center bg-black-3 cursor-pointer`}
+              >
+                상세정보
+              </h1>
+              <h1
+                onClick={() => handleTabClick('review')}
+                className={`${activeTab === 'review' && 'rounded-8 bg-black-7 text-white'} p-12 text-14 font-semibold flex-1 text-center bg-black-3 cursor-pointer`}
+              >
+                리뷰
+              </h1>
+            </div>
+            {activeTab === 'reservation' && (
+              <Reservation
+                product={product}
+                options={options}
+                categoryId={Number(categoryId)}
+              />
+            )}
+            {activeTab === 'details' && <DetailInfo options={options} />}
+            {activeTab === 'review' && (
+              <div className="mt-60">
+                <ReviewAverage productId={productIdNum} />
+                <h1 className="text-18 font-semibold py-16">
+                  리뷰
+                  <span className="text-blue-6 pl-11">
+                    {productReviews?.length ? productReviews.length : 0}개
+                  </span>
+                </h1>
+                {!!dataByPage?.length &&
+                  dataByPage.map((review: any) => {
+                    return <Review key={review.id} review={review} />;
+                  })}
+                <div className="mx-auto w-fit py-20">
+                  <Pagination
+                    pageNum={pageNum}
+                    setPageNum={setPageNum}
+                    allCardNum={reviewByProductId.length}
+                    divNum={LIMIT}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </Layout>
+      <Footer />
+    </>
   );
 };
 
