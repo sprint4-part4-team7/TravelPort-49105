@@ -1,12 +1,15 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable consistent-return */
 /* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import useFetchDetails from '@/hooks/useFetchDetails';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useProductReview from '@/hooks/useProductReview';
 import { useNavigate, useParams } from 'react-router-dom';
+import useReviewByProductIdQuery from '@/hooks/reactQuery/review/useReviewByProductIdQuery';
+import instance from '@/utils/axios';
 import LocationMap from '@/components/details/LocationMap';
 import SalesPeriod from '@/components/details/SalesPeriod';
 import Reservation from '@/components/details/Reservation';
@@ -14,6 +17,7 @@ import DetailsCarousel from '@/components/details/DetailsCarousel';
 import Review from '@/components/Review';
 import ReviewAverage from '@/components/review/ReviewAverage';
 import DetailInfo from '@/components/details/DetailInfo';
+import Pagination from '@/components/common/Pagination';
 
 const ProductDetails = () => {
   const { categoryId, productId } = useParams();
@@ -22,8 +26,24 @@ const ProductDetails = () => {
 
   const { product, options } = useFetchDetails(productIdNum);
 
+  const [pageNum, setPageNum] = useState(1); // 현재 클릭된 페이지 숫자
+  const [dataByPage, setDataByPage] = useState<any>(); // 페이지 별 리뷰 데이터
+  const { reviewByProductId } = useReviewByProductIdQuery(Number(productId));
+  const LIMIT = 3;
+  const offset = pageNum - 1;
+
+  useEffect(() => {
+    const fetchByOffset = async (productId: number, offsetNum: number) => {
+      const response = await instance.get(
+        `/review/product/${productId}?offset=${offsetNum}&limit=${LIMIT}`,
+      );
+      setDataByPage(response.data);
+    };
+    fetchByOffset(productIdNum, offset);
+  }, [offset, productIdNum]);
+
   // productId 없으면 메인페이지로 redirect
-  if (!product || (product && !productId?.includes(String(product.id)))) {
+  if (!product || !productId?.includes(String(product.id))) {
     navigate('/');
   }
 
@@ -92,16 +112,18 @@ const ProductDetails = () => {
                 {productReviews?.length ? productReviews.length : 0}개
               </span>
             </h1>
-            {!!productReviews?.length &&
-              productReviews.map((review) => {
-                return (
-                  <Review
-                    key={review.id}
-                    review={review}
-                    productId={productIdNum}
-                  />
-                );
+            {!!dataByPage?.length &&
+              dataByPage.map((review: any) => {
+                return <Review key={review.id} review={review} />;
               })}
+            <div className="mx-auto w-fit py-20">
+              <Pagination
+                pageNum={pageNum}
+                setPageNum={setPageNum}
+                allCardNum={reviewByProductId.length}
+                divNum={LIMIT}
+              />
+            </div>
           </div>
         )}
       </div>

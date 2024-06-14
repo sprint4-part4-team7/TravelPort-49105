@@ -4,7 +4,7 @@ import logo from '@/assets/icons/travelPortLogo.svg';
 import { useNavigate } from 'react-router-dom';
 import { getCookie } from '@/utils/cookie';
 import useSearchData from '@/hooks/useSearchData';
-import uniqueProduct from '@/utils/uniqueProduct';
+import { uniqueProduct } from '@/utils/uniqueProduct';
 import { useUserStore } from '@/utils/zustand';
 import useProductOptionAll from '@/hooks/reactQuery/productOption/useProductOptionAllQuery';
 import LoginUserHeaderBar from '@/components/common/headerBar/LoginUserHeaderBar';

@@ -1,9 +1,10 @@
-import instance from '@/utils/axios';
 import { useEffect, useState } from 'react';
 import STAR from '@/assets/images/star-fill.svg';
+import useReviewByProductIdQuery from '@/hooks/reactQuery/review/useReviewByProductIdQuery';
+import { uniqueReview } from '@/utils/uniqueProduct';
 
 type ReviewProps = {
-  productId?: number;
+  productId: number;
 };
 
 const ReviewAverage = ({ productId }: ReviewProps) => {
@@ -12,26 +13,11 @@ const ReviewAverage = ({ productId }: ReviewProps) => {
   const scoreArray = [0, 0, 0, 0, 0, 0];
   const reviewLength = reviews.length;
 
-  const handleReview = async (pId: number = 0) => {
-    try {
-      const res = await instance.get(`/review/product/${pId}`);
-      const result = res.data;
-      const uniqueResult: number[] = [];
-      result.forEach((oneResult: { userId: number }) => {
-        if (!uniqueResult.includes(oneResult.userId)) {
-          uniqueResult.push(oneResult.userId);
-        }
-      });
-      setReviews(result);
-      setReviewNum(uniqueResult.length);
-    } catch (error: any) {
-      console.error(error.message);
-    }
-  };
-
+  const { reviewByProductId } = useReviewByProductIdQuery(productId);
   useEffect(() => {
-    handleReview(productId);
-  }, [productId]);
+    setReviews(reviewByProductId);
+    setReviewNum(uniqueReview(reviews).length);
+  }, [reviews, reviewNum]);
 
   let scoreTotal = 0;
   let scoreAvg = 0;

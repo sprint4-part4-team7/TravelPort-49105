@@ -19,8 +19,8 @@ const CheckoutPage = () => {
   const { data: timeTableData } = useTilmeTabaleQuery(2);
   const {
     productOption: productOptionData,
-    isLoading,
-    error,
+    isLoadingOption,
+    optionError,
   } = useProductOptionQuery(optionId);
   const { userInfo } = useUserStore();
 
@@ -71,8 +71,8 @@ const CheckoutPage = () => {
     customerEmail,
   );
 
-  if (isLoading) return <Loading />;
-  if (error) return <h1>error...</h1>;
+  if (isLoadingOption) return <Loading />;
+  if (optionError) return <h1>error...</h1>;
 
   return (
     <>

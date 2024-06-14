@@ -11,10 +11,7 @@ const useProductOptionByProductIdQuery = (productId: number) => {
     queryFn: () => productOptionApi.getProductOptions(productId),
   });
 
-  console.log(productOptionResponse);
-
   const productOption = productOptionResponse?.data;
-
   return { productOption, isLoadingOptions, optionsError };
 };
 

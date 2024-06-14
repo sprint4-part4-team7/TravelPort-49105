@@ -69,6 +69,9 @@ export type ReviewData = {
   reviewContent: string;
   partnerAnswer?: string;
   createdAt: string;
+  userName: string;
+  userProfileImage: string;
+  optionName: string;
 };
 
 export type CardListsType = {
