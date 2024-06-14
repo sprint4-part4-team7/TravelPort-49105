@@ -32,7 +32,6 @@ const postImages = async (data: File[], bucket: string) => {
       contentType: file.type,
     };
   });
-
   // presigned URL 요청
   const response = await postImageDatas({
     items: imageDatas,

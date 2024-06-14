@@ -8,9 +8,9 @@ import React, { useState } from 'react';
 import useModal from '@/hooks/useModal';
 import { useNavigate } from 'react-router-dom';
 import useReviewDefaults from '@/hooks/useReviewDefaults';
-import productOption from '@/apis/productOption';
-import useProductOptionQuery from '@/hooks/reactQuery/productOption/useProductOptionQuery';
 import useReviewPostMutation from '@/hooks/reactQuery/review/useReviewPostMutation';
+import BUCKER_NAME from '@/constants/bucket';
+import postImages from '@/apis/image';
 import TextBox from '@/components/common/TextBox';
 import ReviewStar from '@/components/review/ReviewStar';
 import Button from '@/components/common/Button';
@@ -38,26 +38,40 @@ const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
     },
   });
 
-  const [postImages, setPostImages] = useState<(null | File)[]>([]);
+  const [postingImages, setPostingImages] = useState<(null | File)[]>([]);
 
   const { isModalOpen, openModal, closeModal } = useModal();
   const navigate = useNavigate();
   const { productOption, optionTitle, productName } =
     useReviewDefaults(optionId);
   const { mutate, isLoading } = useReviewPostMutation();
-  const userId = 3;
+  const userId = 3; // 추후 받아올 예정
 
   if (isLoading) return <Loading />;
 
+  // 이미지 업로드 함수
+  const handleUpload = async () => {
+    // 이미지 배열과 버켓 이름을 인자로 넘겨 업로드하고
+    // 반환되는 배열에 담긴 이미지 주소를 이용하자!
+    // response에 url 배열이 담김
+    const filteredPostImages = postingImages.filter(
+      (image): image is File => image !== null,
+    );
+    const response = await postImages(filteredPostImages, BUCKER_NAME.REVIEW);
+    return response;
+    // 참고로 이미지 순서는 배열로 보낸 순서대로 반환됨
+  };
+
   const onSubmit = async (data: any) => {
-    // mutate({
-    //   userId,
-    //   productOptionId: optionId,
-    //   productId: productOption.product.productId,
-    //   reviewInfo: data,
-    // });
-    const filteredPostImages = postImages.filter((image) => image !== null);
-    data.reviewImages = filteredPostImages;
+    mutate({
+      userId,
+      productOptionId: optionId,
+      productId: productOption.product.id,
+      reviewInfo: data,
+    });
+    const postedImages = await handleUpload();
+    console.log(postedImages);
+    data.reviewImages = postedImages;
     console.log({ ...data });
     closeModal();
   };
@@ -84,7 +98,7 @@ const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
     postImageArr: (null | File)[],
   ) => {
     setValue('reviewImages', selectedImages);
-    setPostImages(postImageArr);
+    setPostingImages(postImageArr);
   };
 
   const handleFormSubmit = () => {

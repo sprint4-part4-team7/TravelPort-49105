@@ -27,6 +27,8 @@ const Review = ({ review }: ReviewProps) => {
   const created = changeDateForm(createdAt);
   const [isComment, setIsComment] = useState(false);
 
+  const filteredImages = reviewImages.filter((image: string) => image !== '');
+
   // 판매자 댓글 클릭 시, 댓글 내용이 보이게 하도록 하는 handler 함수
   const handleComment = () => {
     setIsComment(!isComment);
@@ -49,8 +51,8 @@ const Review = ({ review }: ReviewProps) => {
         {userName}
       </div>
       <div className="flex overflow-x-auto w-full pt-14">
-        {!!reviewImages?.length &&
-          reviewImages.map((image, index) => (
+        {!!filteredImages?.length &&
+          filteredImages.map((image, index) => (
             <img
               key={index}
               alt="리뷰 이미지"
