@@ -1,46 +1,40 @@
 import { useForm } from 'react-hook-form';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import CheckButton from './CheckButton';
 import Description from './Description';
+import { PageIdProps } from './productPage';
 
 type CategoryForm = {
   category: string;
 };
 
-type CategoryIdProps = {
-  setPage: Dispatch<SetStateAction<React.ReactNode>>;
-};
-
-const Category = ({ setPage }: CategoryIdProps) => {
-  const { register, handleSubmit, watch, setValue } = useForm<CategoryForm>({
+const Category = ({ setPage }: PageIdProps) => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { isValid },
+  } = useForm<CategoryForm>({
     mode: 'onChange',
   });
 
   const preCategoryValue = watch('category'); // register의 category값을 감시(숙박input이 들어가나, 체험input이들어가나)
 
-  const [disabled, setDisabled] = useState(true); // [버튼] disabled 된게 초기설정
-
   useEffect(() => {
-    if (localStorage.getItem('categoryId') === '3') {
+    if (localStorage.getItem('categoryId') === '1') {
       setValue('category', '숙박'); // setValue를 사용하여 category에 원래있던 기초값을 전달
-    } else if (localStorage.getItem('categoryId') === '20') {
+    } else if (localStorage.getItem('categoryId') === '2') {
       setValue('category', '체험'); // setValue를 사용하여 category에 원래있던 기초값을 전달
     }
   }, []);
 
   const onSubmit = (data: CategoryForm) => {
-    setPage(<Description />);
+    setPage(<Description setPage={setPage} />);
     if (data.category === '숙박') {
       localStorage.setItem('categoryId', '3'); // 서버 바뀌면 1
     } else if (data.category === '체험') {
       localStorage.setItem('categoryId', '20'); // 서버 바뀌면 2
-    }
-  };
-
-  // [버튼] input 클릭시 abled
-  const handleButton = () => {
-    if (preCategoryValue !== 'undefined') {
-      setDisabled(false);
     }
   };
 
@@ -57,15 +51,13 @@ const Category = ({ setPage }: CategoryIdProps) => {
               className="inline-flex items-center justify-between w-full p-5 text-black-6 bg-white border border-dashed border-black-6 rounded-lg cursor-pointer has-[:checked]:border-blue-6 has-[:checked]:text-blue-6 hover:text-black-7 hover:bg-black-2 dark:text-black-5"
             >
               <input
-                {...register('category')}
+                {...register('category', { required: true })}
                 type="radio"
                 id="accommodation"
                 name="category"
                 value="숙박"
                 className="hidden"
-                required
                 checked={preCategoryValue === '숙박'}
-                onClick={handleButton}
               />
               <div className="flex flex-col h-200 p-3 justify-center items-center flex-[1_0_0]">
                 <p className="w-full text-22 font-semibold text-center">숙박</p>
@@ -81,14 +73,13 @@ const Category = ({ setPage }: CategoryIdProps) => {
               className="inline-flex items-center justify-between w-full p-5 text-black-6 bg-white border border-dashed border-black-6 rounded-lg cursor-pointer has-[:checked]:border-blue-6 has-[:checked]:text-blue-6 hover:text-black-7 hover:bg-black-2 dark:text-black-5"
             >
               <input
-                {...register('category')}
+                {...register('category', { required: true })}
                 type="radio"
                 id="attraction"
                 name="category"
                 value="체험"
                 className="hidden"
                 checked={preCategoryValue === '체험'}
-                onClick={handleButton}
               />
               <div className="flex flex-col h-200 p-3 justify-center items-center flex-[1_0_0]">
                 <p className="w-full text-22 font-semibold text-center">체험</p>
@@ -99,7 +90,7 @@ const Category = ({ setPage }: CategoryIdProps) => {
             </label>
           </li>
         </ul>
-        <CheckButton disabled={disabled} />
+        <CheckButton disabled={!isValid} />
       </form>
     </div>
   );
