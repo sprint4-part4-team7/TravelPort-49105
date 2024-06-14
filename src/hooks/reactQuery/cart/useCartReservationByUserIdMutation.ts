@@ -2,8 +2,8 @@ import cartApi from '@/apis/cart';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface CartReservationByUserIdMutationProps {
-  userId: number;
-  cartId: number;
+  userId: any;
+  cartIds: any;
 }
 
 const useCartReservationByUserIdMutation = () => {
@@ -12,9 +12,9 @@ const useCartReservationByUserIdMutation = () => {
   const mutation = useMutation({
     mutationFn: async ({
       userId,
-      cartId,
+      cartIds,
     }: CartReservationByUserIdMutationProps) => {
-      return cartApi.postCartReservation(userId, cartId);
+      return cartApi.postCartReservation(userId, cartIds);
     },
     onSuccess() {
       queryClient.invalidateQueries({
@@ -22,6 +22,7 @@ const useCartReservationByUserIdMutation = () => {
       });
     },
   });
+
   // 로딩 상태를 확인
   const isLoading = mutation.status === 'pending';
 

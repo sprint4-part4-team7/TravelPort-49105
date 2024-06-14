@@ -46,7 +46,7 @@ const Cart = () => {
 
   const handleCheckout = () => {
     setCartInfo(selectedItems);
-    navigate('/payments');
+    navigate('/payments/cart');
   };
 
   if (isLoading) return <Loading />;

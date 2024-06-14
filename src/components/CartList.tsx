@@ -20,7 +20,6 @@ interface CartListProps {
 }
 
 const CartList = ({ item, onSelect }: CartListProps) => {
-  console.log(item);
   const cartId = item?.id;
   const optionId = item?.productOption?.id ?? null;
   const timeTableId = item?.timeTable?.id ?? null;

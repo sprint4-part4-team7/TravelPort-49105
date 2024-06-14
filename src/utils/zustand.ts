@@ -82,7 +82,7 @@ interface CartInfo {
   option: string;
   day: any;
   count: number;
-  price: string | number;
+  price: number;
   maxCount: number;
 }
 
