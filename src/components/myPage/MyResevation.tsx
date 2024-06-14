@@ -77,7 +77,6 @@ const MyResevation = ({
   };
 
   const myReservationData = myReservation.data as Reservation[];
-
   return (
     <div className="flex flex-col gap-48 w-full">
       <div className="text-20 font-semibold">예약 목록</div>
@@ -92,9 +91,11 @@ const MyResevation = ({
             <ReservationCard
               key={reservation.id}
               id={reservation.id}
-              date={reservation.timeTable?.targetDate}
-              option={reservation.productOption?.optionName}
               title={reservation.productOption.product.name}
+              date={reservation.createdAt}
+              time={reservation.timeTable}
+              option={reservation.productOption?.optionName}
+              userInfo={`파트너명 : ${reservation.productOption.product.user.name} / 전화번호 : ${reservation.productOption.product.user.phone || '없음'}`}
               upperRight={upperRightChip(
                 reservation.reservationState || '예약 대기',
               )}
