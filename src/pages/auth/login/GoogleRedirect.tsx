@@ -1,19 +1,17 @@
-import { useGoogleLoginMutation } from '@/hooks/reactQuery/auth/useSocialLoginMutation';
-import { useEffect } from 'react';
+import { useGoogleLoginQuery } from '@/hooks/reactQuery/auth/useSocialLoginQuery';
+import Loading from '@/components/common/Loading';
 
 const GoogleRedirect = () => {
   const code = new URL(window.location.href).searchParams.get('code');
-  const { mutate } = useGoogleLoginMutation();
-
-  useEffect(() => {
-    if (code) {
-      mutate(code);
-    }
-  }, [code, mutate]);
+  const { isLoading } = useGoogleLoginQuery(code);
 
   return (
     <div>
-      <h1 className="text-3xl font-bold underline">Google Redirect Page</h1>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <h1 className="text-36 font-bold underline">Google Redirect Page</h1>
+      )}
     </div>
   );
 };

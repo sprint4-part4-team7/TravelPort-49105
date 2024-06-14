@@ -6,7 +6,7 @@ import SearchBar from '@/components/common/SearchBar';
 import ReservedManageCard from '@/components/ReservedManageCard';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
 
-const ReservationManagement = () => {
+const PostingManagement = () => {
   const { userInfo } = useUserStore();
   const [isNew, setIsNew] = useState<boolean>(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
@@ -221,4 +221,4 @@ const ReservationManagement = () => {
   );
 };
 
-export default ReservationManagement;
+export default PostingManagement;
