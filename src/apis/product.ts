@@ -16,21 +16,21 @@ interface ProductProps {
   closedDay: string[];
 }
 
-const getProductAll = () => {
+const getProductAll = async () => {
   return instance({
     url: '/product/all',
     method: 'GET',
   });
 };
 
-const getProductById = (productId: number) => {
+const getProductById = async (productId: number) => {
   return instance({
     url: `/product/${productId}`,
     method: 'GET',
   });
 };
 
-const putProduct = (
+const putProduct = async (
   productId: number,
   userId: number,
   categoryId: number,
@@ -47,14 +47,14 @@ const putProduct = (
   });
 };
 
-const deleteProductById = (productId: number) => {
+const deleteProductById = async (productId: number) => {
   return instance({
     url: `/product/${productId}`,
     method: 'DELETE',
   });
 };
 
-const postProduct = (
+const postProduct = async (
   userId: number,
   categoryId: number,
   productInfo: ProductProps,

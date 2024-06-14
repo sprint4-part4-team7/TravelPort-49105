@@ -3,10 +3,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import { useForm } from 'react-hook-form';
-// import { getDefaultOption } from '@/apis/review';
 import React, { useState } from 'react';
 import useModal from '@/hooks/useModal';
 import { useNavigate } from 'react-router-dom';
+import useReviewDefaults from '@/hooks/useReviewDefaults';
+import productOption from '@/apis/productOption';
+import useProductOptionQuery from '@/hooks/reactQuery/productOption/useProductOptionQuery';
 import TextBox from '@/components/common/TextBox';
 import ReviewStar from '@/components/review/ReviewStar';
 import Button from '@/components/common/Button';
@@ -30,23 +32,11 @@ const ReviewRegister = () => {
     },
   });
 
-  const [option, setOption] = useState('');
-  const [product, setProduct] = useState('');
   const [postImages, setPostImages] = useState<(null | File)[]>([]);
 
   const { isModalOpen, openModal, closeModal } = useModal();
   const navigate = useNavigate();
-
-  // 리액트 쿼리로 사용해야 해서 주석 처리 해놈 !
-  // useEffect(() => {
-  //   const fetchDefaultOption = async (optionId: number) => {
-  //     const { optionName, productName } =
-  //       await productOptionApi.getProductOptionByOptionId(optionId);
-  //     setOption(optionName);
-  //     setProduct(productName);
-  //   };
-  //   fetchDefaultOption(1); // 추후 옵션아이디로 변경 예정
-  // }, []);
+  const { optionTitle, productName } = useReviewDefaults(1);
 
   const onSubmit = async (data: any) => {
     // post 정상적으로 작동됨. 추후 userId, optionId로 변경 예정
@@ -102,10 +92,10 @@ const ReviewRegister = () => {
       <hr />
       <div className="flex flex-col gap-20 my-20">
         <div className="font-bold text-17">
-          상품 이름 <span className="font-normal">{product}</span>
+          상품 이름 <span className="font-normal">{productName}</span>
         </div>
         <div className="font-bold text-17">
-          옵션 <span className="font-normal">{option}</span>
+          옵션 <span className="font-normal">{optionTitle}</span>
         </div>
       </div>
       <hr />

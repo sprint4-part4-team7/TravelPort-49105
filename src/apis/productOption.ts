@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable prettier/prettier */
+// import { OptionbyIdData } from '@/constants/types';
 import instance from '@/utils/axios';
 
 interface ProductOptionProps {
@@ -23,14 +24,14 @@ const getProductOptionAll = async () => {
   });
 };
 
-const getProductOptionByOptionId = (productOptionId: number) => {
+const getProductOptionByOptionId = async (productOptionId: number) => {
   return instance({
     url: `/productOption/${productOptionId}`,
     method: 'GET',
   });
 };
 
-const putProductOption = (
+const putProductOption = async (
   productOptionId: number,
   productId: number,
   optionInfo: ProductOptionProps,
