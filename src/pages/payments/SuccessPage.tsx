@@ -4,7 +4,12 @@ import useReservationMutation from '@/hooks/reactQuery/reservation/useReservatio
 import { useEffect } from 'react';
 import usePaymentPutMutation from '@/hooks/reactQuery/payment/usePaymentPutMutation';
 import check from '@/assets/icons/check-circle-broken-pay.svg';
-import { useReservationStore } from '@/utils/zustand';
+import {
+  useCartStore,
+  useReservationStore,
+  useUserStore,
+} from '@/utils/zustand';
+import useCartReservationByUserIdMutation from '@/hooks/reactQuery/cart/useCartReservationByUserIdMutation';
 import Layout from '@/components/common/layout/Layout';
 import Button from '@/components/common/Button';
 import Loading from '@/components/common/Loading';
@@ -13,6 +18,8 @@ const SuccessPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const { userInfo } = useUserStore();
+  const { cartInfo } = useCartStore();
   const { reservationInfo } = useReservationStore();
   const [searchParams] = useSearchParams();
   const paymentKey = searchParams.get('paymentKey') ?? '';
@@ -26,11 +33,21 @@ const SuccessPage = () => {
   const {
     mutate: createReservation,
     isLoading,
-    reservationResponse,
+    // reservationResponse,
   } = useReservationMutation();
   // TODO: reservationResponse에서 paymentId 꺼내기 (지금은 대이터가 다 날아가서 확인 불가)
-  console.log(reservationResponse);
+  // console.log(reservationResponse);
   const { mutate: sendPayments } = usePaymentPutMutation();
+  const { mutate: cartReservation } = useCartReservationByUserIdMutation();
+
+  const cartReservationPost = async () => {
+    const userId = userInfo?.id;
+    const cartIds = [{ cartId: 1 }, { cartId: 2 }];
+    cartReservation({
+      userId,
+      cartIds,
+    });
+  };
 
   const reservationPost = async () => {
     createReservation({
@@ -54,7 +71,9 @@ const SuccessPage = () => {
   };
 
   useEffect(() => {
-    if (location.pathname === '/payments/success' && location.search) {
+    if (cartInfo) {
+      cartReservationPost();
+    } else if (location.pathname === '/payments/success' && location.search) {
       reservationPost();
       paymentPut();
     }
