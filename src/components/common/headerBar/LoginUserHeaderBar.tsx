@@ -181,11 +181,13 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
           />
         </button>
         {userInfo.isPartner === 0 && (
-          <img
-            className="h-[3.2rem] w-[3.2rem]"
-            src={cart}
-            alt="쇼핑 카트 아이콘"
-          />
+          <button type="button" onClick={() => navagate('/cart')}>
+            <img
+              className="h-[3.2rem] w-[3.2rem]"
+              src={cart}
+              alt="쇼핑 카트 아이콘"
+            />
+          </button>
         )}
       </div>
       <div className="hidden mobile:flex">
