@@ -20,6 +20,7 @@ const SuccessPage = () => {
 
   const { userInfo } = useUserStore();
   const { cartInfo } = useCartStore();
+  const cartIds = cartInfo.map((item) => ({ cartId: item.cartId }));
   const { reservationInfo } = useReservationStore();
   const [searchParams] = useSearchParams();
   const paymentKey = searchParams.get('paymentKey') ?? '';
@@ -42,7 +43,6 @@ const SuccessPage = () => {
 
   const cartReservationPost = async () => {
     const userId = userInfo?.id;
-    const cartIds = [{ cartId: 1 }, { cartId: 2 }];
     cartReservation({
       userId,
       cartIds,
@@ -73,6 +73,7 @@ const SuccessPage = () => {
   useEffect(() => {
     if (cartInfo) {
       cartReservationPost();
+      // TODO: cartReservationPost() 성공 시 delete 하기
     } else if (location.pathname === '/payments/success' && location.search) {
       reservationPost();
       paymentPut();
