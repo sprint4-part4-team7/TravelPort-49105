@@ -77,6 +77,7 @@ export const useReservationStore = create(
 );
 
 interface CartInfo {
+  cartId: number;
   name: string;
   option: string;
   day: any;
@@ -84,23 +85,25 @@ interface CartInfo {
   price: string | number;
   maxCount: number;
 }
+
 interface CartStore {
-  cartInfo: CartInfo;
-  setCartInfo: (cartInfo: CartInfo) => void;
+  cartInfo: CartInfo[];
+  setCartInfo: (cartInfo: CartInfo[]) => void;
+  addCartItem: (item: CartInfo) => void;
+  removeCartItem: (index: number) => void;
 }
 
 export const useCartStore = create(
   persist<CartStore>(
     (set) => ({
-      cartInfo: {
-        name: '',
-        option: '',
-        day: '',
-        count: 0,
-        price: 0,
-        maxCount: 0,
-      },
+      cartInfo: [],
       setCartInfo: (cartInfo) => set({ cartInfo }),
+      addCartItem: (item) =>
+        set((state) => ({ cartInfo: [...state.cartInfo, item] })),
+      removeCartItem: (index) =>
+        set((state) => ({
+          cartInfo: state.cartInfo.filter((_, i) => i !== index),
+        })),
     }),
     {
       name: 'cart',

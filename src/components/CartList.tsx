@@ -1,22 +1,49 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import minusPay from '@/assets/icons/minusPay.svg';
 import plusPay from '@/assets/icons/plusPay.svg';
 import useProductOptionQuery from '@/hooks/reactQuery/productOption/useProductOptionQuery';
-import useTilmeTabaleQuery from '@/hooks/reactQuery/timeTable/useTimeTableQuery';
+import useTimeTableQuery from '@/hooks/reactQuery/timeTable/useTimeTableQuery';
+import Loading from '@/components/common/Loading';
 
+interface CartInfo {
+  cartId: number;
+  name: string;
+  option: string;
+  day: any;
+  count: number;
+  price: string | number;
+  maxCount: number;
+}
 interface CartListProps {
   item: any;
-  onSelect: (price: number, isSelected: boolean) => void;
+  onSelect: (item: CartInfo, isSelected: boolean) => void;
 }
 
 const CartList = ({ item, onSelect }: CartListProps) => {
   console.log(item);
-  const optionId = item?.productOption.id;
-  const { productOption } = useProductOptionQuery(optionId);
-  const timeTableId = item.timeTable.id;
-  const { data: timeTableData } = useTilmeTabaleQuery(timeTableId);
+  const cartId = item?.id;
+  const optionId = item?.productOption?.id ?? null;
+  const timeTableId = item?.timeTable?.id ?? null;
 
-  const formatDate = (dateString: any) => {
+  const { productOption, isLoading: productOptionLoading } =
+    useProductOptionQuery(optionId);
+  const { data: timeTableData, isLoading: timeTableLoading } =
+    useTimeTableQuery(timeTableId);
+
+  const [count, setCount] = useState(item?.ticketCount);
+  const [isSelected, setIsSelected] = useState(false);
+
+  useEffect(() => {
+    // 상품 정보가 로딩된 후에 초기화
+    if (!productOptionLoading && !timeTableLoading) {
+      setCount(item?.ticketCount);
+      setIsSelected(false);
+    }
+  }, [item, productOptionLoading, timeTableLoading]);
+
+  if (productOptionLoading || timeTableLoading) return <Loading />;
+
+  const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const year = date.getFullYear().toString().slice(2);
     const month = (date.getMonth() + 1).toString();
@@ -35,55 +62,38 @@ const CartList = ({ item, onSelect }: CartListProps) => {
   const name = item?.productOption.product.name;
   const option = productOption?.optionName;
   const price = productOption?.optionPrice;
-  const totalCout = item?.ticketCount;
   const maxCount = productOption?.maxUserCount;
-  const [count, setCount] = useState(1);
-  const [isSelected, setIsSelected] = useState(false);
-
-  // useEffect(() => {
-  //   if (isSelected) {
-  //     const setCartInfo = useCartStore((state) => state.setCartInfo);
-  //     const newCartInfo = {
-  //       name,
-  //       option,
-  //       day,
-  //       count,
-  //       price,
-  //       maxCount,
-  //     };
-  //     setCartInfo(newCartInfo);
-  //   } else {
-  //     const setCartInfo = useCartStore((state) => state.setCartInfo);
-  //     const newCartInfo = {
-  //       name: '',
-  //       option: '',
-  //       day: '',
-  //       count: 0,
-  //       price: 0,
-  //       maxCount: 0,
-  //     };
-  //     setCartInfo(newCartInfo);
-  //   }
-  // }, [isSelected]);
 
   const handleSelect = () => {
     const newSelected = !isSelected;
     setIsSelected(newSelected);
-    onSelect(price * count, newSelected);
+
+    const selectedItem: CartInfo = {
+      cartId,
+      name,
+      option,
+      day,
+      count,
+      price,
+      maxCount,
+    };
+
+    onSelect(selectedItem, newSelected);
   };
 
   const increaseCount = () => {
-    setCount(count + 1);
-  };
-
-  const decreaseCount = () => {
-    if (count > 0) {
-      setCount(count - 1);
+    if (count < maxCount) {
+      setCount(count + 1);
     }
   };
 
+  const decreaseCount = () => {
+    if (count > 1) {
+      setCount(count - 1);
+    }
+  };
   return (
-    <div className="flex items-center py-16 border-solid border-b-1 border-black-3">
+    <div className="flex items-center py-16 border-solid border-b-1 border-black_3">
       <div className="flex justify-between w-full mobile:flex-col">
         <div className="flex">
           <div className="flex items-center justify-center mr-12">
@@ -113,13 +123,13 @@ const CartList = ({ item, onSelect }: CartListProps) => {
                 <div className="flex flex-row items-start gap-12 mobile:flex-col">
                   <div className="flex flex-row items-start gap-8">
                     <div className="font-normal text-16">옵션</div>
-                    <div className="px-8 py-4 font-normal border-solid text-11 bg-black-3 border-1 border-black-5 rounded-4">
+                    <div className="px-8 py-4 font-normal border-solid text-11 bg-black_3 border-1 border-black_5 rounded-4">
                       {option}
                     </div>
                   </div>
                   <div className="flex flex-row items-start gap-8">
                     <div className="font-normal text-16">날짜</div>
-                    <div className="px-8 py-4 font-normal border-solid text-11 bg-black-3 border-1 border-black-5 rounded-4">
+                    <div className="px-8 py-4 font-normal border-solid text-11 bg-black_3 border-1 border-black_5 rounded-4">
                       {day}
                     </div>
                   </div>
@@ -129,27 +139,27 @@ const CartList = ({ item, onSelect }: CartListProps) => {
           </div>
         </div>
         <div className="flex items-center ml-auto gap-60 mobile:justify-between mobile:w-full mobile:mt-40">
-          <div className="flex gap-16 px-6 py-4 border-solid border-1 border-black-4 rounded-4">
+          <div className="flex gap-16 px-6 py-4 border-solid border-1 border-black_4 rounded-4">
             <button
               type="button"
               onClick={decreaseCount}
               className="outline-none"
-              disabled={totalCout <= 1}
+              disabled={count <= 1}
             >
               <img src={minusPay} alt="마이너스 아이콘" />
             </button>
-            <div className="font-normal text-16">{totalCout}</div>
+            <div className="font-normal text-16">{count}</div>
             <button
               type="button"
               onClick={increaseCount}
               className="outline-none"
-              disabled={totalCout >= maxCount}
+              disabled={count >= maxCount}
             >
               <img src={plusPay} alt="플러스 아이콘" />
             </button>
           </div>
           <div className="flex font-semibold text-18 ">
-            {(price * count).toLocaleString()}원{' '}
+            {(price * count).toLocaleString()}원
           </div>
         </div>
       </div>

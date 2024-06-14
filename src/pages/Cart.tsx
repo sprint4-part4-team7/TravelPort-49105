@@ -1,26 +1,55 @@
-// Cart.tsx
 import React, { useState } from 'react';
 import useCartByUserIdQuery from '@/hooks/reactQuery/cart/useCartByUserIdQuery';
-import { useUserStore } from '@/utils/zustand';
+import { useUserStore, useCartStore } from '@/utils/zustand';
+import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/common/layout/Layout';
 import Footer from '@/components/common/Footer';
 import Button from '@/components/common/Button';
 import CartList from '@/components/CartList';
 import Loading from '@/components/common/Loading';
 
+interface CartInfo {
+  cartId: number;
+  name: string;
+  option: string;
+  day: any;
+  count: any;
+  price: any;
+  maxCount: number;
+}
+
 const Cart = () => {
+  const navigate = useNavigate();
   const { userInfo } = useUserStore();
   const userId = userInfo?.id;
   const { cartData, isLoading } = useCartByUserIdQuery(userId);
+  const [selectedItems, setSelectedItems] = useState<CartInfo[]>([]);
   const [selectedTotal, setSelectedTotal] = useState(0);
+  const setCartInfo = useCartStore((state) => state.setCartInfo);
+
+  const handleSelect = (item: CartInfo, isSelected: boolean) => {
+    setSelectedTotal((prevTotal) =>
+      isSelected
+        ? prevTotal + item.price * item.count
+        : prevTotal - item.price * item.count,
+    );
+
+    setSelectedItems((prevSelectedItems) => {
+      if (isSelected) {
+        return [...prevSelectedItems, item];
+      }
+      return prevSelectedItems.filter(
+        (selectedItem) => selectedItem.name !== item.name,
+      );
+    });
+  };
+
+  const handleCheckout = () => {
+    setCartInfo(selectedItems);
+    navigate('/payments');
+  };
 
   if (isLoading) return <Loading />;
-
-  const handleSelect = (price: number, isSelected: boolean) => {
-    setSelectedTotal((prevTotal) =>
-      isSelected ? prevTotal + price : prevTotal - price,
-    );
-  };
 
   return (
     <div>
@@ -62,7 +91,10 @@ const Cart = () => {
                   </div>
                 </div>
                 <div>
-                  <Button buttonStyle="font-normal text-16 p-12">
+                  <Button
+                    buttonStyle="font-normal text-16 p-12"
+                    onClick={handleCheckout}
+                  >
                     결제하기
                   </Button>
                 </div>
