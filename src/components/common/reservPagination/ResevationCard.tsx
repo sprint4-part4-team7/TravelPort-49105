@@ -1,4 +1,4 @@
-import { getDate } from '@/utils/getDate';
+import changeDateForm from '@/utils/changeDateForm';
 import { ReactNode } from 'react';
 
 interface ReservationCardProps {
@@ -27,7 +27,7 @@ const ReservationCard = ({
   upperRight,
   lowerRight,
 }: ReservationCardProps) => {
-  const formattedDate = getDate(date);
+  const formattedDate = changeDateForm(date);
   const duration =
     time?.startTimeOnly && time.endTimeOnly
       ? `${time?.startTimeOnly} ~ ${time?.endTimeOnly}`
@@ -41,17 +41,17 @@ const ReservationCard = ({
       <div className="flex flex-col justify-between gap-32">
         <div className="flex flex-col gap-12">
           <div className="flex flex-row font-semibold justify-between">
-            <div className="text-20 font-semibold">{title}</div>
+            <div className="text-20 font-semibold">상품명 : {title}</div>
             <div className="text-16 font-semibold">{upperRight}</div>
           </div>
           <div className="flex flex-col gap-6">
-            <div className="text-14 text-black-10">{option}</div>
+            <div className="text-14 text-black-10">옵션명 : {option}</div>
             <div className="text-14 text-black-10">{schedule}</div>
           </div>
           <div className="text-16 font-medium">{userInfo}</div>
         </div>
         <div className="flex flex-row justify-between items-center">
-          <div className="text-16">{`${formattedDate} ${duration}`}</div>
+          <div className="text-16">{`일정 : ${formattedDate}${duration ? ', ' : ''}${duration}`}</div>
           {lowerRight}
         </div>
       </div>

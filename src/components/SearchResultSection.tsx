@@ -1,7 +1,7 @@
 import React from 'react';
 import useFilterProducts from '@/hooks/useFilterProducts';
-import Card from './common/card/Card';
-import FilterButton from './common/FilterButton';
+import Card from '@/components/common/card/Card';
+import FilterButton from '@/components/common/FilterButton';
 
 interface ProductCardProps {
   id: number;

@@ -9,9 +9,9 @@ import {
 import instance from '@/utils/axios';
 import changeDateForm from '@/utils/changeDateForm';
 import Button from '@/components/common/Button';
-import ReservationCard from './common/reservPagination/ResevationCard';
-import ReservChips from './myPage/ReservChips';
-import ReservButtonOutlined from './myPage/ReservButtonOutlined';
+import ReservationCard from '@/components/common/reservPagination/ResevationCard';
+import ReservChips from '@/components/myPage/ReservChips';
+import ReservButtonOutlined from '@/components/myPage/ReservButtonOutlined';
 
 type ReserveProps = {
   id: number;
@@ -54,9 +54,9 @@ const ReservedManageCard = ({
   return (
     <ReservationCard
       id={id}
-      title={`상품명 : ${productOption.product.name}`}
+      title={productOption.product.name}
       date={`예약일시 : ${changeDateForm(reserveDate)}`}
-      option={`옵션명 : ${productOption.optionName}`}
+      option={productOption.optionName}
       schedule={`일정 : ${changeDateForm(timeTable.targetDate)}, ${timeTable.startTimeOnly} ~ ${timeTable.endTimeOnly}`}
       userInfo={`예약자명 : ${user.name} / 전화번호 : ${user.phone}`}
       upperRight={<ReservChips status={reservationState} />}

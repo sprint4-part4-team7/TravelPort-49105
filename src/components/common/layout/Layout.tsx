@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import HeaderBar from '../headerBar/HeaderBar';
+import HeaderBar from '@/components/common/headerBar/HeaderBar';
 
 interface LayoutProps {
   children: ReactNode;

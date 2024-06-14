@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import EditInfo from '@/components/myPage/EditInfo';
 import MyPageSideBar from '@/components/myPage/MyPageSideBar';
 import MyResevation from '@/components/myPage/MyResevation';
-import ReservationManagement from './ReservationManagement';
+import ReservationManagement from '@/pages/ReservationManagement';
 import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
 

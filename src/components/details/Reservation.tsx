@@ -9,7 +9,7 @@ import { formatDate } from '@/utils/getDate';
 import { useReservationStore } from '@/utils/zustand';
 import useTimeTable from '@/hooks/useTimeTable';
 import useDatePicker from '@/hooks/useDatePicker';
-import Button from '../common/Button';
+import Button from '@/components/common/Button';
 import '@/styles/ProductDetails.css';
 import DatePickerCustom from './DatePickerCustom';
 

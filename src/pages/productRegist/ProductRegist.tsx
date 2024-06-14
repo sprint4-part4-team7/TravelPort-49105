@@ -1,10 +1,10 @@
 // 상품등록페이지 메인
 import React, { useEffect, useState } from 'react';
-import Category from './Category';
-import Description from './Description';
-import Location from './Location';
-import Date from './Date';
-import Option from './Option';
+import Category from '@/pages/productRegist/Category';
+import Description from '@/pages/productRegist/Description';
+import Location from '@/pages/productRegist/Location';
+import Date from '@/pages/productRegist/Date';
+import Option from '@/pages/productRegist/Option';
 
 const ProductRegist = () => {
   const [page, setPage] = useState<React.ReactNode>();

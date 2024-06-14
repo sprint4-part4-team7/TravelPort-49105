@@ -1,8 +1,8 @@
 // 페이지네이션을 이용하는 페이지 (card쪽으로 구현)
 
 import { useState } from 'react';
-import Card from './Card';
-import Pagination from '../Pagination';
+import Card from '@/components/common/card/Card';
+import Pagination from '@/components/common/Pagination';
 
 const CardSample = () => {
   const [pageNum, setPageNum] = useState(1);

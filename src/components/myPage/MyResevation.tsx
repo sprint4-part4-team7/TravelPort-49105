@@ -28,9 +28,53 @@ const MyResevation = ({
 
   const myReservation = useQuery({
     queryKey: ['myReservation', userInfo.id, pageNum, isExpired],
-    queryFn: () => getMyReservation(userInfo.id, isExpired, limit, pageNum),
+    queryFn: () => getMyReservation(userInfo.id, isExpired, limit, pageNum - 1),
     enabled: !!userInfo.id,
   });
+
+  const handleShowCancelMsg = (msg: string) => {
+    openModal();
+    setCancelMsg(msg);
+  };
+  const handleReview = () => {
+    alert('후기 작성');
+  };
+  const handleCancel = () => {
+    alert('취소하기');
+  };
+
+  const upperRightChip = (state: string) => {
+    return isReservExpired ? (
+      <ReservChipsExpired status={state} />
+    ) : (
+      <ReservChips status={state} />
+    );
+  };
+
+  const lowerRightButton = (state: string, cancelMessage: string) => {
+    if (!isReservExpired) {
+      return state === '예약 거절' ? (
+        <ReservButton
+          onClick={() => handleShowCancelMsg(cancelMessage || '')}
+          status={state}
+        />
+      ) : (
+        <ReservButtonOutlined status="예약 취소" onClick={handleCancel} />
+      );
+    }
+    let buttonFnc;
+    switch (state) {
+      case '예약 완료':
+        buttonFnc = () => handleReview();
+        break;
+      case '예약 거절':
+        buttonFnc = () => handleShowCancelMsg(cancelMessage || '');
+        break;
+      default:
+        buttonFnc = () => {};
+    }
+    return <ReservButton status={state} onClick={buttonFnc} />;
+  };
 
   const myReservationData = myReservation.data as Reservation[];
 
@@ -46,30 +90,18 @@ const MyResevation = ({
         >
           {myReservationData.map((reservation) => (
             <ReservationCard
+              key={reservation.id}
               id={reservation.id}
               date={reservation.timeTable?.targetDate}
               option={reservation.productOption?.optionName}
               title={reservation.productOption.product.name}
-              upperRight={
-                isReservExpired ? (
-                  <ReservChipsExpired status={reservation.reservationState} />
-                ) : (
-                  <ReservChips status={reservation.reservationState} />
-                )
-              }
-              lowerRight={
-                reservation.reservationState === '예약 거절' ? (
-                  <ReservButton
-                    onClick={() => {
-                      openModal();
-                      setCancelMsg(reservation.cancelMsg || '');
-                    }}
-                    status={reservation.reservationState}
-                  />
-                ) : (
-                  <ReservButtonOutlined status="예약 취소" />
-                )
-              }
+              upperRight={upperRightChip(
+                reservation.reservationState || '예약 대기',
+              )}
+              lowerRight={lowerRightButton(
+                reservation.reservationState || '예약 대기',
+                reservation.cancelMsg || '',
+              )}
             />
           ))}
         </ReservPagination>
@@ -79,7 +111,7 @@ const MyResevation = ({
         </div>
       )}
       <Modal isOpen={isModalOpen} closeModal={closeModal}>
-        <CancelMessage cancelMsg={cancelMsg} />
+        {!!cancelMsg && <CancelMessage cancelMsg={cancelMsg} />}
       </Modal>
     </div>
   );
