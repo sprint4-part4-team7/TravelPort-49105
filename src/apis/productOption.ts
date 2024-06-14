@@ -1,6 +1,5 @@
 /* eslint-disable consistent-return */
 /* eslint-disable prettier/prettier */
-import { CardListsType } from '@/constants/types';
 import instance from '@/utils/axios';
 
 interface ProductOptionProps {
@@ -54,9 +53,7 @@ const deleteProductOption = async (productOptionId: number) => {
   });
 };
 
-const getProductOptions = async (
-  productId: number,
-): Promise<CardListsType[]> => {
+const getProductOptions = async (productId: number) => {
   return instance({
     url: `/productOption/product/${productId}`,
     method: 'GET',

@@ -61,18 +61,17 @@ const List = () => {
   const LIMIT = categoryId === '1' ? 3 : 6;
   const offset = pageNum - 1;
 
-  // 추후 categoryId 쿼리스트링에 추가
   useEffect(() => {
-    const fetchByOffset = async (offsetNum: number) => {
+    const fetchByOffset = async (offsetNum: number, categoryNum: number) => {
       const response = await instance.get(
-        `/product/all?offset=${offsetNum}&limit=${LIMIT}`,
+        `/product/all?categoryId=${categoryNum}&offset=${offsetNum}&limit=${LIMIT}`,
       );
       setDataByPage(response.data);
     };
-    fetchByOffset(offset);
+    fetchByOffset(offset, Number(categoryId));
   }, [offset, categoryId]);
 
-  const cards = filteredData || dataByPage; //! !!수정하기
+  const cards = filteredData || dataByPage;
 
   const outsideRef = useRef<HTMLDivElement>(null);
   useOutsideClick(outsideRef, () => {
@@ -104,7 +103,6 @@ const List = () => {
     categoryId === '1'
       ? 'flex flex-col gap-24 mb-64 w-full mobile:mx-auto mobile:w-fit'
       : 'grid grid-cols-3 gap-24 w-fit mx-auto mb-64 mobile:grid-cols-1';
-
   return (
     <>
       <Layout main noSearch={false}>
@@ -235,7 +233,7 @@ const List = () => {
           <Pagination
             pageNum={pageNum}
             setPageNum={setPageNum}
-            allCardNum={cards?.length ? cards.length : 0}
+            allCardNum={cards?.length ? cards?.length : 0}
             divNum={categoryId === '1' ? 3 : 6}
           />
         </div>

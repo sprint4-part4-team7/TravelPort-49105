@@ -94,7 +94,13 @@ const ProductDetails = () => {
             </h1>
             {!!productReviews?.length &&
               productReviews.map((review) => {
-                return <Review key={review.id} review={review} />;
+                return (
+                  <Review
+                    key={review.id}
+                    review={review}
+                    productId={productIdNum}
+                  />
+                );
               })}
           </div>
         )}
