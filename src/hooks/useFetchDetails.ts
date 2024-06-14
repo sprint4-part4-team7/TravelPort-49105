@@ -6,15 +6,17 @@ const useFetchDetailsQuery = (productId: number) => {
   const [product, setProduct] = useState<any>();
   const [options, setOptions] = useState<any>([]);
 
-  const { productByProductId } = useProductByIdQuery(productId);
-  const { productOption } = useProductOptionByProductIdQuery(productId);
+  const { productByProductId, isLoadingProducts } =
+    useProductByIdQuery(productId);
+  const { productOption, isLoadingOptions } =
+    useProductOptionByProductIdQuery(productId);
 
   useEffect(() => {
     if (productByProductId) setProduct(productByProductId);
     if (productOption) setOptions(productOption);
   }, [productByProductId, productOption]);
 
-  return { product, options };
+  return { product, options, isLoadingProducts, isLoadingOptions };
 };
 
 export default useFetchDetailsQuery;

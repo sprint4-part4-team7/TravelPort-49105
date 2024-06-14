@@ -1,6 +1,6 @@
 // import emptyImage from '@/assets/images/star-empty.svg';
 import fillImage from '@/assets/images/star-fill.svg';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from '@/components/common/Button';
 
 type HotelCardProps = {

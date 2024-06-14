@@ -19,6 +19,24 @@ export type ProductType = {
   createdAt: string;
 };
 
+export interface OptionbyIdData {
+  data: {
+    id: number;
+    productId: number;
+    optionName: string;
+    optionDesc: string;
+    optionPrice: number;
+    optionImages: string[];
+    minUserCount: number;
+    maxUserCount: number;
+    userCount: number;
+    averageRate: number;
+    isDelete: boolean;
+    createdAt: string;
+    product: ProductType;
+  };
+}
+
 export type DetailData = {
   id: number;
   categoryId: number;
@@ -69,6 +87,9 @@ export type ReviewData = {
   reviewContent: string;
   partnerAnswer?: string;
   createdAt: string;
+  userName: string;
+  userProfileImage: string;
+  optionName: string;
 };
 
 export type CardListsType = {

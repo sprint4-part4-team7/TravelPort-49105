@@ -17,14 +17,10 @@ const CheckoutPage = () => {
 
   const { data: timeTableOptionData } = useTilmeTabaleOptionQuery(optionId);
   const { data: timeTableData } = useTilmeTabaleQuery(2);
-  const {
-    productOption: productOptionData,
-    isLoading,
-    error,
-  } = useProductOptionQuery(optionId);
+  const { productOption, isLoading, error } = useProductOptionQuery(optionId);
   const { userInfo } = useUserStore();
 
-  const productName = productOptionData?.optionName || 'Unknown'; // 상품 이름
+  const productName = productOption?.optionName || 'Unknown'; // 상품 이름
   const customerName = userInfo?.realName || 'Unknown'; // 고객 이름
   const customerEmail = userInfo?.email || 'Unknown'; // 고객 이메일
 
@@ -39,13 +35,13 @@ const CheckoutPage = () => {
   const formattedDate = formatDate(timeTableData?.targetDate);
 
   const day =
-    productOptionData?.product.categoryId === 1
+    productOption?.product.categoryId === 1
       ? `${formattedDate} ( ${timeTableOptionData?.length}박 )`
       : `${formattedDate} ${timeTableData?.startTimeOnly} ~ ${timeTableData?.endTimeOnly}`;
 
-  const [count, setCount] = useState(productOptionData?.userCount || 1);
-  const optionPrice = productOptionData?.optionPrice || 0;
-  const maxUserCount = productOptionData?.maxUserCount || Infinity;
+  const [count, setCount] = useState(productOption?.userCount || 1);
+  const optionPrice = productOption?.optionPrice || 0;
+  const maxUserCount = productOption?.maxUserCount || Infinity;
   const [isChecked, setIsChecked] = useState(true);
 
   const handleCheckedChange = (checked: boolean) => {
@@ -82,7 +78,7 @@ const CheckoutPage = () => {
         </div>
 
         <OrderSummary
-          productOptionData={productOptionData}
+          productOptionData={productOption}
           count={count}
           decreaseCount={decreaseCount}
           increaseCount={increaseCount}

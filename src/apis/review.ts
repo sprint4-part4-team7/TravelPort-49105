@@ -42,7 +42,9 @@ const deleteReview = async (reviewId: number) => {
   });
 };
 
-const getProductReview = async (productId: number): Promise<ReviewData[]> => {
+const getProductReview = async (
+  productId: number,
+): Promise<ReviewData[] | any> => {
   return instance({
     url: `/review/product/${productId}`,
     method: 'GET',
@@ -66,21 +68,6 @@ const postReview = async (
     },
   });
 };
-
-// const getDefaultOption = async (
-//   optionId: number,
-// ): Promise<DefaultOptionType> => {
-//   try {
-//     const response = await instance.get(`/productOption/${optionId}`);
-//     const { optionName } = response.data;
-//     const { productId } = response.data;
-//     const productName = (await product.getProductById(productId)).name;
-//     return { optionName, productName };
-//   } catch (error) {
-//     console.log(error);
-//     throw error;
-//   }
-// };
 
 export default {
   getReviewAll,

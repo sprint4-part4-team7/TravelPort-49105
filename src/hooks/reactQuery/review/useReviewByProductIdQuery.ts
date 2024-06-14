@@ -11,8 +11,10 @@ function useReviewByProductIdQuery(productId: number) {
     queryFn: () => review.getProductReview(productId),
   });
 
+  const reviewByProductId = reviewByProductIdResponse?.data;
+
   return {
-    reviewByProductIdResponse,
+    reviewByProductId,
     isLoadingReview,
     reviewError,
   };
