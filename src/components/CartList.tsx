@@ -64,14 +64,19 @@ const CartList = ({
 
   const image = item?.productOption.product.thumbnail;
   const name = item?.productOption.product.name;
-  const option = productOption?.optionName;
+  const options = productOption?.optionName;
   const price = productOption?.optionPrice;
   const maxCount = productOption?.maxUserCount;
   const userCount = productOption?.userCount;
 
+  const option =
+    productOption?.product.categoryId === 1
+      ? `${options} ( ${maxCount} 인실 )`
+      : `${options}`;
+
   const day =
     productOption?.product.categoryId === 1
-      ? `${formattedDate} (${maxCount} 인실)`
+      ? `${formattedDate}`
       : `${formattedDate} ${timeTableData?.startTimeOnly} ~ ${timeTableData?.endTimeOnly}`;
 
   const handleSelect = () => {
