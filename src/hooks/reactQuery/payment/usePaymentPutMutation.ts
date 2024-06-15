@@ -33,8 +33,6 @@ const usePutPayment = (cartIds?: { cartId: number }[]) => {
           cartDelete(cartId);
         });
       }
-
-      alert('결제 확인 성공!');
     },
   });
 
