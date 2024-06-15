@@ -1,10 +1,10 @@
 import ARROW from '@/assets/icons/arrowDown.svg';
 import { useEffect, useState } from 'react';
 import { useUserStore } from '@/utils/zustand';
-import useReservationManageQuery from '@/hooks/reactQuery/reservation/useReservationManageQuery';
+import useProductByPartnerQuery from '@/hooks/reactQuery/product/useProductByPartnerQuery';
 import SearchBar from '@/components/common/SearchBar';
-import ReservedManageCard from '@/components/ReservedManageCard';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
+import ReservationCard from '@/components/common/reservPagination/ResevationCard';
 
 const PostingManagement = () => {
   const { userInfo } = useUserStore();
@@ -14,15 +14,7 @@ const PostingManagement = () => {
   const [activityData, setActivityData] = useState<any[]>([]);
   const [allData, setAllData] = useState<any[]>([]);
 
-  const { reservedData: lodge } = useReservationManageQuery({
-    partnerId: userInfo.id,
-    categoryId: 1,
-  });
-
-  const { reservedData: activity, error: acError } = useReservationManageQuery({
-    partnerId: userInfo.id,
-    categoryId: 2,
-  });
+  const { postingData: allPost } = useProductByPartnerQuery(userInfo.id);
 
   const sortData = (data: any[], postNew: boolean) => {
     if (!Array.isArray(data)) return [];
@@ -32,7 +24,7 @@ const PostingManagement = () => {
       return postNew ? timeB - timeA : timeA - timeB;
     });
   };
-  console.log(acError);
+
   const toggleDropdown = () => {
     setIsNew(!isNew);
   };
@@ -68,12 +60,18 @@ const PostingManagement = () => {
   const end = start + limit;
 
   useEffect(() => {
-    setLodgeData(sortData(lodge, isNew));
-    setActivityData(sortData(activity, isNew));
-    setAllData(sortData([...lodge, ...activity], isNew));
+    setAllData(sortData(allPost, isNew));
+    if (allPost) {
+      const lodge = allPost.filter(
+        (post: { categoryId: number }) => post.categoryId === 1,
+      );
+      const activity = allPost.filter(
+        (post: { categoryId: number }) => post.categoryId === 2,
+      );
+      setLodgeData(sortData(lodge, isNew));
+      setActivityData(sortData(activity, isNew));
+    }
   }, [isNew, allData]);
-
-  sortData(activity, isNew);
 
   return (
     <div className="mx-10 my-0 w-1000">
@@ -141,14 +139,11 @@ const PostingManagement = () => {
                     allCardNum={allData.length}
                   >
                     {allData.slice(start, end).map((item) => (
-                      <ReservedManageCard
+                      <ReservationCard
                         key={item.id}
                         id={item.id}
-                        reservationState={item.reservationState}
-                        productOption={item.productOption}
-                        user={item.user}
-                        reserveDate={item.createdAt}
-                        timeTable={item.timeTable}
+                        title={item.name}
+                        date={item.createdAt}
                       />
                     ))}
                   </ReservPagination>
@@ -166,14 +161,11 @@ const PostingManagement = () => {
                     allCardNum={lodgeData.length}
                   >
                     {lodgeData.slice(start, end).map((item) => (
-                      <ReservedManageCard
+                      <ReservationCard
                         key={item.id}
                         id={item.id}
-                        reservationState={item.reservationState}
-                        productOption={item.productOption}
-                        user={item.user}
-                        reserveDate={item.createdAt}
-                        timeTable={item.timeTable}
+                        title={item.name}
+                        date={item.createdAt}
                       />
                     ))}
                   </ReservPagination>
@@ -191,14 +183,11 @@ const PostingManagement = () => {
                     allCardNum={activityData.length}
                   >
                     {activityData.slice(start, end).map((item) => (
-                      <ReservedManageCard
+                      <ReservationCard
                         key={item.id}
                         id={item.id}
-                        reservationState={item.reservationState}
-                        productOption={item.productOption}
-                        user={item.user}
-                        reserveDate={item.createdAt}
-                        timeTable={item.timeTable}
+                        title={item.name}
+                        date={item.createdAt}
                       />
                     ))}
                   </ReservPagination>
