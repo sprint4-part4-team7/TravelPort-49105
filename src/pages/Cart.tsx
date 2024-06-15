@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// Cart.tsx
+import React, { useCallback, useEffect, useState } from 'react';
 import useCartByUserIdQuery from '@/hooks/reactQuery/cart/useCartByUserIdQuery';
 import { useUserStore, useCartStore } from '@/utils/zustand';
 import { useNavigate } from 'react-router-dom';
@@ -8,13 +11,13 @@ import Button from '@/components/common/Button';
 import CartList from '@/components/CartList';
 import Loading from '@/components/common/Loading';
 
-interface CartInfo {
+export interface CartInfo {
   cartId: number;
   name: string;
   option: string;
   day: any;
-  count: any;
-  price: any;
+  count: number; // Assuming count is a number for quantity
+  price: number; // Assuming price is a number for item price
   maxCount: number;
 }
 
@@ -27,6 +30,8 @@ const Cart = () => {
   const [selectedTotal, setSelectedTotal] = useState(0);
   const setCartInfo = useCartStore((state) => state.setCartInfo);
   const [cartItems, setCartItems] = useState<any>([]);
+  const [totalPay, setTotalPay] = useState(0);
+  const [totalCount, setTotalCount] = useState(1);
 
   useEffect(() => {
     if (cartData) {
@@ -34,26 +39,28 @@ const Cart = () => {
     }
   }, [cartData]);
 
+  const handlePriceChange = (totalPrice: number, count: number) => {
+    setTotalPay(totalPrice);
+    setTotalCount(count);
+  };
+
   const handleDelete = (cartId: number) => {
     setCartItems(cartItems.filter((item: any) => item.id !== cartId));
   };
 
-  const handleSelect = (item: CartInfo, isSelected: boolean) => {
-    setSelectedTotal((prevTotal) =>
-      isSelected
-        ? prevTotal + item.price * item.count
-        : prevTotal - item.price * item.count,
-    );
-
-    setSelectedItems((prevSelectedItems) => {
-      if (isSelected) {
-        return [...prevSelectedItems, item];
-      }
-      return prevSelectedItems.filter(
-        (selectedItem) => selectedItem.name !== item.name,
+  const handleSelect = useCallback((item: CartInfo, isSelected: boolean) => {
+    if (isSelected) {
+      setSelectedItems((prevSelectedItems) => [...prevSelectedItems, item]);
+      setSelectedTotal((prevTotal) => prevTotal + item.price * item.count);
+    } else {
+      setSelectedItems((prevSelectedItems) =>
+        prevSelectedItems.filter(
+          (selectedItem) => selectedItem.cartId !== item.cartId,
+        ),
       );
-    });
-  };
+      setSelectedTotal((prevTotal) => prevTotal - item.price * item.count);
+    }
+  }, []);
 
   const handleCheckout = () => {
     setCartInfo(selectedItems);
@@ -61,7 +68,6 @@ const Cart = () => {
   };
 
   if (isLoading) return <Loading />;
-
   return (
     <div>
       <Layout>
@@ -72,16 +78,21 @@ const Cart = () => {
             </div>
             <div className="flex tablet:flex-col mobile:flex-col gap-90">
               <div className="w-full mb-100">
-                {cartData.map((item: any) => {
-                  return (
+                {cartData.length === 0 ? (
+                  <div className="flex items-center justify-center px-8 font-semibold pt-86 text-22 text-black-5">
+                    장바구니가 비어있어요
+                  </div>
+                ) : (
+                  cartData.map((item: CartInfo) => (
                     <CartList
-                      key={item.id}
+                      key={item.cartId}
                       item={item}
                       onSelect={handleSelect}
                       onDelete={handleDelete}
+                      onPriceChange={handlePriceChange}
                     />
-                  );
-                })}
+                  ))
+                )}
               </div>
               <div className="flex flex-col gap-16 w-322 tablet:w-full mobile:w-full">
                 <div className="flex flex-col p-16 gap-36 bg-black-3">
@@ -103,12 +114,22 @@ const Cart = () => {
                   </div>
                 </div>
                 <div>
-                  <Button
-                    buttonStyle="font-normal text-16 p-12"
-                    onClick={handleCheckout}
-                  >
-                    결제하기
-                  </Button>
+                  {selectedTotal === 0 ? (
+                    <Button
+                      buttonStyle="font-normal text-16 p-12"
+                      onClick={handleCheckout}
+                      disabled
+                    >
+                      결제하기
+                    </Button>
+                  ) : (
+                    <Button
+                      buttonStyle="font-normal text-16 p-12"
+                      onClick={handleCheckout}
+                    >
+                      결제하기
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>

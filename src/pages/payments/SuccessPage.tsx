@@ -41,7 +41,6 @@ const SuccessPage = () => {
     isLoading: cartLoading,
     pId,
   } = useCartReservationByUserIdMutation();
-  console.log(cartData);
   const { mutate: sendPayments } = usePaymentPutMutation(cartIds);
 
   const handleCartReservationPost = async () => {

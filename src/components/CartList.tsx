@@ -19,11 +19,17 @@ interface CartInfo {
 
 interface CartListProps {
   item: any;
-  onSelect: (item: CartInfo, isSelected: boolean) => void;
-  onDelete: (cartId: number) => void; // 삭제 핸들러 추가
+  onSelect: (item: any, isSelected: boolean) => void;
+  onDelete: (cartId: number) => void;
+  onPriceChange: (totalPrice: any, count: number) => void;
 }
 
-const CartList = ({ item, onSelect, onDelete }: CartListProps) => {
+const CartList = ({
+  item,
+  onSelect,
+  onDelete,
+  onPriceChange,
+}: CartListProps) => {
   const navigate = useNavigate();
   const cartId = item?.id;
   const optionId = item?.productOption?.id ?? null;
@@ -46,8 +52,6 @@ const CartList = ({ item, onSelect, onDelete }: CartListProps) => {
     }
   }, [item, productOptionLoading, timeTableLoading]);
 
-  if (productOptionLoading || timeTableLoading) return <Loading />;
-
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const year = date.getFullYear().toString().slice(2);
@@ -58,16 +62,17 @@ const CartList = ({ item, onSelect, onDelete }: CartListProps) => {
 
   const formattedDate = formatDate(timeTableData?.targetDate);
 
-  const day =
-    productOption?.product.categoryId === 1
-      ? `${formattedDate}`
-      : `${formattedDate} ${timeTableData?.startTimeOnly} ~ ${timeTableData?.endTimeOnly}`;
-
   const image = item?.productOption.product.thumbnail;
   const name = item?.productOption.product.name;
   const option = productOption?.optionName;
   const price = productOption?.optionPrice;
   const maxCount = productOption?.maxUserCount;
+  const userCount = productOption?.userCount;
+
+  const day =
+    productOption?.product.categoryId === 1
+      ? `${formattedDate} (${maxCount} 인실)`
+      : `${formattedDate} ${timeTableData?.startTimeOnly} ~ ${timeTableData?.endTimeOnly}`;
 
   const handleSelect = () => {
     const newSelected = !isSelected;
@@ -86,15 +91,22 @@ const CartList = ({ item, onSelect, onDelete }: CartListProps) => {
     onSelect(selectedItem, newSelected);
   };
 
+  useEffect(() => {
+    const totalPrice = price * count;
+    onPriceChange(totalPrice, count);
+  }, [count, price]);
+
   const increaseCount = () => {
-    if (count < maxCount) {
-      setCount(count + 1);
-    }
+    const newCount = count + 1;
+    setCount(newCount);
+    onPriceChange(item.price * newCount, newCount);
   };
 
   const decreaseCount = () => {
     if (count > 1) {
-      setCount(count - 1);
+      const newCount = count - 1;
+      setCount(newCount);
+      onPriceChange(item.price * newCount, newCount);
     }
   };
 
@@ -112,6 +124,8 @@ const CartList = ({ item, onSelect, onDelete }: CartListProps) => {
       },
     });
   };
+
+  if (productOptionLoading || timeTableLoading) return <Loading />;
 
   return (
     <div className="flex items-center py-16 border-solid border-b-1 border-black_3">
@@ -180,21 +194,27 @@ const CartList = ({ item, onSelect, onDelete }: CartListProps) => {
           </div>
         </div>
         <div className="flex items-center ml-auto gap-60 mobile:justify-between mobile:w-full mobile:mt-40">
-          <div className="flex gap-16 px-6 py-4 border-solid border-1 border-black_4 rounded-4">
+          <div
+            className={`flex gap-16 px-6 py-4 border-solid border-1 border-black_4 rounded-4 ${isSelected && 'bg-black-3'}`}
+          >
             <button
               type="button"
               onClick={decreaseCount}
               className="outline-none"
-              disabled={count <= 1}
+              disabled={isSelected || count <= 1}
             >
               <img src={minusPay} alt="마이너스 아이콘" />
             </button>
-            <div className="font-normal text-16">{count}</div>
+            <div
+              className={`font-normal text-16 ${isSelected && 'text-blue-6'}`}
+            >
+              {count}
+            </div>
             <button
               type="button"
               onClick={increaseCount}
               className="outline-none"
-              disabled={count >= maxCount}
+              disabled={isSelected || count >= userCount}
             >
               <img src={plusPay} alt="플러스 아이콘" />
             </button>
