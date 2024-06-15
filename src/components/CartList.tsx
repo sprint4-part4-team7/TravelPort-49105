@@ -3,6 +3,8 @@ import minusPay from '@/assets/icons/minusPay.svg';
 import plusPay from '@/assets/icons/plusPay.svg';
 import useProductOptionQuery from '@/hooks/reactQuery/productOption/useProductOptionQuery';
 import useTimeTableQuery from '@/hooks/reactQuery/timeTable/useTimeTableQuery';
+import { useNavigate } from 'react-router-dom';
+import useCartDeleteByCartIdMutation from '@/hooks/reactQuery/cart/useCartDeleteByCartIdMutation';
 import Loading from '@/components/common/Loading';
 
 interface CartInfo {
@@ -14,12 +16,15 @@ interface CartInfo {
   price: string | number;
   maxCount: number;
 }
+
 interface CartListProps {
   item: any;
   onSelect: (item: CartInfo, isSelected: boolean) => void;
+  onDelete: (cartId: number) => void; // 삭제 핸들러 추가
 }
 
-const CartList = ({ item, onSelect }: CartListProps) => {
+const CartList = ({ item, onSelect, onDelete }: CartListProps) => {
+  const navigate = useNavigate();
   const cartId = item?.id;
   const optionId = item?.productOption?.id ?? null;
   const timeTableId = item?.timeTable?.id ?? null;
@@ -28,6 +33,7 @@ const CartList = ({ item, onSelect }: CartListProps) => {
     useProductOptionQuery(optionId);
   const { data: timeTableData, isLoading: timeTableLoading } =
     useTimeTableQuery(timeTableId);
+  const { mutate: cartDelete } = useCartDeleteByCartIdMutation();
 
   const [count, setCount] = useState(item?.ticketCount);
   const [isSelected, setIsSelected] = useState(false);
@@ -91,6 +97,22 @@ const CartList = ({ item, onSelect }: CartListProps) => {
       setCount(count - 1);
     }
   };
+
+  const handleDetail = () => {
+    const cId = item?.productOption.product.categoryId;
+    const id = item?.productOption.product.id;
+    navigate(`/details/${cId}/${id}`);
+  };
+
+  const deleteCartList = () => {
+    const id = item?.id;
+    cartDelete(id, {
+      onSuccess: () => {
+        onDelete(cartId); // 삭제 핸들러 호출
+      },
+    });
+  };
+
   return (
     <div className="flex items-center py-16 border-solid border-b-1 border-black_3">
       <div className="flex justify-between w-full mobile:flex-col">
@@ -116,20 +138,40 @@ const CartList = ({ item, onSelect }: CartListProps) => {
                 </div>
               </div>
               <div>
-                <div className="mb-6 font-normal text-18 mobile:hidden">
+                <div className="mb-12 font-normal text-18 mobile:hidden">
                   {name}
                 </div>
                 <div className="flex flex-row items-start gap-12 mobile:flex-col">
-                  <div className="flex flex-row items-start gap-8">
-                    <div className="font-normal text-16">옵션</div>
-                    <div className="px-8 py-4 font-normal border-solid text-11 bg-black_3 border-1 border-black_5 rounded-4">
-                      {option}
+                  <div className="flex flex-col gap-16">
+                    <div className="flex gap-12">
+                      <div className="flex flex-row items-start gap-8">
+                        <div className="font-normal text-16">옵션</div>
+                        <div className="px-8 py-4 font-normal border-solid text-11 bg-black_3 border-1 border-black_5 rounded-4">
+                          {option}
+                        </div>
+                      </div>
+                      <div className="flex flex-row items-start gap-8">
+                        <div className="font-normal text-16">날짜</div>
+                        <div className="px-8 py-4 font-normal border-solid text-11 bg-black_3 border-1 border-black_5 rounded-4">
+                          {day}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex flex-row items-start gap-8">
-                    <div className="font-normal text-16">날짜</div>
-                    <div className="px-8 py-4 font-normal border-solid text-11 bg-black_3 border-1 border-black_5 rounded-4">
-                      {day}
+                    <div className="flex gap-12 font-semibold text-14 text-black-7">
+                      <button
+                        onClick={handleDetail}
+                        className="underline"
+                        type="button"
+                      >
+                        제품 상세보기
+                      </button>
+                      <button
+                        onClick={deleteCartList}
+                        className="underline"
+                        type="button"
+                      >
+                        삭제
+                      </button>
                     </div>
                   </div>
                 </div>

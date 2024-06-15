@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useCartByUserIdQuery from '@/hooks/reactQuery/cart/useCartByUserIdQuery';
 import { useUserStore, useCartStore } from '@/utils/zustand';
 import { useNavigate } from 'react-router-dom';
@@ -26,6 +26,17 @@ const Cart = () => {
   const [selectedItems, setSelectedItems] = useState<CartInfo[]>([]);
   const [selectedTotal, setSelectedTotal] = useState(0);
   const setCartInfo = useCartStore((state) => state.setCartInfo);
+  const [cartItems, setCartItems] = useState<any>([]);
+
+  useEffect(() => {
+    if (cartData) {
+      setCartItems(cartData);
+    }
+  }, [cartData]);
+
+  const handleDelete = (cartId: number) => {
+    setCartItems(cartItems.filter((item: any) => item.id !== cartId));
+  };
 
   const handleSelect = (item: CartInfo, isSelected: boolean) => {
     setSelectedTotal((prevTotal) =>
@@ -67,6 +78,7 @@ const Cart = () => {
                       key={item.id}
                       item={item}
                       onSelect={handleSelect}
+                      onDelete={handleDelete}
                     />
                   );
                 })}

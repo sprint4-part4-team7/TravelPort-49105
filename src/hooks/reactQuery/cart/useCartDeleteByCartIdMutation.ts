@@ -8,12 +8,13 @@ const useCartDeleteByCartIdMutation = () => {
     mutationFn: async (cartId: number) => {
       return cartApi.deleteCartById(cartId);
     },
-    onSuccess() {
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['useCartDeleteByCartIdMutation'],
+        queryKey: ['getCartById'],
       });
     },
   });
+
   // 로딩 상태를 확인
   const isLoading = mutation.status === 'pending';
 

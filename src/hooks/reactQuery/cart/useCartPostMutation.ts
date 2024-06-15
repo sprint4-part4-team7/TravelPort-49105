@@ -27,7 +27,7 @@ const useCartPostMutation = () => {
     },
     onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ['useCartPostMutation'],
+        queryKey: ['getCartById'],
       });
     },
   });

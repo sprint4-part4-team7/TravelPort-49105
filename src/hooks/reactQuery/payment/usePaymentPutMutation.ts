@@ -18,6 +18,7 @@ const usePutPayment = () => {
       orderId,
       amount,
     }: PutPaymentParams) => {
+      console.log(paymentId, paymentKey, orderId, amount);
       return putPayment(paymentId, paymentKey, orderId, amount);
     },
     onSuccess() {
