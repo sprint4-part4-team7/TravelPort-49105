@@ -10,6 +10,7 @@ interface CartReservationByUserIdMutationProps {
 const useCartReservationByUserIdMutation = () => {
   const queryClient = useQueryClient();
   const [datas, setData] = useState<any>();
+  const [pId, setPaymnetId] = useState<number>(0);
 
   const mutation = useMutation({
     mutationFn: async ({
@@ -20,6 +21,8 @@ const useCartReservationByUserIdMutation = () => {
     },
     onSuccess(data) {
       setData(data?.data[0]);
+      setPaymnetId(data?.data[0].paymentId);
+      console.log('data', data);
       queryClient.invalidateQueries({
         queryKey: ['getCartById'],
       });
@@ -30,7 +33,7 @@ const useCartReservationByUserIdMutation = () => {
   const isLoading = mutation.status === 'pending';
 
   // 'isLoading' 상태와 함께 'mutate' 함수도 함께 반환
-  return { mutate: mutation.mutate, isLoading, datas };
+  return { mutate: mutation.mutate, isLoading, datas, pId };
 };
 
 export default useCartReservationByUserIdMutation;

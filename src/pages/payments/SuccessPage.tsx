@@ -1,7 +1,7 @@
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import './Payments.css';
 import useReservationMutation from '@/hooks/reactQuery/reservation/useReservationMutation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import usePaymentPutMutation from '@/hooks/reactQuery/payment/usePaymentPutMutation';
 import check from '@/assets/icons/check-circle-broken-pay.svg';
 import {
@@ -16,67 +16,62 @@ import Loading from '@/components/common/Loading';
 
 const SuccessPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const { userInfo } = useUserStore();
   const { cartInfo } = useCartStore();
   const cartIds = cartInfo.map((item) => ({ cartId: item.cartId }));
   const { reservationInfo } = useReservationStore();
+  console.log('reservationInfo', reservationInfo);
   const [searchParams] = useSearchParams();
   const paymentKey = searchParams.get('paymentKey') ?? '';
   const orderId = searchParams.get('orderId') ?? '';
   const amount = parseInt(searchParams.get('amount') ?? '0', 10);
 
-  function confirm() {
-    navigate('/');
-  }
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [isReservationPosted, setIsReservationPosted] = useState(false); // 상태 추가
 
-  const {
-    mutate: createReservation,
-    isLoading,
-    // reservationResponse,
-  } = useReservationMutation();
-  // TODO: reservationResponse에서 paymentId 꺼내기 (지금은 대이터가 다 날아가서 확인 불가)
+  const confirm = () => {
+    navigate('/');
+  };
+
+  const { mutate: createReservation, isLoading: reservationLoading } =
+    useReservationMutation();
   const { mutate: sendPayments } = usePaymentPutMutation();
   const {
     mutate: cartReservation,
-    datas,
+    datas: cartData,
     isLoading: cartLoading,
+    pId,
   } = useCartReservationByUserIdMutation();
-  const paymentIds = datas && datas.paymentId;
 
-  const cartReservationPost = async () => {
+  const handleCartReservationPost = async () => {
     const userId = userInfo?.id;
-    cartReservation({
-      userId,
-      cartIds,
-    });
+    if (userId) {
+      cartReservation({
+        userId,
+        cartIds,
+      });
+    }
   };
 
-  const reservationPost = async () => {
-    createReservation({
-      userId: reservationInfo?.userId,
-      productOptionId: reservationInfo?.productOptionId,
-      timeTableId: reservationInfo?.timeTableId,
-      reservationState: reservationInfo?.reservationState,
-      reservationPrice: reservationInfo?.reservationPrice,
-      ticketCount: reservationInfo?.ticketCount,
-      cancelMsg: reservationInfo?.cancelMsg || '',
-    });
+  const handleReservationPost = async () => {
+    if (reservationInfo.productOptionId !== 0 && !cartData) {
+      createReservation({
+        userId: reservationInfo.userId,
+        productOptionId: reservationInfo.productOptionId,
+        timeTableId: reservationInfo.timeTableId,
+        reservationState: reservationInfo.reservationState,
+        reservationPrice: reservationInfo.reservationPrice,
+        ticketCount: reservationInfo.ticketCount,
+        cancelMsg: reservationInfo.cancelMsg || '',
+      });
+      setIsReservationPosted(true); // 상태 업데이트
+    }
   };
 
-  const paymentPut = async () => {
+  const handlePaymentPut = async (paymentId: number) => {
     sendPayments({
-      paymentId: 3,
-      paymentKey,
-      orderId,
-      amount,
-    });
-  };
-
-  const cartPaymentPut = async () => {
-    sendPayments({
-      paymentId: paymentIds,
+      paymentId,
       paymentKey,
       orderId,
       amount,
@@ -84,17 +79,26 @@ const SuccessPage = () => {
   };
 
   useEffect(() => {
-    if (cartInfo || datas || paymentIds) {
-      cartReservationPost();
-      cartPaymentPut();
-      // TODO: cartReservationPost() 성공 시 delete 하기
-    } else if (location.pathname === '/payments/success' && location.search) {
-      reservationPost();
-      paymentPut();
+    if (!isInitialized && cartInfo.length > 0) {
+      setIsInitialized(true);
+      handleCartReservationPost();
     }
-  }, []);
+  }, [cartInfo, isInitialized]);
 
-  if (isLoading || cartLoading || !datas || paymentIds) return <Loading />;
+  useEffect(() => {
+    if (cartData) {
+      handlePaymentPut(pId);
+    }
+  }, [cartData, pId]);
+
+  useEffect(() => {
+    if (!cartData && !pId && !isReservationPosted) {
+      // 조건에 isReservationPosted 추가
+      handleReservationPost();
+    }
+  }, [cartData, pId, isReservationPosted]); // 의존성 배열에 isReservationPosted 추가
+
+  if (reservationLoading || cartLoading) return <Loading />;
 
   return (
     <Layout>
@@ -109,7 +113,7 @@ const SuccessPage = () => {
               </Button>
               <Button
                 buttonStyle="w-320 h-48 text-16 font-normal"
-                onClick={() => confirm()}
+                onClick={confirm}
               >
                 더 둘러보기
               </Button>

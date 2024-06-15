@@ -18,12 +18,13 @@ const usePutPayment = () => {
       orderId,
       amount,
     }: PutPaymentParams) => {
-      console.log(paymentId, paymentKey, orderId, amount);
+      console.log('paymentId', paymentId);
+      if (!paymentId) return null;
       return putPayment(paymentId, paymentKey, orderId, amount);
     },
     onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ['payments'], // 여기에 적절한 queryKey를 사용하여 관련 쿼리를 무효화하세요.
+        queryKey: ['getCartById'],
       });
       alert('결제 확인 성공!');
     },
