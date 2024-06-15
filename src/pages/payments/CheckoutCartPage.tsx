@@ -22,7 +22,10 @@ const CheckoutCartPage = () => {
   const { cartInfo } = useCartStore();
   const { userInfo } = useUserStore();
 
-  const productName = `${cartInfo[0]}외 ${cartInfo.length}`;
+  const productName =
+    cartInfo.length === 1
+      ? `${cartInfo[0]}`
+      : `${cartInfo[0]}외 ${cartInfo.length - 1}개`;
   const customerName = userInfo?.realName || 'Unknown';
   const customerEmail = userInfo?.email || 'Unknown';
 

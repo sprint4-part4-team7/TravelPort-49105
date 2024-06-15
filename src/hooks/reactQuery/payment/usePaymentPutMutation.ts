@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import putPayment from '@/apis/payments';
+import useCartDeleteByCartIdMutation from '@/hooks/reactQuery/cart/useCartDeleteByCartIdMutation';
 
 interface PutPaymentParams {
   paymentId: number;
@@ -8,8 +9,9 @@ interface PutPaymentParams {
   amount: number;
 }
 
-const usePutPayment = () => {
+const usePutPayment = (cartIds?: { cartId: number }[]) => {
   const queryClient = useQueryClient();
+  const { mutate: cartDelete } = useCartDeleteByCartIdMutation();
 
   const mutation = useMutation({
     mutationFn: async ({
@@ -18,14 +20,20 @@ const usePutPayment = () => {
       orderId,
       amount,
     }: PutPaymentParams) => {
-      console.log('paymentId', paymentId);
       if (!paymentId) return null;
       return putPayment(paymentId, paymentKey, orderId, amount);
     },
-    onSuccess() {
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['getCartById'],
       });
+
+      if (cartIds && cartIds.length > 0) {
+        cartIds.forEach(({ cartId }) => {
+          cartDelete(cartId);
+        });
+      }
+
       alert('결제 확인 성공!');
     },
   });

@@ -108,7 +108,7 @@ const CartList = ({ item, onSelect, onDelete }: CartListProps) => {
     const id = item?.id;
     cartDelete(id, {
       onSuccess: () => {
-        onDelete(cartId); // 삭제 핸들러 호출
+        onDelete(cartId);
       },
     });
   };

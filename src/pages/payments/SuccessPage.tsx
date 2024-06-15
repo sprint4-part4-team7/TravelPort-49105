@@ -21,7 +21,6 @@ const SuccessPage = () => {
   const { cartInfo } = useCartStore();
   const cartIds = cartInfo.map((item) => ({ cartId: item.cartId }));
   const { reservationInfo } = useReservationStore();
-  console.log('reservationInfo', reservationInfo);
   const [searchParams] = useSearchParams();
   const paymentKey = searchParams.get('paymentKey') ?? '';
   const orderId = searchParams.get('orderId') ?? '';
@@ -36,13 +35,14 @@ const SuccessPage = () => {
 
   const { mutate: createReservation, isLoading: reservationLoading } =
     useReservationMutation();
-  const { mutate: sendPayments } = usePaymentPutMutation();
   const {
     mutate: cartReservation,
     datas: cartData,
     isLoading: cartLoading,
     pId,
   } = useCartReservationByUserIdMutation();
+  console.log(cartData);
+  const { mutate: sendPayments } = usePaymentPutMutation(cartIds);
 
   const handleCartReservationPost = async () => {
     const userId = userInfo?.id;
@@ -65,7 +65,7 @@ const SuccessPage = () => {
         ticketCount: reservationInfo.ticketCount,
         cancelMsg: reservationInfo.cancelMsg || '',
       });
-      setIsReservationPosted(true); // 상태 업데이트
+      setIsReservationPosted(true);
     }
   };
 
@@ -93,7 +93,6 @@ const SuccessPage = () => {
 
   useEffect(() => {
     if (!cartData && !pId && !isReservationPosted) {
-      // 조건에 isReservationPosted 추가
       handleReservationPost();
     }
   }, [cartData, pId, isReservationPosted]); // 의존성 배열에 isReservationPosted 추가
