@@ -48,7 +48,7 @@ const ProductDetails = () => {
     fetchByOffset(productIdNum, offset);
   }, [offset, productIdNum]);
 
-  const [activeTab, setActiveTab] = useState('');
+  const [activeTab, setActiveTab] = useState('reservation');
 
   const { productReviews } = useProductReview(productIdNum);
 
