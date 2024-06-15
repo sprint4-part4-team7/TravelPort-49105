@@ -7,6 +7,7 @@ import MyResevation from '@/components/myPage/MyResevation';
 import ReservationManagement from '@/pages/ReservationManagement';
 import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
+import PostingManagement from './PostingManagement';
 
 const MyPage = ({ isPartner = false }: { isPartner?: boolean }) => {
   const { status } = useParams();
@@ -27,7 +28,8 @@ const MyPage = ({ isPartner = false }: { isPartner?: boolean }) => {
           {status === 'reservation-history' && (
             <MyResevation isExpired="true" />
           )}
-          {status === 'manage' && <ReservationManagement />}
+          {status === 'posting-manage' && <PostingManagement />}
+          {status === 'reserve-manage' && <ReservationManagement />}
         </MyPageSideBar>
       </Layout>
       <Footer />

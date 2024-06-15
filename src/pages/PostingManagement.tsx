@@ -71,7 +71,7 @@ const PostingManagement = () => {
     setLodgeData(sortData(lodge, isNew));
     setActivityData(sortData(activity, isNew));
     setAllData(sortData([...lodge, ...activity], isNew));
-  }, [isNew]);
+  }, [isNew, allData]);
 
   sortData(activity, isNew);
 
@@ -79,7 +79,7 @@ const PostingManagement = () => {
     <div className="mx-10 my-0 w-1000">
       <div className="flex flex-col gap-60 mt-60">
         <div className="flex flex-col gap-20">
-          <div className="font-bold text-24">예약 관리</div>
+          <div className="font-bold text-24">상품 판매(게시) 관리</div>
           <SearchBar cardLists={[]} />
         </div>
 
@@ -154,7 +154,7 @@ const PostingManagement = () => {
                   </ReservPagination>
                 ) : (
                   <div className="flex items-center justify-center text-24 font-medium">
-                    예약 내역이 없습니다.
+                    게시한 상품이 없습니다.
                   </div>
                 ))}
               {selectedCategory === '숙박' &&
@@ -179,7 +179,7 @@ const PostingManagement = () => {
                   </ReservPagination>
                 ) : (
                   <div className="flex items-center justify-center text-24 font-medium">
-                    예약 내역이 없습니다.
+                    게시한 상품이 없습니다.
                   </div>
                 ))}
               {selectedCategory === '체험' &&
@@ -204,7 +204,7 @@ const PostingManagement = () => {
                   </ReservPagination>
                 ) : (
                   <div className="flex items-center justify-center text-24 font-medium">
-                    예약 내역이 없습니다.
+                    게시한 상품이 없습니다.
                   </div>
                 ))}
 
