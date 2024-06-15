@@ -19,7 +19,7 @@ const ReservationManagement = () => {
     categoryId: 1,
   });
 
-  const { reservedData: activity, error: acError } = useReservationManageQuery({
+  const { reservedData: activity } = useReservationManageQuery({
     partnerId: userInfo.id,
     categoryId: 2,
   });
@@ -32,7 +32,7 @@ const ReservationManagement = () => {
       return postNew ? timeB - timeA : timeA - timeB;
     });
   };
-  console.log(acError);
+
   const toggleDropdown = () => {
     setIsNew(!isNew);
   };
