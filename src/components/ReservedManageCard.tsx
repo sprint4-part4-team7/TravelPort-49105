@@ -7,6 +7,7 @@ import {
   ReserveStatusType,
 } from '@/constants/reserveType';
 import instance from '@/utils/axios';
+import { useState } from 'react';
 import Button from '@/components/common/Button';
 import ReservationCard from '@/components/common/reservPagination/ResevationCard';
 import ReservChips from '@/components/myPage/ReservChips';
@@ -38,16 +39,21 @@ const ReservedManageCard = ({
   reserveDate = '',
   timeTable = { targetDate: '', startTimeOnly: '', endTimeOnly: '' },
 }: ReserveProps) => {
+  const [state, setState] = useState<ReserveStatusType>(reservationState);
+
   const handleApprove = () => {
     instance.put(`/reservation/${id}`, { reservationState: '예약 완료' });
+    setState('예약 완료');
   };
 
   const handleReject = () => {
     instance.put(`/reservation/${id}`, { reservationState: '예약 거절' });
+    setState('예약 거절');
   };
 
   const handleStandby = () => {
     instance.put(`/reservation/${id}`, { reservationState: '예약 대기' });
+    setState('예약 대기');
   };
 
   return (
@@ -59,9 +65,9 @@ const ReservedManageCard = ({
       // schedule={`일정 : ${changeDateForm(timeTable.targetDate)}, ${timeTable.startTimeOnly} ~ ${timeTable.endTimeOnly}`}
       time={timeTable}
       userInfo={`예약자명 : ${user.name} / 전화번호 : ${user.phone}`}
-      upperRight={<ReservChips status={reservationState} />}
+      upperRight={<ReservChips status={state} />}
       lowerRight={
-        reservationState === '예약 대기' ? (
+        state === '예약 대기' ? (
           <div className="flex flex-col mobile:flex-row gap-8 justify-end">
             <div className="absolute top-16 right-16 text-14 text-right font-semibold">
               대기중
@@ -95,7 +101,7 @@ const ReservedManageCard = ({
               <ReservButtonOutlined status="예약 거절" onClick={handleReject} />
             </div>
           </div>
-        ) : reservationState === '예약 완료' ? (
+        ) : state === '예약 완료' ? (
           <div className="flex flex-col gap-8 justify-between">
             <div className="absolute top-16 right-16 text-14 text-right font-semibold">
               승인됨
@@ -125,7 +131,7 @@ const ReservedManageCard = ({
               <ReservButtonOutlined status="예약 거절" onClick={handleReject} />
             </div>
           </div>
-        ) : reservationState === '예약 거절' ? (
+        ) : state === '예약 거절' ? (
           <div className="flex flex-col gap-8 justify-between">
             <div className="absolute top-16 right-16 text-14 text-right font-semibold">
               거절됨
@@ -153,7 +159,7 @@ const ReservedManageCard = ({
               </Button>
             </div>
           </div>
-        ) : reservationState === '예약 취소' ? (
+        ) : state === '예약 취소' ? (
           <div className="flex flex-col gap-8 justify-between">
             <div className="absolute top-16 right-16 text-14 text-right font-semibold">
               예약 취소함
