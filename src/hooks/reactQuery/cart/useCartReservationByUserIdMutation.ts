@@ -22,7 +22,6 @@ const useCartReservationByUserIdMutation = () => {
     onSuccess(data) {
       setData(data?.data[0]);
       setPaymnetId(data?.data[0].paymentId);
-      console.log('data', data);
       queryClient.invalidateQueries({
         queryKey: ['getCartById'],
       });
