@@ -38,9 +38,9 @@ export interface OptionbyIdData {
 }
 
 export type DetailData = {
-  id: number;
-  categoryId: number;
-  name: string;
+  productId: number;
+  product_categoryId: number;
+  productName: string;
   productDesc: string;
   productSiteLat: number;
   productSiteLng: number;

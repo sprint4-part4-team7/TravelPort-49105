@@ -2,7 +2,7 @@ import { useState } from 'react';
 import useProductByIdQuery from './reactQuery/product/useProductByIdQuery';
 
 const useDatePicker = (productId?: number) => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
   let maxStartDate;
