@@ -12,7 +12,7 @@ interface DefaultModalProps {
 const DefaultModal = ({
   title,
   children,
-  buttonText,
+  buttonText = '확인',
   onConfirm,
   closeModal,
 }: DefaultModalProps) => {
@@ -24,18 +24,29 @@ const DefaultModal = ({
   };
 
   return (
-    <div className="flex flex-col w-475 p-16 h-full max-h-300 text-center justify-center items-center">
-      <div className="text-20 w-full font-semibold">{title}</div>
+    <div className="flex flex-col w-475 h-full text-center justify-between items-center">
+      <div className="text-20 w-full font-normal py-24">{title}</div>
       {children ? (
-        <div className="text-16 w-full h-full mt-4">{children}</div>
-      ) : (
-        <div className="block mt-32" />
-      )}
-      <div className="flex gap-8 justify-end w-full mt-8">
-        <Button outlined onClick={closeModal}>
+        <div className="text-16 w-full h-full pb-24">{children}</div>
+      ) : null}
+      <div className="flex gap-8 justify-end w-full pt-8">
+        <Button
+          outlined
+          buttonStyle="px-32 text-16 p-12"
+          width="w-fit mobile:w-full"
+          onClick={closeModal}
+        >
           닫기
         </Button>
-        {!!onConfirm && <Button onClick={handleConfirm}>{buttonText}</Button>}
+        {!!onConfirm && (
+          <Button
+            buttonStyle="px-32 text-16 p-12"
+            width="w-fit mobile:w-full"
+            onClick={handleConfirm}
+          >
+            {buttonText}
+          </Button>
+        )}
       </div>
     </div>
   );

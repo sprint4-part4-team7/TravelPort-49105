@@ -49,7 +49,7 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
 
   const handleSave = async (data: UserInfo) => {
     if (img.length) {
-      const response = await postImages(img, BUCKER_NAME.TEST);
+      const response = await postImages(img, BUCKER_NAME.PRODUCT_OPTION);
       data = { ...data, profileImage: response[0] };
     } else {
       data = { ...data, profileImage: '' };

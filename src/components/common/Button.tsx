@@ -5,6 +5,7 @@ type ButtonProps = {
   buttonType?: 'button' | 'submit' | 'reset';
   variant?: 'default' | 'more' | 'floating';
   outlined?: boolean;
+  width?: string;
   buttonStyle?: string; // font 굵기, text 크기, padding, width 변경 시 tailwind 형식으로 진행
   onClick?: () => void;
   isCancel?: boolean;
@@ -17,13 +18,14 @@ const Button = ({
   variant = 'default',
   outlined = false,
   buttonStyle = 'text-16 p-12',
+  width = 'w-full',
   onClick,
   isCancel = false,
   disabled = false,
   children,
 }: ButtonProps) => {
   const styles = {
-    base: `flex justify-center items-center w-full ${variant === 'floating' ? 'rounded-28' : 'rounded-4'} ${buttonStyle}`,
+    base: `flex justify-center items-center ${variant === 'floating' ? 'rounded-28' : 'rounded-4'} ${buttonStyle} ${width}`,
     default: 'bg-blue-6 text-white hover:bg-blue-5 active:bg-blue-7',
     outlined:
       'bg-white border-1 border-solid border-blue-6 text-blue-6 hover:border-blue-5 hover:text-blue-5 active:border-blue-7 active:text-blue-7',
