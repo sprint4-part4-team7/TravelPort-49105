@@ -6,7 +6,7 @@ import Location from '@/pages/productRegist/Location';
 import Date from '@/pages/productRegist/Date';
 import Option from '@/pages/productRegist/Option';
 
-const ProductRegist = () => {
+const ProductRegister = () => {
   const [page, setPage] = useState<React.ReactNode>();
 
   useEffect(() => {
@@ -78,4 +78,4 @@ const ProductRegist = () => {
   );
 };
 
-export default ProductRegist;
+export default ProductRegister;

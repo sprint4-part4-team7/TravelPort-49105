@@ -9,7 +9,12 @@ type ImageForm = {
   thumbnail: FileList;
   check: FileList;
 };
-const ImgModal = () => {
+
+type ModalProps = {
+  closeModal: () => void;
+};
+
+const ImgModal = ({ closeModal }: ModalProps) => {
   const { register, handleSubmit, watch } = useForm<ImageForm>({
     mode: 'onChange',
   });
@@ -77,6 +82,10 @@ const ImgModal = () => {
     });
   };
 
+  const completion = () => {
+    closeModal();
+  };
+
   const onSubmit = (data: any) => {
     console.log(data.img);
   };
@@ -105,12 +114,13 @@ const ImgModal = () => {
               buttonStyle="h-28"
               outlined={trueButton}
               buttonType="button"
+              onClick={closeModal}
             >
               취소
             </Button>
           </div>
           <div className="w-166">
-            <Button buttonStyle="h-28" buttonType="submit">
+            <Button buttonStyle="h-28" buttonType="submit" onClick={completion}>
               완료
             </Button>
           </div>

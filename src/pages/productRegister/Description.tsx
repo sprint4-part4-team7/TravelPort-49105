@@ -84,7 +84,7 @@ const Description = ({ setPage }: PageIdProps) => {
         <CheckButton disabled={!isValid} />
       </form>
       <Modal isOpen={isModalOpen} closeModal={closeModal}>
-        <ImgModal />
+        <ImgModal closeModal={closeModal} />
       </Modal>
     </>
   );
