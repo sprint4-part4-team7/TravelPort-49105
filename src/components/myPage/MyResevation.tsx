@@ -49,7 +49,7 @@ const MyResevation = ({
     setCancelReserv(id);
   };
 
-  const upperRightChip = (state: string) => {
+  const upperRightChip = (state: number | null) => {
     return isReservExpired ? (
       <ReservChipsExpired status={state} />
     ) : (
@@ -58,20 +58,20 @@ const MyResevation = ({
   };
 
   const lowerRightButton = (
-    state: string,
+    state: number | null,
     cancelMessage: string,
     cancelId: number,
     reviewId?: number,
   ) => {
     if (!isReservExpired) {
-      return state === '예약 거절' ? (
+      return state === 3 ? (
         <ReservButton
           onClick={() => handleShowCancelMsg(cancelMessage || '')}
           status={state}
         />
       ) : (
         <ReservButtonOutlined
-          status="예약 취소"
+          status={4}
           onClick={() => handleCancel(cancelId)}
         />
       );
@@ -79,24 +79,21 @@ const MyResevation = ({
 
     let buttonFnc;
     switch (state) {
-      case '예약 완료':
+      case 2:
         buttonFnc = () => handleReview(reviewId || 0);
         break;
-      case '예약 거절':
+      case 3:
         buttonFnc = () => handleShowCancelMsg(cancelMessage || '');
         break;
-      case '예약 취소':
+      case 4:
         buttonFnc = () => handleCancel(cancelId);
         break;
       default:
         buttonFnc = () => {};
     }
 
-    return state === '예약 대기' ? (
-      <ReservButtonOutlined
-        status="예약 취소"
-        onClick={() => handleCancel(cancelId)}
-      />
+    return state === 1 || state === null ? (
+      <ReservButtonOutlined status={4} onClick={() => handleCancel(cancelId)} />
     ) : (
       <ReservButton status={state} onClick={buttonFnc} />
     );
@@ -121,11 +118,9 @@ const MyResevation = ({
               time={reservation.timeTable}
               option={reservation.productOption?.optionName}
               userInfo={`파트너명 : ${reservation.productOption.product.user.name} / 전화번호 : ${reservation.productOption.product.user.phone || '없음'}`}
-              upperRight={upperRightChip(
-                reservation.reservationState || '예약 대기',
-              )}
+              upperRight={upperRightChip(reservation.reservationState || 1)}
               lowerRight={lowerRightButton(
-                reservation.reservationState || '예약 대기',
+                reservation.reservationState || 1,
                 reservation.cancelMsg || '',
                 reservation.id,
                 reservation.productOptionId,

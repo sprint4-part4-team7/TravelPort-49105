@@ -3,7 +3,7 @@ import { ReactComponent as ReviewIcon } from '@/assets/icons/review.svg';
 import { useState } from 'react';
 
 interface ReservButtonProps {
-  status: string;
+  status: number | null;
   onClick?: () => void;
 }
 
@@ -11,7 +11,7 @@ const ReservButton = ({ status, onClick }: ReservButtonProps) => {
   const [isHover, setIsHover] = useState(false);
   let content;
   switch (status) {
-    case '예약 완료':
+    case 2:
       content = (
         <>
           후기 쓰기
@@ -27,7 +27,7 @@ const ReservButton = ({ status, onClick }: ReservButtonProps) => {
     //     </>
     //   );
     //   break;
-    case '예약 거절':
+    case 3:
       content = (
         <>
           거절 사유 보기

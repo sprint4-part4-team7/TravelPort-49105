@@ -21,23 +21,23 @@ const ReservButtonOutlined = ({
     'hover:border-system-error hover:text-system-error hover:bg-system-error-bg';
 
   switch (status) {
-    case '예약 취소':
-      text = '취소하기';
-      icon = <XIcon stroke="#8C8C8C" />;
-      break;
-    case '예약 거절':
-      text = '거절하기';
-      base = 'bg-white border-system-error-bg text-system-error';
-      hover = hoverError;
-      icon = <XIcon stroke="#ff4d4f" />;
-      break;
-    case '예약 완료':
+    case 2:
       text = '예약확정';
       base = 'bg-white border-blue-6 text-blue-6';
       hover = 'hover:bg-blue-1 hover:border-blue-6';
       icon = <CheckIcon />;
       break;
-    case '예약 삭제':
+    case 3:
+      text = '거절하기';
+      base = 'bg-white border-system-error-bg text-system-error';
+      hover = hoverError;
+      icon = <XIcon stroke="#ff4d4f" />;
+      break;
+    case 4:
+      text = '취소하기';
+      icon = <XIcon stroke="#8C8C8C" />;
+      break;
+    case 5:
       text = '삭제하기';
       hover = hoverError;
       icon = <XIcon stroke="#ff4d4f" />;

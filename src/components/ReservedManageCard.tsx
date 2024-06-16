@@ -2,10 +2,7 @@
 import APPROVE from '@/assets/icons/check-circle.svg';
 import DENIED from '@/assets/icons/x-square-red.svg';
 import CANCEL from '@/assets/icons/x-square.svg';
-import {
-  ReserveProductOptionType,
-  ReserveStatusType,
-} from '@/constants/reserveType';
+import { ReservProductOptionType, ReservStatusType } from '@/constants/types';
 import instance from '@/utils/axios';
 import { useState } from 'react';
 import Button from '@/components/common/Button';
@@ -15,8 +12,8 @@ import ReservButtonOutlined from '@/components/myPage/ReservButtonOutlined';
 
 type ReserveProps = {
   id: number;
-  reservationState: ReserveStatusType;
-  productOption: ReserveProductOptionType;
+  reservationState: ReservStatusType;
+  productOption: ReservProductOptionType;
   user: { name: string; phone: string };
   reserveDate: string;
   timeTable: {
@@ -28,7 +25,7 @@ type ReserveProps = {
 
 const ReservedManageCard = ({
   id,
-  reservationState = '예약 대기',
+  reservationState = 1,
   productOption = {
     optionName: '',
     product: {
@@ -39,21 +36,21 @@ const ReservedManageCard = ({
   reserveDate = '',
   timeTable = { targetDate: '', startTimeOnly: '', endTimeOnly: '' },
 }: ReserveProps) => {
-  const [state, setState] = useState<ReserveStatusType>(reservationState);
+  const [state, setState] = useState<ReservStatusType>(reservationState);
 
   const handleApprove = () => {
     instance.put(`/reservation/${id}`, { reservationState: '예약 완료' });
-    setState('예약 완료');
+    setState(2);
   };
 
   const handleReject = () => {
     instance.put(`/reservation/${id}`, { reservationState: '예약 거절' });
-    setState('예약 거절');
+    setState(3);
   };
 
   const handleStandby = () => {
     instance.put(`/reservation/${id}`, { reservationState: '예약 대기' });
-    setState('예약 대기');
+    setState(1);
   };
 
   return (
@@ -67,7 +64,7 @@ const ReservedManageCard = ({
       userInfo={`예약자명 : ${user.name} / 전화번호 : ${user.phone}`}
       upperRight={<ReservChips status={state} />}
       lowerRight={
-        state === '예약 대기' || state === '예약대기' ? (
+        state === 1 || state === null ? (
           <div className="flex flex-col mobile:flex-row gap-8 justify-end">
             <div className="absolute top-16 right-16 text-14 text-right font-semibold">
               대기중
@@ -82,10 +79,7 @@ const ReservedManageCard = ({
                 승인하기
                 <img alt="승인" src={APPROVE} width={16} height={16} />
               </Button> */}
-              <ReservButtonOutlined
-                status="예약 완료"
-                onClick={handleApprove}
-              />
+              <ReservButtonOutlined status={2} onClick={handleApprove} />
               {/* <Button
                 variant="default"
                 outlined
@@ -98,10 +92,10 @@ const ReservedManageCard = ({
                 거절하기
                 <img alt="거절" src={DENIED} width={16} height={16} />
               </Button> */}
-              <ReservButtonOutlined status="예약 거절" onClick={handleReject} />
+              <ReservButtonOutlined status={3} onClick={handleReject} />
             </div>
           </div>
-        ) : state === '예약 완료' ? (
+        ) : state === 2 ? (
           <div className="flex flex-col gap-8 justify-between">
             <div className="absolute top-16 right-16 text-14 text-right font-semibold">
               승인됨
@@ -128,10 +122,10 @@ const ReservedManageCard = ({
                 거절하기
                 <img alt="거절" src={DENIED} width={16} height={16} />
               </Button> */}
-              <ReservButtonOutlined status="예약 거절" onClick={handleReject} />
+              <ReservButtonOutlined status={3} onClick={handleReject} />
             </div>
           </div>
-        ) : state === '예약 거절' ? (
+        ) : state === 3 ? (
           <div className="flex flex-col gap-8 justify-between">
             <div className="absolute top-16 right-16 text-14 text-right font-semibold">
               거절됨
@@ -159,7 +153,7 @@ const ReservedManageCard = ({
               </Button>
             </div>
           </div>
-        ) : state === '예약 취소' ? (
+        ) : state === 4 ? (
           <div className="flex flex-col gap-8 justify-between">
             <div className="absolute top-16 right-16 text-14 text-right font-semibold">
               예약 취소함

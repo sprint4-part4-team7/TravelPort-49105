@@ -1,24 +1,26 @@
-import { ReservStatusType } from '@/constants/types';
-
-const ReservChipsExpired = ({ status }: { status: ReservStatusType }) => {
+const ReservChipsExpired = ({ status }: { status: number | null }) => {
   let color;
   let text;
   switch (status) {
-    case '예약 대기':
+    case null:
       color = 'text-system-success';
       text = '구매완료';
       break;
-    case '예약 완료':
+    case 1:
+      color = 'text-system-success';
+      text = '구매완료';
+      break;
+    case 2:
       color = 'text-blue-6';
       text = '사용완료';
       break;
-    case '예약 취소':
-      color = 'text-black-6';
-      text = '취소완료';
-      break;
-    case '예약 거절':
+    case 3:
       color = 'text-system-error';
       text = '거절됨';
+      break;
+    case 4:
+      color = 'text-black-6';
+      text = '취소완료';
       break;
     default:
       color = 'text-black';
