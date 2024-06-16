@@ -67,7 +67,7 @@ const ReservedManageCard = ({
       userInfo={`예약자명 : ${user.name} / 전화번호 : ${user.phone}`}
       upperRight={<ReservChips status={state} />}
       lowerRight={
-        state === '예약 대기' ? (
+        state === '예약 대기' || state === '예약대기' ? (
           <div className="flex flex-col mobile:flex-row gap-8 justify-end">
             <div className="absolute top-16 right-16 text-14 text-right font-semibold">
               대기중

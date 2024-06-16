@@ -18,6 +18,11 @@ const ReservChips = ({ status }: { status: string }) => {
       style += 'text-system-warning';
       text = '대기중';
       break;
+    case '예약대기':
+      src = pending;
+      style += 'text-system-warning';
+      text = '대기중';
+      break;
     case '예약 거절':
       src = rejected;
       style += 'text-system-error';
