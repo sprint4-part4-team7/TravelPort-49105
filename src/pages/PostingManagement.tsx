@@ -4,7 +4,8 @@ import { useUserStore } from '@/utils/zustand';
 import useProductByPartnerQuery from '@/hooks/reactQuery/product/useProductByPartnerQuery';
 import SearchBar from '@/components/common/SearchBar';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
-import ReservationCard from '@/components/common/reservPagination/ResevationCard';
+import PostingCard from '@/components/PostingCard';
+import Switch from '@/components/common/Switch';
 
 const PostingManagement = () => {
   const { userInfo } = useUserStore();
@@ -28,6 +29,8 @@ const PostingManagement = () => {
   const toggleDropdown = () => {
     setIsNew(!isNew);
   };
+
+  // const togglePosting = () => {};
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(category);
@@ -138,14 +141,21 @@ const PostingManagement = () => {
                     setPageNum={setPageNum}
                     allCardNum={allData.length}
                   >
-                    {allData.slice(start, end).map((item) => (
-                      <ReservationCard
-                        key={item.id}
-                        id={item.id}
-                        title={item.name}
-                        date={item.createdAt}
-                      />
-                    ))}
+                    {allData.slice(start, end).map((item) => {
+                      return (
+                        <PostingCard
+                          key={item.id}
+                          id={item.id}
+                          title={item.name}
+                          salePeriod={{
+                            startDate: item.startDate,
+                            endDate: item.endDate,
+                          }}
+                          postingDate={item.createdAt}
+                          upperRight={<Switch />}
+                        />
+                      );
+                    })}
                   </ReservPagination>
                 ) : (
                   <div className="flex items-center justify-center text-24 font-medium">
@@ -161,11 +171,15 @@ const PostingManagement = () => {
                     allCardNum={lodgeData.length}
                   >
                     {lodgeData.slice(start, end).map((item) => (
-                      <ReservationCard
+                      <PostingCard
                         key={item.id}
                         id={item.id}
                         title={item.name}
-                        date={item.createdAt}
+                        salePeriod={{
+                          startDate: item.startDate,
+                          endDate: item.endDate,
+                        }}
+                        postingDate={item.createdAt}
                       />
                     ))}
                   </ReservPagination>
@@ -183,11 +197,15 @@ const PostingManagement = () => {
                     allCardNum={activityData.length}
                   >
                     {activityData.slice(start, end).map((item) => (
-                      <ReservationCard
+                      <PostingCard
                         key={item.id}
                         id={item.id}
                         title={item.name}
-                        date={item.createdAt}
+                        salePeriod={{
+                          startDate: item.startDate,
+                          endDate: item.endDate,
+                        }}
+                        postingDate={item.createdAt}
                       />
                     ))}
                   </ReservPagination>
