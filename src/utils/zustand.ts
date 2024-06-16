@@ -92,12 +92,3 @@ export const useProductImageStore = create<ProductImageState>((set) => ({
   productImages: [],
   setProductImages: (productImages) => set({ productImages }),
 }));
-
-interface OptionImageState {
-  optionImage: File | null;
-  setOptionImage: (optionImage: File) => void;
-}
-export const useOptionImageStore = create<OptionImageState>((set) => ({
-  optionImage: null,
-  setOptionImage: (optionImage) => set({ optionImage }),
-}));
