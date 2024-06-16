@@ -15,6 +15,7 @@ interface CartInfo {
   count: number;
   price: string | number;
   maxCount: number;
+  categoryId: number;
 }
 
 interface CartListProps {
@@ -68,6 +69,7 @@ const CartList = ({
   const price = productOption?.optionPrice;
   const maxCount = productOption?.maxUserCount;
   const userCount = productOption?.userCount;
+  const categoryId = item?.productOption.product.categoryId;
 
   const option =
     productOption?.product.categoryId === 1
@@ -91,6 +93,7 @@ const CartList = ({
       count,
       price,
       maxCount,
+      categoryId,
     };
 
     onSelect(selectedItem, newSelected);

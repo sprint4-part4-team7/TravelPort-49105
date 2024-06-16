@@ -16,9 +16,10 @@ export interface CartInfo {
   name: string;
   option: string;
   day: any;
-  count: number; // Assuming count is a number for quantity
-  price: number; // Assuming price is a number for item price
+  count: number;
+  price: number;
   maxCount: number;
+  categoryId: number;
 }
 
 const Cart = () => {
