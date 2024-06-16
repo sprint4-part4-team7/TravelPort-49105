@@ -40,7 +40,7 @@ const Option = () => {
               </td>
               <td aria-label="title" className="flex-1">
                 <input
-                  className="w-full text-center"
+                  className="w-full text-center truncate"
                   type="text"
                   value={i[1]}
                   readOnly
@@ -88,7 +88,7 @@ const Option = () => {
               </td>
               <td aria-label="content" className="flex-1">
                 <input
-                  className="w-full text-center"
+                  className="w-full text-center truncate"
                   type="text"
                   value={i[7]}
                   readOnly
