@@ -39,17 +39,17 @@ const ReservedManageCard = ({
   const [state, setState] = useState<ReservStatusType>(reservationState);
 
   const handleApprove = () => {
-    instance.put(`/reservation/${id}`, { reservationState: '예약 완료' });
+    instance.put(`/reservation/${id}`, { reservationState: 2 });
     setState(2);
   };
 
   const handleReject = () => {
-    instance.put(`/reservation/${id}`, { reservationState: '예약 거절' });
+    instance.put(`/reservation/${id}`, { reservationState: 3 });
     setState(3);
   };
 
   const handleStandby = () => {
-    instance.put(`/reservation/${id}`, { reservationState: '예약 대기' });
+    instance.put(`/reservation/${id}`, { reservationState: 1 });
     setState(1);
   };
 
