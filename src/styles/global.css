@@ -5,6 +5,7 @@
 @tailwind utilities;
 
 @import url('../components/common/CalendarCustom.css');
+@import url('./switch.css');
 
 @font-face {
   font-family: plex_sansKR;

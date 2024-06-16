@@ -74,7 +74,7 @@ const ReservationManagement = () => {
       setAllData(sortData([...lodge, ...activity], isNew));
     };
     fetchData();
-  }, [isNew, allData]);
+  }, [isNew, lodgeData, activityData]);
 
   return (
     <div className="mx-10 my-0 w-1000">

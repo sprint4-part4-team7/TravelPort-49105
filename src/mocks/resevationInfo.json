@@ -4,69 +4,69 @@
     "title": "호텔1",
     "option": "옵션1",
     "date": "2019-01-01",
-    "status": "pending"
+    "status": 1
   },
   {
     "id": 2,
     "title": "호텔2",
     "option": "옵션2",
     "date": "2019-01-02",
-    "status": "rejected"
+    "status": 3
   },
   {
     "id": 3,
     "title": "호텔3",
     "option": "옵션3",
     "date": "2019-01-03",
-    "status": "approved"
+    "status": 2
   },
   {
     "id": 4,
     "title": "호텔4",
     "option": "옵션4",
     "date": "2019-01-04",
-    "status": "approved"
+    "status": 2
   },
   {
     "id": 5,
     "title": "호텔5",
     "option": "옵션5",
     "date": "2019-01-05",
-    "status": "pending"
+    "status": 1
   },
   {
     "id": 6,
     "title": "호텔6",
     "option": "옵션6",
     "date": "2019-01-06",
-    "status": "rejected"
+    "status": 3
   },
   {
     "id": 7,
     "title": "호텔7",
     "option": "옵션7",
     "date": "2019-01-07",
-    "status": "approved"
+    "status": 2
   },
   {
     "id": 8,
     "title": "호텔8",
     "option": "옵션8",
     "date": "2019-01-08",
-    "status": "approved"
+    "status": 2
   },
   {
     "id": 9,
     "title": "호텔9",
     "option": "옵션9",
     "date": "2019-01-09",
-    "status": "pending"
+    "status": 1
   },
   {
     "id": 10,
     "title": "호텔10",
     "option": "옵션10",
     "date": "2019-01-10",
-    "status": "rejected"
+    "status": 3
   }
 ]
