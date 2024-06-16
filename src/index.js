@@ -4,7 +4,9 @@ import { CookiesProvider } from 'react-cookie';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './styles/global.css';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { Flip, ToastContainer } from 'react-toastify';
 import App from './App';
+import 'react-toastify/dist/ReactToastify.css';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,6 +25,13 @@ root.render(
     </CookiesProvider>
     <div style={{ fontSize: 16 }}>
       <ReactQueryDevtools initialIsOpen />
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        closeOnClick
+        pauseOnHover={false}
+        transition={Flip}
+      />
     </div>
   </QueryClientProvider>,
 );
