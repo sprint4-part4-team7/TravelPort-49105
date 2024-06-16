@@ -1,5 +1,6 @@
 // 상품등록페이지 메인
 import React, { useEffect, useState } from 'react';
+import { useProductImageStore, useThumbnailStore } from '@/utils/zustand';
 import Category from './Category';
 import Description from './Description';
 import Location from './Location';
@@ -8,6 +9,10 @@ import Option from './Option';
 
 const ProductRegister = () => {
   const [page, setPage] = useState<React.ReactNode>();
+
+  const { thumbnail } = useThumbnailStore();
+  const { productImages } = useProductImageStore();
+  console.log(thumbnail, productImages);
 
   useEffect(() => {
     setPage(<Category setPage={setPage} />);
