@@ -4,11 +4,11 @@ import Button from '@/components/common/Button';
 import NumberInputBox from '@/components/common/NumberInputBox';
 
 type OptionModalForm = {
-  img: FileList;
+  img: File;
   title: string;
   content: string;
-  minimum: number;
   maximum: number;
+  userCount: number;
   price: number;
   start: number;
   end: number;
@@ -16,16 +16,31 @@ type OptionModalForm = {
 
 type ModalProps = {
   closeModal: () => void;
+  optionList: any;
+  setOptionList: any;
 };
 
-const OptionModal = ({ closeModal }: ModalProps) => {
+const OptionModal = ({ closeModal, optionList, setOptionList }: ModalProps) => {
   const { register, handleSubmit } = useForm<OptionModalForm>({
     mode: 'onChange',
   });
   const trueButton = true;
 
   const onSubmit = (data: any) => {
-    console.log(data.img);
+    console.log(data);
+    setOptionList([
+      ...optionList,
+      [
+        data.img[0],
+        data.title,
+        data.content,
+        data.maximum,
+        data.userCount,
+        data.price,
+        data.start,
+        data.end,
+      ],
+    ]);
     closeModal();
   };
 
@@ -57,26 +72,34 @@ const OptionModal = ({ closeModal }: ModalProps) => {
           </label>
           <div className="flex gap-6">
             <NumberInputBox
-              {...register('minimum')}
-              labelname="최소 인원"
-              inputstyle="w-47"
-              divstyle="w-90"
-              numberBox="minimum"
-              unit="명"
-              placeholder="2"
-            />
-            <NumberInputBox
-              {...register('maximum')}
-              labelname="최대 인원"
-              inputstyle="w-47"
+              register={register('maximum', {
+                valueAsNumber: true,
+              })}
+              labelname="예약가능인원"
+              inputstyle="w-57"
               divstyle="w-90"
               numberBox="maximum"
               unit="명"
               placeholder="232"
+              max={999}
+            />
+            <NumberInputBox
+              register={register('userCount', {
+                valueAsNumber: true,
+              })}
+              labelname="티켓 갯수"
+              inputstyle="w-57"
+              divstyle="w-90"
+              numberBox="maximum"
+              unit="개"
+              placeholder="111"
+              max={999}
             />
           </div>
           <NumberInputBox
-            {...register('price')}
+            register={register('price', {
+              valueAsNumber: true,
+            })}
             labelname="가격"
             inputstyle="w-77 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             divstyle="w-120"
@@ -86,7 +109,9 @@ const OptionModal = ({ closeModal }: ModalProps) => {
           />
           <div className="flex gap-6">
             <NumberInputBox
-              {...register('start')}
+              register={register('start', {
+                valueAsNumber: true,
+              })}
               labelname="시작 시간"
               inputstyle="w-37"
               divstyle="w-80"
@@ -96,7 +121,9 @@ const OptionModal = ({ closeModal }: ModalProps) => {
               max={23}
             />
             <NumberInputBox
-              {...register('end')}
+              register={register('end', {
+                valueAsNumber: true,
+              })}
               labelname="종료 시간"
               inputstyle="w-37"
               divstyle="w-80"
