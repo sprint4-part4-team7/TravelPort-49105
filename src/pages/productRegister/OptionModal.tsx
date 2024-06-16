@@ -33,12 +33,12 @@ const OptionModal = ({ closeModal, optionList, setOptionList }: ModalProps) => {
       [
         data.img[0],
         data.title,
-        data.content,
         data.maximum,
         data.userCount,
         data.price,
         data.start,
         data.end,
+        data.content,
       ],
     ]);
     closeModal();

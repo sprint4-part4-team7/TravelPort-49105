@@ -1,108 +1,116 @@
-import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import plusImage from '@/assets/icons/plus-white.svg';
 import useModal from '@/hooks/useModal';
-// import NumberInputBox from '@/components/common/NumberInputBox';
+import trashImage from '@/assets/icons/trash-red.svg';
 import Button from '@/components/common/Button';
 import Modal from '@/components/common/Modal';
 import OptionModal from './OptionModal';
 
-type OptionForm = {
-  title: string;
-  content: string;
-  minimum: number;
-  maximum: number;
-  price: number;
-  start: number;
-  end: number;
-};
-
 const Option = () => {
-  const { register } = useForm<OptionForm>({ mode: 'onChange' });
-
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const [optionList, setOptionList] = useState([]);
   console.log(optionList);
+
   return (
-    <>
-      <form>
-        <div className="mx-40 flex flex-col gap-12">
-          <div className="flex gap-12 items-center">
-            <label className="flex gap-12 flex-col" htmlFor="title">
-              <p className="text-14">세부 상품명</p>
-              <input
-                className="h-48 p-12 rounded text-16 outline-none border-solid border-1 border-black-5 w-239 focus:border-blue-6 focus:border-1 mobile:max-w-none"
-                {...register('title')}
-                placeholder="상품옵션의 이름을 적어주세요."
-                id="title"
-                type="text"
-              />
-            </label>
-            {/* 체험만 필요 */}
-            {/* <NumberInputBox
-              {...register('minimum')}
-              labelname="최소 인원"
-              inputstyle="w-47"
-              divstyle="w-90"
-              numberBox="minimum"
-              unit="명"
-              placeholder="2"
-            />
-            <NumberInputBox
-              {...register('maximum')}
-              labelname="최대 인원"
-              inputstyle="w-47"
-              divstyle="w-90"
-              numberBox="maximum"
-              unit="명"
-              placeholder="232"
-            />
-            <NumberInputBox
-              {...register('price')}
-              labelname="가격"
-              inputstyle="w-77 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-              divstyle="w-120"
-              numberBox="price"
-              unit="원"
-              placeholder="20000"
-            />
-            {/* 체험만 필요 */}
-            {/* <NumberInputBox
-              {...register('start')}
-              labelname="시작 시간"
-              inputstyle="w-37"
-              divstyle="w-80"
-              numberBox="start"
-              unit="시"
-              placeholder="19"
-              max={23}
-            /> */}
-            {/* 체험만 필요 */}
-            {/* <NumberInputBox
-              {...register('end')}
-              labelname="종료 시간"
-              inputstyle="w-37"
-              divstyle="w-80"
-              numberBox="end"
-              unit="시"
-              placeholder="19"
-              max={23}
-            />  */}
-          </div>
-          <label className="flex gap-12 flex-col" htmlFor="content">
-            <p className="text-14">세부 상품 설명</p>
-            <textarea
-              className="resize-none h-48 p-12 rounded text-16 outline-none border-solid border-1 border-black-5 w-full focus:border-blue-6 focus:border-1 mobile:max-w-none"
-              {...register('content')}
-              placeholder="등록할 상품옵션의 설명을 적어주세요.(300자)"
-              id="content"
-              maxLength={300}
-            />
-          </label>
-        </div>
-      </form>
-      <div className="w-148">
+    <div className="mx-40 flex flex-col">
+      <table className="table-auto w-full">
+        <thead>
+          <tr className="flex justify-center gap-20 text-17 p-12">
+            <th className="flex-1">대표이미지</th>
+            <th className="flex-1">체험상품명</th>
+            <th className="flex-1">가능인원</th>
+            <th className="flex-1">티켓갯수</th>
+            <th className="flex-1">가격</th>
+            <th className="flex-1">시작시간</th>
+            <th className="flex-1">종료시간</th>
+            <th className="flex-1">상품설명</th>
+            <th className="flex-1">삭제</th>
+          </tr>
+        </thead>
+        <tbody>
+          {optionList.map((i: any, index: number) => (
+            <tr className="flex bg-black-2 p-12 gap-20 items-center justify-center text-16">
+              <td aria-label="img" className="flex flex-1 justify-center">
+                <img
+                  className="w-60 h-60"
+                  src={URL.createObjectURL(i[0])}
+                  alt="상품옵션"
+                />
+              </td>
+              <td aria-label="title" className="flex-1">
+                <input
+                  className="w-full text-center"
+                  type="text"
+                  value={i[1]}
+                  readOnly
+                />
+              </td>
+              <td aria-label="maximum" className="flex-1">
+                <input
+                  className="w-full text-center"
+                  type="text"
+                  value={`${i[2]}명`}
+                  readOnly
+                />
+              </td>
+              <td aria-label="userCount" className="flex-1">
+                <input
+                  className="w-full text-center"
+                  type="text"
+                  value={`${i[3]}개`}
+                  readOnly
+                />
+              </td>
+              <td aria-label="price" className="flex-1">
+                <input
+                  className="w-full text-center"
+                  type="text"
+                  value={`${i[4]}원`}
+                  readOnly
+                />
+              </td>
+              <td aria-label="start" className="flex-1">
+                <input
+                  className="w-full text-center"
+                  type="text"
+                  value={`${i[5]}시`}
+                  readOnly
+                />
+              </td>
+              <td aria-label="end" className="flex-1">
+                <input
+                  className="w-full text-center"
+                  type="text"
+                  value={`${i[6]}시`}
+                  readOnly
+                />
+              </td>
+              <td aria-label="content" className="flex-1">
+                <input
+                  className="w-full text-center"
+                  type="text"
+                  value={i[7]}
+                  readOnly
+                />
+              </td>
+              <td aria-label="content" className="flex flex-1 justify-center">
+                <img
+                  src={trashImage}
+                  alt="삭제 아이콘"
+                  role="presentation"
+                  onClick={() => {
+                    const temp = [...optionList];
+                    temp.splice(index, 1); // 배열에서 선택한 인덱스를 삭제해서 배열을 재정의
+                    setOptionList(temp); // 재정의된 배열을 set안에 넣어서 재정의+state변환
+                  }}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="w-148 mt-4">
         <Button
           buttonType="button"
           buttonStyle="text-16 p-12 flex gap-6 justify-center items-center"
@@ -119,7 +127,8 @@ const Option = () => {
           setOptionList={setOptionList}
         />
       </Modal>
-    </>
+    </div>
   );
 };
+
 export default Option;
