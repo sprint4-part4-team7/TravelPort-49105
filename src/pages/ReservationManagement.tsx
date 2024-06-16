@@ -19,7 +19,7 @@ const ReservationManagement = () => {
     categoryId: 1,
   });
 
-  const { reservedData: activity, error: acError } = useReservationManageQuery({
+  const { reservedData: activity } = useReservationManageQuery({
     partnerId: userInfo.id,
     categoryId: 2,
   });
@@ -32,8 +32,8 @@ const ReservationManagement = () => {
       return postNew ? timeB - timeA : timeA - timeB;
     });
   };
-  console.log(acError);
-  const toggleDropdown = () => {
+
+  const toggleOrder = () => {
     setIsNew(!isNew);
   };
 
@@ -68,12 +68,13 @@ const ReservationManagement = () => {
   const end = start + limit;
 
   useEffect(() => {
-    setLodgeData(sortData(lodge, isNew));
-    setActivityData(sortData(activity, isNew));
-    setAllData(sortData([...lodge, ...activity], isNew));
-  }, [isNew]);
-
-  sortData(activity, isNew);
+    const fetchData = () => {
+      setLodgeData(sortData(lodge, isNew));
+      setActivityData(sortData(activity, isNew));
+      setAllData(sortData([...lodge, ...activity], isNew));
+    };
+    fetchData();
+  }, [isNew, allData]);
 
   return (
     <div className="mx-10 my-0 w-1000">
@@ -103,7 +104,7 @@ const ReservationManagement = () => {
               className="flex items-center justify-center gap-4 
               px-12 py-8 text-16 font-semibold
               border-1 border-solid border-black-5 rounded-8"
-              onClick={toggleDropdown}
+              onClick={toggleOrder}
             >
               {isNew ? (
                 <>

@@ -31,7 +31,10 @@ const MyPageSideBar = ({ children, isPartner = false }: MyPageSideBarProps) => {
   const buttonList = [
     { status: 'edit-info', text: '정보 수정' },
     ...(isPartner
-      ? [{ status: 'manage', text: '예약 관리' }]
+      ? [
+          { status: 'posting-manage', text: '게시물 관리' },
+          { status: 'reserve-manage', text: '예약 관리' },
+        ]
       : [
           { status: 'reservation-status', text: '예약 현황' },
           { status: 'reservation-history', text: '예약 내역' },

@@ -30,6 +30,13 @@ const getProductById = async (productId: number) => {
   });
 };
 
+const getProductByPartner = async (partnerId: number) => {
+  return instance({
+    url: `/product/user/${partnerId}`,
+    method: 'GET',
+  });
+};
+
 const putProduct = async (
   productId: number,
   userId: number,
@@ -73,6 +80,7 @@ const postProduct = async (
 export default {
   getProductAll,
   getProductById,
+  getProductByPartner,
   putProduct,
   deleteProductById,
   postProduct,
