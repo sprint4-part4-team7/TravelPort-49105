@@ -75,6 +75,43 @@ export const useReservationStore = create(
     },
   ),
 );
+
+interface CartInfo {
+  cartId: number;
+  name: string;
+  option: string;
+  day: any;
+  count: number;
+  price: number;
+  maxCount: number;
+  categoryId: number;
+}
+
+interface CartStore {
+  cartInfo: CartInfo[];
+  setCartInfo: (cartInfo: CartInfo[]) => void;
+  addCartItem: (item: CartInfo) => void;
+  removeCartItem: (index: number) => void;
+}
+
+export const useCartStore = create(
+  persist<CartStore>(
+    (set) => ({
+      cartInfo: [],
+      setCartInfo: (cartInfo) => set({ cartInfo }),
+      addCartItem: (item) =>
+        set((state) => ({ cartInfo: [...state.cartInfo, item] })),
+      removeCartItem: (index) =>
+        set((state) => ({
+          cartInfo: state.cartInfo.filter((_, i) => i !== index),
+        })),
+    }),
+    {
+      name: 'cart',
+    },
+  ),
+);
+
 interface ThumbnailState {
   thumbnail: File | null;
   setThumbnail: (thumbnail: File) => void;

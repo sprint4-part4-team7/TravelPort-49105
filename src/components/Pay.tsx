@@ -9,7 +9,7 @@ const Pay = ({ requestPayment }: any) => {
         <div className="w-full px-6">
           <button
             type="button"
-            className="w-full py-10 text-lg font-semibold text-white border-none rounded-lg cursor-pointer btn-primary"
+            className="w-full py-10 text-lg font-semibold text-white border-none rounded-lg cursor-pointer btn-primary h-30"
             onClick={requestPayment}
           >
             결제하기

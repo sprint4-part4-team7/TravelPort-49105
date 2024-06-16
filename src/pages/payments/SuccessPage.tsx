@@ -1,52 +1,76 @@
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import './Payments.css';
 import useReservationMutation from '@/hooks/reactQuery/reservation/useReservationMutation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import usePaymentPutMutation from '@/hooks/reactQuery/payment/usePaymentPutMutation';
 import check from '@/assets/icons/check-circle-broken-pay.svg';
-import { useReservationStore } from '@/utils/zustand';
+import {
+  useCartStore,
+  useReservationStore,
+  useUserStore,
+} from '@/utils/zustand';
+import useCartReservationByUserIdMutation from '@/hooks/reactQuery/cart/useCartReservationByUserIdMutation';
 import Layout from '@/components/common/layout/Layout';
 import Button from '@/components/common/Button';
 import Loading from '@/components/common/Loading';
 
 const SuccessPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
 
+  const { userInfo } = useUserStore();
+  const { cartInfo } = useCartStore();
+  const cartIds = cartInfo.map((item) => ({ cartId: item.cartId }));
   const { reservationInfo } = useReservationStore();
   const [searchParams] = useSearchParams();
   const paymentKey = searchParams.get('paymentKey') ?? '';
   const orderId = searchParams.get('orderId') ?? '';
   const amount = parseInt(searchParams.get('amount') ?? '0', 10);
 
-  function confirm() {
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [isReservationPosted, setIsReservationPosted] = useState(false); // 상태 추가
+
+  const confirm = () => {
     navigate('/');
-  }
-
-  const {
-    mutate: createReservation,
-    isLoading,
-    reservationResponse,
-  } = useReservationMutation();
-  // TODO: reservationResponse에서 paymentId 꺼내기 (지금은 대이터가 다 날아가서 확인 불가)
-  console.log(reservationResponse);
-  const { mutate: sendPayments } = usePaymentPutMutation();
-
-  const reservationPost = async () => {
-    createReservation({
-      userId: reservationInfo?.userId,
-      productOptionId: reservationInfo?.productOptionId,
-      timeTableId: reservationInfo?.timeTableId,
-      reservationState: reservationInfo?.reservationState,
-      reservationPrice: reservationInfo?.reservationPrice,
-      ticketCount: reservationInfo?.ticketCount,
-      cancelMsg: reservationInfo?.cancelMsg || '',
-    });
   };
 
-  const paymentPut = async () => {
+  const { mutate: createReservation, isLoading: reservationLoading } =
+    useReservationMutation();
+  const {
+    mutate: cartReservation,
+    datas: cartData,
+    isLoading: cartLoading,
+    pId,
+  } = useCartReservationByUserIdMutation();
+  const { mutate: sendPayments } = usePaymentPutMutation(cartIds);
+
+  const handleCartReservationPost = async () => {
+    const userId = userInfo?.id;
+    if (userId) {
+      cartReservation({
+        userId,
+        cartIds,
+      });
+    }
+  };
+
+  const handleReservationPost = async () => {
+    if (reservationInfo.productOptionId !== 0 && !cartData) {
+      createReservation({
+        userId: reservationInfo.userId,
+        productOptionId: reservationInfo.productOptionId,
+        timeTableId: reservationInfo.timeTableId,
+        reservationState: reservationInfo.reservationState,
+        reservationPrice: reservationInfo.reservationPrice,
+        ticketCount: reservationInfo.ticketCount,
+        cancelMsg: reservationInfo.cancelMsg || '',
+      });
+      setIsReservationPosted(true);
+    }
+  };
+
+  const handlePaymentPut = async (paymentId: number) => {
     sendPayments({
-      paymentId: 3,
+      paymentId,
       paymentKey,
       orderId,
       amount,
@@ -54,13 +78,25 @@ const SuccessPage = () => {
   };
 
   useEffect(() => {
-    if (location.pathname === '/payments/success' && location.search) {
-      reservationPost();
-      paymentPut();
+    if (!isInitialized && cartInfo.length > 0) {
+      setIsInitialized(true);
+      handleCartReservationPost();
     }
-  }, []);
+  }, [cartInfo, isInitialized]);
 
-  if (isLoading) return <Loading />;
+  useEffect(() => {
+    if (cartData) {
+      handlePaymentPut(pId);
+    }
+  }, [cartData, pId]);
+
+  useEffect(() => {
+    if (!cartData && !pId && !isReservationPosted) {
+      handleReservationPost();
+    }
+  }, [cartData, pId, isReservationPosted]); // 의존성 배열에 isReservationPosted 추가
+
+  if (reservationLoading || cartLoading) return <Loading />;
 
   return (
     <Layout>
@@ -75,7 +111,7 @@ const SuccessPage = () => {
               </Button>
               <Button
                 buttonStyle="w-320 h-48 text-16 font-normal"
-                onClick={() => confirm()}
+                onClick={confirm}
               >
                 더 둘러보기
               </Button>
