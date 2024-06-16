@@ -1,6 +1,7 @@
 import cartApi from '@/apis/cart';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface CartReservationByUserIdMutationProps {
   userId: any;
@@ -8,6 +9,7 @@ interface CartReservationByUserIdMutationProps {
 }
 
 const useCartReservationByUserIdMutation = () => {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [datas, setData] = useState<any>();
   const [pId, setPaymnetId] = useState<number>(0);
@@ -25,6 +27,9 @@ const useCartReservationByUserIdMutation = () => {
       queryClient.invalidateQueries({
         queryKey: ['getCartById'],
       });
+    },
+    onError() {
+      navigate('/payments/fail');
     },
   });
 
