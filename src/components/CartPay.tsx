@@ -1,29 +1,16 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import React, { useState, useEffect } from 'react';
-// import minusPay from '@/assets/icons/minusPay.svg';
-// import plusPay from '@/assets/icons/plusPay.svg';
 
 const CartPay = ({
   item,
   isChecked: initialChecked,
   onCheckboxChange,
 }: any) => {
-  // const [count, setCount] = useState(item?.count || 1);
   const [isChecked, setIsChecked] = useState(initialChecked);
 
   useEffect(() => {
     setIsChecked(initialChecked);
   }, [initialChecked]);
-
-  // const increaseCount = () => {
-  //   setCount(count + 1);
-  // };
-
-  // const decreaseCount = () => {
-  //   if (count > 0) {
-  //     setCount(count - 1);
-  //   }
-  // };
 
   const handleCheckboxChange = (e: any) => {
     const isChecked = e.target.checked;
@@ -65,29 +52,8 @@ const CartPay = ({
         </div>
 
         {/* 카운트와 가격 (모바일 화면에서만 아래로 이동) */}
-        <div className="flex items-center gap-10 ml-auto mobile:justify-between mobile:w-full mobile:mt-40">
-          <div
-            className={`flex items-center justify-center gap-5 px-6 py-4  text-11 ${isChecked && ' text-blue-6'}`}
-          >
-            {/* <button
-              type="button"
-              onClick={decreaseCount}
-              className="outline-none"
-              disabled={count <= 1}
-            >
-              <img src={minusPay} alt="마이너스 아이콘" />
-            </button> */}
-            {/* <div className="font-normal text-11">{item?.count} 개</div> */}
-            {/* <button
-              type="button"
-              onClick={increaseCount}
-              className="outline-none"
-              disabled={count >= item?.maxCount}
-            >
-              <img src={plusPay} alt="플러스 아이콘" />
-            </button> */}
-          </div>
-          <div className="flex font-semibold text-18 ">
+        <div className="flex items-center gap-5 ml-auto mobile:justify-between mobile:w-full mobile:mt-10">
+          <div className="flex font-semibold text-20 ">
             {item.price.toLocaleString()}원
           </div>
         </div>
