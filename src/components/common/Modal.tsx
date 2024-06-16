@@ -45,6 +45,7 @@ const Modal = ({ isOpen, children, closeModal, modal = '' }: ModalProps) => {
         onClick={closeModal}
       />
       <div className={modalClass}>{children}</div>
+      {/* <button onClick={closeModal}>취소</button> */}
     </ModalPortal>
   );
 };

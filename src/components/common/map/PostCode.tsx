@@ -4,9 +4,9 @@ import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useForm } from 'react-hook-form';
 import saveImage from '@/assets/icons/check-circle-broken.svg';
 import searchImage from '@/assets/icons/search-pr.svg';
-import CheckButton from '@/pages/productRegist/CheckButton';
+import CheckButton from '@/pages/productRegister/CheckButton';
 import Button from '@/components/common/Button';
-import Date from '@/pages/productRegist/Date';
+import Date from '@/pages/productRegister/Date';
 
 type PostCodeForm = {
   address: string;

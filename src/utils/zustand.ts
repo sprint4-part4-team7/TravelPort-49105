@@ -75,3 +75,20 @@ export const useReservationStore = create(
     },
   ),
 );
+interface ThumbnailState {
+  thumbnail: File | null;
+  setThumbnail: (thumbnail: File) => void;
+}
+export const useThumbnailStore = create<ThumbnailState>((set) => ({
+  thumbnail: null,
+  setThumbnail: (thumbnail) => set({ thumbnail }),
+}));
+
+interface ProductImageState {
+  productImages: File[];
+  setProductImages: (productImages: File[]) => void;
+}
+export const useProductImageStore = create<ProductImageState>((set) => ({
+  productImages: [],
+  setProductImages: (productImages) => set({ productImages }),
+}));
