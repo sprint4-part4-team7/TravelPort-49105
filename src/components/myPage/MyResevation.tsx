@@ -10,10 +10,9 @@ import ReservPagination from '@/components/common/reservPagination/ReservPaginat
 import ReservChips from '@/components/myPage/ReservChips';
 import ReservButton from '@/components/myPage/ReservButton';
 import ReservButtonOutlined from '@/components/myPage/ReservButtonOutlined';
-import Modal from '@/components/common/Modal';
-import CancelMessage from '@/components/myPage/CancelMessage';
+import CheckCancelMsg from '@/components/myPage/modal/CheckCancelMsg';
 import ReservChipsExpired from '@/components/myPage/ReservChipsExpired';
-import CancelReserv from './CancelReserv';
+import CancelReserv from './modal/CancelReserv';
 
 const MyResevation = ({
   isExpired = 'false',
@@ -39,7 +38,7 @@ const MyResevation = ({
 
   const handleShowCancelMsg = (msg: string) => {
     openModal();
-    setCancelMsg(msg);
+    setCancelMsg(msg || '거절 사유가 없습니다');
   };
   const handleReview = (id: number) => {
     navigate(`/review/${id}`);
@@ -133,14 +132,20 @@ const MyResevation = ({
           예약 목록이 없습니다.
         </div>
       )}
-      <Modal isOpen={isModalOpen} closeModal={closeModal}>
-        {!!cancelMsg && (
-          <CancelMessage cancelMsg={cancelMsg} closeModal={closeModal} />
-        )}
-        {!!cancelReserv && (
-          <CancelReserv id={cancelReserv} closeModal={closeModal} />
-        )}
-      </Modal>
+      {!!cancelMsg && (
+        <CheckCancelMsg
+          isOpen={isModalOpen}
+          cancelMsg={cancelMsg}
+          closeModal={closeModal}
+        />
+      )}
+      {!!cancelReserv && (
+        <CancelReserv
+          isOpen={isModalOpen}
+          id={cancelReserv}
+          closeModal={closeModal}
+        />
+      )}
     </div>
   );
 };
