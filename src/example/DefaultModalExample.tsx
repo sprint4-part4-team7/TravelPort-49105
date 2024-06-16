@@ -1,6 +1,6 @@
 import useModal from '@/hooks/useModal';
-import DefaultModal from './DefaultModal';
-import Button from '../Button';
+import DefaultModal from '../components/common/DefaultModal';
+import Button from '../components/common/Button';
 
 // 얘도 그냥 일반 모달처럼 평범하게 불러오면 됨
 // 따로 Modal 컴포넌트를 만들어서 사용하는 것이 아니라, DefaultModal 컴포넌트를 사용하면 됨

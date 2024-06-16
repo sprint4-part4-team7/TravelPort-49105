@@ -1,4 +1,4 @@
-import DefaultModal from '../../common/modal/DefaultModal';
+import DefaultModal from '../../common/DefaultModal';
 
 interface CancelMessageProps {
   cancelMsg: string;

@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { putMyReservation } from '@/apis/myReservation';
-import DefaultModal from '../../common/modal/DefaultModal';
+import DefaultModal from '../../common/DefaultModal';
 
 const CancelReserv = ({
   id: cancelId,
