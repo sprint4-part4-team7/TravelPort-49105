@@ -168,9 +168,11 @@ export interface Reservation {
   };
 }
 
-export type ReservStatusType =
-  | '예약 대기'
-  | '예약 완료'
-  | '예약 취소'
-  | '예약 거절'
-  | string;
+export type ReservStatusType = 1 | 2 | 3 | 4 | 5 | null;
+
+export type ReservProductOptionType = {
+  optionName: string;
+  product: {
+    name: string;
+  };
+};
