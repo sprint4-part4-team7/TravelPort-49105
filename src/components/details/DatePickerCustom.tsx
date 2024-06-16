@@ -1,12 +1,13 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable prefer-const */
 /* eslint-disable react/button-has-type */
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './DatePickerCustom.css';
 import { ko } from 'date-fns/locale/ko';
 import { addDays, format, getDay, isBefore, subDays } from 'date-fns';
+import useOutsideClick from '@/hooks/useOutsideClick';
 
 type DatePickerProps = {
   startDate: Date | null;
@@ -30,6 +31,11 @@ const DatePickerCustom = ({
   holiday = [],
 }: DatePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const outsideRef = useRef<HTMLDivElement>(null);
+  useOutsideClick(outsideRef, () => {
+    setIsOpen(false);
+  });
 
   const handleClick = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -91,7 +97,7 @@ const DatePickerCustom = ({
 
   return (
     <div className="flex gap-10">
-      <div className="date-picker-container relative">
+      <div className="date-picker-container relative" ref={outsideRef}>
         <button
           className="border-2 border-blue-6 p-10 rounded-4 bg-white text-14 max-w-300"
           onClick={handleClick}

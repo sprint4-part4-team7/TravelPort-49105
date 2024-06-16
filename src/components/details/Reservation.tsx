@@ -44,17 +44,19 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     )
       setIsDisabled(true);
     else setIsDisabled(false);
-  }, [ticketNum, selectedOption, endDate, categoryId, isDisabled]);
+  }, [ticketNum, selectedOption, startDate, endDate, categoryId, isDisabled]);
 
   const getTableId = (timeTable: any) => {
-    if (!timeTable) return 0;
+    if (!timeTable || !startDate) return 0;
 
     for (let i = 0; i < timeTable?.length; i++) {
-      if (timeTable[i].targetDate.includes(formatDate(startDate)))
+      if (timeTable[i].targetDate?.includes(formatDate(startDate))) {
         return timeTable[i].id;
+      }
     }
     return 0;
   };
+  getTableId(table);
 
   const handleClick = (id: number) => {
     setSelectedOption(id);
