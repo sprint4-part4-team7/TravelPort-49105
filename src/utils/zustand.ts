@@ -84,6 +84,7 @@ interface CartInfo {
   count: number;
   price: number;
   maxCount: number;
+  categoryId: number;
 }
 
 interface CartStore {
