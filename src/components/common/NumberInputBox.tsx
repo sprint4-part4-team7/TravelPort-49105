@@ -2,7 +2,7 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 
 type NumberInputBoxProps = {
   labelname: string;
-  register?: UseFormRegisterReturn;
+  register: UseFormRegisterReturn;
   numberBox: string;
   unit: string;
   placeholder?: string;

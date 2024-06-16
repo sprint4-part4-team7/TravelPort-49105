@@ -1,7 +1,8 @@
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import plusImage from '@/assets/icons/plus-white.svg';
 import useModal from '@/hooks/useModal';
-import NumberInputBox from '@/components/common/NumberInputBox';
+// import NumberInputBox from '@/components/common/NumberInputBox';
 import Button from '@/components/common/Button';
 import Modal from '@/components/common/Modal';
 import OptionModal from './OptionModal';
@@ -20,6 +21,9 @@ const Option = () => {
   const { register } = useForm<OptionForm>({ mode: 'onChange' });
 
   const { isModalOpen, openModal, closeModal } = useModal();
+
+  const [optionList, setOptionList] = useState([]);
+  console.log(optionList);
   return (
     <>
       <form>
@@ -36,7 +40,7 @@ const Option = () => {
               />
             </label>
             {/* 체험만 필요 */}
-            <NumberInputBox
+            {/* <NumberInputBox
               {...register('minimum')}
               labelname="최소 인원"
               inputstyle="w-47"
@@ -64,7 +68,7 @@ const Option = () => {
               placeholder="20000"
             />
             {/* 체험만 필요 */}
-            <NumberInputBox
+            {/* <NumberInputBox
               {...register('start')}
               labelname="시작 시간"
               inputstyle="w-37"
@@ -73,9 +77,9 @@ const Option = () => {
               unit="시"
               placeholder="19"
               max={23}
-            />
+            /> */}
             {/* 체험만 필요 */}
-            <NumberInputBox
+            {/* <NumberInputBox
               {...register('end')}
               labelname="종료 시간"
               inputstyle="w-37"
@@ -84,7 +88,7 @@ const Option = () => {
               unit="시"
               placeholder="19"
               max={23}
-            />
+            />  */}
           </div>
           <label className="flex gap-12 flex-col" htmlFor="content">
             <p className="text-14">세부 상품 설명</p>
@@ -109,7 +113,11 @@ const Option = () => {
         </Button>
       </div>
       <Modal isOpen={isModalOpen} closeModal={closeModal}>
-        <OptionModal closeModal={closeModal} />
+        <OptionModal
+          closeModal={closeModal}
+          optionList={optionList}
+          setOptionList={setOptionList}
+        />
       </Modal>
     </>
   );
