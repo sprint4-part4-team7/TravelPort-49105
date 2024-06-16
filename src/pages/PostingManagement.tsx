@@ -152,7 +152,7 @@ const PostingManagement = () => {
                             endDate: item.endDate,
                           }}
                           postingDate={item.createdAt}
-                          upperRight={<Switch />}
+                          upperRight={<Switch state={item.switch} />}
                         />
                       );
                     })}
