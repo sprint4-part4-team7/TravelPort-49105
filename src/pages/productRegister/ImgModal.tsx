@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import plusImage from '@/assets/icons/plus-blue.svg';
 import trashImage from '@/assets/icons/trash-red.svg';
 import { useEffect, useState } from 'react';
+import { useProductImageStore, useThumbnailStore } from '@/utils/zustand';
 import Button from '@/components/common/Button';
 
 type ImageForm = {
@@ -19,6 +20,8 @@ const ImgModal = ({ closeModal }: ModalProps) => {
     mode: 'onChange',
   });
   const [imageArray, setImageArray] = useState<any>([]);
+  const { setThumbnail } = useThumbnailStore();
+  const { setProductImages } = useProductImageStore();
 
   const imageData = watch('img');
 
@@ -83,6 +86,8 @@ const ImgModal = ({ closeModal }: ModalProps) => {
   };
 
   const completion = () => {
+    setThumbnail(imageArray[0]);
+    setProductImages(imageArray);
     closeModal();
   };
 
