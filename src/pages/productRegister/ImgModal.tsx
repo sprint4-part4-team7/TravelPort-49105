@@ -85,18 +85,14 @@ const ImgModal = ({ closeModal }: ModalProps) => {
     });
   };
 
-  const completion = () => {
+  const onSubmit = () => {
     setThumbnail(imageArray[0]);
     setProductImages(imageArray);
     closeModal();
   };
 
-  const onSubmit = (data: any) => {
-    console.log(data.img);
-  };
-
   return (
-    <div className="p-16 w-384 h-532">
+    <div className="w-384 h-532">
       <form onSubmit={handleSubmit(onSubmit)}>
         <label
           className="flex items-center justify-center gap-12 border border-dashed border-blue-6 rounded text-blue-6 p-12"
@@ -125,7 +121,7 @@ const ImgModal = ({ closeModal }: ModalProps) => {
             </Button>
           </div>
           <div className="w-166">
-            <Button buttonStyle="h-28" buttonType="submit" onClick={completion}>
+            <Button buttonStyle="h-28" buttonType="submit">
               완료
             </Button>
           </div>
