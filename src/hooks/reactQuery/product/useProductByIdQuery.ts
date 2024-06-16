@@ -7,7 +7,7 @@ const useProductByIdQuery = (productId: number) => {
     isLoading: isLoadingProducts,
     error: productsError,
   } = useQuery({
-    queryKey: ['getProductById', productId, productApi.getProductById],
+    queryKey: ['getProductById', productId],
     queryFn: () => productApi.getProductById(productId),
   });
 

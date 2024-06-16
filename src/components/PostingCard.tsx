@@ -1,38 +1,34 @@
 import changeDateForm from '@/utils/changeDateForm';
 import { ReactNode } from 'react';
 
-interface ReservationCardProps {
+interface PostingCardProps {
   id: number;
   title: string;
-  date: string;
-  time?: {
-    targetDate: string;
-    startTimeOnly: string;
-    endTimeOnly: string;
+  postingDate: string;
+  salePeriod?: {
+    startDate: string;
+    endDate: string;
   };
   option?: string;
-  userInfo?: string;
   upperRight?: ReactNode;
   lowerRight?: ReactNode;
 }
 
-const ReservationCard = ({
+const PostingCard = ({
   id = 0,
   title,
-  date,
-  time,
+  postingDate,
+  salePeriod,
   option,
-  userInfo,
   upperRight,
   lowerRight,
-}: ReservationCardProps) => {
-  const formattedDate = changeDateForm(date);
+}: PostingCardProps) => {
   const duration =
-    time?.startTimeOnly && time.endTimeOnly
-      ? `${time?.startTimeOnly} ~ ${time?.endTimeOnly}`
-      : time?.startTimeOnly || time?.endTimeOnly || '';
-  const schedule = `일정 : ${formattedDate}${duration ? ', ' : ''}${duration}`;
-  const reservDate = `예약일시 : ${changeDateForm(date)}`;
+    salePeriod?.startDate && salePeriod?.endDate
+      ? `${changeDateForm(salePeriod?.startDate)} ~ ${changeDateForm(salePeriod?.endDate)}`
+      : salePeriod?.startDate || salePeriod?.endDate || '';
+  const salePeriodStr = `판매 기간 : ${duration}`;
+  const postingDateStr = `게시일 : ${changeDateForm(postingDate)}`;
   return (
     <div
       id={id ? id.toString() : 'undefined'}
@@ -45,13 +41,16 @@ const ReservationCard = ({
             <div className="text-16 font-semibold">{upperRight}</div>
           </div>
           <div className="flex flex-col gap-6">
-            <div className="text-14 text-black-10">옵션명 : {option}</div>
-            <div className="text-14 text-black-10">{schedule}</div>
+            {option && (
+              <div className="text-14 text-black-10">옵션명 : {option}</div>
+            )}
+            {salePeriod && (
+              <div className="text-14 text-black-10">{salePeriodStr}</div>
+            )}
           </div>
-          <div className="text-16 font-medium">{userInfo}</div>
         </div>
         <div className="flex flex-row justify-between items-center">
-          <div className="text-16">{reservDate}</div>
+          <div className="text-16">{postingDateStr}</div>
           {lowerRight}
         </div>
       </div>
@@ -59,4 +58,4 @@ const ReservationCard = ({
   );
 };
 
-export default ReservationCard;
+export default PostingCard;

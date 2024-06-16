@@ -4,12 +4,12 @@ import logo from '@/assets/icons/travelPortLogo.svg';
 import { useNavigate } from 'react-router-dom';
 import { getCookie } from '@/utils/cookie';
 import useSearchData from '@/hooks/useSearchData';
-import uniqueProduct from '@/utils/uniqueProduct';
+import { uniqueProduct } from '@/utils/uniqueProduct';
 import { useUserStore } from '@/utils/zustand';
 import useProductOptionAll from '@/hooks/reactQuery/productOption/useProductOptionAllQuery';
-import LoginUserHeaderBar from './LoginUserHeaderBar';
-import UnLoginUserHeaderBar from './UnLoginUserHeaderBar';
-import SearchBar from '../SearchBar';
+import LoginUserHeaderBar from '@/components/common/headerBar/LoginUserHeaderBar';
+import UnLoginUserHeaderBar from '@/components/common/headerBar/UnLoginUserHeaderBar';
+import SearchBar from '@/components/common/SearchBar';
 import MainCategoryButton from '@/components/MainCategoryButton';
 
 interface HeaderBarProps {

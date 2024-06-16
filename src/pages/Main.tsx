@@ -12,7 +12,7 @@ import Carousel from '@/components/Carousel';
 import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
 import MainCard from '@/components/MainCard';
-import PartnerMain from './PartnerMain';
+import PartnerMain from '@/pages/PartnerMain';
 import Loading from '@/components/common/Loading';
 
 interface ImageItem {

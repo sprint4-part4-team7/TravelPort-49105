@@ -1,19 +1,17 @@
-import { useKakaoLoginMutation } from '@/hooks/reactQuery/auth/useSocialLoginMutation';
-import { useEffect } from 'react';
+import { useKakaoLoginQuery } from '@/hooks/reactQuery/auth/useSocialLoginQuery';
+import Loading from '@/components/common/Loading';
 
 const KakaoRedirect = () => {
   const code = new URL(window.location.href).searchParams.get('code');
-  const { mutate } = useKakaoLoginMutation();
-
-  useEffect(() => {
-    if (code) {
-      mutate(code);
-    }
-  }, [code, mutate]);
+  const { isLoading } = useKakaoLoginQuery(code);
 
   return (
     <div>
-      <h1 className="text-3xl font-bold underline">Kakao Redirect Page</h1>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <h1 className="text-36 font-bold underline">Kakao Redirect Page</h1>
+      )}
     </div>
   );
 };

@@ -3,12 +3,45 @@ import { ReactComponent as ReviewIcon } from '@/assets/icons/review.svg';
 import { useState } from 'react';
 
 interface ReservButtonProps {
-  status: string;
+  status: number | null;
   onClick?: () => void;
 }
 
 const ReservButton = ({ status, onClick }: ReservButtonProps) => {
   const [isHover, setIsHover] = useState(false);
+  let content;
+  switch (status) {
+    case 2:
+      content = (
+        <>
+          후기 쓰기
+          <ReviewIcon stroke={isHover ? '#3065e8' : 'black'} />
+        </>
+      );
+      break;
+    // case '예약 대기':
+    //   content = (
+    //     <>
+    //       후기 쓰기
+    //       <ReviewIcon stroke={isHover ? '#3065e8' : 'black'} />
+    //     </>
+    //   );
+    //   break;
+    case 3:
+      content = (
+        <>
+          거절 사유 보기
+          <LinkIcon stroke={isHover ? '#3065e8' : 'black'} />
+        </>
+      );
+      break;
+    // case '예약 취소':
+    //   content = '';
+    //   break;
+    default:
+      content = '';
+      break;
+  }
   return (
     <button
       type="button"
@@ -17,17 +50,7 @@ const ReservButton = ({ status, onClick }: ReservButtonProps) => {
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
-      {status === '예약 취소' ? (
-        <>
-          거절 사유 보기
-          <LinkIcon stroke={isHover ? '#3065e8' : 'black'} />
-        </>
-      ) : (
-        <>
-          후기 쓰기
-          <ReviewIcon stroke={isHover ? '#3065e8' : 'black'} />
-        </>
-      )}
+      {content}
     </button>
   );
 };

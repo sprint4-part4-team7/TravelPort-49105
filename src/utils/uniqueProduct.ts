@@ -1,4 +1,4 @@
-const uniqueProduct = (array: any) => {
+export const uniqueProduct = (array: any) => {
   const optionId: number[] = [];
   const uniqueOptionAll = [];
   for (let i = 0; i < array?.length; i++) {
@@ -10,4 +10,14 @@ const uniqueProduct = (array: any) => {
   return uniqueOptionAll;
 };
 
-export default uniqueProduct;
+export const uniqueReview = (array: any) => {
+  const optionId: number[] = [];
+  const uniqueOptionAll = [];
+  for (let i = 0; i < array?.length; i++) {
+    if (!optionId.includes(array[i].userName)) {
+      optionId.push(array[i].userName);
+      uniqueOptionAll.push(array[i]);
+    }
+  }
+  return uniqueOptionAll;
+};

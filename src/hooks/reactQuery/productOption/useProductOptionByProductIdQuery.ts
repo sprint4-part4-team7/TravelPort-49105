@@ -12,7 +12,6 @@ const useProductOptionByProductIdQuery = (productId: number) => {
   });
 
   const productOption = productOptionResponse?.data;
-
   return { productOption, isLoadingOptions, optionsError };
 };
 

@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Login from './pages/auth/login/Login';
+import Login from '@/pages/auth/login/Login';
 import Main from '@/pages/Main';
 import CheckoutPage from '@/pages/payments/CheckoutPage';
 import SuccessPage from '@/pages/payments/SuccessPage';
@@ -12,7 +12,7 @@ import NaverRedirect from '@/pages/auth/login/NaverRedirect';
 import PartnerSignup from '@/pages/auth/signup/PartnerSignup';
 import UserSignup from '@/pages/auth/signup/UserSignup';
 import ProductDetails from '@/pages/ProductDetails';
-import ProductRegist from '@/pages/productRegist/ProductRegist';
+import ProductRegister from '@/pages/productRegister/ProductRegister';
 import SearchResultPage from '@/pages/SearchResultPage';
 import ReviewRegist from '@/pages/ReviewRegist';
 import PartnerMain from '@/pages/PartnerMain';
@@ -46,13 +46,11 @@ const App = () => {
         <Route path="details/:categoryId/:productId">
           <Route index element={<ProductDetails />} />
         </Route>
-        <Route path="product-regist">
-          <Route index element={<ProductRegist />} />
-        </Route>
         <Route path="mypage/:status" element={<MyPage />} />
         <Route path="partner/">
           <Route index element={<PartnerMain />} />
           <Route path="mypage/:status" element={<MyPage isPartner />} />
+          <Route path="product-register" element={<ProductRegister />} />
         </Route>
         <Route path="payments">
           <Route index element={<CheckoutPage />} />
@@ -60,7 +58,7 @@ const App = () => {
           <Route path="success" element={<SuccessPage />} />
           <Route path="fail" element={<FailPage />} />
         </Route>
-        <Route path="review">
+        <Route path="review/:optionId">
           <Route index element={<ReviewRegist />} />
         </Route>
         <Route path="search">

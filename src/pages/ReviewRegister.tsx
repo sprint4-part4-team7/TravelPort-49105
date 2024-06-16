@@ -1,23 +1,32 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import { useForm } from 'react-hook-form';
-// import { getDefaultOption } from '@/apis/review';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useModal from '@/hooks/useModal';
 import { useNavigate } from 'react-router-dom';
+import useReviewDefaults from '@/hooks/useReviewDefaults';
+import useReviewPostMutation from '@/hooks/reactQuery/review/useReviewPostMutation';
+import BUCKER_NAME from '@/constants/bucket';
+import postImages from '@/apis/image';
 import TextBox from '@/components/common/TextBox';
 import ReviewStar from '@/components/review/ReviewStar';
 import Button from '@/components/common/Button';
 import ImageUpload from '@/components/review/ImageUpload';
 import Modal from '@/components/common/Modal';
+import Loading from '@/components/common/Loading';
 
-const ReviewRegister = () => {
+interface ReviewRegisterProps {
+  optionId: number;
+}
+const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
   const {
     register,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors },
     clearErrors,
     watch,
@@ -30,34 +39,48 @@ const ReviewRegister = () => {
     },
   });
 
-  const [option, setOption] = useState('');
-  const [product, setProduct] = useState('');
-  const [postImages, setPostImages] = useState<(null | File)[]>([]);
+  const [postingImages, setPostingImages] = useState<(null | File)[]>([]);
 
   const { isModalOpen, openModal, closeModal } = useModal();
   const navigate = useNavigate();
+  const { productOption, optionTitle, productName } =
+    useReviewDefaults(optionId);
+  const { mutate, isLoading } = useReviewPostMutation();
+  const userId = 3; // 추후 받아올 예정
 
-  // 리액트 쿼리로 사용해야 해서 주석 처리 해놈 !
-  // useEffect(() => {
-  //   const fetchDefaultOption = async (optionId: number) => {
-  //     const { optionName, productName } =
-  //       await productOptionApi.getProductOptionByOptionId(optionId);
-  //     setOption(optionName);
-  //     setProduct(productName);
-  //   };
-  //   fetchDefaultOption(1); // 추후 옵션아이디로 변경 예정
-  // }, []);
+  // 버튼 활성화 여부 조절
+  const [isDisableToSubmit, setIsDisableToSubmit] = useState(true);
+  useEffect(() => {
+    if (getValues('score') !== 0 && getValues('reviewContent') !== '')
+      setIsDisableToSubmit(false);
+    else setIsDisableToSubmit(true);
+  }, [errors, getValues('score'), getValues('reviewContent')]);
+
+  if (isLoading) return <Loading />;
+
+  // 이미지 업로드 함수
+  const handleUpload = async () => {
+    // 이미지 배열과 버켓 이름을 인자로 넘겨 업로드하고
+    // 반환되는 배열에 담긴 이미지 주소를 이용하자!
+    // response에 url 배열이 담김
+    const filteredPostImages = postingImages.filter(
+      (image): image is File => image !== null,
+    );
+    const response = await postImages(filteredPostImages, BUCKER_NAME.REVIEW);
+    return response;
+    // 참고로 이미지 순서는 배열로 보낸 순서대로 반환됨
+  };
 
   const onSubmit = async (data: any) => {
-    // post 정상적으로 작동됨. 추후 userId, optionId로 변경 예정
-    // try {
-    //   await postReview(1, 1, data); // 임시
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    const filteredPostImages = postImages.filter((image) => image !== null);
-    data.reviewImages = filteredPostImages;
+    const postedImages = await handleUpload();
+    data.reviewImages = postedImages;
     console.log({ ...data });
+    mutate({
+      userId,
+      productOptionId: optionId,
+      productId: productOption.product.id,
+      reviewInfo: data,
+    });
     closeModal();
   };
 
@@ -83,7 +106,7 @@ const ReviewRegister = () => {
     postImageArr: (null | File)[],
   ) => {
     setValue('reviewImages', selectedImages);
-    setPostImages(postImageArr);
+    setPostingImages(postImageArr);
   };
 
   const handleFormSubmit = () => {
@@ -102,10 +125,10 @@ const ReviewRegister = () => {
       <hr />
       <div className="flex flex-col gap-20 my-20">
         <div className="font-bold text-17">
-          상품 이름 <span className="font-normal">{product}</span>
+          상품 이름 <span className="font-normal">{productName}</span>
         </div>
         <div className="font-bold text-17">
-          옵션 <span className="font-normal">{option}</span>
+          옵션 <span className="font-normal">{optionTitle}</span>
         </div>
       </div>
       <hr />
@@ -137,7 +160,9 @@ const ReviewRegister = () => {
       </h1>
       <ImageUpload onChange={handleImageChange} />
       <div className="mt-60">
-        <Button buttonType="submit">등록하기</Button>
+        <Button buttonType="submit" disabled={isDisableToSubmit}>
+          등록하기
+        </Button>
       </div>
       <Modal isOpen={isModalOpen} closeModal={closeModal}>
         <div className="p-16">리뷰를 등록하시겠습니까?</div>

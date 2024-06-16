@@ -1,13 +1,18 @@
 // 상품등록페이지 메인
 import React, { useEffect, useState } from 'react';
-import Category from './Category';
-import Description from './Description';
-import Location from './Location';
-import Date from './Date';
-import Option from './Option';
+import { useProductImageStore, useThumbnailStore } from '@/utils/zustand';
+import Category from '@/pages/productRegister/Category';
+import Description from '@/pages/productRegister/Description';
+import Location from '@/pages/productRegister/Location';
+import Date from '@/pages/productRegister/Date';
+import Option from '@/pages/productRegister/Option';
 
-const ProductRegist = () => {
+const ProductRegister = () => {
   const [page, setPage] = useState<React.ReactNode>();
+
+  const { thumbnail } = useThumbnailStore();
+  const { productImages } = useProductImageStore();
+  console.log(thumbnail, productImages);
 
   useEffect(() => {
     setPage(<Category setPage={setPage} />);
@@ -78,4 +83,4 @@ const ProductRegist = () => {
   );
 };
 
-export default ProductRegist;
+export default ProductRegister;

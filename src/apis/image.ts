@@ -25,6 +25,7 @@ const postImageDatas = async (data: PostData) => {
 
 // 이미지 파일들을 받아 presigned URL을 요청하고, 해당 URL을 사용하여 S3에 업로드하는 함수
 const postImages = async (data: File[], bucket: string) => {
+  if (!data.length) return [];
   const imageDatas = data.map((file) => {
     return {
       objectKey: file.name,

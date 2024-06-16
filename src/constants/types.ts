@@ -19,6 +19,24 @@ export type ProductType = {
   createdAt: string;
 };
 
+export interface OptionbyIdData {
+  data: {
+    id: number;
+    productId: number;
+    optionName: string;
+    optionDesc: string;
+    optionPrice: number;
+    optionImages: string[];
+    minUserCount: number;
+    maxUserCount: number;
+    userCount: number;
+    averageRate: number;
+    isDelete: boolean;
+    createdAt: string;
+    product: ProductType;
+  };
+}
+
 export type DetailData = {
   id: number;
   categoryId: number;
@@ -69,6 +87,9 @@ export type ReviewData = {
   reviewContent: string;
   partnerAnswer?: string;
   createdAt: string;
+  userName: string;
+  userProfileImage: string;
+  optionName: string;
 };
 
 export type CardListsType = {
@@ -134,6 +155,10 @@ export interface Reservation {
     optionName: string;
     product: {
       name: string;
+      user: {
+        name: string;
+        phone: string;
+      };
     };
   };
   timeTable: {
@@ -143,9 +168,11 @@ export interface Reservation {
   };
 }
 
-export type ReservStatusType =
-  | '예약 대기'
-  | '예약 완료'
-  | '예약 취소'
-  | '예약 거절'
-  | string;
+export type ReservStatusType = 1 | 2 | 3 | 4 | 5 | null;
+
+export type ReservProductOptionType = {
+  optionName: string;
+  product: {
+    name: string;
+  };
+};
