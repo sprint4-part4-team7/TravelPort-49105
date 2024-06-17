@@ -39,7 +39,6 @@ const ReservButtonOutlined = ({
       break;
     case 5:
       text = '삭제하기';
-      hover = hoverError;
       icon = <XIcon stroke="#8C8C8C" />;
       break;
     default:
