@@ -54,6 +54,21 @@ const putProduct = async (
   });
 };
 
+const putPostingState = async (
+  productId: number,
+  userId: number,
+  isPosting: boolean,
+) => {
+  return instance({
+    url: `/product/${productId}`,
+    method: 'PUT',
+    data: {
+      userId,
+      isPosting,
+    },
+  });
+};
+
 const deleteProductById = async (productId: number) => {
   return instance({
     url: `/product/${productId}`,
@@ -82,6 +97,7 @@ export default {
   getProductById,
   getProductByPartner,
   putProduct,
+  putPostingState,
   deleteProductById,
   postProduct,
 };
