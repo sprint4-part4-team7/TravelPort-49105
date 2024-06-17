@@ -14,8 +14,7 @@ export const useUserStore = create(
         id: 0,
         name: '',
         email: '',
-        profileImage:
-          'https://i.pinimg.com/736x/53/7e/f5/537ef59499259ba707068742f91a10f8.jpg',
+        profileImage: '',
         isPartner: 0,
       },
       setUserInfo: (userInfo) => set({ userInfo }),
