@@ -26,12 +26,12 @@ const MyResevation = ({
   const [pageNum, setPageNum] = useState(1);
   const navigate = useNavigate();
 
-  const limit = 5;
+  const limit = 4;
   const isReservExpired = isExpired === 'true';
 
   const myReservation = useQuery({
     queryKey: ['myReservation', userInfo.id, pageNum, isExpired],
-    queryFn: () => getMyReservation(userInfo.id, isExpired, limit, pageNum - 1),
+    queryFn: () => getMyReservation(userInfo.id, isExpired, pageNum - 1, limit),
     enabled: !!userInfo.id,
   });
   const myReservationData = myReservation.data as Reservation[];
