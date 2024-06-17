@@ -21,6 +21,7 @@ import Pagination from '@/components/common/Pagination';
 import DatePickerCustom from '@/components/details/DatePickerCustom';
 import Button from '@/components/common/Button';
 import ProductType from '@/components/common/filter/ProductType';
+import NoData from '@/components/common/NoData';
 
 const List = () => {
   const { categoryId } = useParams(); // categoryId(string 형태)
@@ -120,6 +121,7 @@ const List = () => {
       setIsOpen(true);
     }
   };
+  console.log(paginatedProducts);
 
   const listClass =
     categoryId === '1'
@@ -203,9 +205,9 @@ const List = () => {
             </div>
           </div>
 
-          <div className={`${listClass}`}>
-            {paginatedProducts &&
-              paginatedProducts.map((item: any) => {
+          {paginatedProducts.length ? (
+            <div className={`${listClass}`}>
+              {paginatedProducts.map((item: any) => {
                 return categoryId === '1' ? (
                   <HotelCard
                     key={item.productId}
@@ -230,15 +232,20 @@ const List = () => {
                   />
                 );
               })}
-          </div>
-          <div className="mx-auto w-fit">
+            </div>
+          ) : (
+            <NoData text="찾는 상품이 없어요." />
+          )}
+        </div>
+        <div className="mx-auto w-fit">
+          {!!cards?.length && (
             <Pagination
               pageNum={pageNum}
               setPageNum={setPageNum}
               allCardNum={cards?.length ? cards?.length : 0}
               divNum={categoryId === '1' ? 3 : 6}
             />
-          </div>
+          )}
         </div>
       </Layout>
       <Footer />

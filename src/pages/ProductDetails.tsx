@@ -23,6 +23,7 @@ import NoPage from './NoPage';
 import Layout from '@/components/common/layout/Layout';
 import Footer from '@/components/common/Footer';
 import Loading from '@/components/common/Loading';
+import NoData from '@/components/common/NoData';
 
 const ProductDetails = () => {
   const { categoryId, productId } = useParams();
@@ -128,17 +129,22 @@ const ProductDetails = () => {
                     {productReviews?.length ? productReviews.length : 0}개
                   </span>
                 </h1>
-                {!!dataByPage?.length &&
+                {dataByPage?.length ? (
                   dataByPage.map((review: any) => {
                     return <Review key={review.id} review={review} />;
-                  })}
+                  })
+                ) : (
+                  <NoData text="리뷰가 없어요." />
+                )}
                 <div className="mx-auto w-fit py-20">
-                  <Pagination
-                    pageNum={pageNum}
-                    setPageNum={setPageNum}
-                    allCardNum={reviewByProductId.length}
-                    divNum={LIMIT}
-                  />
+                  {!!reviewByProductId.length && (
+                    <Pagination
+                      pageNum={pageNum}
+                      setPageNum={setPageNum}
+                      allCardNum={reviewByProductId.length}
+                      divNum={LIMIT}
+                    />
+                  )}
                 </div>
               </div>
             )}
