@@ -4,11 +4,10 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable prefer-const */
 /* eslint-disable no-undef */
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useMemo } from 'react';
 import arrowDown from '@/assets/icons/arrowDown.svg';
 import { useParams } from 'react-router-dom';
 import useOutsideClick from '@/hooks/useOutsideClick';
-import instance from '@/utils/axios';
 import useDatePicker from '@/hooks/useDatePicker';
 import useTypeCheckbox from '@/hooks/useTypeCheckbox';
 import useFetchByCategory from '@/hooks/useFetchByCategory';
@@ -28,8 +27,6 @@ const List = () => {
   const [filterTab, setFilterTab] = useState(''); // 선택된 탭
   const [isOpen, setIsOpen] = useState(false); // 탭 open 여부
   const [pageNum, setPageNum] = useState(1); // 현재 클릭된 페이지 숫자
-  const [dataByPage, setDataByPage] = useState<any>(); // 페이지 별 데이터
-  console.log(dataByPage);
 
   let filteredData = new Set(); // 필터링된  데이터
 
@@ -100,20 +97,14 @@ const List = () => {
     setCards(Array.from(filteredData));
   };
 
+  const itemsPerPage = categoryId === '1' ? 3 : 6;
+  const paginatedProducts = useMemo(() => {
+    const startIndex = (pageNum - 1) * itemsPerPage;
+    return cards?.slice(startIndex, startIndex + itemsPerPage);
+  }, [pageNum, cards]);
+
   const categoryName = Number(categoryId) === 1 ? '숙박' : '체험';
   const filterings = ['날짜', '인원수', '가격대', `${categoryName} 종류`];
-  const LIMIT = categoryId === '1' ? 3 : 6;
-  const offset = pageNum - 1;
-
-  useEffect(() => {
-    const fetchByOffset = async (offsetNum: number, categoryNum: number) => {
-      const response = await instance.get(
-        `/product/all?categoryId=${categoryNum}&offset=${offsetNum}&limit=${LIMIT}`,
-      );
-      setDataByPage(response.data);
-    };
-    fetchByOffset(offset, Number(categoryId));
-  }, [offset, categoryId, LIMIT]);
 
   const outsideRef = useRef<HTMLDivElement>(null);
   useOutsideClick(outsideRef, () => {
@@ -213,8 +204,8 @@ const List = () => {
           </div>
 
           <div className={`${listClass}`}>
-            {cards &&
-              cards.map((item: any) => {
+            {paginatedProducts &&
+              paginatedProducts.map((item: any) => {
                 return categoryId === '1' ? (
                   <HotelCard
                     key={item.productId}
@@ -244,9 +235,7 @@ const List = () => {
             <Pagination
               pageNum={pageNum}
               setPageNum={setPageNum}
-              allCardNum={
-                productsByCategory?.length ? productsByCategory?.length : 0
-              }
+              allCardNum={cards?.length ? cards?.length : 0}
               divNum={categoryId === '1' ? 3 : 6}
             />
           </div>
