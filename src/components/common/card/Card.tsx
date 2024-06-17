@@ -27,12 +27,17 @@ const Card = ({
     const imageList = [];
     for (let i = 0; i < roundScore; i += 1) {
       imageList.push(
-        <img key={`fill${i}`} src={fillImage} alt="이미지가 있음" />,
+        <img key={`fill${i}`} src={fillImage} alt="이미지가 있음" width={16} />,
       );
     }
     for (let i = 0; i < 5 - roundScore; i += 1) {
       imageList.push(
-        <img key={`empty${i}`} src={emptyImage} alt="이미지가 없음" />,
+        <img
+          key={`empty${i}`}
+          src={emptyImage}
+          alt="이미지가 없음"
+          width={16}
+        />,
       );
     }
     return imageList;
@@ -56,7 +61,9 @@ const Card = ({
           <div className="flex flex-row items-center mb-16 mobile:flex-col mobile:items-start ">
             <div className="flex flex-row item-center pr-8 mobile:mb-8">
               <div className="flex flex-row w-85">{ImageScore()}</div>
-              <p className="text-black-6 text-11 pl-4">( {score} / 5 )</p>
+              <p className="text-black-6 text-11 pl-4">
+                ( {Math.round(score).toFixed(1)} / 5 )
+              </p>
             </div>
             <p className="text-black-6 text-11 leading-3 mobile:mt-10">
               리뷰 {review.toLocaleString()}개
