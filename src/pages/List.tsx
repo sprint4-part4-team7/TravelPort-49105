@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable array-callback-return */
 /* eslint-disable eqeqeq */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
@@ -5,31 +6,34 @@
 /* eslint-disable no-undef */
 import { useRef, useState, useEffect } from 'react';
 import arrowDown from '@/assets/icons/arrowDown.svg';
-import search from '@/assets/icons/search.svg';
 import { useParams } from 'react-router-dom';
 import useOutsideClick from '@/hooks/useOutsideClick';
 import instance from '@/utils/axios';
 import useDatePicker from '@/hooks/useDatePicker';
 import useTypeCheckbox from '@/hooks/useTypeCheckbox';
-import SearchBar from '../components/common/SearchBar';
+import useFetchByCategory from '@/hooks/useFetchByCategory';
 import Layout from '@/components/common/layout/Layout';
 import HotelCard from '@/components/common/card/HotelCard';
 import HeadCount from '@/components/common/filter/HeadCount';
 import PriceRange from '@/components/common/filter/PriceRange';
-import ProductType from '@/components/common/filter/ProductType';
 import Footer from '@/components/common/Footer';
 import Card from '@/components/common/card/Card';
 import Pagination from '@/components/common/Pagination';
 import DatePickerCustom from '@/components/details/DatePickerCustom';
+import Button from '@/components/common/Button';
+import ProductType from '@/components/common/filter/ProductType';
 
 const List = () => {
   const { categoryId } = useParams(); // categoryId(string 형태)
   const [filterTab, setFilterTab] = useState(''); // 선택된 탭
   const [isOpen, setIsOpen] = useState(false); // 탭 open 여부
-  const [isSearchBarOpen, setIsSearchBarOpen] = useState(false); // 서치바 open 여부
   const [pageNum, setPageNum] = useState(1); // 현재 클릭된 페이지 숫자
-  const [filteredData, setFilteredData] = useState(); // 필터링된 데이터
   const [dataByPage, setDataByPage] = useState<any>(); // 페이지 별 데이터
+  console.log(dataByPage);
+
+  let filteredData = new Set(); // 필터링된  데이터
+
+  const { productsByCategory } = useFetchByCategory(Number(categoryId)); // 리스트 페이지에 들어가는 모든 데이터
 
   // 인원수 필터링
   const [count, setCount] = useState(0);
@@ -55,9 +59,61 @@ const List = () => {
   //   checkedList,
   // );
 
+  // 필터링날짜가 판매시작날짜와 판매종료날짜 사이에 있는지 구하는 함수
+  const isFiltered = (filteringDate: Date, start: string, end: string) => {
+    const filterDate = new Date(filteringDate);
+    const newStartDate = new Date(start);
+    const newEndDate = new Date(end);
+
+    return filterDate >= newStartDate && filterDate <= newEndDate;
+  };
+
+  console.log(filteredData);
+
+  for (let i = 0; i < productsByCategory.length; i++) {
+    const product = productsByCategory[i];
+    const isWithinDateRange =
+      startDate && endDate
+        ? isFiltered(startDate, product.startDate, product.endDate) &&
+          isFiltered(endDate, product.startDate, product.endDate)
+        : startDate
+          ? isFiltered(startDate, product.startDate, product.endDate)
+          : true;
+    const isWithinPriceRange =
+      rangeMinValue === fixedMinPrice && rangeMaxValue === fixedMaxPrice
+        ? true
+        : product.minPrice >= rangeMinValue &&
+          product.minPrice <= rangeMaxValue;
+    const isProductTypeMatch =
+      checkedList.length === 0
+        ? true
+        : checkedList.includes(product.product_productType);
+    const isUserCountMatch =
+      count === 0
+        ? true
+        : product.productOptions.some(
+            (option) => option.maxUserCount * option.userCount >= count,
+          );
+    if (
+      isWithinDateRange &&
+      isWithinPriceRange &&
+      isProductTypeMatch &&
+      isUserCountMatch
+    )
+      filteredData.add(product);
+  }
+
+  let cards: any[] = [...productsByCategory];
+
+  const handleFilterClick = () => {
+    cards = Array.from(filteredData)
+      ? Array.from(filteredData)
+      : productsByCategory;
+  };
+  console.log(cards);
+
   const categoryName = Number(categoryId) === 1 ? '숙박' : '체험';
   const filterings = ['날짜', '인원수', '가격대', `${categoryName} 종류`];
-  const filterSearch = window.innerWidth > 767 ? '어디로 떠날까요?' : '검색';
   const LIMIT = categoryId === '1' ? 3 : 6;
   const offset = pageNum - 1;
 
@@ -69,23 +125,12 @@ const List = () => {
       setDataByPage(response.data);
     };
     fetchByOffset(offset, Number(categoryId));
-  }, [offset, categoryId]);
-
-  const cards = filteredData || dataByPage;
+  }, [offset, categoryId, LIMIT]);
 
   const outsideRef = useRef<HTMLDivElement>(null);
   useOutsideClick(outsideRef, () => {
     setIsOpen(false);
   });
-
-  const handleSearchBar = () => {
-    if (isSearchBarOpen) {
-      setIsSearchBarOpen(false);
-    } else {
-      setIsSearchBarOpen(true);
-      setFilterTab('');
-    }
-  };
 
   const handleFilterTab = (tab: string) => {
     if (filterTab === tab) {
@@ -95,8 +140,6 @@ const List = () => {
       setFilterTab(tab);
       setIsOpen(true);
     }
-
-    setIsSearchBarOpen(false);
   };
 
   const listClass =
@@ -173,36 +216,17 @@ const List = () => {
                   />
                 </div>
               )}
-
-              <div
-                className="flex gap-2 cursor-pointer"
-                onClick={() => {
-                  handleSearchBar();
-                }}
-              >
-                <img src={search} alt="검색" className="mobile:w-10" />{' '}
-                <span className="font-medium text-blue-6 text-13">
-                  {filterSearch}
-                </span>
-                {isSearchBarOpen && (
-                  <div
-                    className="absolute right-0 w-full my-10 ml-10 top-70"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <SearchBar
-                      cardLists={cards}
-                      path="list/"
-                      setFilteredData={setFilteredData}
-                    />
-                  </div>
-                )}
+              <div>
+                <Button buttonStyle="py-10 px-20" onClick={handleFilterClick}>
+                  검색하기
+                </Button>
               </div>
             </div>
           </div>
 
           <div className={`${listClass}`}>
-            {dataByPage &&
-              dataByPage.map((item: any) => {
+            {cards &&
+              cards.map((item: any) => {
                 return categoryId === '1' ? (
                   <HotelCard
                     key={item.productId}
@@ -228,14 +252,16 @@ const List = () => {
                 );
               })}
           </div>
-        </div>
-        <div className="mx-auto w-fit">
-          <Pagination
-            pageNum={pageNum}
-            setPageNum={setPageNum}
-            allCardNum={cards?.length ? cards?.length : 0}
-            divNum={categoryId === '1' ? 3 : 6}
-          />
+          <div className="mx-auto w-fit">
+            <Pagination
+              pageNum={pageNum}
+              setPageNum={setPageNum}
+              allCardNum={
+                productsByCategory?.length ? productsByCategory?.length : 0
+              }
+              divNum={categoryId === '1' ? 3 : 6}
+            />
+          </div>
         </div>
       </Layout>
       <Footer />
