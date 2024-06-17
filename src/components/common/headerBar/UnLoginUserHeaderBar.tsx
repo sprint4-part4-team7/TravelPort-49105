@@ -89,7 +89,7 @@ const UnLoginUserHeaderBar = () => {
           outlined
           buttonStyle="min-w-fit text-14 p-10 font-semibold"
           onClick={() => {
-            navigate('/partner');
+            navigate('/signup/partner');
           }}
         >
           파트너 페이지
