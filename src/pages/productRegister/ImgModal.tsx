@@ -30,7 +30,7 @@ const ImgModal = ({ closeModal }: ModalProps) => {
   useEffect(() => {
     if (imageData !== undefined) {
       if (imageData.length > 5) {
-        alert('최대 5개');
+        // alert('최대 5개');
       } else if (imageData.length > 0) {
         const temp = [...imageArray];
         Array.from(imageData).map((i: any) => {
@@ -40,7 +40,7 @@ const ImgModal = ({ closeModal }: ModalProps) => {
         if (temp.length <= 5) {
           setImageArray(Array.from(temp));
         } else {
-          alert('최대 5개');
+          // alert('최대 5개');
         }
       }
     }

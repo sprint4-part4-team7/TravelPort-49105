@@ -76,7 +76,7 @@ const usePaymentWidget = (
     try {
       await paymentWidgetRef.current?.requestPayment(paymentOptions);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 

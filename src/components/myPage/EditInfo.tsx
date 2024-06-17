@@ -37,10 +37,10 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
 
   const handleImgUpload: ChangeEventHandler<HTMLInputElement> = (e) => {
     const file = e.target.files?.[0];
-    console.log(file);
+    // console.log(file);
     if (!file) return;
     if (file.size > 10 * 1024 * 1024) {
-      alert('10mb 이하의 파일만 업로드 가능합니다');
+      // alert('10mb 이하의 파일만 업로드 가능합니다');
       return;
     }
     const instantUrl = URL.createObjectURL(file);
@@ -62,11 +62,11 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
     else delete newData.description;
     try {
       await putUserInfo(newData);
-      alert('저장되었습니다');
+      // alert('저장되었습니다');
       setUserInfo({ ...userInfo, ...newData });
     } catch (error) {
-      console.error(error);
-      alert('저장에 실패했습니다');
+      // console.error(error);
+      // alert('저장에 실패했습니다');
     }
   };
 

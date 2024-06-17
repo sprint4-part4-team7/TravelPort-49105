@@ -2,19 +2,19 @@ import { useState } from 'react';
 
 interface SwitchProps {
   state?: boolean;
+  onChange?: any;
 }
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
-const Switch = ({ state = false }: SwitchProps) => {
+const Switch = ({ state = false, onChange }: SwitchProps) => {
   // 체크 상태를 관리할 state 선언
   const [isChecked, setIsChecked] = useState(state);
 
   // 체크 상태를 토글하는 함수
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
+    onChange(isChecked);
   };
-
-  console.log(isChecked);
 
   return (
     <label className="plane-switch">
