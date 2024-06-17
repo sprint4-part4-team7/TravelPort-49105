@@ -65,7 +65,6 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     }
     return 0;
   };
-  getTableId(table);
 
   const handleClick = (id: number) => {
     setSelectedOption(id);
@@ -210,7 +209,14 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
       </div>
       <div className="flex w-full gap-20 pb-58">
         <div className="w-1/3">
-          <Button outlined disabled={isDisabled} onClick={() => openModal()}>
+          <Button
+            outlined
+            disabled={isDisabled}
+            onClick={() => {
+              openModal();
+              handleCartUpdate();
+            }}
+          >
             장바구니 담기
           </Button>
         </div>
@@ -218,11 +224,9 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
           title="장바구니로 이동하시겠습니까?"
           isOpen={isModalOpen}
           closeModal={() => {
-            handleCartUpdate();
             closeModal();
           }}
           onConfirm={() => {
-            handleCartUpdate();
             closeModal();
             navigate('/cart');
           }}
