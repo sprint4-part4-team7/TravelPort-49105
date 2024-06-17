@@ -121,7 +121,6 @@ const List = () => {
       setIsOpen(true);
     }
   };
-  console.log(paginatedProducts);
 
   const listClass =
     categoryId === '1'
