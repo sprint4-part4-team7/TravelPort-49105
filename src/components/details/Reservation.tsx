@@ -9,6 +9,7 @@ import { formatDate } from '@/utils/getDate';
 import { useReservationStore, useUserStore } from '@/utils/zustand';
 import useTimeTable from '@/hooks/useTimeTable';
 import useDatePicker from '@/hooks/useDatePicker';
+import { useNavigate } from 'react-router-dom';
 import Button from '@/components/common/Button';
 import '@/styles/ProductDetails.css';
 import DatePickerCustom from './DatePickerCustom';
@@ -26,6 +27,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   const [isDisabled, setIsDisabled] = useState(true);
 
   const { userInfo } = useUserStore();
+  const navigate = useNavigate();
 
   const {
     startDate,
@@ -96,6 +98,8 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
       cancelMsg: '',
     };
     setReservationInfo(newReservationInfo);
+
+    navigate('/payments');
   };
 
   return (
