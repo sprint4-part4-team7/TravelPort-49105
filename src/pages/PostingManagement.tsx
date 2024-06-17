@@ -5,12 +5,11 @@ import useProductByPartnerQuery from '@/hooks/reactQuery/product/useProductByPar
 import SearchBar from '@/components/common/SearchBar';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
 import PostingCard from '@/components/PostingCard';
-import Switch from '@/components/common/Switch';
+import PostingSwitch from '@/components/myPage/PostingSwitch';
 
 const PostingManagement = () => {
   const { userInfo } = useUserStore();
   const [isNew, setIsNew] = useState<boolean>(true);
-  // const [postState, setPostState] = useState<boolean>(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
   const [lodgeData, setLodgeData] = useState<any[]>([]);
   const [activityData, setActivityData] = useState<any[]>([]);
@@ -30,11 +29,6 @@ const PostingManagement = () => {
   const toggleDropdown = () => {
     setIsNew(!isNew);
   };
-
-  // const togglePostingState = (posting: boolean) => {
-  //   // put method 추가
-  //   setPostState(posting);
-  // };
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(category);
@@ -157,9 +151,9 @@ const PostingManagement = () => {
                           }}
                           postingDate={item.createdAt}
                           upperRight={
-                            <Switch
-                              state={item.switch}
-                              // onChange={togglePostingState}
+                            <PostingSwitch
+                              id={item.id}
+                              state={item.isPosting}
                             />
                           }
                         />
@@ -189,6 +183,9 @@ const PostingManagement = () => {
                           endDate: item.endDate,
                         }}
                         postingDate={item.createdAt}
+                        upperRight={
+                          <PostingSwitch id={item.id} state={item.isPosting} />
+                        }
                       />
                     ))}
                   </ReservPagination>
@@ -215,6 +212,9 @@ const PostingManagement = () => {
                           endDate: item.endDate,
                         }}
                         postingDate={item.createdAt}
+                        upperRight={
+                          <PostingSwitch id={item.id} state={item.isPosting} />
+                        }
                       />
                     ))}
                   </ReservPagination>
