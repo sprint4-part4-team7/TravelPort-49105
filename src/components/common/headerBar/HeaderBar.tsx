@@ -74,7 +74,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
               <SearchBar isMainSearchBar={main} cardLists={filteredTitles} />
             </div>
             {category && (
-              <div className="absolute bottom-[-4rem] right-0 flex gap-8 left-15 z-1 mobile:w-152 mobile:gap-0 mobile:bottom-[-3rem]">
+              <div className="absolute -bottom-40 right-0 flex gap-8 left-15 z-1 mobile:w-152 mobile:gap-0 mobile:-bottom-30">
                 <MainCategoryButton
                   title="숙소"
                   onclick={handleAccommodation}
