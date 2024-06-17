@@ -2,10 +2,12 @@ import ARROW from '@/assets/icons/arrowDown.svg';
 import { useEffect, useState } from 'react';
 import { useUserStore } from '@/utils/zustand';
 import useProductByPartnerQuery from '@/hooks/reactQuery/product/useProductByPartnerQuery';
+import useProductDeleteMutation from '@/hooks/reactQuery/product/useProductDeleteMutation';
 import SearchBar from '@/components/common/SearchBar';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
 import PostingCard from '@/components/PostingCard';
 import PostingSwitch from '@/components/myPage/PostingSwitch';
+import ReservButtonOutlined from '@/components/myPage/ReservButtonOutlined';
 
 const PostingManagement = () => {
   const { userInfo } = useUserStore();
@@ -16,6 +18,7 @@ const PostingManagement = () => {
   const [allData, setAllData] = useState<any[]>([]);
 
   const { postingData: allPost } = useProductByPartnerQuery(userInfo.id);
+  const { mutate } = useProductDeleteMutation();
 
   const sortData = (data: any[], postNew: boolean) => {
     if (!Array.isArray(data)) return [];
@@ -28,6 +31,10 @@ const PostingManagement = () => {
 
   const toggleDropdown = () => {
     setIsNew(!isNew);
+  };
+
+  const handleDelete = (productId: number) => {
+    mutate(productId);
   };
 
   const handleCategoryClick = (category: string) => {
@@ -156,6 +163,12 @@ const PostingManagement = () => {
                               state={item.isPosting}
                             />
                           }
+                          lowerRight={
+                            <ReservButtonOutlined
+                              status={5}
+                              onClick={() => handleDelete(item.id)}
+                            />
+                          }
                         />
                       );
                     })}
@@ -186,6 +199,12 @@ const PostingManagement = () => {
                         upperRight={
                           <PostingSwitch id={item.id} state={item.isPosting} />
                         }
+                        lowerRight={
+                          <ReservButtonOutlined
+                            status={5}
+                            onClick={() => handleDelete(item.id)}
+                          />
+                        }
                       />
                     ))}
                   </ReservPagination>
@@ -214,6 +233,12 @@ const PostingManagement = () => {
                         postingDate={item.createdAt}
                         upperRight={
                           <PostingSwitch id={item.id} state={item.isPosting} />
+                        }
+                        lowerRight={
+                          <ReservButtonOutlined
+                            status={5}
+                            onClick={() => handleDelete(item.id)}
+                          />
                         }
                       />
                     ))}
