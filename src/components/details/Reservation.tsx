@@ -23,7 +23,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   const [selectedOption, setSelectedOption] = useState(0);
   const [optionId, setOptionId] = useState(0);
   const [ticketNum, setTicketNum] = useState(0);
-  console.log(options);
+  // console.log(options);
   const {
     startDate,
     setStartDate,
@@ -32,7 +32,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     maxStartDate,
     minEndDate,
   } = useDatePicker(product.id);
-  console.log(startDate, endDate, maxStartDate, minEndDate);
+  // console.log(startDate, endDate, maxStartDate, minEndDate);
   const { table } = useTimeTable(optionId);
 
   const getTableId = (timeTable: any) => {

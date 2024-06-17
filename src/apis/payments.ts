@@ -7,6 +7,7 @@ const putPayment = async (
   orderId: string,
   amount: number,
 ) => {
+  // eslint-disable-next-line no-useless-catch
   try {
     const response = await instance.put(`/payment/${paymentId}`, {
       paymentKey,
@@ -15,7 +16,6 @@ const putPayment = async (
     });
     return response.data;
   } catch (error) {
-    console.log(error);
     throw error;
   }
 };

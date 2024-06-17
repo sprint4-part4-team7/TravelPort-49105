@@ -10,7 +10,7 @@ const Option = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const [optionList, setOptionList] = useState([]);
-  console.log(optionList);
+  // console.log(optionList);
 
   return (
     <div className="mx-40 flex flex-col">

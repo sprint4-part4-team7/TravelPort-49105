@@ -27,7 +27,7 @@ const OptionModal = ({ closeModal, optionList, setOptionList }: ModalProps) => {
   const trueButton = true;
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    // console.log(data);
     setOptionList([
       ...optionList,
       [

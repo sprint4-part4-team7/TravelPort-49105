@@ -84,9 +84,9 @@ const PartnerSignup = () => {
           navigate('/login', { replace: true });
         }
       },
-      onError: (error: any) => {
-        alert(error.message);
-      },
+      // onError: (error: any) => {
+      //   alert(error.message);
+      // },
     });
   };
 
