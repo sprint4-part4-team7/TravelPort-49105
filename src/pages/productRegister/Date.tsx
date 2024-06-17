@@ -30,7 +30,7 @@ const Date = ({ setPage }: PageIdProps) => {
   }, [endDate]);
 
   const onSubmit = () => {
-    if (endDate !== null) {
+    if (startDate !== null && endDate !== null) {
       localStorage.setItem('startDate', startDate.toString());
       localStorage.setItem('endDate', endDate.toString());
       const saveHoliday: any = [];

@@ -34,6 +34,10 @@ const List = () => {
   let filteredData = new Set(); // 필터링된  데이터
 
   const { productsByCategory } = useFetchByCategory(Number(categoryId)); // 리스트 페이지에 들어가는 모든 데이터
+  const [cards, setCards] = useState<any[]>([]);
+  useEffect(() => {
+    setCards(productsByCategory);
+  }, [productsByCategory]);
 
   // 인원수 필터링
   const [count, setCount] = useState(0);
@@ -50,15 +54,6 @@ const List = () => {
   // 종류 필터링
   const { checkedList, checkHandler } = useTypeCheckbox();
 
-  // console.log(
-  //   count,
-  //   rangeMinValue,
-  //   rangeMaxValue,
-  //   startDate,
-  //   endDate,
-  //   checkedList,
-  // );
-
   // 필터링날짜가 판매시작날짜와 판매종료날짜 사이에 있는지 구하는 함수
   const isFiltered = (filteringDate: Date, start: string, end: string) => {
     const filterDate = new Date(filteringDate);
@@ -67,8 +62,6 @@ const List = () => {
 
     return filterDate >= newStartDate && filterDate <= newEndDate;
   };
-
-  console.log(filteredData);
 
   for (let i = 0; i < productsByCategory.length; i++) {
     const product = productsByCategory[i];
@@ -103,14 +96,9 @@ const List = () => {
       filteredData.add(product);
   }
 
-  let cards: any[] = [...productsByCategory];
-
   const handleFilterClick = () => {
-    cards = Array.from(filteredData)
-      ? Array.from(filteredData)
-      : productsByCategory;
+    setCards(Array.from(filteredData));
   };
-  console.log(cards);
 
   const categoryName = Number(categoryId) === 1 ? '숙박' : '체험';
   const filterings = ['날짜', '인원수', '가격대', `${categoryName} 종류`];
