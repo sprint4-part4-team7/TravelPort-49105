@@ -10,7 +10,7 @@ import Switch from '@/components/common/Switch';
 const PostingManagement = () => {
   const { userInfo } = useUserStore();
   const [isNew, setIsNew] = useState<boolean>(true);
-  const [postState, setPostState] = useState<boolean>(true);
+  // const [postState, setPostState] = useState<boolean>(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
   const [lodgeData, setLodgeData] = useState<any[]>([]);
   const [activityData, setActivityData] = useState<any[]>([]);
@@ -31,10 +31,10 @@ const PostingManagement = () => {
     setIsNew(!isNew);
   };
 
-  const togglePostingState = (posting: boolean) => {
-    // put method 추가
-    setPostState(posting);
-  };
+  // const togglePostingState = (posting: boolean) => {
+  //   // put method 추가
+  //   setPostState(posting);
+  // };
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(category);
@@ -159,7 +159,7 @@ const PostingManagement = () => {
                           upperRight={
                             <Switch
                               state={item.switch}
-                              onChange={togglePostingState}
+                              // onChange={togglePostingState}
                             />
                           }
                         />
