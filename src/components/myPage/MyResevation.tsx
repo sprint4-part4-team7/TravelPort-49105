@@ -10,9 +10,9 @@ import ReservPagination from '@/components/common/reservPagination/ReservPaginat
 import ReservChips from '@/components/myPage/ReservChips';
 import ReservButton from '@/components/myPage/ReservButton';
 import ReservButtonOutlined from '@/components/myPage/ReservButtonOutlined';
-import CheckCancelMsg from '@/components/myPage/modal/CheckCancelMsg';
+import CheckCancelMsg from '@/components/myPage/Modal/CheckCancelMsg';
 import ReservChipsExpired from '@/components/myPage/ReservChipsExpired';
-import CancelReserv from './modal/CancelReserv';
+import CancelReserv from '@/components/myPage/Modal/CancelReserv';
 
 const MyResevation = ({
   isExpired = 'false',
