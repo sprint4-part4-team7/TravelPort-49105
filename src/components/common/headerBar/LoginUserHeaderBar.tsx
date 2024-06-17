@@ -39,7 +39,6 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
   const navagate = useNavigate();
   const { mutate: logout } = useLogoutMutation();
   const { userInfo, setUserInfo } = useUserStore();
-  console.log(userInfo);
 
   const image = useProfileImage(userInfo);
 
