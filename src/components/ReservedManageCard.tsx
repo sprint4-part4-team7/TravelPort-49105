@@ -84,7 +84,7 @@ const ReservedManageCard = ({
             <div className="absolute top-16 right-16 text-14 text-right font-semibold">
               승인됨
             </div>
-            <div className="flex gap-8 items-center">
+            <div className="flex gap-8 items-end tablet:flex-col mobile:justify-between">
               <ReservButtonOutlined status={4} onClick={handleStandby} />
               <ReservButtonOutlined status={3} onClick={handleReject} />
             </div>
@@ -94,15 +94,15 @@ const ReservedManageCard = ({
             <div className="absolute top-16 right-16 text-14 text-right font-semibold">
               거절됨
             </div>
-            <div className="flex gap-8 items-center">
+            <div className="flex gap-8 items-end tablet:flex-col mobile:justify-between">
               <ReservButtonOutlined status={4} onClick={handleStandby} />
               <Button
                 variant="default"
                 outlined
-                buttonStyle="flex gap-4 text-14 p-8 w-fit h-fit font-semibold rounded"
+                buttonStyle="flex gap-4 text-14 py-8 px-12 w-auto font-semibold rounded"
                 onClick={openModal}
               >
-                거절 사유 작성
+                사유 작성
                 <img alt="승인" src={ARROW_UP_RIGHT} width={16} height={16} />
               </Button>
               <Modal
@@ -110,7 +110,7 @@ const ReservedManageCard = ({
                 closeModal={closeModal}
                 modal="w-full max-w-536"
               >
-                <RejectReservation closeModal={closeModal} />
+                <RejectReservation id={id} closeModal={closeModal} />
               </Modal>
             </div>
           </div>

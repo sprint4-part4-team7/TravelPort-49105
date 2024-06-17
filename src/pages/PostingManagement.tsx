@@ -8,7 +8,6 @@ import ReservPagination from '@/components/common/reservPagination/ReservPaginat
 import PostingCard from '@/components/PostingCard';
 import PostingSwitch from '@/components/myPage/PostingSwitch';
 import ReservButtonOutlined from '@/components/myPage/ReservButtonOutlined';
-import Modal from '@/components/common/Modal';
 import DeletePosting from '@/components/myPage/Modal/DeletePosting';
 
 const PostingManagement = () => {
@@ -168,17 +167,12 @@ const PostingManagement = () => {
                             />
                           }
                         />
-                        <Modal
-                          isOpen={isModalOpen}
+
+                        <DeletePosting
+                          id={item.id}
                           closeModal={closeModal}
-                          modal="w-full max-w-536"
-                        >
-                          <DeletePosting
-                            id={item.id}
-                            closeModal={closeModal}
-                            isOpen={isModalOpen}
-                          />
-                        </Modal>
+                          isOpen={isModalOpen}
+                        />
                       </>
                     ))}
                   </ReservPagination>
@@ -219,17 +213,11 @@ const PostingManagement = () => {
                             />
                           }
                         />
-                        <Modal
-                          isOpen={isModalOpen}
+                        <DeletePosting
+                          id={item.id}
                           closeModal={closeModal}
-                          modal="w-full max-w-536"
-                        >
-                          <DeletePosting
-                            id={item.id}
-                            closeModal={closeModal}
-                            isOpen={isModalOpen}
-                          />
-                        </Modal>
+                          isOpen={isModalOpen}
+                        />
                       </>
                     ))}
                   </ReservPagination>
@@ -270,17 +258,11 @@ const PostingManagement = () => {
                             />
                           }
                         />
-                        <Modal
-                          isOpen={isModalOpen}
+                        <DeletePosting
+                          id={item.id}
                           closeModal={closeModal}
-                          modal="w-full max-w-536"
-                        >
-                          <DeletePosting
-                            id={item.id}
-                            closeModal={closeModal}
-                            isOpen={isModalOpen}
-                          />
-                        </Modal>
+                          isOpen={isModalOpen}
+                        />
                       </>
                     ))}
                   </ReservPagination>
