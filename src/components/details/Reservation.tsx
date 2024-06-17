@@ -71,9 +71,8 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     setSelectedOption(id);
   };
 
-  const filteredOption = options?.filter(
-    (option) => option?.id === selectedOption,
-  );
+  const filteredOption =
+    options && options?.filter((option) => option?.id === selectedOption);
 
   const handleTicketMinus = () => {
     if (ticketNum <= 0) return;
