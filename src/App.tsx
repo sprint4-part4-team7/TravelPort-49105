@@ -20,6 +20,7 @@ import NoPage from '@/pages/NoPage';
 import PreparingPage from '@/pages/PreparingPage';
 import Cart from '@/pages/Cart';
 import CheckoutCartPage from '@/pages/payments/CheckoutCartPage';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
   return (
@@ -53,10 +54,38 @@ const App = () => {
           <Route path="product-register" element={<ProductRegister />} />
         </Route>
         <Route path="payments">
-          <Route index element={<CheckoutPage />} />
-          <Route path="cart" element={<CheckoutCartPage />} />
-          <Route path="success" element={<SuccessPage />} />
-          <Route path="fail" element={<FailPage />} />
+          <Route
+            index
+            element={
+              <ProtectedRoute>
+                <CheckoutPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="cart"
+            element={
+              <ProtectedRoute>
+                <CheckoutCartPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="success"
+            element={
+              <ProtectedRoute>
+                <SuccessPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="fail"
+            element={
+              <ProtectedRoute>
+                <FailPage />
+              </ProtectedRoute>
+            }
+          />
         </Route>
         <Route path="review/:optionId">
           <Route index element={<ReviewRegist />} />
@@ -64,7 +93,14 @@ const App = () => {
         <Route path="search">
           <Route index element={<SearchResultPage />} />
         </Route>
-        <Route path="cart" element={<Cart />} />
+        <Route
+          path="cart"
+          element={
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<NoPage />} />
         {/* 서비스 준비중 페이지  */}
         <Route path="preparing" element={<PreparingPage />} />
