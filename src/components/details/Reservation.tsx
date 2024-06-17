@@ -71,8 +71,8 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     setSelectedOption(id);
   };
 
-  const filteredOption = options.filter(
-    (option) => option.id === selectedOption,
+  const filteredOption = options?.filter(
+    (option) => option?.id === selectedOption,
   );
 
   const handleTicketMinus = () => {
@@ -128,7 +128,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
 
   return (
     <div className="mt-40">
-      <h1 className="my-20 text-24 font-bold">일정을 선택하세요</h1>
+      <h1 className="my-20 font-bold text-24">일정을 선택하세요</h1>
       <hr className="mb-20" />
       <div className="w-full mb-60">
         <DatePickerCustom
@@ -142,15 +142,15 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
         />
       </div>
 
-      <h1 className="my-20 text-24 font-bold">회차를 선택하세요</h1>
+      <h1 className="my-20 font-bold text-24">회차를 선택하세요</h1>
       <hr className="mb-20" />
-      <div className="grid mx-auto grid-cols-3 mobile:grid-cols-2 gap-16 text-14 font-semibold mb-60 cursor-pointer">
+      <div className="grid grid-cols-3 gap-16 mx-auto font-semibold cursor-pointer mobile:grid-cols-2 text-14 mb-60">
         {options.map((option) => {
           if (option.userCount === 0) {
             return (
               <div
                 key={option.id}
-                className="line flex flex-col justify-center items-center bg-black-3 text-black-6 border-black-4 border-1 rounded-4 h-60"
+                className="flex flex-col items-center justify-center line bg-black-3 text-black-6 border-black-4 border-1 rounded-4 h-60"
               >
                 <div>{option.optionName}</div>
                 <div className="font-normal">마감</div>
@@ -173,12 +173,12 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
         })}
       </div>
 
-      <h1 className="my-20 text-24 font-bold">수량을 선택하세요</h1>
+      <h1 className="my-20 font-bold text-24">수량을 선택하세요</h1>
       <hr className="mb-20" />
       <div className="flex justify-between mb-60">
         <div className="flex flex-col gap-8">
-          <h2 className="text-20 font-semibold">{product?.productName}</h2>
-          <h3 className="text-17 font-semibold">
+          <h2 className="font-semibold text-20">{product?.productName}</h2>
+          <h3 className="font-semibold text-17">
             {filteredOption.length &&
               filteredOption[0]?.optionPrice.toLocaleString()}
             원
@@ -188,28 +188,28 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
           <div className="flex justify-end">
             <div
               onClick={() => handleTicketMinus()}
-              className="w-40 h-40 flex justify-center items-center border-solid border-1 border-black-4 rounded-l-4 hover:bg-blue-6 cursor-pointer"
+              className="flex items-center justify-center w-40 h-40 border-solid cursor-pointer border-1 border-black-4 rounded-l-4 hover:bg-blue-6"
             >
               <img src={minus} alt="마이너스아이콘" />
             </div>
-            <div className="w-40 h-40 flex justify-center items-center border-solid border-y-1 border-black-4">
+            <div className="flex items-center justify-center w-40 h-40 border-solid border-y-1 border-black-4">
               {ticketNum}
             </div>
             <div
               onClick={() => handleTicketPlus()}
-              className="w-40 h-40 flex justify-center items-center border-solid border-1 border-black-4 rounded-r-4 hover:bg-blue-6 cursor-pointer"
+              className="flex items-center justify-center w-40 h-40 border-solid cursor-pointer border-1 border-black-4 rounded-r-4 hover:bg-blue-6"
             >
               <img src={plus} alt="플러스아이콘" />
             </div>
           </div>
-          <h3 className="text-18 font-semibold text-end">
+          <h3 className="font-semibold text-18 text-end">
             {filteredOption.length &&
               (filteredOption[0].optionPrice * ticketNum).toLocaleString()}
             원
           </h3>
         </div>
       </div>
-      <div className="flex gap-20 w-full pb-58">
+      <div className="flex w-full gap-20 pb-58">
         <div className="w-1/3">
           <Button outlined disabled={isDisabled} onClick={() => openModal()}>
             장바구니 담기
