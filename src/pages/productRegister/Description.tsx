@@ -27,9 +27,9 @@ const Description = ({ setPage }: PageIdProps) => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const onSubmit = (data: DescriptionForm) => {
+    localStorage.setItem('title', data.title);
+    localStorage.setItem('content', data.content);
     setPage(<Location setPage={setPage} />);
-    // eslint-disable-next-line no-console
-    console.log(data);
   };
 
   return (
