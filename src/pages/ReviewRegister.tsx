@@ -11,6 +11,7 @@ import useReviewDefaults from '@/hooks/useReviewDefaults';
 import useReviewPostMutation from '@/hooks/reactQuery/review/useReviewPostMutation';
 import BUCKER_NAME from '@/constants/bucket';
 import postImages from '@/apis/image';
+import { useUserStore } from '@/utils/zustand';
 import TextBox from '@/components/common/TextBox';
 import ReviewStar from '@/components/review/ReviewStar';
 import Button from '@/components/common/Button';
@@ -46,7 +47,8 @@ const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
   const { productOption, optionTitle, productName } =
     useReviewDefaults(optionId);
   const { mutate, isLoading } = useReviewPostMutation();
-  const userId = 3; // 추후 받아올 예정
+  const { userInfo } = useUserStore();
+  const userId = userInfo.id;
 
   // 버튼 활성화 여부 조절
   const [isDisableToSubmit, setIsDisableToSubmit] = useState(true);

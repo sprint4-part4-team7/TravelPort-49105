@@ -6,7 +6,7 @@ import minus from '@/assets/icons/minus.svg';
 import plus from '@/assets/icons/plus.svg';
 import { useEffect, useState } from 'react';
 import { formatDate } from '@/utils/getDate';
-import { useReservationStore } from '@/utils/zustand';
+import { useReservationStore, useUserStore } from '@/utils/zustand';
 import useTimeTable from '@/hooks/useTimeTable';
 import useDatePicker from '@/hooks/useDatePicker';
 import Button from '@/components/common/Button';
@@ -24,6 +24,8 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   const [optionId, setOptionId] = useState(0);
   const [ticketNum, setTicketNum] = useState(0);
   const [isDisabled, setIsDisabled] = useState(true);
+
+  const { userInfo } = useUserStore();
 
   const {
     startDate,
@@ -85,7 +87,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   );
   const handleUpdate = () => {
     const newReservationInfo = {
-      userId: 1,
+      userId: userInfo.id,
       productOptionId: optionId,
       timeTableId: getTableId(table),
       reservationState: '예약 대기',
