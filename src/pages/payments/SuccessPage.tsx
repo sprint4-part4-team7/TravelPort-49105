@@ -56,9 +56,9 @@ const SuccessPage = () => {
       });
     }
   };
-  console.log(reservationInfo);
+
   const handleReservationPost = async () => {
-    if (reservationInfo.productOptionId !== 0 && !cartData) {
+    if (reservationInfo.productOptionId !== 0 && !cartInfo) {
       createReservation({
         userId: reservationInfo.userId,
         productOptionId: reservationInfo.productOptionId,
@@ -101,7 +101,9 @@ const SuccessPage = () => {
   }, [cartData, pId, isReservationPosted]);
 
   if (reservationLoading || cartLoading) return <Loading />;
-  if (reservationError) return <FailPage />;
+  if (!cartInfo) {
+    if (reservationError) return <FailPage />;
+  }
   return (
     <Layout>
       <div className="w-full">
