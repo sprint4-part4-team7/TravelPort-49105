@@ -110,7 +110,7 @@ const ReservedManageCard = ({
                 closeModal={closeModal}
                 modal="w-full max-w-536"
               >
-                <RejectReservation closeModal={closeModal} />
+                <RejectReservation id={id} closeModal={closeModal} />
               </Modal>
             </div>
           </div>
