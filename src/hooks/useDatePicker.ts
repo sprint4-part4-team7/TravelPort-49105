@@ -10,7 +10,6 @@ const useDatePicker = (productId?: number) => {
   let holiday;
   if (productId) {
     const { productByProductId } = useProductByIdQuery(productId);
-    // console.log(productByProductId);
     const leftDate = productByProductId.startDate; // 상품 판매 시작 날짜
     const rightDate = productByProductId.endDate; // 상품 판매 종료 날짜
     maxStartDate =

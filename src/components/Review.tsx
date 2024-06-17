@@ -28,7 +28,6 @@ const Review = ({ review }: ReviewProps) => {
   const [isComment, setIsComment] = useState(false);
 
   const filteredImages = reviewImages.filter((image: string) => image !== '');
-  // console.log(filteredImages);
 
   // 판매자 댓글 클릭 시, 댓글 내용이 보이게 하도록 하는 handler 함수
   const handleComment = () => {
