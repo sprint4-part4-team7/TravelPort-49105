@@ -1,4 +1,4 @@
-import { UserInfo } from '@/constants/types';
+import { ReservStatusType, UserInfo } from '@/constants/types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -14,8 +14,7 @@ export const useUserStore = create(
         id: 0,
         name: '',
         email: '',
-        profileImage:
-          'https://i.pinimg.com/736x/53/7e/f5/537ef59499259ba707068742f91a10f8.jpg',
+        profileImage: '',
         isPartner: 0,
       },
       setUserInfo: (userInfo) => set({ userInfo }),
@@ -47,7 +46,7 @@ interface ReservationInfo {
   userId: number;
   productOptionId: number;
   timeTableId: number;
-  reservationState: string;
+  reservationState: ReservStatusType;
   reservationPrice: number;
   ticketCount: number;
   cancelMsg?: string;
@@ -63,7 +62,7 @@ export const useReservationStore = create(
         userId: 0,
         productOptionId: 0,
         timeTableId: 0,
-        reservationState: '',
+        reservationState: 1,
         reservationPrice: 0,
         ticketCount: 0,
         cancelMsg: '',

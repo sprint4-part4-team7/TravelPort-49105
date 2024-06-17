@@ -12,6 +12,7 @@ import useDatePicker from '@/hooks/useDatePicker';
 import { useNavigate } from 'react-router-dom';
 import useCartPostMutation from '@/hooks/reactQuery/cart/useCartPostMutation';
 import useModal from '@/hooks/useModal';
+import RESERV_STATUS from '@/constants/reserv';
 import Button from '@/components/common/Button';
 import '@/styles/ProductDetails.css';
 import DatePickerCustom from './DatePickerCustom';
@@ -99,7 +100,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
       userId: userInfo.id,
       productOptionId: optionId,
       timeTableId: getTableId(table),
-      reservationState: '예약 대기',
+      reservationState: RESERV_STATUS.PENDING,
       reservationPrice: filteredOption[0].optionPrice * ticketNum,
       ticketCount: ticketNum,
       cancelMsg: '',

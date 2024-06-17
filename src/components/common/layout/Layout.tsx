@@ -17,7 +17,7 @@ const Layout: React.FC<LayoutProps> = ({
   return (
     <div className="flex flex-col min-h-screen font-plexSans">
       <HeaderBar main={main} category={category} noSearch={noSearch} />
-      <div className="flex-grow px-[3.6rem] mt-[14.4rem] break-words whitespace-normal overflow-y-auto">
+      <div className="flex-grow px-36 mt-144 break-words whitespace-normal overflow-y-auto">
         {children}
       </div>
     </div>

@@ -2,6 +2,8 @@ import React from 'react';
 import { useUserMypageStore, useUserStore } from '@/utils/zustand';
 import { useNavigate } from 'react-router-dom';
 import useProfileImage from '@/utils/randomProfile';
+import useLogoutMutation from '@/hooks/reactQuery/auth/useLogoutMutation';
+import { removeCookie } from '@/utils/cookie';
 import Button from '@/components/common/Button';
 import MyPageButton from '@/components/myPage/MyPageButton';
 
@@ -14,12 +16,22 @@ const MyPageSideBar = ({ children, isPartner = false }: MyPageSideBarProps) => {
   const navigate = useNavigate();
   const navigateUrl = `${isPartner ? '/partner' : ''}/mypage/`;
   const { userMypage, setUserMypage } = useUserMypageStore();
-  const { userInfo } = useUserStore();
+  const { userInfo, setUserInfo } = useUserStore();
+  const { mutate: logout } = useLogoutMutation();
   const image = useProfileImage(userInfo);
 
-  const handleStorageClear = () => {
-    localStorage.clear();
-    window.location.reload();
+  const handleLogOut = () => {
+    setUserInfo({
+      id: 0,
+      name: '',
+      email: '',
+      profileImage: '',
+      isPartner: 0,
+    });
+    removeCookie('accessToken');
+    removeCookie('refreshToken');
+    navigate('/');
+    logout();
   };
 
   const changeStatus = (newStatus: string) => {
@@ -72,7 +84,7 @@ const MyPageSideBar = ({ children, isPartner = false }: MyPageSideBarProps) => {
           isCancel
           outlined
           buttonStyle="text-16 p-12 mobile:hidden"
-          onClick={handleStorageClear}
+          onClick={handleLogOut}
         >
           로그아웃
         </Button>

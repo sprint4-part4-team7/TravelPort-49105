@@ -2,12 +2,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import reservationApi from '@/apis/reservation';
 import { useState } from 'react';
 import { useCartStore } from '@/utils/zustand';
+import { ReservStatusType } from '@/constants/types';
 
 interface PostReservationProp {
   userId: number;
   productOptionId: number;
   timeTableId: number;
-  reservationState: string;
+  reservationState: ReservStatusType;
   reservationPrice: number;
   ticketCount: number;
   cancelMsg: string;

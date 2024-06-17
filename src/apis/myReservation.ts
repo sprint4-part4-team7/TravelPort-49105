@@ -1,4 +1,4 @@
-import { Reservation } from '@/constants/types';
+import { ReservStatusType, Reservation } from '@/constants/types';
 import instance from '@/utils/axios';
 
 export const getMyReservation = async (
@@ -15,7 +15,7 @@ export const getMyReservation = async (
 
 export const putMyReservation = async (
   reservationId: number,
-  status: string,
+  status: ReservStatusType,
 ): Promise<void> => {
   await instance.put(`/reservation/${reservationId}`, { status });
 };

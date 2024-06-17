@@ -1,5 +1,6 @@
 import { ReactComponent as LinkIcon } from '@/assets/icons/arrow-up-right.svg';
 import { ReactComponent as ReviewIcon } from '@/assets/icons/review.svg';
+import RESERV_STATUS from '@/constants/reserv';
 import { useState } from 'react';
 
 interface ReservButtonProps {
@@ -11,7 +12,7 @@ const ReservButton = ({ status, onClick }: ReservButtonProps) => {
   const [isHover, setIsHover] = useState(false);
   let content;
   switch (status) {
-    case 2:
+    case RESERV_STATUS.FINISHED:
       content = (
         <>
           후기 쓰기
@@ -19,15 +20,7 @@ const ReservButton = ({ status, onClick }: ReservButtonProps) => {
         </>
       );
       break;
-    // case '예약 대기':
-    //   content = (
-    //     <>
-    //       후기 쓰기
-    //       <ReviewIcon stroke={isHover ? '#3065e8' : 'black'} />
-    //     </>
-    //   );
-    //   break;
-    case 3:
+    case RESERV_STATUS.REJECTED:
       content = (
         <>
           거절 사유 보기
@@ -35,9 +28,6 @@ const ReservButton = ({ status, onClick }: ReservButtonProps) => {
         </>
       );
       break;
-    // case '예약 취소':
-    //   content = '';
-    //   break;
     default:
       content = '';
       break;

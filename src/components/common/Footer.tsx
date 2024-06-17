@@ -5,16 +5,16 @@ import insta from '@/assets/icons/instagram.svg';
 
 const Footer = () => {
   return (
-    <footer className="font-plexSans w-full mt-[2rem] bg-[#EBF1FF] flex flex-col mobile:flex-col justify-center items-center py-[2rem] px-[4rem] text-center">
-      <div className="flex mobile:flex-col flex-row tablet:gap-[12rem] gap-[30rem] mobile:gap-[0.8rem] items-center">
+    <footer className="font-plexSans w-full mt-20 bg-[#EBF1FF] flex flex-col mobile:flex-col justify-center items-center py-20 px-40 text-center">
+      <div className="flex mobile:flex-col flex-row tablet:gap-120 gap-300 mobile:gap-8 items-center">
         <div>
-          <div className="text-[1.4rem] font-semibold	mobile:text-[1.3rem] mobile:font-medium	">
+          <div className="text-14 font-semibold	mobile:text-13 mobile:font-medium	">
             ⓒTravelPort - 2024
           </div>
         </div>
 
-        <div className="flex flex-row tablet:gap-[12rem] gap-[30rem] mobile:gap-[4.4rem] items-center">
-          <div className="mobile:text-[1.1rem] mobile:font-normal	 font-medium text-[1.3rem] space-x-4 mobile:flex-col tablet:flex-row mobile:space-x-0">
+        <div className="flex flex-row tablet:gap-120 gap-300 mobile:gap-44 items-center">
+          <div className="mobile:text-11 mobile:font-normal	 font-medium text-13 space-x-4 mobile:flex-col tablet:flex-row mobile:space-x-0">
             <a href="/" className="text-[#A4A1AA] px-4 py-3">
               Privacy Policy
             </a>
@@ -23,7 +23,7 @@ const Footer = () => {
             </a>
           </div>
 
-          <div className="flex flex-row space-x-4 mobile:space-x-0 gap-[2rem] mobile:gap-[0.8rem] items-center">
+          <div className="flex flex-row space-x-4 mobile:space-x-0 gap-20 mobile:gap-8 items-center">
             <a aria-label="Save" href="/">
               <img src={message} alt="메세지 아이콘" />
             </a>

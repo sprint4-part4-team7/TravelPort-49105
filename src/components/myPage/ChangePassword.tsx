@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { putPassword } from '@/apis/editInfo';
 import { PASSWORD_REGEX } from '@/constants/InputType';
+import { toast } from 'react-toastify';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 
@@ -26,14 +27,13 @@ const ChangePassword = ({ closeModal }: { closeModal: () => void }) => {
         newPassword,
       });
       if (response.status === 200) {
-        // alert(response.data.message);
+        toast.success(response.data.message);
         closeModal();
       } else {
         throw new Error(response.data.message);
       }
     } catch (error) {
-      // alert('비밀번호 변경에 실패했습니다');
-      // console.error(error);
+      toast.error('비밀번호 변경에 실패했습니다');
     }
   };
 

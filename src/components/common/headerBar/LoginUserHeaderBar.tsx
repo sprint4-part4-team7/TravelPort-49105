@@ -159,56 +159,48 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
           <img
             src={user.image}
             alt="Profile"
-            className="rounded-full cursor-pointer h-[3.2rem] w-[3.2rem]"
+            className="rounded-full cursor-pointer h-32 w-32"
           />
         </button>
         {userInfo.isPartner === 0 && (
           <button type="button" onClick={() => navagate('/cart')}>
-            <img
-              className="h-[3.2rem] w-[3.2rem]"
-              src={cart}
-              alt="쇼핑 카트 아이콘"
-            />
+            <img className="h-32 w-32" src={cart} alt="쇼핑 카트 아이콘" />
           </button>
         )}
       </div>
       <div className="hidden mobile:flex">
         <button type="button" onClick={toggleSidebar}>
-          <img
-            src={menu}
-            alt="Menu"
-            className="h-[3.2rem] w-[3.2rem] cursor-pointer"
-          />
+          <img src={menu} alt="Menu" className="h-32 w-32 cursor-pointer" />
         </button>
       </div>
       {isDropdownOpen && (
         <div
           ref={dropdownRef}
-          className="left-[-2rem] absolute mt-10 bg-white border border-gray-300 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] top-full rounded-[1.2rem] pt-[0.8rem] pb-[0.4rem]"
+          className="-left-20 absolute mt-10 bg-white border border-gray-300 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.25)] top-full rounded-12 pt-8 pb-4"
           style={{ marginLeft: '-1.5rem', width: 'auto' }}
         >
-          <ul className="w-[106px] text-[1.5rem] font-normal ">
+          <ul className="w-[106px] text-15 font-normal ">
             {/* 프로필 이미지랑 이름 */}
-            <li className="items-center hidden p-2 mobile:flex px-[1.2rem] justify-between py-1.5 hover:bg-blue-50">
-              <div className="flex items-center gap-[0.8rem]">
+            <li className="items-center hidden p-2 mobile:flex px-12 justify-between py-1.5 hover:bg-blue-50">
+              <div className="flex items-center gap-8">
                 <img
                   src={user.image}
                   alt="Profile"
-                  className="rounded-full h-[3.2rem] w-[3.2rem] mobile:w-[2.6rem] mobile:h-[2.6rem]"
+                  className="rounded-full h-32 w-32 mobile:w-26 mobile:h-26"
                 />
                 <span className="ml-2">{user.name}</span>
               </div>
             </li>
             {/* 장바구니 아이콘 */}
             {userInfo.isPartner === 0 && (
-              <li className="items-center justify-between hidden px-[1.2rem] mobile:flex py-1.5 hover:bg-blue-50">
+              <li className="items-center justify-between hidden px-12 mobile:flex py-1.5 hover:bg-blue-50">
                 <div className="flex items-center">
                   <img
-                    className="h-[3.2rem] w-[3.2rem] mobile:w-[1.6rem] mobile:h-[1.6rem]"
+                    className="h-32 w-32 mobile:w-16 mobile:h-16"
                     src={cart}
                     alt="쇼핑 카트 아이콘"
                   />
-                  <span className="ml-[0.8rem]">장바구니</span>
+                  <span className="ml-8">장바구니</span>
                 </div>
               </li>
             )}
@@ -216,7 +208,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
             {menuItems.map((item, index) => (
               <li
                 key={item.id}
-                className={`px-[0.6rem] flex justify-center items-center p-2 ${index === menuItems.length - 1 ? 'border-t border-solid border-gray-200' : ''} ${item.label === '로그아웃' ? 'hover:text-[#000] text-gray-400 font-semibold' : 'hover:bg-blue-50 '}`}
+                className={`px-6 flex justify-center items-center p-2 ${index === menuItems.length - 1 ? 'border-t border-solid border-gray-200' : ''} ${item.label === '로그아웃' ? 'hover:text-[#000] text-gray-400 font-semibold' : 'hover:bg-blue-50 '}`}
               >
                 <button
                   type="button"
@@ -248,7 +240,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
       >
         {/* 배경 오버레이 */}
         <div
-          className="absolute inset-0 bg-opacity-50 bg-black-7 left-[-2rem]"
+          className="absolute inset-0 bg-opacity-50 bg-black-7 -left-20"
           onClick={() => setIsSidebarOpen(false)}
         />
         {/* 사이드바 */}
