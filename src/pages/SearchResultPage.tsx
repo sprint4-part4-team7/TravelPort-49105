@@ -119,13 +119,21 @@ const SearchResultPage = () => {
           </button>
         </div>
         <div className="flex flex-col items-center justify-center gap-20">
-          <SearchResultSection productsWithMinPrice={paginatedProducts} />
-          <Pagination
-            pageNum={pageNum}
-            setPageNum={setPageNum}
-            allCardNum={productsWithMinPrice?.length || 0}
-            divNum={itemsPerPage}
-          />
+          {productsWithMinPrice?.length !== 0 ? (
+            <SearchResultSection productsWithMinPrice={paginatedProducts} />
+          ) : (
+            <div className="font-semibold text-22 text-black-6">
+              상품이 존재하지 않습니다 :)
+            </div>
+          )}
+          {productsWithMinPrice?.length !== 0 && (
+            <Pagination
+              pageNum={pageNum}
+              setPageNum={setPageNum}
+              allCardNum={productsWithMinPrice?.length || 0}
+              divNum={itemsPerPage}
+            />
+          )}
         </div>
       </Layout>
       <Footer />

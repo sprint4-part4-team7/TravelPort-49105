@@ -9,11 +9,7 @@ import useLogoutMutation from '@/hooks/reactQuery/auth/useLogoutMutation';
 import { removeCookie } from '@/utils/cookie';
 import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '@/utils/zustand';
-import defaul1Img1 from '@/assets/icons/defaultImg1.svg';
-import defaul1Img2 from '@/assets/icons/defaultImg2.svg';
-import defaul1Img3 from '@/assets/icons/defaultImg3.svg';
-import defaul1Img4 from '@/assets/icons/defaultImg4.svg';
-import defaul1Img5 from '@/assets/icons/defaultImg5.svg';
+import useProfileImage from '@/utils/randomProfile';
 
 interface LoginUserHeaderBarProps {
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -44,22 +40,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
   const { mutate: logout } = useLogoutMutation();
   const { userInfo, setUserInfo } = useUserStore();
 
-  const defaultImages = [
-    defaul1Img1,
-    defaul1Img2,
-    defaul1Img3,
-    defaul1Img4,
-    defaul1Img5,
-  ];
-
-  // 랜덤으로 이미지 선택
-  const getRandomImage = (images: string[]): string => {
-    const randomIndex = Math.floor(Math.random() * images.length);
-    return images[randomIndex];
-  };
-
-  // userInfo.profileImage가 비어있으면 랜덤 이미지를, 그렇지 않으면 userInfo.profileImage를 사용
-  const image = userInfo.profileImage || getRandomImage(defaultImages);
+  const image = useProfileImage(userInfo);
 
   const user: User = {
     name: userInfo.name,
@@ -87,6 +68,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
       isPartner: 0,
     });
     setIsLoggedIn(false);
+    localStorage.removeItem('profileImage');
     removeCookie('accessToken');
     removeCookie('refreshToken');
     navagate('/');

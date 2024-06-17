@@ -1,7 +1,7 @@
 import React from 'react';
 import { useUserMypageStore, useUserStore } from '@/utils/zustand';
 import { useNavigate } from 'react-router-dom';
-import randomProfile from '@/utils/randomProfile';
+import useProfileImage from '@/utils/randomProfile';
 import Button from '@/components/common/Button';
 import MyPageButton from '@/components/myPage/MyPageButton';
 
@@ -15,6 +15,7 @@ const MyPageSideBar = ({ children, isPartner = false }: MyPageSideBarProps) => {
   const navigateUrl = `${isPartner ? '/partner' : ''}/mypage/`;
   const { userMypage, setUserMypage } = useUserMypageStore();
   const { userInfo } = useUserStore();
+  const image = useProfileImage(userInfo);
 
   const handleStorageClear = () => {
     localStorage.clear();
@@ -42,16 +43,16 @@ const MyPageSideBar = ({ children, isPartner = false }: MyPageSideBarProps) => {
   ];
 
   return (
-    <div className="flex flex-row mobile:flex-col gap-24 w-full">
-      <div className="flex flex-col relative justify-between px-12 border-r-1 mobile:border-r-0 border-black-4">
-        <div className="flex flex-col w-241 mobile:w-full gap-32">
-          <div className="flex flex-col gap-12 items-center">
+    <div className="flex flex-row w-full min-h-screen gap-24 mobile:flex-col">
+      <div className="relative flex flex-col justify-between px-12 border-r-1 mobile:border-r-0 border-black-4">
+        <div className="flex flex-col gap-32 w-241 mobile:w-full">
+          <div className="flex flex-col items-center gap-12">
             <img
-              src={userInfo.profileImage || randomProfile}
+              src={userInfo.profileImage || image}
               alt="profile"
-              className="w-120 h-120 rounded-full"
+              className="rounded-full w-120 h-120"
             />
-            <span className="text-14 font-semibold px-4 py-8">
+            <span className="px-4 py-8 font-semibold text-14">
               {userInfo.name}
             </span>
           </div>

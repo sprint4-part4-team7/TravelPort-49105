@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import logo from '@/assets/icons/travelPortLogo.svg';
 import { useNavigate } from 'react-router-dom';
-import { getCookie } from '@/utils/cookie';
 import useSearchData from '@/hooks/useSearchData';
 import { uniqueProduct } from '@/utils/uniqueProduct';
 import { useUserStore } from '@/utils/zustand';
@@ -35,7 +34,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
   const handleTraffic = () => {
     navigate('/preparing');
   };
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   const { optionAll } = useProductOptionAll();
 
@@ -45,13 +44,12 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
   const { filteredTitles } = useSearchData(uniqueOptionAll);
 
   useEffect(() => {
-    const accessToken = getCookie('accessToken');
-    if (accessToken) {
-      setIsLoggedIn(true);
-    } else {
+    if (userInfo.id === 0) {
       setIsLoggedIn(false);
+    } else {
+      setIsLoggedIn(true);
     }
-  }, []);
+  }, [userInfo]);
 
   const handleHome = () => {
     navigate('/');

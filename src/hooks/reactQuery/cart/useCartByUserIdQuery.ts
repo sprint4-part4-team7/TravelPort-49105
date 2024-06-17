@@ -5,7 +5,6 @@ const useCartByUserIdQuery = (userId: number) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ['getCartById'],
     queryFn: () => cartApi.getCartById(userId),
-    staleTime: 10,
   });
 
   const cartData = data?.data;

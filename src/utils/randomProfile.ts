@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 import defaul1Img1 from '@/assets/icons/defaultImg1.svg';
 import defaul1Img2 from '@/assets/icons/defaultImg2.svg';
 import defaul1Img3 from '@/assets/icons/defaultImg3.svg';
@@ -13,11 +15,27 @@ const defaultImages = [
 ];
 
 // 랜덤으로 이미지 선택
-const getRandomImage = (images: string[]): string => {
+const getRandomImage = (images: any) => {
   const randomIndex = Math.floor(Math.random() * images.length);
   return images[randomIndex];
 };
 
-const randomProfile = getRandomImage(defaultImages);
+const useProfileImage = (userInfo: any) => {
+  const [image, setImage] = useState('');
 
-export default randomProfile;
+  useEffect(() => {
+    const storedImage = localStorage.getItem('profileImage');
+
+    if (storedImage) {
+      setImage(storedImage);
+    } else {
+      const newImage = userInfo.profileImage || getRandomImage(defaultImages);
+      setImage(newImage);
+      localStorage.setItem('profileImage', newImage);
+    }
+  }, [userInfo, defaultImages]);
+
+  return image;
+};
+
+export default useProfileImage;

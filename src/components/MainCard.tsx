@@ -25,7 +25,7 @@ const MainCard: React.FC<PopularAccommodationsProps> = ({
   onclick,
 }) => {
   return (
-    <div className="">
+    <div>
       <div className="flex justify-between mb-18">
         <p className="font-semibold text-22 ">{title} </p>
         <div className="w-61">
@@ -40,7 +40,7 @@ const MainCard: React.FC<PopularAccommodationsProps> = ({
           </Button>
         </div>
       </div>
-      <div className="grid gap-20 mobile:grid-cols-1 tablet:grid-cols-3 desktop:grid-cols-4">
+      <div className="grid gap-20 mobile:grid-cols-1 tablet:grid-cols-3 desktop:grid-cols-4 mobile:w-335">
         {images &&
           images.map((item, index) => (
             <Card
