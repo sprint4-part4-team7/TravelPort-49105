@@ -34,7 +34,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
   const handleTraffic = () => {
     navigate('/preparing');
   };
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   const { optionAll } = useProductOptionAll();
 
