@@ -37,7 +37,7 @@ const ProductCard = ({
       score={scoreAvg}
       review={reviewCount}
       image={thumbnail}
-      link={`/detail/${product_categoryId}/${id}`}
+      link={`/details/${product_categoryId}/${id}`}
     />
   );
 };

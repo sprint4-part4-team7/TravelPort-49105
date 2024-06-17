@@ -61,7 +61,7 @@ const Main = () => {
       data.map((item: any) => ({
         url: item.thumbnail,
         text: item.productName,
-        path: `detail/${categoryId}/${item.productId}`,
+        path: `details/${categoryId}/${item.productId}`,
         location: item.productAddress,
         price: item.minPrice,
         score: item.reviewAvg.toFixed(1),
