@@ -6,6 +6,7 @@ import instance from '@/utils/axios';
 import { useState } from 'react';
 import ARROW_UP_RIGHT from '@/assets/icons/arrow-up-right-blue.svg';
 import useModal from '@/hooks/useModal';
+import RESERV_STATUS from '@/constants/reserv';
 import Button from '@/components/common/Button';
 import ReservationCard from '@/components/common/reservPagination/ResevationCard';
 import ReservChips from '@/components/myPage/ReservChips';
@@ -28,7 +29,7 @@ type ReserveProps = {
 
 const ReservedManageCard = ({
   id,
-  reservationState = 1,
+  reservationState = RESERV_STATUS.PENDING,
   productOption = {
     optionName: '',
     product: {
@@ -44,18 +45,24 @@ const ReservedManageCard = ({
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const handleApprove = () => {
-    instance.put(`/reservation/${id}`, { reservationState: 2 });
-    setState(2);
+    instance.put(`/reservation/${id}`, {
+      reservationState: RESERV_STATUS.FINISHED,
+    });
+    setState(RESERV_STATUS.FINISHED);
   };
 
   const handleReject = () => {
-    instance.put(`/reservation/${id}`, { reservationState: 3 });
-    setState(3);
+    instance.put(`/reservation/${id}`, {
+      reservationState: RESERV_STATUS.REJECTED,
+    });
+    setState(RESERV_STATUS.REJECTED);
   };
 
   const handleStandby = () => {
-    instance.put(`/reservation/${id}`, { reservationState: 1 });
-    setState(1);
+    instance.put(`/reservation/${id}`, {
+      reservationState: RESERV_STATUS.PENDING,
+    });
+    setState(RESERV_STATUS.PENDING);
   };
 
   return (
@@ -69,17 +76,23 @@ const ReservedManageCard = ({
       userInfo={`예약자명 : ${user.name} / 전화번호 : ${user.phone}`}
       upperRight={<ReservChips status={state} />}
       lowerRight={
-        state === 1 || state === null ? (
+        state === RESERV_STATUS.PENDING || state === null ? (
           <div className="flex flex-col mobile:flex-row gap-8 justify-end">
             <div className="absolute top-16 right-16 text-14 text-right font-semibold">
               대기중
             </div>
             <div className="flex gap-8 items-end tablet:flex-col mobile:justify-between">
-              <ReservButtonOutlined status={2} onClick={handleApprove} />
-              <ReservButtonOutlined status={3} onClick={handleReject} />
+              <ReservButtonOutlined
+                status={RESERV_STATUS.FINISHED}
+                onClick={handleApprove}
+              />
+              <ReservButtonOutlined
+                status={RESERV_STATUS.REJECTED}
+                onClick={handleReject}
+              />
             </div>
           </div>
-        ) : state === 2 ? (
+        ) : state === RESERV_STATUS.FINISHED ? (
           <div className="flex flex-col gap-8 justify-between">
             <div className="absolute top-16 right-16 text-14 text-right font-semibold">
               승인됨
@@ -89,7 +102,7 @@ const ReservedManageCard = ({
               <ReservButtonOutlined status={3} onClick={handleReject} />
             </div>
           </div>
-        ) : state === 3 ? (
+        ) : state === RESERV_STATUS.REJECTED ? (
           <div className="flex flex-col gap-8 justify-between">
             <div className="absolute top-16 right-16 text-14 text-right font-semibold">
               거절됨
@@ -114,7 +127,7 @@ const ReservedManageCard = ({
               </Modal>
             </div>
           </div>
-        ) : state === 4 ? (
+        ) : state === RESERV_STATUS.CANCELED ? (
           <div className="flex flex-col gap-8 justify-between">
             <div className="absolute top-16 right-16 text-14 text-right font-semibold">
               예약 취소함

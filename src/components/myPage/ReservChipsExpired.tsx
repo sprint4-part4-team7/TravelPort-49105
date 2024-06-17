@@ -1,24 +1,22 @@
+import RESERV_STATUS from '@/constants/reserv';
+
 const ReservChipsExpired = ({ status }: { status: number | null }) => {
   let color;
   let text;
   switch (status) {
-    case null:
+    case RESERV_STATUS.PENDING:
       color = 'text-system-success';
       text = '구매완료';
       break;
-    case 1:
-      color = 'text-system-success';
-      text = '구매완료';
-      break;
-    case 2:
+    case RESERV_STATUS.FINISHED:
       color = 'text-blue-6';
       text = '사용완료';
       break;
-    case 3:
+    case RESERV_STATUS.REJECTED:
       color = 'text-system-error';
       text = '거절됨';
       break;
-    case 4:
+    case RESERV_STATUS.CANCELED:
       color = 'text-black-6';
       text = '취소완료';
       break;

@@ -5,6 +5,7 @@ import { Reservation } from '@/constants/types';
 import useModal from '@/hooks/useModal';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import RESERV_STATUS from '@/constants/reserv';
 import ReservationCard from '@/components/common/reservPagination/ResevationCard';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
 import ReservChips from '@/components/myPage/ReservChips';
@@ -63,7 +64,7 @@ const MyResevation = ({
     reviewId?: number,
   ) => {
     if (!isReservExpired) {
-      return state === 3 ? (
+      return state === RESERV_STATUS.REJECTED ? (
         <ReservButton
           onClick={() => handleShowCancelMsg(cancelMessage || '')}
           status={state}
@@ -78,21 +79,24 @@ const MyResevation = ({
 
     let buttonFnc;
     switch (state) {
-      case 2:
+      case RESERV_STATUS.PENDING:
         buttonFnc = () => handleReview(reviewId || 0);
         break;
-      case 3:
+      case RESERV_STATUS.REJECTED:
         buttonFnc = () => handleShowCancelMsg(cancelMessage || '');
         break;
-      case 4:
+      case RESERV_STATUS.CANCELED:
         buttonFnc = () => handleCancel(cancelId);
         break;
       default:
         buttonFnc = () => {};
     }
 
-    return state === 1 || state === null ? (
-      <ReservButtonOutlined status={4} onClick={() => handleCancel(cancelId)} />
+    return state === RESERV_STATUS.PENDING ? (
+      <ReservButtonOutlined
+        status={RESERV_STATUS.CANCELED}
+        onClick={() => handleCancel(cancelId)}
+      />
     ) : (
       <ReservButton status={state} onClick={buttonFnc} />
     );
@@ -119,7 +123,7 @@ const MyResevation = ({
               userInfo={`파트너명 : ${reservation.productOption.product.user.name} / 전화번호 : ${reservation.productOption.product.user.phone || '없음'}`}
               upperRight={upperRightChip(reservation.reservationState || 1)}
               lowerRight={lowerRightButton(
-                reservation.reservationState || 1,
+                reservation.reservationState || RESERV_STATUS.PENDING,
                 reservation.cancelMsg || '',
                 reservation.id,
                 reservation.productOptionId,
