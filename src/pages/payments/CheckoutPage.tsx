@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Payments.css';
 import usePaymentWidget from '@/hooks/usePaymentWidget';
 import useProductOptionQuery from '@/hooks/reactQuery/productOption/useProductOptionQuery';
 import useTilmeTabaleQuery from '@/hooks/reactQuery/timeTable/useTimeTableQuery';
 import useTilmeTabaleOptionQuery from '@/hooks/reactQuery/timeTable/useTilmeTabaleOptionQuery';
-import { useReservationStore, useUserStore } from '@/utils/zustand';
+import {
+  useCartStore,
+  useReservationStore,
+  useUserStore,
+} from '@/utils/zustand';
 import Layout from '@/components/common/layout/Layout';
 import Footer from '@/components/common/Footer';
 import Pay from '@/components/Pay';
@@ -13,6 +17,10 @@ import Loading from '@/components/common/Loading';
 
 const CheckoutPage = () => {
   const { reservationInfo } = useReservationStore();
+  const resetCart = useCartStore((state) => state.resetCart);
+  useEffect(() => {
+    resetCart();
+  }, []);
   const optionId = reservationInfo?.productOptionId;
 
   const { data: timeTableOptionData } = useTilmeTabaleOptionQuery(optionId);

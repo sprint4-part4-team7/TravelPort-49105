@@ -92,6 +92,7 @@ interface CartStore {
   setCartInfo: (cartInfo: CartInfo[]) => void;
   addCartItem: (item: CartInfo) => void;
   removeCartItem: (index: number) => void;
+  resetCart: () => void;
 }
 
 export const useCartStore = create(
@@ -105,6 +106,7 @@ export const useCartStore = create(
         set((state) => ({
           cartInfo: state.cartInfo.filter((_, i) => i !== index),
         })),
+      resetCart: () => set({ cartInfo: [] }),
     }),
     {
       name: 'cart',

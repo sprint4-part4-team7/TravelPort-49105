@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import React, { useEffect, useState } from 'react';
 import logo from '@/assets/icons/travelPortLogo.svg';
 import { useNavigate } from 'react-router-dom';
@@ -56,8 +55,8 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 text-2xl font-bold bg-white py-36">
-      <div className="relative flex items-center justify-between px-48 h-60">
+    <div className="fixed top-0 left-0 right-0 z-50 text-2xl font-bold bg-white py-36 ">
+      <div className="relative flex items-center justify-between px-48 h-60 mobile:px-20">
         <div className="flex items-center">
           <div className="w-195 h-65 mobile:w-76 mobile:h-25 tablet:w-147 tablet:h-48">
             <button
@@ -70,14 +69,12 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
           </div>
         </div>
         {!noSearch && (
-          <div className="flex-1 mx-[4.8rem] relative">
-            {main ? (
-              <SearchBar isMainSearchBar cardLists={filteredTitles} />
-            ) : (
-              <SearchBar cardLists={filteredTitles} />
-            )}
+          <div className={`flex-1 mx-48 mobile:mx-16 tablet:mx-24 relative `}>
+            <div className="w-full">
+              <SearchBar isMainSearchBar={main} cardLists={filteredTitles} />
+            </div>
             {category && (
-              <div className="absolute bottom-[-4rem] right-0 flex gap-8 left-15 z-1">
+              <div className="absolute bottom-[-4rem] right-0 flex gap-8 left-15 z-1 mobile:w-152 mobile:gap-0 mobile:bottom-[-3rem]">
                 <MainCategoryButton
                   title="숙소"
                   onclick={handleAccommodation}

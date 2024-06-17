@@ -1,4 +1,5 @@
 import cartApi from '@/apis/cart';
+import { useCartStore } from '@/utils/zustand';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +14,7 @@ const useCartReservationByUserIdMutation = () => {
   const queryClient = useQueryClient();
   const [datas, setData] = useState<any>();
   const [pId, setPaymnetId] = useState<number>(0);
+  const resetCart = useCartStore((state) => state.resetCart);
 
   const mutation = useMutation({
     mutationFn: async ({
@@ -24,6 +26,7 @@ const useCartReservationByUserIdMutation = () => {
     onSuccess(data) {
       setData(data?.data[0]);
       setPaymnetId(data?.data[0].paymentId);
+      resetCart();
       queryClient.invalidateQueries({
         queryKey: ['getCartById'],
       });

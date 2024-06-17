@@ -13,6 +13,7 @@ import useCartReservationByUserIdMutation from '@/hooks/reactQuery/cart/useCartR
 import Layout from '@/components/common/layout/Layout';
 import Button from '@/components/common/Button';
 import Loading from '@/components/common/Loading';
+import FailPage from './FailPage';
 
 const SuccessPage = () => {
   const navigate = useNavigate();
@@ -27,14 +28,17 @@ const SuccessPage = () => {
   const amount = parseInt(searchParams.get('amount') ?? '0', 10);
 
   const [isInitialized, setIsInitialized] = useState(false);
-  const [isReservationPosted, setIsReservationPosted] = useState(false); // 상태 추가
+  const [isReservationPosted, setIsReservationPosted] = useState(false);
 
   const confirm = () => {
     navigate('/');
   };
 
-  const { mutate: createReservation, isLoading: reservationLoading } =
-    useReservationMutation();
+  const {
+    mutate: createReservation,
+    isLoading: reservationLoading,
+    isError: reservationError,
+  } = useReservationMutation();
   const {
     mutate: cartReservation,
     datas: cartData,
@@ -54,7 +58,7 @@ const SuccessPage = () => {
   };
 
   const handleReservationPost = async () => {
-    if (reservationInfo.productOptionId !== 0 && !cartData) {
+    if (reservationInfo.productOptionId !== 0 && !cartInfo) {
       createReservation({
         userId: reservationInfo.userId,
         productOptionId: reservationInfo.productOptionId,
@@ -94,10 +98,12 @@ const SuccessPage = () => {
     if (!cartData && !pId && !isReservationPosted) {
       handleReservationPost();
     }
-  }, [cartData, pId, isReservationPosted]); // 의존성 배열에 isReservationPosted 추가
+  }, [cartData, pId, isReservationPosted]);
 
   if (reservationLoading || cartLoading) return <Loading />;
-
+  if (!cartInfo) {
+    if (reservationError) return <FailPage />;
+  }
   return (
     <Layout>
       <div className="w-full">
