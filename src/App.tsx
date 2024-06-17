@@ -88,7 +88,14 @@ const App = () => {
           />
         </Route>
         <Route path="review/:optionId">
-          <Route index element={<ReviewRegist />} />
+          <Route
+            index
+            element={
+              <ProtectedRoute>
+                <ReviewRegist />
+              </ProtectedRoute>
+            }
+          />
         </Route>
         <Route path="search">
           <Route index element={<SearchResultPage />} />

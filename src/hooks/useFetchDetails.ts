@@ -12,9 +12,10 @@ const useFetchDetailsQuery = (productId: number) => {
     useProductOptionByProductIdQuery(productId);
 
   useEffect(() => {
-    if (productByProductId) setProduct(productByProductId);
-    if (productOption) setOptions(productOption);
-  }, [productByProductId, productOption]);
+    if (productByProductId && productByProductId !== product)
+      setProduct(productByProductId);
+    if (productOption && productOption !== options) setOptions(productOption);
+  }, [productByProductId, productOption, product, options, productId]);
 
   return { product, options, isLoadingProducts, isLoadingOptions };
 };

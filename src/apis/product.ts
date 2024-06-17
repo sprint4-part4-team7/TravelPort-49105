@@ -23,6 +23,13 @@ const getProductAll = async () => {
   });
 };
 
+const getProductByCategory = async (categoryId: number) => {
+  return instance({
+    url: `/product/all?categoryId=${categoryId}`,
+    method: 'GET',
+  });
+};
+
 const getProductById = async (productId: number) => {
   return instance({
     url: `/product/${productId}`,
@@ -94,6 +101,7 @@ const postProduct = async (
 
 export default {
   getProductAll,
+  getProductByCategory,
   getProductById,
   getProductByPartner,
   putProduct,

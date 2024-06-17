@@ -4,14 +4,18 @@
 import { CardListsType, DetailData } from '@/constants/types';
 import minus from '@/assets/icons/minus.svg';
 import plus from '@/assets/icons/plus.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { formatDate } from '@/utils/getDate';
-import { useReservationStore } from '@/utils/zustand';
+import { useReservationStore, useUserStore } from '@/utils/zustand';
 import useTimeTable from '@/hooks/useTimeTable';
 import useDatePicker from '@/hooks/useDatePicker';
+import { useNavigate } from 'react-router-dom';
+import useCartPostMutation from '@/hooks/reactQuery/cart/useCartPostMutation';
+import useModal from '@/hooks/useModal';
 import Button from '@/components/common/Button';
 import '@/styles/ProductDetails.css';
 import DatePickerCustom from './DatePickerCustom';
+import DefaultModal from '../common/DefaultModal';
 
 interface ReservationProps {
   product: DetailData;
@@ -23,7 +27,13 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   const [selectedOption, setSelectedOption] = useState(0);
   const [optionId, setOptionId] = useState(0);
   const [ticketNum, setTicketNum] = useState(0);
-  // console.log(options);
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  const { isModalOpen, openModal, closeModal } = useModal();
+
+  const { userInfo } = useUserStore();
+  const navigate = useNavigate();
+
   const {
     startDate,
     setStartDate,
@@ -31,19 +41,31 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     setEndDate,
     maxStartDate,
     minEndDate,
-  } = useDatePicker(product.id);
-  // console.log(startDate, endDate, maxStartDate, minEndDate);
+  } = useDatePicker(product?.productId);
   const { table } = useTimeTable(optionId);
 
+  useEffect(() => {
+    if (
+      ticketNum === 0 ||
+      selectedOption === 0 ||
+      (categoryId === 1 && !endDate) ||
+      (categoryId === 2 && !startDate)
+    )
+      setIsDisabled(true);
+    else setIsDisabled(false);
+  }, [ticketNum, selectedOption, startDate, endDate, categoryId, isDisabled]);
+
   const getTableId = (timeTable: any) => {
-    if (!timeTable) return 0;
+    if (!timeTable || !startDate) return 0;
 
     for (let i = 0; i < timeTable?.length; i++) {
-      if (timeTable[i].targetDate.includes(formatDate(startDate)))
+      if (timeTable[i].targetDate?.includes(formatDate(startDate))) {
         return timeTable[i].id;
+      }
     }
     return 0;
   };
+  getTableId(table);
 
   const handleClick = (id: number) => {
     setSelectedOption(id);
@@ -71,8 +93,12 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     (state) => state.setReservationInfo,
   );
   const handleUpdate = () => {
+    if (!userInfo) {
+      navigate('/login');
+      return;
+    }
     const newReservationInfo = {
-      userId: 1,
+      userId: userInfo.id,
       productOptionId: optionId,
       timeTableId: getTableId(table),
       reservationState: '예약 대기',
@@ -81,6 +107,23 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
       cancelMsg: '',
     };
     setReservationInfo(newReservationInfo);
+
+    navigate('/payments');
+  };
+
+  const { mutate } = useCartPostMutation();
+  const handleCartUpdate = () => {
+    if (!userInfo) {
+      navigate('/login');
+      return;
+    }
+
+    mutate({
+      userId: userInfo.id,
+      productOptionId: optionId,
+      timeTableId: getTableId(table),
+      ticketCount: ticketNum,
+    });
   };
 
   return (
@@ -134,7 +177,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
       <hr className="mb-20" />
       <div className="flex justify-between mb-60">
         <div className="flex flex-col gap-8">
-          <h2 className="text-20 font-semibold">{product?.name}</h2>
+          <h2 className="text-20 font-semibold">{product?.productName}</h2>
           <h3 className="text-17 font-semibold">
             {filteredOption.length &&
               filteredOption[0]?.optionPrice.toLocaleString()}
@@ -168,10 +211,27 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
       </div>
       <div className="flex gap-20 w-full pb-58">
         <div className="w-1/3">
-          <Button outlined>장바구니 담기</Button>
+          <Button outlined disabled={isDisabled} onClick={() => openModal()}>
+            장바구니 담기
+          </Button>
         </div>
+        <DefaultModal
+          title="장바구니로 이동하시겠습니까?"
+          isOpen={isModalOpen}
+          closeModal={() => {
+            handleCartUpdate();
+            closeModal();
+          }}
+          onConfirm={() => {
+            handleCartUpdate();
+            closeModal();
+            navigate('/cart');
+          }}
+        />
         <div className="w-2/3">
-          <Button onClick={handleUpdate}>결제하기</Button>
+          <Button onClick={handleUpdate} disabled={isDisabled}>
+            결제하기
+          </Button>
         </div>
       </div>
     </div>

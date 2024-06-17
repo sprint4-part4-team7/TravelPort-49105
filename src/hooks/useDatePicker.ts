@@ -2,7 +2,7 @@ import { useState } from 'react';
 import useProductByIdQuery from './reactQuery/product/useProductByIdQuery';
 
 const useDatePicker = (productId?: number) => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
   let maxStartDate;
@@ -10,7 +10,6 @@ const useDatePicker = (productId?: number) => {
   let holiday;
   if (productId) {
     const { productByProductId } = useProductByIdQuery(productId);
-    // console.log(productByProductId);
     const leftDate = productByProductId.startDate; // 상품 판매 시작 날짜
     const rightDate = productByProductId.endDate; // 상품 판매 종료 날짜
     maxStartDate =

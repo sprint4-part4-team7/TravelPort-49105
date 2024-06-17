@@ -1,9 +1,9 @@
 export type ProductType = {
-  id: number;
-  partnerId: null | number;
-  categoryId: number;
-  name: string;
-  productType: string[];
+  productId: number;
+  product_userId: number;
+  product_categoryId: number;
+  productName: string;
+  product_productType: string;
   productDesc: string;
   minPrice: number;
   productSiteLat: number;
@@ -15,8 +15,19 @@ export type ProductType = {
   startDate: string;
   endDate: string;
   closedDay: number[];
-  isDelete: boolean;
+  isDelete: number;
   createdAt: string;
+  reviewAvg: number;
+  reviewCount: number;
+  productOptions: {
+    optionName: string;
+    id: number;
+    optionPrice: number;
+    optionImages: string[];
+    minUserCount: number;
+    maxUserCount: number;
+    userCount: number;
+  }[];
 };
 
 export interface OptionbyIdData {
@@ -38,9 +49,9 @@ export interface OptionbyIdData {
 }
 
 export type DetailData = {
-  id: number;
-  categoryId: number;
-  name: string;
+  productId: number;
+  product_categoryId: number;
+  productName: string;
   productDesc: string;
   productSiteLat: number;
   productSiteLng: number;

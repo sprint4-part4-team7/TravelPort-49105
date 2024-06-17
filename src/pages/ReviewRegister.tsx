@@ -11,12 +11,14 @@ import useReviewDefaults from '@/hooks/useReviewDefaults';
 import useReviewPostMutation from '@/hooks/reactQuery/review/useReviewPostMutation';
 import BUCKER_NAME from '@/constants/bucket';
 import postImages from '@/apis/image';
+import { useUserStore } from '@/utils/zustand';
 import TextBox from '@/components/common/TextBox';
 import ReviewStar from '@/components/review/ReviewStar';
 import Button from '@/components/common/Button';
 import ImageUpload from '@/components/review/ImageUpload';
 import Modal from '@/components/common/Modal';
 import Loading from '@/components/common/Loading';
+import DefaultModal from '@/components/common/DefaultModal';
 
 interface ReviewRegisterProps {
   optionId: number;
@@ -46,7 +48,8 @@ const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
   const { productOption, optionTitle, productName } =
     useReviewDefaults(optionId);
   const { mutate, isLoading } = useReviewPostMutation();
-  const userId = 3; // 추후 받아올 예정
+  const { userInfo } = useUserStore();
+  const userId = userInfo.id;
 
   // 버튼 활성화 여부 조절
   const [isDisableToSubmit, setIsDisableToSubmit] = useState(true);
@@ -74,7 +77,6 @@ const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
   const onSubmit = async (data: any) => {
     const postedImages = await handleUpload();
     data.reviewImages = postedImages;
-    // console.log({ ...data });
     mutate({
       userId,
       productOptionId: optionId,
@@ -164,18 +166,16 @@ const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
           등록하기
         </Button>
       </div>
-      <Modal isOpen={isModalOpen} closeModal={closeModal}>
-        <div className="p-16">리뷰를 등록하시겠습니까?</div>
-        <Button
-          onClick={() => {
-            handleSubmit(onSubmit)();
-            closeModal();
-            navigate('/');
-          }}
-        >
-          확인
-        </Button>
-      </Modal>
+      <DefaultModal
+        title="리뷰를 등록하시겠습니까?"
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        onConfirm={() => {
+          handleSubmit(onSubmit)();
+          closeModal();
+          navigate('/');
+        }}
+      />
     </form>
   );
 };
