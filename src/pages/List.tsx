@@ -46,14 +46,14 @@ const List = () => {
   // 종류 필터링
   const { checkedList, checkHandler } = useTypeCheckbox();
 
-  console.log(
-    count,
-    rangeMinValue,
-    rangeMaxValue,
-    startDate,
-    endDate,
-    checkedList,
-  );
+  // console.log(
+  //   count,
+  //   rangeMinValue,
+  //   rangeMaxValue,
+  //   startDate,
+  //   endDate,
+  //   checkedList,
+  // );
 
   const categoryName = Number(categoryId) === 1 ? '숙박' : '체험';
   const filterings = ['날짜', '인원수', '가격대', `${categoryName} 종류`];

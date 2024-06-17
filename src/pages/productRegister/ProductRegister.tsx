@@ -12,6 +12,7 @@ const ProductRegister = () => {
 
   const { thumbnail } = useThumbnailStore();
   const { productImages } = useProductImageStore();
+  // eslint-disable-next-line no-console
   console.log(thumbnail, productImages);
 
   useEffect(() => {

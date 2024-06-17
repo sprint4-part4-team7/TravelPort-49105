@@ -18,7 +18,7 @@ const postImageDatas = async (data: PostData) => {
     if (!response.data) throw new Error('Failed to get presigned URL');
     return response.data.presignedUrls;
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     throw new Error('Failed to get presigned URL');
   }
 };

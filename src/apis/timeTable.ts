@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 // api/payments.ts
 import instance from '@/utils/axios';
 
@@ -9,7 +10,7 @@ const timeTableApi = {
       );
       return response.data;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       throw error;
     }
   },
@@ -19,7 +20,7 @@ const timeTableApi = {
       const response = await instance.get(`/timeTable/${timeTableId}`);
       return response.data;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       throw error;
     }
   },

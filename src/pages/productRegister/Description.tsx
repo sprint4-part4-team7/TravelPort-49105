@@ -28,6 +28,7 @@ const Description = ({ setPage }: PageIdProps) => {
 
   const onSubmit = (data: DescriptionForm) => {
     setPage(<Location setPage={setPage} />);
+    // eslint-disable-next-line no-console
     console.log(data);
   };
 

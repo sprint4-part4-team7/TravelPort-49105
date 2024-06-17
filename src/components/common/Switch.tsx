@@ -16,8 +16,6 @@ const Switch = ({ state = false, onChange }: SwitchProps) => {
     onChange(isChecked);
   };
 
-  console.log(isChecked);
-
   return (
     <label className="plane-switch">
       <input

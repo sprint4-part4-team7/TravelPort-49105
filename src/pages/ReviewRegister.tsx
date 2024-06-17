@@ -74,7 +74,7 @@ const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
   const onSubmit = async (data: any) => {
     const postedImages = await handleUpload();
     data.reviewImages = postedImages;
-    console.log({ ...data });
+    // console.log({ ...data });
     mutate({
       userId,
       productOptionId: optionId,
