@@ -132,9 +132,12 @@ const MyResevation = ({
           ))}
         </ReservPagination>
       ) : (
-        <div className="border-solid border-1 border-black-3 rounded-12 p-20">
+        <div className="border-solid text-24 text-center font-medium border-1 border-black-7 rounded-8 p-16">
           예약 목록이 없습니다.
         </div>
+        //   <div className="flex items-center justify-center text-24 font-medium">
+        //   게시한 상품이 없습니다.
+        // </div>
       )}
       {!!cancelMsg && (
         <CheckCancelMsg
