@@ -11,7 +11,7 @@ import { ChangeEventHandler, useState } from 'react';
 import postImages from '@/apis/image';
 import BUCKER_NAME from '@/constants/bucket';
 import { ReactComponent as Delete } from '@/assets/icons/x-circle-custom.svg';
-import randomProfile from '@/utils/randomProfile';
+import useProfileImage from '@/utils/randomProfile';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 import Modal from '@/components/common/Modal';
@@ -19,6 +19,7 @@ import ChangePassword from '@/components/myPage/ChangePassword';
 
 const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
   const { userInfo, setUserInfo } = useUserStore();
+  const image = useProfileImage(userInfo);
   const { isModalOpen, openModal, closeModal } = useModal();
   const [instantImg, setInstantImg] = useState<string | undefined>(
     userInfo.profileImage,
@@ -70,22 +71,22 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
   };
 
   return (
-    <div className="flex flex-col gap-12 p-24 w-full">
+    <div className="flex flex-col w-full gap-12 p-24">
       <form
-        className="text-16 flex flex-col gap-24"
+        className="flex flex-col gap-24 text-16"
         onSubmit={handleSubmit(handleSave)}
       >
-        <div className="flex flex-row gap-24 items-center">
+        <div className="flex flex-row items-center gap-24">
           <div className="relative">
             <img
-              src={instantImg || randomProfile}
-              className="rounded-full w-140 h-140 object-cover"
+              src={instantImg || image}
+              className="object-cover rounded-full w-140 h-140"
               alt="profile"
             />
             {!!instantImg && (
               <button
                 type="button"
-                className="absolute top-12 right-12 bg-white rounded-full"
+                className="absolute bg-white rounded-full top-12 right-12"
                 onClick={() => {
                   setInstantImg(undefined);
                   setImg([]);
@@ -95,15 +96,15 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
               </button>
             )}
           </div>
-          {/* // <div className="w-140 h-140 rounded-full relative bg-black-6">
-            //   <div className="absolute text-64 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          {/* // <div className="relative rounded-full w-140 h-140 bg-black-6">
+            //   <div className="absolute text-white -translate-x-1/2 -translate-y-1/2 text-64 top-1/2 left-1/2">
             //     {userInfo.name[0]}
             //   </div>
             // </div> */}
           <div className="flex flex-col gap-12">
             <label
               htmlFor="profileImg"
-              className="flex flex-row gap-8 rounded-30 w-fit border-1 border-blue-6 p-16 text-16 cursor-pointer text-blue-6 font-normal"
+              className="flex flex-row gap-8 p-16 font-normal cursor-pointer rounded-30 w-fit border-1 border-blue-6 text-16 text-blue-6"
             >
               <img src={uploadIcon} alt="upload" />
               프로필 사진 업로드
@@ -118,7 +119,7 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
             <div>최대 10mb까지 업로드 가능합니다.</div>
           </div>
         </div>
-        <div className="flex flex-col gap-32 w-full">
+        <div className="flex flex-col w-full gap-32">
           <InputBox
             id="nickname"
             label={isUser ? '닉네임' : '이름/법인명'}
@@ -174,7 +175,7 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
                 소개글
                 <textarea
                   id="description"
-                  className="p-12 h-72 rounded text-16 resize-none outline-none border-1 border-black-5 focus:border-blue-6"
+                  className="p-12 rounded outline-none resize-none h-72 text-16 border-1 border-black-5 focus:border-blue-6"
                   placeholder="간단한 소개를 입력해주세요"
                   {...register('description')}
                 />
@@ -191,7 +192,7 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
             />
             <button
               type="button"
-              className="p-12 text-16 text-blue-6 font-normal flex flex-row gap-4"
+              className="flex flex-row gap-4 p-12 font-normal text-16 text-blue-6"
               onClick={openModal}
             >
               비밀번호 변경하기
