@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface ProductProps {
   name: string;
-  productType: string[];
+  productType: string;
   productDesc: string;
   productSiteLat: number;
   productSiteLng: number;
