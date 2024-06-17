@@ -70,7 +70,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
         </div>
         {!noSearch && (
           <div
-            className={`flex-1 ${main ? 'mx-48 mobile:mx-16 tablet:mx-24' : ''} relative `}
+            className={`flex-1 ${main ? 'mx-48 mobile:mx-16 tablet:mx-24' : 'mx-48 mobile:mx-16 tablet:mx-24'} relative `}
           >
             <div className="w-full">
               <SearchBar isMainSearchBar={main} cardLists={filteredTitles} />
