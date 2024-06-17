@@ -20,7 +20,6 @@ const MyPageSideBar = ({ children, isPartner = false }: MyPageSideBarProps) => {
   const { mutate: logout } = useLogoutMutation();
   const image = useProfileImage(userInfo);
 
-
   const handleLogOut = () => {
     setUserInfo({
       id: 0,
@@ -33,12 +32,6 @@ const MyPageSideBar = ({ children, isPartner = false }: MyPageSideBarProps) => {
     removeCookie('refreshToken');
     navigate('/');
     logout();
-  const { userInfo } = useUserStore();
-  const image = useProfileImage(userInfo);
-
-  const handleStorageClear = () => {
-    localStorage.clear();
-    window.location.reload();
   };
 
   const changeStatus = (newStatus: string) => {

@@ -12,6 +12,7 @@ import postImages from '@/apis/image';
 import BUCKER_NAME from '@/constants/bucket';
 import { ReactComponent as Delete } from '@/assets/icons/x-circle-custom.svg';
 import useProfileImage from '@/utils/randomProfile';
+import { toast } from 'react-toastify';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 import Modal from '@/components/common/Modal';
@@ -37,10 +38,9 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
 
   const handleImgUpload: ChangeEventHandler<HTMLInputElement> = (e) => {
     const file = e.target.files?.[0];
-    // console.log(file);
     if (!file) return;
     if (file.size > 10 * 1024 * 1024) {
-      // alert('10mb 이하의 파일만 업로드 가능합니다');
+      toast.warning('10mb 이하의 파일만 업로드 가능합니다');
       return;
     }
     const instantUrl = URL.createObjectURL(file);
@@ -62,11 +62,10 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
     else delete newData.description;
     try {
       await putUserInfo(newData);
-      // alert('저장되었습니다');
+      toast.success('저장되었습니다');
       setUserInfo({ ...userInfo, ...newData });
     } catch (error) {
-      // console.error(error);
-      // alert('저장에 실패했습니다');
+      toast.error('저장에 실패했습니다');
     }
   };
 
@@ -96,11 +95,6 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
               </button>
             )}
           </div>
-          {/* // <div className="relative rounded-full w-140 h-140 bg-black-6">
-            //   <div className="absolute text-white -translate-x-1/2 -translate-y-1/2 text-64 top-1/2 left-1/2">
-            //     {userInfo.name[0]}
-            //   </div>
-            // </div> */}
           <div className="flex flex-col gap-12">
             <label
               htmlFor="profileImg"

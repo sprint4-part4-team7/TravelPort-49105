@@ -20,14 +20,6 @@ const ReservButton = ({ status, onClick }: ReservButtonProps) => {
         </>
       );
       break;
-    // case '예약 대기':
-    //   content = (
-    //     <>
-    //       후기 쓰기
-    //       <ReviewIcon stroke={isHover ? '#3065e8' : 'black'} />
-    //     </>
-    //   );
-    //   break;
     case RESERV_STATUS.REJECTED:
       content = (
         <>
@@ -36,9 +28,6 @@ const ReservButton = ({ status, onClick }: ReservButtonProps) => {
         </>
       );
       break;
-    // case '예약 취소':
-    //   content = '';
-    //   break;
     default:
       content = '';
       break;
