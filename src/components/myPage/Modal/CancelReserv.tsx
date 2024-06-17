@@ -1,5 +1,6 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { putMyReservation } from '@/apis/myReservation';
+import RESERV_STATUS from '@/constants/reserv';
 import DefaultModal from '../../common/DefaultModal';
 
 const CancelReserv = ({
@@ -11,8 +12,14 @@ const CancelReserv = ({
   closeModal: () => void;
   isOpen: boolean;
 }) => {
+  const queryClient = useQueryClient();
   const mutateReserv = useMutation({
-    mutationFn: (id: number) => putMyReservation(id, '예약 취소'),
+    mutationFn: (id: number) => putMyReservation(id, RESERV_STATUS.CANCELED),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['myReservation'],
+      });
+    },
   });
   const handleCancel = () => {
     mutateReserv.mutate(cancelId);

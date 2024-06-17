@@ -1,3 +1,4 @@
+import { ReservStatusType } from '@/constants/types';
 import instance from '@/utils/axios';
 
 interface GetReservationUserProps {
@@ -17,7 +18,7 @@ interface PostReservationProps {
   userId: number;
   productOptionId: number;
   timeTableId: number;
-  reservationState: string;
+  reservationState: ReservStatusType;
   reservationPrice: number;
   ticketCount: number;
   cancelMsg: string;
