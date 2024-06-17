@@ -1,14 +1,17 @@
 /* eslint-disable no-nested-ternary */
-import APPROVE from '@/assets/icons/check-circle.svg';
-import DENIED from '@/assets/icons/x-square-red.svg';
-import CANCEL from '@/assets/icons/x-square.svg';
+// import DENIED from '@/assets/icons/x-square-red.svg';
+// import CANCEL from '@/assets/icons/x-square.svg';
 import { ReservProductOptionType, ReservStatusType } from '@/constants/types';
 import instance from '@/utils/axios';
 import { useState } from 'react';
+import ARROW_UP_RIGHT from '@/assets/icons/arrow-up-right-blue.svg';
+import useModal from '@/hooks/useModal';
 import Button from '@/components/common/Button';
 import ReservationCard from '@/components/common/reservPagination/ResevationCard';
 import ReservChips from '@/components/myPage/ReservChips';
 import ReservButtonOutlined from '@/components/myPage/ReservButtonOutlined';
+import Modal from './common/Modal';
+import RejectReservation from './myPage/Modal/RejectReservation';
 
 type ReserveProps = {
   id: number;
@@ -37,6 +40,8 @@ const ReservedManageCard = ({
   timeTable = { targetDate: '', startTimeOnly: '', endTimeOnly: '' },
 }: ReserveProps) => {
   const [state, setState] = useState<ReservStatusType>(reservationState);
+
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const handleApprove = () => {
     instance.put(`/reservation/${id}`, { reservationState: 2 });
@@ -70,28 +75,7 @@ const ReservedManageCard = ({
               대기중
             </div>
             <div className="flex gap-8 items-end tablet:flex-col mobile:justify-between">
-              {/* <Button
-                variant="default"
-                outlined
-                buttonStyle="flex gap-4 text-14 px-12 min-w-96 py-8 font-semibold rounded-8"
-                onClick={handleApprove}
-              >
-                승인하기
-                <img alt="승인" src={APPROVE} width={16} height={16} />
-              </Button> */}
               <ReservButtonOutlined status={2} onClick={handleApprove} />
-              {/* <Button
-                variant="default"
-                outlined
-                buttonStyle="flex gap-4 text-14 px-12 py-8 min-w-96 h-fit 
-                          text-system-error font-semibold border-system-error rounded-8
-                          hover:border-system-error hover:text-system-error-bg
-                          active:border-system-error active:text-system-error"
-                onClick={handleReject}
-              >
-                거절하기
-                <img alt="거절" src={DENIED} width={16} height={16} />
-              </Button> */}
               <ReservButtonOutlined status={3} onClick={handleReject} />
             </div>
           </div>
@@ -101,27 +85,7 @@ const ReservedManageCard = ({
               승인됨
             </div>
             <div className="flex gap-8 items-center">
-              <Button
-                variant="more"
-                outlined
-                buttonStyle="flex gap-4 text-14 px-12 h-fit py-8 font-semibold rounded-8"
-                onClick={handleStandby}
-              >
-                취소하기
-                <img alt="취소" src={CANCEL} width={16} height={16} />
-              </Button>
-              {/* <Button
-                variant="default"
-                outlined
-                buttonStyle="flex gap-4 text-14 px-12 py-8 h-fit 
-                          text-system-error font-semibold border-system-error rounded-8
-                          hover:border-system-error hover:text-system-error-bg
-                          active:border-system-error active:text-system-error"
-                onClick={handleReject}
-              >
-                거절하기
-                <img alt="거절" src={DENIED} width={16} height={16} />
-              </Button> */}
+              <ReservButtonOutlined status={4} onClick={handleStandby} />
               <ReservButtonOutlined status={3} onClick={handleReject} />
             </div>
           </div>
@@ -131,26 +95,23 @@ const ReservedManageCard = ({
               거절됨
             </div>
             <div className="flex gap-8 items-center">
+              <ReservButtonOutlined status={4} onClick={handleStandby} />
               <Button
                 variant="default"
                 outlined
-                buttonStyle="flex gap-4 text-14 px-12 h-fit py-8 font-semibold rounded-8"
+                buttonStyle="flex gap-4 text-14 p-8 w-fit h-fit font-semibold rounded"
+                onClick={openModal}
               >
-                취소 사유 작성
-                <img alt="승인" src={APPROVE} width={16} height={16} />
+                거절 사유 작성
+                <img alt="승인" src={ARROW_UP_RIGHT} width={16} height={16} />
               </Button>
-              <Button
-                variant="default"
-                outlined
-                buttonStyle="flex gap-4 text-14 px-12 py-8 h-fit 
-                          text-system-error font-semibold border-system-error rounded-8
-                          hover:border-system-error hover:text-system-error-bg
-                          active:border-system-error active:text-system-error"
-                onClick={handleStandby}
+              <Modal
+                isOpen={isModalOpen}
+                closeModal={closeModal}
+                modal="w-full max-w-536"
               >
-                거절 취소
-                <img alt="거절" src={DENIED} width={16} height={16} />
-              </Button>
+                <RejectReservation closeModal={closeModal} />
+              </Modal>
             </div>
           </div>
         ) : state === 4 ? (

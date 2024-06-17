@@ -2,7 +2,7 @@ import { postLogin } from '@/apis/auth';
 import { getCookie, setCookie } from '@/utils/cookie';
 import jwtDecode from '@/utils/jwtDecode';
 import { useUserStore } from '@/utils/zustand';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,6 +12,7 @@ type LoginForm = {
 };
 
 const useLoginMutation = () => {
+  const queryClient = useQueryClient();
   const setUserInfo = useUserStore((state) => state.setUserInfo);
   const navigate = useNavigate();
   return useMutation({
@@ -22,6 +23,9 @@ const useLoginMutation = () => {
       return res.data;
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['postLogin'],
+      });
       const token = getCookie('accessToken');
       if (token) {
         const userInfo = jwtDecode(token);
