@@ -58,7 +58,7 @@ const PriceRange = ({
           onChange={HandlePriceRangeMaxValue}
         />
         <div
-          className="absolute bg-blue-6 h-full top-[-0.9rem] left-[-1rem]"
+          className="absolute bg-blue-6 h-full -top-9 -left-10"
           style={{
             left: `${minPercent}%`,
             right: `${100 - maxPercent}%`,
