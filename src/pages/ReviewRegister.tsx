@@ -18,6 +18,7 @@ import Button from '@/components/common/Button';
 import ImageUpload from '@/components/review/ImageUpload';
 import Modal from '@/components/common/Modal';
 import Loading from '@/components/common/Loading';
+import DefaultModal from '@/components/common/DefaultModal';
 
 interface ReviewRegisterProps {
   optionId: number;
@@ -165,18 +166,16 @@ const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
           등록하기
         </Button>
       </div>
-      <Modal isOpen={isModalOpen} closeModal={closeModal}>
-        <div className="p-16">리뷰를 등록하시겠습니까?</div>
-        <Button
-          onClick={() => {
-            handleSubmit(onSubmit)();
-            closeModal();
-            navigate('/');
-          }}
-        >
-          확인
-        </Button>
-      </Modal>
+      <DefaultModal
+        title="리뷰를 등록하시겠습니까?"
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        onConfirm={() => {
+          handleSubmit(onSubmit)();
+          closeModal();
+          navigate('/');
+        }}
+      />
     </form>
   );
 };

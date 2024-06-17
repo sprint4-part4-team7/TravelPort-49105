@@ -10,9 +10,12 @@ import { useReservationStore, useUserStore } from '@/utils/zustand';
 import useTimeTable from '@/hooks/useTimeTable';
 import useDatePicker from '@/hooks/useDatePicker';
 import { useNavigate } from 'react-router-dom';
+import useCartPostMutation from '@/hooks/reactQuery/cart/useCartPostMutation';
+import useModal from '@/hooks/useModal';
 import Button from '@/components/common/Button';
 import '@/styles/ProductDetails.css';
 import DatePickerCustom from './DatePickerCustom';
+import DefaultModal from '../common/DefaultModal';
 
 interface ReservationProps {
   product: DetailData;
@@ -25,6 +28,8 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   const [optionId, setOptionId] = useState(0);
   const [ticketNum, setTicketNum] = useState(0);
   const [isDisabled, setIsDisabled] = useState(true);
+
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const { userInfo } = useUserStore();
   const navigate = useNavigate();
@@ -88,6 +93,10 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     (state) => state.setReservationInfo,
   );
   const handleUpdate = () => {
+    if (!userInfo) {
+      navigate('/login');
+      return;
+    }
     const newReservationInfo = {
       userId: userInfo.id,
       productOptionId: optionId,
@@ -100,6 +109,21 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     setReservationInfo(newReservationInfo);
 
     navigate('/payments');
+  };
+
+  const { mutate } = useCartPostMutation();
+  const handleCartUpdate = () => {
+    if (!userInfo) {
+      navigate('/login');
+      return;
+    }
+
+    mutate({
+      userId: userInfo.id,
+      productOptionId: optionId,
+      timeTableId: getTableId(table),
+      ticketCount: ticketNum,
+    });
   };
 
   return (
@@ -187,10 +211,23 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
       </div>
       <div className="flex gap-20 w-full pb-58">
         <div className="w-1/3">
-          <Button outlined disabled={isDisabled}>
+          <Button outlined disabled={isDisabled} onClick={() => openModal()}>
             장바구니 담기
           </Button>
         </div>
+        <DefaultModal
+          title="장바구니로 이동하시겠습니까?"
+          isOpen={isModalOpen}
+          closeModal={() => {
+            handleCartUpdate();
+            closeModal();
+          }}
+          onConfirm={() => {
+            handleCartUpdate();
+            closeModal();
+            navigate('/cart');
+          }}
+        />
         <div className="w-2/3">
           <Button onClick={handleUpdate} disabled={isDisabled}>
             결제하기
