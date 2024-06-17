@@ -72,12 +72,12 @@ const CartList = ({
   const categoryId = item?.productOption.product.categoryId;
 
   const option =
-    productOption?.product.categoryId === 1
+    productOption?.product?.categoryId === 1
       ? `${options} ( ${maxCount} 인실 )`
       : `${options}`;
 
   const day =
-    productOption?.product.categoryId === 1
+    productOption?.product?.categoryId === 1
       ? `${formattedDate}`
       : `${formattedDate} ${timeTableData?.startTimeOnly} ~ ${timeTableData?.endTimeOnly}`;
 
