@@ -23,6 +23,11 @@ interface PostReservationProps {
   cancelMsg: string;
 }
 
+// interface PutCancelMsgProps {
+//   reservationId: number;
+//   cancelMsg: string;
+// }
+
 interface DeleteReservationProps {
   reservationId: number;
 }
@@ -76,6 +81,16 @@ const postReservation = ({
     },
   });
 };
+
+// const putCancelMsg = ({ reservationId, cancelMsg }: PutCancelMsgProps) => {
+//   return instance({
+//     url: `/reservation/${reservationId}`,
+//     method: 'PUT',
+//     data: {
+//       cancelMsg,
+//     },
+//   });
+// };
 
 const deleteReservation = ({ reservationId }: DeleteReservationProps) => {
   return instance({
