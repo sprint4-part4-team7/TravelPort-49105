@@ -98,7 +98,6 @@ const CheckoutPage = () => {
           decreaseCount={decreaseCount}
           increaseCount={increaseCount}
           optionPrice={optionPrice}
-          maxUserCount={maxUserCount}
           day={day}
           onCheckedChange={handleCheckedChange}
           isChecked={isChecked}

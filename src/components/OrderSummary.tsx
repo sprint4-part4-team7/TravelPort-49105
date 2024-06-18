@@ -8,7 +8,6 @@ interface OrderSummaryProps {
   decreaseCount: () => void;
   increaseCount: () => void;
   optionPrice: number;
-  maxUserCount: number;
   day: string;
   onCheckedChange: (isChecked: boolean) => void;
   isChecked: boolean;
@@ -22,7 +21,6 @@ const OrderSummary = ({
   decreaseCount,
   increaseCount,
   optionPrice,
-  maxUserCount,
   day,
   onCheckedChange,
   isChecked,
@@ -32,7 +30,6 @@ const OrderSummary = ({
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onCheckedChange(event.target.checked);
   };
-  console.log(maxUserCount);
 
   return (
     <div className="flex items-center py-16 border-solid border-b-1 border-black-3">
