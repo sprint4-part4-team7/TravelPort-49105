@@ -14,6 +14,7 @@ import ReservButtonOutlined from '@/components/myPage/ReservButtonOutlined';
 import CheckCancelMsg from '@/components/myPage/Modal/CheckCancelMsg';
 import ReservChipsExpired from '@/components/myPage/ReservChipsExpired';
 import CancelReserv from '@/components/myPage/Modal/CancelReserv';
+import Loading from '../common/Loading';
 
 const MyResevation = ({
   isExpired = 'false',
@@ -30,12 +31,12 @@ const MyResevation = ({
   const limit = 4;
   const isReservExpired = isExpired === 'true';
 
-  const myReservation = useQuery({
+  const { isPending, data: myReservation } = useQuery({
     queryKey: ['myReservation', userInfo.id, pageNum, isExpired],
     queryFn: () => getMyReservation(userInfo.id, isExpired, pageNum - 1, limit),
     enabled: !!userInfo.id,
   });
-  const myReservationData = myReservation.data as Reservation[];
+  const myReservationData = myReservation as Reservation[];
 
   const handleShowCancelMsg = (msg: string) => {
     openModal();
@@ -101,6 +102,9 @@ const MyResevation = ({
       <ReservButton status={state} onClick={buttonFnc} />
     );
   };
+  if (isPending) {
+    return <Loading />;
+  }
 
   return (
     <div className="flex flex-col gap-48 w-full">
