@@ -97,7 +97,7 @@ const SearchResultPage = () => {
   return (
     <div>
       <Layout noSearch={false}>
-        <div className="flex py-32 font-semibold text-20">
+        <div className="flex py-32 font-semibold text-20 ">
           <p className="text-blue-6">{search}</p>
           <p>에 대한 결과</p>
         </div>
@@ -136,7 +136,7 @@ const SearchResultPage = () => {
             체험({categoryCounts.experience})
           </button>
         </div>
-        <div className="flex flex-col items-center justify-center gap-20">
+        <div className="flex flex-col items-center justify-center w-full gap-20">
           {productsWithMinPrice?.length !== 0 ? (
             <SearchResultSection productsWithMinPrice={paginatedProducts} />
           ) : (
