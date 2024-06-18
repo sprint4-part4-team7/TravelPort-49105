@@ -49,7 +49,7 @@ const Category = ({ setPage }: PageIdProps) => {
       data.category === '숙박'
         ? data.accommodationOption
         : data.attractionOption;
-    console.log('SubCategory:', subCategory);
+    // console.log('SubCategory:', subCategory);
 
     setPage(<Description setPage={setPage} />);
 

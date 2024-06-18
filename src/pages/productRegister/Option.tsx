@@ -43,8 +43,8 @@ const Option = () => {
     return `${yyyy}-${mm}-${dd} ${hh}:${min}:${ss}`;
   };
 
+  // console.log(startDate !== null ? formatDate(new Date(startDate)) : '');
   const onSubmitAll = async () => {
-    console.log(startDate, endDate);
     // 여기에 서버로 전송할 데이터를 모두 모아 보냄
     try {
       // 1. 카테고리를 서버에 등록
@@ -76,17 +76,11 @@ const Option = () => {
         buildingName: buildingName !== null ? buildingName : '', // 건물 이름
         thumbnail: await handleUploadThumbnail(), // 썸네일 이미지 URL
         productImages: await handleUploadProduct(), // 상품 이미지들의 URL 배열
-        startDate:
-          startDate !== null
-            ? new Date(formatDate(new Date(startDate))).toString()
-            : '', // 시작 날짜 (예: '2024-06-18')
-        endDate:
-          endDate !== null
-            ? new Date(formatDate(new Date(endDate))).toString()
-            : '', // 종료 날짜 (예: '2024-06-20')
+        startDate: startDate !== null ? formatDate(new Date(startDate)) : '', // 시작 날짜 (예: '2024-06-18')
+        endDate: endDate !== null ? formatDate(new Date(endDate)) : '', // 종료 날짜 (예: '2024-06-20')
         closedDay: holiday !== undefined ? holiday : [''], // 휴무일 배열
       };
-      console.log('0단계', categoryResponse); // 잘 받아와지는지 테스트용
+      // console.log('0단계', categoryResponse); // 잘 받아와지는지 테스트용
       // 2. 로컬을 바탕으로 상품을 서버에 등록
       if (categoryResponse) {
         console.log('1단계'); // 잘 받아와지는지 테스트용
@@ -96,7 +90,7 @@ const Option = () => {
           productInfo,
         );
         if (productResponse.data.status === 201) {
-          console.log('2단계'); // 잘 받아와지는지 테스트용
+          // console.log('2단계'); // 잘 받아와지는지 테스트용
 
           // 3. 상품 옵션을 서버에 등록(option페이지에있는거 그대로 사용)
           optionList.map((option) => {
@@ -130,12 +124,12 @@ const Option = () => {
           localStorage.removeItem('startDate');
           localStorage.removeItem('endDate');
           localStorage.removeItem('holiday');
-          alert('상품 및 옵션이 성공적으로 등록되었습니다.');
+          // alert('상품 및 옵션이 성공적으로 등록되었습니다.');
         }
       }
     } catch (error) {
-      console.error('상품 및 옵션 등록 중 오류가 발생했습니다:', error);
-      alert('상품 및 옵션 등록 중 오류가 발생했습니다.');
+      // console.error('상품 및 옵션 등록 중 오류가 발생했습니다:', error);
+      // alert('상품 및 옵션 등록 중 오류가 발생했습니다.');
     }
   };
 
