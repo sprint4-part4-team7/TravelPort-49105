@@ -5,6 +5,7 @@ import { useUserStore } from '@/utils/zustand';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 type LoginForm = {
   email: string;
@@ -28,17 +29,18 @@ const useLoginMutation = () => {
       });
       const token = getCookie('accessToken');
       if (token) {
+        toast.success('정상적으로 로그인 되었습니다.');
         const userInfo = jwtDecode(token);
         setUserInfo(userInfo);
         navigate('/');
       }
     },
     onError(error) {
-      if (axios.isAxiosError(error) && error.response?.status === 401) {
-        throw new Error(error.response.data.message);
-      } else if (axios.isAxiosError(error) && error.response?.status === 500) {
-        throw new Error(error.response.data.message);
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+        throw new Error(error.response?.data.message);
       } else {
+        toast.error(error.message);
         throw new Error(error.message);
       }
     },
