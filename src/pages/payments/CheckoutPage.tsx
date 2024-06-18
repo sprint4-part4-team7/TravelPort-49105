@@ -3,7 +3,6 @@ import './Payments.css';
 import usePaymentWidget from '@/hooks/usePaymentWidget';
 import useProductOptionQuery from '@/hooks/reactQuery/productOption/useProductOptionQuery';
 import useTilmeTabaleQuery from '@/hooks/reactQuery/timeTable/useTimeTableQuery';
-import useTilmeTabaleOptionQuery from '@/hooks/reactQuery/timeTable/useTilmeTabaleOptionQuery';
 import {
   useCartStore,
   useReservationStore,
@@ -22,10 +21,13 @@ const CheckoutPage = () => {
     resetCart();
   }, []);
   const optionId = reservationInfo?.productOptionId;
+  const timeTableId = reservationInfo?.timeTableId;
 
-  const { data: timeTableOptionData } = useTilmeTabaleOptionQuery(optionId);
-  const { data: timeTableData } = useTilmeTabaleQuery(2);
+  const { data: timeTableData } = useTilmeTabaleQuery(timeTableId);
   const { productOption, isLoading, error } = useProductOptionQuery(optionId);
+  console.log(productOption);
+  const userCount = productOption?.userCount;
+
   const { userInfo } = useUserStore();
 
   const productName = productOption?.optionName || 'Unknown'; // 상품 이름
@@ -41,15 +43,20 @@ const CheckoutPage = () => {
   };
 
   const formattedDate = formatDate(timeTableData?.targetDate);
+  const maxUserCount = productOption?.maxUserCount || Infinity;
 
   const day =
-    productOption?.product.categoryId === 1
-      ? `${formattedDate} ( ${timeTableOptionData?.length}박 )`
+    productOption?.product?.categoryId === 1
+      ? `${formattedDate}`
       : `${formattedDate} ${timeTableData?.startTimeOnly} ~ ${timeTableData?.endTimeOnly}`;
+
+  const optionName =
+    productOption?.product?.categoryId === 1
+      ? `${productOption?.optionName} ( ${maxUserCount} 인실 )`
+      : `${productOption?.optionName}`;
 
   const [count, setCount] = useState(productOption?.userCount || 1);
   const optionPrice = productOption?.optionPrice || 0;
-  const maxUserCount = productOption?.maxUserCount || Infinity;
   const [isChecked, setIsChecked] = useState(true);
 
   const handleCheckedChange = (checked: boolean) => {
@@ -95,6 +102,8 @@ const CheckoutPage = () => {
           day={day}
           onCheckedChange={handleCheckedChange}
           isChecked={isChecked}
+          userCount={userCount}
+          optionName={optionName}
         />
 
         <div className="flex justify-end gap-20 font-semibold mt-28 text-17 mb-100">
