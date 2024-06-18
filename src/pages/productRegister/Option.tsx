@@ -83,7 +83,7 @@ const Option = () => {
       // console.log('0단계', categoryResponse); // 잘 받아와지는지 테스트용
       // 2. 로컬을 바탕으로 상품을 서버에 등록
       if (categoryResponse) {
-        console.log('1단계'); // 잘 받아와지는지 테스트용
+        // console.log('1단계'); // 잘 받아와지는지 테스트용
         const productResponse = await product.postProduct(
           1,
           parseInt(categoryResponse, 10),
