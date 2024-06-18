@@ -12,8 +12,8 @@ const Date = ({ setPage }: PageIdProps) => {
     setStartDate,
     endDate,
     setEndDate,
-    maxStartDate,
-    minEndDate,
+    // maxStartDate,
+    // minEndDate,
   } = useDatePicker();
   const { register, watch } = useForm<any>({
     mode: 'onChange',
@@ -110,9 +110,9 @@ const Date = ({ setPage }: PageIdProps) => {
           endDate={endDate}
           setEndDate={setEndDate}
           categoryId={1}
-          maxStartDate={maxStartDate}
-          minEndDate={minEndDate}
-          holiday={['0']}
+          // maxStartDate={maxStartDate}
+          // minEndDate={minEndDate}
+          // holiday={['']}
         />
       </div>
       <CheckButton disabled={disabled} onClick={() => onSubmit()} />

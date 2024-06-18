@@ -3,7 +3,7 @@ import instance from '@/utils/axios';
 
 interface ProductProps {
   name: string;
-  productType: string[];
+  productType: string; // 라디오버튼으로 1개로 받기로 변경(백엔드도 고쳐줌)
   productDesc: string;
   productSiteLat: number;
   productSiteLng: number;
