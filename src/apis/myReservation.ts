@@ -19,3 +19,7 @@ export const putMyReservation = async (
 ): Promise<void> => {
   await instance.put(`/reservation/${reservationId}`, { status });
 };
+
+export const deleteMyReservation = async (reservationId: number) => {
+  await instance.delete(`/reservation/${reservationId}`);
+};

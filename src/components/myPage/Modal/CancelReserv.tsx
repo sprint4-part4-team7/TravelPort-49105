@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { putMyReservation } from '@/apis/myReservation';
-import RESERV_STATUS from '@/constants/reserv';
+import { deleteMyReservation } from '@/apis/myReservation';
 import { toast } from 'react-toastify';
 import DefaultModal from '../../common/DefaultModal';
 
@@ -15,7 +14,7 @@ const CancelReserv = ({
 }) => {
   const queryClient = useQueryClient();
   const mutateReserv = useMutation({
-    mutationFn: (id: number) => putMyReservation(id, RESERV_STATUS.CANCELED),
+    mutationFn: (id: number) => deleteMyReservation(id),
     onSuccess: () => {
       toast.success('예약이 취소되었습니다');
       queryClient.invalidateQueries({
