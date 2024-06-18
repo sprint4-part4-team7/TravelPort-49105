@@ -89,6 +89,9 @@ const MyResevation = ({
       case RESERV_STATUS.CANCELED:
         buttonFnc = () => handleCancel(cancelId);
         break;
+      case RESERV_STATUS.REVIEWED:
+        buttonFnc = () => handleReview(reviewId || 0);
+        break;
       default:
         buttonFnc = () => {};
     }
