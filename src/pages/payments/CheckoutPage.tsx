@@ -54,7 +54,7 @@ const CheckoutPage = () => {
       ? `${productOption?.optionName} ( ${maxUserCount} 인실 )`
       : `${productOption?.optionName}`;
 
-  const [count, setCount] = useState(productOption?.userCount || 1);
+  const [count, setCount] = useState(reservationInfo?.ticketCount || 1);
   const optionPrice = productOption?.optionPrice || 0;
   const [isChecked, setIsChecked] = useState(true);
 
