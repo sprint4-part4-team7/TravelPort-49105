@@ -49,6 +49,7 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
   };
 
   const handleSave = async (data: UserInfo) => {
+    localStorage.removeItem('profileImage');
     if (img.length) {
       const response = await postImages(img, BUCKER_NAME.PRODUCT_OPTION);
       data = { ...data, profileImage: response[0] };
