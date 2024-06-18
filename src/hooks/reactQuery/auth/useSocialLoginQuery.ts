@@ -5,6 +5,7 @@ import { useUserStore } from '@/utils/zustand';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 type SocialLoginType = {
   provider: 'google' | 'kakao' | 'naver';
@@ -41,6 +42,7 @@ const useSocialLoginQuery = ({ provider, code }: SocialLoginType) => {
       setCookie('accessToken', ACCESS_TOKEN);
       const token = getCookie('accessToken');
       if (token) {
+        toast.success('소셜 로그인 완료!');
         const userInfo = jwtDecode(token);
         setUserInfo(userInfo);
         navigate('/');

@@ -8,6 +8,7 @@ import jwtDecode from '@/utils/jwtDecode';
 import useVerifyEmail from '@/hooks/reactQuery/auth/useVerifyEmail';
 import { useUserStore } from '@/utils/zustand';
 import useSignupMutation from '@/hooks/reactQuery/auth/useSignupMutation';
+import { toast } from 'react-toastify';
 import Button from '@/components/common/Button';
 import InputBox from '@/components/common/InputBox';
 
@@ -79,14 +80,12 @@ const UserSignup = () => {
     signUp(signupData, {
       onSuccess: () => {
         if (isEmailValid) {
+          toast.success('정상 가입되었습니다!');
           const accessToken = getCookie('accessToken');
           if (accessToken) setUserInfo({ ...jwtDecode(accessToken) });
           navigate('/login', { replace: true });
         }
       },
-      // onError: (error: any) => {
-      //   alert(error.message);
-      // },
     });
   };
 
