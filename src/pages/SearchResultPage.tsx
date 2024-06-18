@@ -19,7 +19,27 @@ const SearchResultPage = () => {
   const { productAll, isLoadingProducts } = useProductAllQuery();
   const [selectedTab, setSelectedTab] = useState('all');
   const [pageNum, setPageNum] = useState(1);
-  const itemsPerPage = 10;
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+
+  const updateItemsPerPage = () => {
+    const width = window.innerWidth;
+    if (width >= 1200) {
+      setItemsPerPage(10);
+    } else if (width >= 768 && width < 1200) {
+      setItemsPerPage(8);
+    } else {
+      // 원하는 경우 기본 값을 설정하거나 추가 조건을 처리할 수 있습니다.
+    }
+  };
+
+  useEffect(() => {
+    updateItemsPerPage(); // 컴포넌트가 처음 렌더링될 때 화면 크기를 기반으로 설정
+    window.addEventListener('resize', updateItemsPerPage);
+
+    return () => {
+      window.removeEventListener('resize', updateItemsPerPage);
+    };
+  }, []);
 
   const filteredProducts = productAll?.filter((product: any) => {
     if (selectedTab === 'all') return true;
