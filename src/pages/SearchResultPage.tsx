@@ -27,8 +27,6 @@ const SearchResultPage = () => {
       setItemsPerPage(10);
     } else if (width >= 768 && width < 1200) {
       setItemsPerPage(8);
-    } else {
-      // 원하는 경우 기본 값을 설정하거나 추가 조건을 처리할 수 있습니다.
     }
   };
 
