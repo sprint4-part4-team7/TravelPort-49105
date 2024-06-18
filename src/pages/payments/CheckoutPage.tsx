@@ -25,7 +25,6 @@ const CheckoutPage = () => {
 
   const { data: timeTableData } = useTilmeTabaleQuery(timeTableId);
   const { productOption, isLoading, error } = useProductOptionQuery(optionId);
-  console.log(productOption);
   const userCount = productOption?.userCount;
 
   const { userInfo } = useUserStore();
