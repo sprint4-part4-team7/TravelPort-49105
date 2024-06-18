@@ -21,15 +21,15 @@ const PartnerMain = () => {
             />
             <PartnerMainButton
               text="내 게시물 목록 보기"
-              onClick={() => navigate('/partner/mypage/edit-info')}
-            />
-            <PartnerMainButton
-              text="예약 관리"
               onClick={() => navigate('/partner/mypage/posting-manage')}
             />
             <PartnerMainButton
-              text="판매자 정보 수정"
+              text="예약 관리"
               onClick={() => navigate('/partner/mypage/reserve-manage')}
+            />
+            <PartnerMainButton
+              text="판매자 정보 수정"
+              onClick={() => navigate('/partner/mypage/edit-info')}
             />
           </div>
         </div>

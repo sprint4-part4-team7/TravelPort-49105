@@ -8,7 +8,7 @@ import ARROW_UP_RIGHT from '@/assets/icons/arrow-up-right-blue.svg';
 import useModal from '@/hooks/useModal';
 import RESERV_STATUS from '@/constants/reserv';
 import Button from '@/components/common/Button';
-import ReservationCard from '@/components/common/reservPagination/ResevationCard';
+import ReservationCard from '@/components/common/reservPagination/ReservationCard';
 import ReservChips from '@/components/myPage/ReservChips';
 import ReservButtonOutlined from '@/components/myPage/ReservButtonOutlined';
 import Modal from './common/Modal';

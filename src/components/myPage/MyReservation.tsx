@@ -6,7 +6,7 @@ import useModal from '@/hooks/useModal';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import RESERV_STATUS from '@/constants/reserv';
-import ReservationCard from '@/components/common/reservPagination/ResevationCard';
+import ReservationCard from '@/components/common/reservPagination/ReservationCard';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
 import ReservChips from '@/components/myPage/ReservChips';
 import ReservButton from '@/components/myPage/ReservButton';
@@ -16,7 +16,7 @@ import ReservChipsExpired from '@/components/myPage/ReservChipsExpired';
 import CancelReserv from '@/components/myPage/Modal/CancelReserv';
 import Loading from '../common/Loading';
 
-const MyResevation = ({
+const MyReservation = ({
   isExpired = 'false',
 }: {
   isExpired?: 'true' | 'false';
@@ -92,6 +92,9 @@ const MyResevation = ({
       case RESERV_STATUS.REVIEWED:
         buttonFnc = () => handleReview(reviewId || 0);
         break;
+      case RESERV_STATUS.FINISHED:
+        buttonFnc = () => handleReview(reviewId || 0);
+        break;
       default:
         buttonFnc = () => {};
     }
@@ -160,4 +163,4 @@ const MyResevation = ({
     </div>
   );
 };
-export default MyResevation;
+export default MyReservation;
