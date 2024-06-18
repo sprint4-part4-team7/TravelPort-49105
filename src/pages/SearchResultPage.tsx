@@ -19,7 +19,25 @@ const SearchResultPage = () => {
   const { productAll, isLoadingProducts } = useProductAllQuery();
   const [selectedTab, setSelectedTab] = useState('all');
   const [pageNum, setPageNum] = useState(1);
-  const itemsPerPage = 10;
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+
+  const updateItemsPerPage = () => {
+    const width = window.innerWidth;
+    if (width >= 1200) {
+      setItemsPerPage(8);
+    } else if (width >= 768 && width < 1200) {
+      setItemsPerPage(6);
+    }
+  };
+
+  useEffect(() => {
+    updateItemsPerPage(); // 컴포넌트가 처음 렌더링될 때 화면 크기를 기반으로 설정
+    window.addEventListener('resize', updateItemsPerPage);
+
+    return () => {
+      window.removeEventListener('resize', updateItemsPerPage);
+    };
+  }, []);
 
   const filteredProducts = productAll?.filter((product: any) => {
     if (selectedTab === 'all') return true;
@@ -79,7 +97,7 @@ const SearchResultPage = () => {
   return (
     <div>
       <Layout noSearch={false}>
-        <div className="flex py-32 font-semibold text-20">
+        <div className="flex py-32 font-semibold text-20 ">
           <p className="text-blue-6">{search}</p>
           <p>에 대한 결과</p>
         </div>
@@ -118,7 +136,7 @@ const SearchResultPage = () => {
             체험({categoryCounts.experience})
           </button>
         </div>
-        <div className="flex flex-col items-center justify-center gap-20">
+        <div className="flex flex-col items-center justify-center w-full gap-20">
           {productsWithMinPrice?.length !== 0 ? (
             <SearchResultSection productsWithMinPrice={paginatedProducts} />
           ) : (
