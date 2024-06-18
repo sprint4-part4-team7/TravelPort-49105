@@ -28,7 +28,7 @@ const SuccessPage = () => {
   const amount = parseInt(searchParams.get('amount') ?? '0', 10);
 
   const [isInitialized, setIsInitialized] = useState(false);
-  const [isReservationPosted, setIsReservationPosted] = useState(false);
+  const [isReservationWhitPay, setIsReservationWhitPay] = useState(false);
 
   const confirm = () => {
     navigate('/');
@@ -38,13 +38,18 @@ const SuccessPage = () => {
     mutate: createReservation,
     isLoading: reservationLoading,
     isError: reservationError,
+    reservationResponse,
   } = useReservationMutation();
+
+  const payId = reservationResponse?.data?.paymentId;
+
   const {
     mutate: cartReservation,
     datas: cartData,
     isLoading: cartLoading,
     pId,
   } = useCartReservationByUserIdMutation();
+
   const { mutate: sendPayments } = usePaymentPutMutation(cartIds);
 
   const handleCartReservationPost = async () => {
@@ -58,7 +63,7 @@ const SuccessPage = () => {
   };
 
   const handleReservationPost = async () => {
-    if (reservationInfo.productOptionId !== 0 && !cartInfo) {
+    if (!isReservationWhitPay) {
       createReservation({
         userId: reservationInfo.userId,
         productOptionId: reservationInfo.productOptionId,
@@ -68,7 +73,7 @@ const SuccessPage = () => {
         ticketCount: reservationInfo.ticketCount,
         cancelMsg: reservationInfo.cancelMsg || '',
       });
-      setIsReservationPosted(true);
+      setIsReservationWhitPay(true);
     }
   };
 
@@ -95,10 +100,14 @@ const SuccessPage = () => {
   }, [cartData, pId]);
 
   useEffect(() => {
-    if (!cartData && !pId && !isReservationPosted) {
+    if (cartInfo.length === 0 && reservationInfo.productOptionId !== 0) {
       handleReservationPost();
     }
-  }, [cartData, pId, isReservationPosted]);
+  }, [cartInfo, reservationInfo]);
+
+  useEffect(() => {
+    handlePaymentPut(payId);
+  }, [payId]);
 
   if (reservationLoading || cartLoading) return <Loading />;
   if (!cartInfo) {
