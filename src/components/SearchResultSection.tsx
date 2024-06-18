@@ -80,7 +80,7 @@ const SearchResultSection = ({
           />
         </div>
       </div>
-      <div className="grid gap-20 mb-3 mobile:grid-cols-1 tablet:grid-cols-4 desktop:grid-cols-5">
+      <div className="grid grid-cols-1 gap-20 mb-3 mobile:grid-cols-1 tablet:grid-cols-3 desktop:grid-cols-4">
         {sortedProducts.map((item: any) => (
           <ProductCard
             key={item.productId}

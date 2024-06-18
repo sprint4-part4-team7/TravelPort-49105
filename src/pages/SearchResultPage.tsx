@@ -24,9 +24,9 @@ const SearchResultPage = () => {
   const updateItemsPerPage = () => {
     const width = window.innerWidth;
     if (width >= 1200) {
-      setItemsPerPage(10);
-    } else if (width >= 768 && width < 1200) {
       setItemsPerPage(8);
+    } else if (width >= 768 && width < 1200) {
+      setItemsPerPage(6);
     }
   };
 
