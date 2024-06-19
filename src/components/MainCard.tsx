@@ -26,21 +26,23 @@ const MainCard: React.FC<PopularAccommodationsProps> = ({
 }) => {
   return (
     <div>
-      <div className="flex justify-between mb-18">
-        <p className="font-semibold text-22 ">{title} </p>
-        <div className="w-61">
-          <Button
-            variant="default"
-            outlined
-            isCancel
-            onClick={onclick}
-            buttonStyle="rounded-4 px-12 py-8 text-13 font-medium text-black-5"
-          >
-            더보기
-          </Button>
+      <div className="w-full">
+        <div className="flex justify-between mb-18">
+          <p className="font-semibold text-22 ">{title} </p>
+          <div className="w-61">
+            <Button
+              variant="default"
+              outlined
+              isCancel
+              onClick={onclick}
+              buttonStyle="rounded-4 px-12 py-8 text-13 font-medium text-black-5"
+            >
+              더보기
+            </Button>
+          </div>
         </div>
       </div>
-      <div className="grid gap-20 mobile:grid-cols-1 tablet:grid-cols-3 desktop:grid-cols-4 mobile:w-335">
+      <div className="grid gap-20 mobile:grid-cols-1 tablet:grid-cols-3 desktop:grid-cols-4 mobile:min-w-335 tablet:min-w-768 min-w-1200">
         {images &&
           images.map((item, index) => (
             <Card
