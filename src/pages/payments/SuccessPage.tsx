@@ -33,6 +33,9 @@ const SuccessPage = () => {
   const confirm = () => {
     navigate('/');
   };
+  const toMyReserv = () => {
+    navigate('/mypage/reservation-status');
+  };
 
   const {
     mutate: createReservation,
@@ -121,7 +124,11 @@ const SuccessPage = () => {
             <img src={check} alt="성공 아이콘" />
             <div className="mt-32 font-bold text-32">결제가 완료되었습니다</div>
             <div className="flex w-full gap-28 mt-100 mobile:flex-col">
-              <Button outlined buttonStyle="w-320 h-48 text-16 font-normal">
+              <Button
+                outlined
+                buttonStyle="w-320 h-48 text-16 font-normal"
+                onClick={toMyReserv}
+              >
                 내 예약 현황으로
               </Button>
               <Button

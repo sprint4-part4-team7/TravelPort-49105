@@ -116,7 +116,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
             id: 'reservation-history',
             icon: reservationStatus,
             label: '예약 현황',
-            path: '/mypage/resevation-history',
+            path: '/mypage/reservation-history',
           },
         ]
       : []),

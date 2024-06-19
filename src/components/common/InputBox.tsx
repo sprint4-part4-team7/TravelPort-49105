@@ -50,21 +50,27 @@ const InputBox = ({
       <label className="text-16" htmlFor={id}>
         {label}
       </label>
-      <input
-        id={id}
-        className={inputboxClass}
-        type={inputType}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        disabled={disabled}
-        {...register}
-        onFocus={onFocus}
-        onClick={onClick}
-      />
-      {error && (
-        <div className="text-system-error text-12">{error.message}</div>
-      )}
+      <div
+        className={`flex flex-col gap-8 w-full ${
+          direction === 'col' ? '' : 'max-w-335 mobile:max-w-none'
+        }`}
+      >
+        <input
+          id={id}
+          className={inputboxClass}
+          type={inputType}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          disabled={disabled}
+          {...register}
+          onFocus={onFocus}
+          onClick={onClick}
+        />
+        {error && (
+          <div className="text-system-error text-12">{error.message}</div>
+        )}
+      </div>
     </div>
   );
 };

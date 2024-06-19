@@ -28,6 +28,14 @@ const ReservButton = ({ status, onClick }: ReservButtonProps) => {
         </>
       );
       break;
+    case RESERV_STATUS.REVIEWED:
+      content = (
+        <>
+          후기 수정하기
+          <LinkIcon stroke={isHover ? '#3065e8' : 'black'} />
+        </>
+      );
+      break;
     default:
       content = '';
       break;

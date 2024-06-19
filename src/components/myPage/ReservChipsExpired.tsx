@@ -20,6 +20,11 @@ const ReservChipsExpired = ({ status }: { status: number | null }) => {
       color = 'text-black-6';
       text = '취소완료';
       break;
+    case RESERV_STATUS.REVIEWED:
+      color = 'text-blue-6';
+      text = '리뷰완료';
+      break;
+
     default:
       color = 'text-black';
       text = '내역 없음';

@@ -26,13 +26,16 @@ const ReservationCard = ({
   upperRight,
   lowerRight,
 }: ReservationCardProps) => {
-  const formattedDate = changeDateForm(date);
-  const duration =
+  const formattedDate = changeDateForm(time?.targetDate || '');
+  let duration =
     time?.startTimeOnly && time.endTimeOnly
       ? `${time?.startTimeOnly} ~ ${time?.endTimeOnly}`
       : time?.startTimeOnly || time?.endTimeOnly || '';
+  if (duration === '00:00 ~ 23:59') duration = '1일권';
   const schedule = `일정 : ${formattedDate}${duration ? ', ' : ''}${duration}`;
+
   const reservDate = `예약일시 : ${changeDateForm(date)}`;
+
   return (
     <div
       id={id ? id.toString() : 'undefined'}
