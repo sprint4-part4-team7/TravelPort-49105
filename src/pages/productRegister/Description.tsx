@@ -43,9 +43,10 @@ const Description = ({ setPage }: PageIdProps) => {
               {...register('title', {
                 required: true,
               })}
-              placeholder="등록할 제목(상품명)을 입력해주세요."
+              placeholder="등록할 제목(상품명)을 입력해주세요.(50자)"
               id="title"
               type="text"
+              maxLength={50}
             />
           </label>
           <label className="flex gap-12 flex-col" htmlFor="content">
