@@ -110,13 +110,13 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
             id: 'reservation-status',
             icon: list,
             label: '예약 내역',
-            path: '/mypage/reservation-status',
+            path: '/mypage/reservation-history',
           },
           {
             id: 'reservation-history',
             icon: reservationStatus,
             label: '예약 현황',
-            path: '/mypage/reservation-history',
+            path: '/mypage/reservation-status',
           },
         ]
       : []),
@@ -136,13 +136,13 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
             id: 'reservation-status',
             icon: list,
             label: '예약 내역',
-            path: '/mypage/resevation-status',
+            path: '/mypage/reservation-history',
           },
           {
             id: 'reservation-history',
             icon: reservationStatus,
             label: '예약 현황',
-            path: '/mypage/resevation-history',
+            path: '/mypage/reservation-status',
           },
         ]
       : []),
@@ -159,18 +159,18 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
           <img
             src={user.image}
             alt="Profile"
-            className="rounded-full cursor-pointer h-32 w-32"
+            className="w-32 h-32 rounded-full cursor-pointer"
           />
         </button>
         {userInfo.isPartner === 0 && (
           <button type="button" onClick={() => navagate('/cart')}>
-            <img className="h-32 w-32" src={cart} alt="쇼핑 카트 아이콘" />
+            <img className="w-32 h-32" src={cart} alt="쇼핑 카트 아이콘" />
           </button>
         )}
       </div>
       <div className="hidden mobile:flex">
         <button type="button" onClick={toggleSidebar}>
-          <img src={menu} alt="Menu" className="h-32 w-32 cursor-pointer" />
+          <img src={menu} alt="Menu" className="w-32 h-32 cursor-pointer" />
         </button>
       </div>
       {isDropdownOpen && (
@@ -186,7 +186,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
                 <img
                   src={user.image}
                   alt="Profile"
-                  className="rounded-full h-32 w-32 mobile:w-26 mobile:h-26"
+                  className="w-32 h-32 rounded-full mobile:w-26 mobile:h-26"
                 />
                 <span className="ml-2">{user.name}</span>
               </div>
@@ -196,7 +196,7 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
               <li className="items-center justify-between hidden px-12 mobile:flex py-1.5 hover:bg-blue-50">
                 <div className="flex items-center">
                   <img
-                    className="h-32 w-32 mobile:w-16 mobile:h-16"
+                    className="w-32 h-32 mobile:w-16 mobile:h-16"
                     src={cart}
                     alt="쇼핑 카트 아이콘"
                   />
