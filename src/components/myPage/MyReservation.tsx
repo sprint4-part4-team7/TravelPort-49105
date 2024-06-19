@@ -135,7 +135,7 @@ const MyReservation = ({
               date={reservation.createdAt}
               time={reservation.timeTable}
               option={reservation.productOption?.optionName}
-              userInfo={`파트너명 : ${reservation.productOption.product.user.name} / 전화번호 : ${reservation.productOption.product.user.phone || '없음'}`}
+              userInfo={`파트너명 : ${reservation.productOption.product.user.name || '없음'} / 전화번호 : ${reservation.productOption.product.user.phone || '없음'}`}
               upperRight={upperRightChip(reservation.reservationState || 1)}
               lowerRight={lowerRightButton(
                 reservation.reservationState || RESERV_STATUS.PENDING,
