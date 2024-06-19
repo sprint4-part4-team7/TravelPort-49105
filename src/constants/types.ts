@@ -101,6 +101,7 @@ export type ReviewData = {
   userName: string;
   userProfileImage: string;
   optionName: string;
+  userId: number;
 };
 
 export type CardListsType = {
