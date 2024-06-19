@@ -36,7 +36,7 @@ const MyReservation = ({
     queryFn: () => getMyReservation(userInfo.id, isExpired, pageNum - 1, limit),
     enabled: !!userInfo.id,
   });
-  const myReservationData = myReservation as Reservation[];
+  const myReservationData = myReservation?.reservations as Reservation[];
 
   const handleShowCancelMsg = (msg: string) => {
     openModal();
@@ -63,6 +63,7 @@ const MyReservation = ({
     cancelMessage: string,
     cancelId: number,
     reviewId?: number,
+    reviewedId?: number,
   ) => {
     if (!isReservExpired) {
       return state === RESERV_STATUS.REJECTED ? (
@@ -89,11 +90,11 @@ const MyReservation = ({
       case RESERV_STATUS.CANCELED:
         buttonFnc = () => handleCancel(cancelId);
         break;
-      case RESERV_STATUS.REVIEWED:
-        buttonFnc = () => handleReview(reviewId || 0);
-        break;
       case RESERV_STATUS.FINISHED:
         buttonFnc = () => handleReview(reviewId || 0);
+        break;
+      case RESERV_STATUS.REVIEWED:
+        buttonFnc = () => handleReview(reviewedId || 0);
         break;
       default:
         buttonFnc = () => {};
@@ -115,12 +116,12 @@ const MyReservation = ({
   return (
     <div className="flex flex-col gap-48 w-full">
       <div className="text-20 font-semibold">예약 목록</div>
-      {myReservationData?.length > 0 ? (
+      {!!myReservation?.totalCount && myReservation?.totalCount >= 0 ? (
         <ReservPagination
           limit={limit}
           pageNum={pageNum}
           setPageNum={setPageNum}
-          allCardNum={myReservationData.length}
+          allCardNum={myReservation?.totalCount || 0}
         >
           {myReservationData.map((reservation) => (
             <ReservationCard
@@ -137,6 +138,7 @@ const MyReservation = ({
                 reservation.cancelMsg || '',
                 reservation.id,
                 reservation.productOptionId,
+                reservation.review?.id,
               )}
             />
           ))}
