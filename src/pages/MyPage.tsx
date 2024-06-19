@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import EditInfo from '@/components/myPage/EditInfo';
 import MyPageSideBar from '@/components/myPage/MyPageSideBar';
-import MyResevation from '@/components/myPage/MyResevation';
+import MyReservation from '@/components/myPage/MyReservation';
 import ReservationManagement from '@/pages/ReservationManagement';
 import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
@@ -24,9 +24,9 @@ const MyPage = ({ isPartner = false }: { isPartner?: boolean }) => {
       <Layout>
         <MyPageSideBar isPartner={isPartner}>
           {status === 'edit-info' && <EditInfo isPartner={isPartner} />}
-          {status === 'reservation-status' && <MyResevation />}
+          {status === 'reservation-status' && <MyReservation />}
           {status === 'reservation-history' && (
-            <MyResevation isExpired="true" />
+            <MyReservation isExpired="true" />
           )}
           {status === 'posting-manage' && <PostingManagement />}
           {status === 'reserve-manage' && <ReservationManagement />}

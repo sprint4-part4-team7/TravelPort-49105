@@ -6,6 +6,7 @@ interface ReservStatus {
   REJECTED: ReservStatusType;
   CANCELED: ReservStatusType;
   DELETED: ReservStatusType;
+  REVIEWED: ReservStatusType;
 }
 
 const RESERV_STATUS: ReservStatus = {
@@ -14,6 +15,7 @@ const RESERV_STATUS: ReservStatus = {
   REJECTED: 3,
   CANCELED: 4,
   DELETED: 5,
+  REVIEWED: 6,
 };
 
 export default RESERV_STATUS;

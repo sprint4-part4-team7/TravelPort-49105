@@ -152,7 +152,7 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
           <InputBox
             id="phone"
             label="전화번호"
-            placeholder="010-****-****"
+            placeholder="'-' 없이 입력해주세요"
             register={register('phone', {
               pattern: {
                 value: PHONE_NUMBER_REGEX,
