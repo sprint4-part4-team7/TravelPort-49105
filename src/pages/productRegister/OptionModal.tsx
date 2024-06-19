@@ -65,9 +65,10 @@ const OptionModal = ({ closeModal, optionList, setOptionList }: ModalProps) => {
             <input
               className="h-48 p-12 rounded text-16 outline-none border-solid border-1 border-black-5 w-239 focus:border-blue-6 focus:border-1 mobile:max-w-none"
               {...register('title')}
-              placeholder="상품옵션의 이름을 적어주세요."
+              placeholder="상품옵션의 이름을 적어주세요.(50자)"
               id="title"
               type="text"
+              maxLength={50}
             />
           </label>
           <div className="flex gap-6">
