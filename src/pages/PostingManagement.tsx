@@ -2,13 +2,15 @@ import ARROW from '@/assets/icons/arrowDown.svg';
 import { useEffect, useState } from 'react';
 import { useUserStore } from '@/utils/zustand';
 import useProductByPartnerQuery from '@/hooks/reactQuery/product/useProductByPartnerQuery';
-import useModal from '@/hooks/useModal';
+// import useModal from '@/hooks/useModal';
+import useProductDeleteMutation from '@/hooks/reactQuery/product/useProductDeleteMutation';
+import { toast } from 'react-toastify';
 import SearchBar from '@/components/common/SearchBar';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
 import PostingCard from '@/components/PostingCard';
 import PostingSwitch from '@/components/myPage/PostingSwitch';
 import ReservButtonOutlined from '@/components/myPage/ReservButtonOutlined';
-import DeletePosting from '@/components/myPage/Modal/DeletePosting';
+// import DeletePosting from '@/components/myPage/Modal/DeletePosting';
 
 const PostingManagement = () => {
   const { userInfo } = useUserStore();
@@ -19,7 +21,7 @@ const PostingManagement = () => {
   const [allData, setAllData] = useState<any[]>([]);
 
   const { postingData: allPost } = useProductByPartnerQuery(userInfo.id);
-  const { isModalOpen, openModal, closeModal } = useModal();
+  // const { isModalOpen, openModal, closeModal } = useModal();
 
   const sortData = (data: any[], postNew: boolean) => {
     if (!Array.isArray(data)) return [];
@@ -36,6 +38,13 @@ const PostingManagement = () => {
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(category);
+  };
+
+  const { mutate } = useProductDeleteMutation();
+
+  const handleDelete = (productId: number) => {
+    mutate(productId);
+    toast.success('게시물이 삭제되었습니다.');
   };
 
   const getCategoryCount = (category: string) => {
@@ -160,16 +169,18 @@ const PostingManagement = () => {
                             />
                           }
                           lowerRight={
-                            <ReservButtonOutlined
-                              status={5}
-                              onClick={openModal}
-                            />
+                            <>
+                              <ReservButtonOutlined
+                                status={5}
+                                onClick={() => handleDelete(item.id)}
+                              />
+                              {/* <DeletePosting
+                                id={item.id}
+                                closeModal={closeModal}
+                                isOpen={isModalOpen}
+                              /> */}
+                            </>
                           }
-                        />
-                        <DeletePosting
-                          id={item.id}
-                          closeModal={closeModal}
-                          isOpen={isModalOpen}
                         />
                       </div>
                     ))}
@@ -204,17 +215,18 @@ const PostingManagement = () => {
                             />
                           }
                           lowerRight={
-                            <ReservButtonOutlined
-                              status={5}
-                              onClick={openModal}
-                            />
+                            <>
+                              <ReservButtonOutlined
+                                status={5}
+                                onClick={() => handleDelete(item.id)}
+                              />
+                              {/* <DeletePosting
+                                id={item.id}
+                                closeModal={closeModal}
+                                isOpen={isModalOpen}
+                              /> */}
+                            </>
                           }
-                        />
-
-                        <DeletePosting
-                          id={item.id}
-                          closeModal={closeModal}
-                          isOpen={isModalOpen}
                         />
                       </div>
                     ))}
@@ -249,17 +261,18 @@ const PostingManagement = () => {
                             />
                           }
                           lowerRight={
-                            <ReservButtonOutlined
-                              status={5}
-                              onClick={openModal}
-                            />
+                            <>
+                              <ReservButtonOutlined
+                                status={5}
+                                onClick={() => handleDelete(item.id)}
+                              />
+                              {/* <DeletePosting
+                                id={item.id}
+                                closeModal={closeModal}
+                                isOpen={isModalOpen}
+                              /> */}
+                            </>
                           }
-                        />
-
-                        <DeletePosting
-                          id={item.id}
-                          closeModal={closeModal}
-                          isOpen={isModalOpen}
                         />
                       </div>
                     ))}
