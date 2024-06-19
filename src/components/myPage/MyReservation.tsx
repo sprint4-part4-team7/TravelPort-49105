@@ -110,7 +110,11 @@ const MyReservation = ({
     );
   };
   if (isPending) {
-    return <Loading />;
+    return (
+      <div className="w-full">
+        <Loading />
+      </div>
+    );
   }
 
   return (
