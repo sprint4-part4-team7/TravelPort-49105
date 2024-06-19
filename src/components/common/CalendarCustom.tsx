@@ -42,7 +42,7 @@ const CalendarCustom = ({
         view === 'month' &&
         holiday.includes(date.getDay())
       }
-      formatDay={(_, date) => date.toLocaleString('en', { day: 'numeric' })}
+      formatDay={(_, date) => date.toLocaleString('ko', { day: 'numeric' })}
     />
   );
 };

@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import useCartPostMutation from '@/hooks/reactQuery/cart/useCartPostMutation';
 import useModal from '@/hooks/useModal';
 import RESERV_STATUS from '@/constants/reserv';
+import { toast } from 'react-toastify';
 import Button from '@/components/common/Button';
 import '@/styles/ProductDetails.css';
 import DatePickerCustom from './DatePickerCustom';
@@ -42,7 +43,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     setEndDate,
     maxStartDate,
     minEndDate,
-  } = useDatePicker(product?.productId);
+  } = useDatePicker(product?.id);
   const { table } = useTimeTable(optionId);
 
   useEffect(() => {
@@ -92,7 +93,8 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     (state) => state.setReservationInfo,
   );
   const handleUpdate = () => {
-    if (!userInfo) {
+    if (!userInfo.id) {
+      toast.error('로그인이 필요합니다.');
       navigate('/login');
       return;
     }
@@ -112,7 +114,8 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
 
   const { mutate } = useCartPostMutation();
   const handleCartUpdate = () => {
-    if (!userInfo) {
+    if (!userInfo.id) {
+      toast.error('로그인이 필요합니다.');
       navigate('/login');
       return;
     }
@@ -176,7 +179,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
       <hr className="mb-20" />
       <div className="flex justify-between mb-60">
         <div className="flex flex-col gap-8">
-          <h2 className="font-semibold text-20">{product?.productName}</h2>
+          <h2 className="font-semibold text-20">{product?.name}</h2>
           <h3 className="font-semibold text-17">
             {filteredOption.length &&
               filteredOption[0]?.optionPrice.toLocaleString()}
