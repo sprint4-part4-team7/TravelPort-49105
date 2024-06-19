@@ -16,6 +16,7 @@ module.exports = {
       minHeight: rem0_1200,
       spacing: rem0_1200,
       colors: {
+        grayCustom: 'rgba(140, 140, 140, 0.60)',
         white: '#ffffff',
         black: {
           modal: 'rgba(0, 0, 0, 0.5)',

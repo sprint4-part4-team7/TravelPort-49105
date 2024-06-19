@@ -51,25 +51,25 @@ const Card = ({
           alt="예시사진"
           className="w-265 h-267 object-fit tablet:h-217 mobile:w-158 mobile:h-198"
         />
-        <div className="w-265 h-133 bg-white px-16 py-20 hover:bg-blue-1 tablet:w-229 mobile:w-177 mobile:h-198">
-          <h2 className="text-black-12 mb-5 text-20 py-4 h-28 font-semibold leading-20 truncate">
+        <div className="px-16 py-20 bg-white w-265 h-133 hover:bg-blue-1 tablet:w-229 mobile:w-177 mobile:h-198">
+          <h2 className="py-4 mb-5 font-semibold truncate text-black-12 text-20 h-28 leading-20">
             {title}
           </h2>
-          <p className="text-black-12 mb-8 text-12 mobile:my-15 truncate">
+          <p className="mb-8 truncate text-black-12 text-12 mobile:my-15">
             {location}
           </p>
           <div className="flex flex-row items-center mb-16 mobile:flex-col mobile:items-start ">
-            <div className="flex flex-row item-center pr-8 mobile:mb-8">
+            <div className="flex flex-row pr-8 item-center mobile:mb-8">
               <div className="flex flex-row w-85">{ImageScore()}</div>
-              <p className="text-black-6 text-11 pl-4">
+              <p className="pl-4 text-black-6 text-11">
                 ( {Math.round(score).toFixed(1)} / 5 )
               </p>
             </div>
-            <p className="text-black-6 text-11 leading-3 mobile:mt-10">
+            <p className="leading-3 text-black-6 text-11 mobile:mt-10">
               리뷰 {review.toLocaleString()}개
             </p>
           </div>
-          <p className="text-blue-6 text-right text-12 font-semibold leading-5 mobile:mt-45">
+          <p className="font-semibold leading-5 text-right text-blue-6 text-12 mobile:mt-45">
             최저 {price.toLocaleString()}원~
           </p>
         </div>

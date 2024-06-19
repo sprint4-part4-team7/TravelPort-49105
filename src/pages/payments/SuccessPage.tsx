@@ -111,7 +111,7 @@ const SuccessPage = () => {
 
   if (reservationLoading || cartLoading) return <Loading />;
   if (!cartInfo) {
-    if (reservationError) return <FailPage />;
+    if (reservationError || payId) return <FailPage />;
   }
   return (
     <Layout>
