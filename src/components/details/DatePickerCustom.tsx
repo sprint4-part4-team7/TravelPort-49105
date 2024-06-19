@@ -6,7 +6,14 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './DatePickerCustom.css';
 import { ko } from 'date-fns/locale/ko';
-import { addDays, format, getDay, isBefore, subDays } from 'date-fns';
+import {
+  addDays,
+  format,
+  getDay,
+  isBefore,
+  startOfDay,
+  subDays,
+} from 'date-fns';
 import useOutsideClick from '@/hooks/useOutsideClick';
 
 type DatePickerProps = {
@@ -50,7 +57,7 @@ const DatePickerCustom = ({
 
   // 오늘 이전 날
   const isPastDate = (date: Date) => {
-    const today = new Date();
+    const today = startOfDay(new Date());
     return isBefore(date, today);
   };
 
