@@ -114,8 +114,8 @@ export const useCartStore = create(
 );
 
 interface ThumbnailState {
-  thumbnail: File[];
-  setThumbnail: (thumbnail: File[]) => void;
+  thumbnail: any;
+  setThumbnail: (thumbnail: File) => void;
 }
 export const useThumbnailStore = create<ThumbnailState>((set) => ({
   thumbnail: [],
