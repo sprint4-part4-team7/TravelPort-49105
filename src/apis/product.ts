@@ -3,7 +3,7 @@ import instance from '@/utils/axios';
 
 interface ProductProps {
   name: string;
-  productType: string[];
+  productType: string; // 백엔드에서 string[] -> string으로 고쳐주셨습니다.
   productDesc: string;
   productSiteLat: number;
   productSiteLng: number;
