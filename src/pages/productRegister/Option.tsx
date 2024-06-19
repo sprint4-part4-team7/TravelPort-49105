@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useProductImageStore, useThumbnailStore } from '@/utils/zustand';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import plusImage from '@/assets/icons/plus-white.svg';
 import useModal from '@/hooks/useModal';
 import product from '@/apis/product';
@@ -124,14 +125,16 @@ const Option = () => {
                 ],
               },
             ];
-            return instance.post('/productOption', optionInfo); // 각 옵션에 대한 비동기 작업을 반환합니다.
+            return instance.post('/productOption', optionInfo); // 각 옵션에 대한 비동기 작업을 반환
           });
           Promise.all(promise)
-            .then((results) => {
-              console.log('모든 옵션이 성공적으로 등록되었습니다.', results);
+            .then(() => {
+              // results
+              toast.success('모든 옵션이 성공적으로 등록되었습니다.');
             })
-            .catch((error) => {
-              console.error('옵션 등록 중 오류가 발생했습니다.', error);
+            .catch(() => {
+              // error
+              toast.error('옵션 등록 중 오류가 발생했습니다.');
             });
           localStorage.removeItem('categoryId');
           localStorage.removeItem('title');
@@ -144,16 +147,13 @@ const Option = () => {
           localStorage.removeItem('startDate');
           localStorage.removeItem('endDate');
           localStorage.removeItem('holiday');
-          // alert('상품 및 옵션이 성공적으로 등록되었습니다.');
           navigation('/partner');
         }
       }
     } catch (error) {
-      // console.error('상품 및 옵션 등록 중 오류가 발생했습니다:', error);
-      // alert('상품 및 옵션 등록 중 오류가 발생했습니다.');
+      toast.error('상품 및 옵션 등록 중 오류가 발생했습니다.');
     }
   };
-  // console.log(optionList);
 
   return (
     <>
