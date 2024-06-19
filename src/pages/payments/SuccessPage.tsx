@@ -35,9 +35,6 @@ const SuccessPage = () => {
   const confirm = () => {
     navigate('/');
   };
-  // const toMyReserv = () => {
-  //   navigate('/mypage/reservation-status');
-  // };
 
   const {
     mutate: createReservation,
