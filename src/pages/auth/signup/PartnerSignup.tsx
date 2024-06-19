@@ -36,7 +36,7 @@ const PartnerSignup = () => {
     defaultValues: { company: '', email: '', password: '', passwordCheck: '' },
   });
   const navigate = useNavigate();
-  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState<boolean | null>();
   const [emailMessage, setEmailMessage] = useState('');
   const setUserInfo = useUserStore((state) => state.setUserInfo);
   const { mutate: verifyEmail } = useVerifyEmail();
@@ -76,15 +76,13 @@ const PartnerSignup = () => {
   const handleSignupForm = async (data: PartnerSignupData) => {
     const { company: name, email, password } = data;
     const loginType: UserType = 'PARTNER';
-    const signupData = { name, email, password, loginType };
+    const signupData = { name, email, password, loginType, isEmailValid };
     signUp(signupData, {
       onSuccess: () => {
-        if (isEmailValid) {
-          toast.success('정상 가입되었습니다!');
-          const accessToken = getCookie('accessToken');
-          if (accessToken) setUserInfo({ ...jwtDecode(accessToken) });
-          navigate('/login', { replace: true });
-        }
+        toast.success('정상 가입되었습니다!');
+        const accessToken = getCookie('accessToken');
+        if (accessToken) setUserInfo({ ...jwtDecode(accessToken) });
+        navigate('/login', { replace: true });
       },
     });
   };
