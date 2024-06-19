@@ -97,14 +97,14 @@ const DatePickerCustom = ({
 
   return (
     <div className="flex gap-10">
-      <div className="date-picker-container relative" ref={outsideRef}>
+      <div className="relative date-picker-container" ref={outsideRef}>
         <button
-          className="border-2 border-blue-6 p-10 rounded-4 bg-white text-14 max-w-300"
+          className="p-10 bg-white border-2 border-blue-6 rounded-4 text-14 max-w-300"
           onClick={handleClick}
         >
           {displayText}
         </button>
-        <div className="absolute top-70 w-full">
+        <div className="absolute w-full top-70">
           {isOpen && (
             <DatePicker
               locale={ko}

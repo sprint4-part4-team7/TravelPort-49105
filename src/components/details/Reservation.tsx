@@ -43,7 +43,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     setEndDate,
     maxStartDate,
     minEndDate,
-  } = useDatePicker(product?.productId);
+  } = useDatePicker(product?.id);
   const { table } = useTimeTable(optionId);
 
   useEffect(() => {
@@ -179,7 +179,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
       <hr className="mb-20" />
       <div className="flex justify-between mb-60">
         <div className="flex flex-col gap-8">
-          <h2 className="font-semibold text-20">{product?.productName}</h2>
+          <h2 className="font-semibold text-20">{product?.name}</h2>
           <h3 className="font-semibold text-17">
             {filteredOption.length &&
               filteredOption[0]?.optionPrice.toLocaleString()}
