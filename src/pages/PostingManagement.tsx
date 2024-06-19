@@ -76,7 +76,7 @@ const PostingManagement = () => {
       setLodgeData(sortData(lodge, isNew));
       setActivityData(sortData(activity, isNew));
     }
-  }, [isNew, allData]);
+  }, [isNew, allPost]);
 
   return (
     <div className="mx-10 my-0 w-1000">
@@ -144,9 +144,52 @@ const PostingManagement = () => {
                     allCardNum={allData.length}
                   >
                     {allData.slice(start, end).map((item) => (
-                      <>
+                      <div key={item.id}>
                         <PostingCard
-                          key={item.id}
+                          id={item.id}
+                          title={item.name}
+                          salePeriod={{
+                            startDate: item.startDate,
+                            endDate: item.endDate,
+                          }}
+                          postingDate={item.createdAt}
+                          upperRight={
+                            <PostingSwitch
+                              id={item.id}
+                              state={item.isPosting}
+                            />
+                          }
+                          lowerRight={
+                            <ReservButtonOutlined
+                              status={5}
+                              onClick={openModal}
+                            />
+                          }
+                        />
+                        <DeletePosting
+                          id={item.id}
+                          closeModal={closeModal}
+                          isOpen={isModalOpen}
+                        />
+                      </div>
+                    ))}
+                  </ReservPagination>
+                ) : (
+                  <div className="flex items-center justify-center text-24 font-medium">
+                    게시한 상품이 없습니다.
+                  </div>
+                ))}
+              {selectedCategory === '숙박' &&
+                (lodgeData.length > 0 ? (
+                  <ReservPagination
+                    limit={limit}
+                    pageNum={pageNum}
+                    setPageNum={setPageNum}
+                    allCardNum={lodgeData.length}
+                  >
+                    {lodgeData.slice(start, end).map((item) => (
+                      <div key={item.id}>
+                        <PostingCard
                           id={item.id}
                           title={item.name}
                           salePeriod={{
@@ -173,52 +216,7 @@ const PostingManagement = () => {
                           closeModal={closeModal}
                           isOpen={isModalOpen}
                         />
-                      </>
-                    ))}
-                  </ReservPagination>
-                ) : (
-                  <div className="flex items-center justify-center text-24 font-medium">
-                    게시한 상품이 없습니다.
-                  </div>
-                ))}
-              {selectedCategory === '숙박' &&
-                (lodgeData.length > 0 ? (
-                  <ReservPagination
-                    limit={limit}
-                    pageNum={pageNum}
-                    setPageNum={setPageNum}
-                    allCardNum={lodgeData.length}
-                  >
-                    {lodgeData.slice(start, end).map((item) => (
-                      <>
-                        <PostingCard
-                          key={item.id}
-                          id={item.id}
-                          title={item.name}
-                          salePeriod={{
-                            startDate: item.startDate,
-                            endDate: item.endDate,
-                          }}
-                          postingDate={item.createdAt}
-                          upperRight={
-                            <PostingSwitch
-                              id={item.id}
-                              state={item.isPosting}
-                            />
-                          }
-                          lowerRight={
-                            <ReservButtonOutlined
-                              status={5}
-                              onClick={openModal}
-                            />
-                          }
-                        />
-                        <DeletePosting
-                          id={item.id}
-                          closeModal={closeModal}
-                          isOpen={isModalOpen}
-                        />
-                      </>
+                      </div>
                     ))}
                   </ReservPagination>
                 ) : (
@@ -235,9 +233,8 @@ const PostingManagement = () => {
                     allCardNum={activityData.length}
                   >
                     {activityData.slice(start, end).map((item) => (
-                      <>
+                      <div key={item.id}>
                         <PostingCard
-                          key={item.id}
                           id={item.id}
                           title={item.name}
                           salePeriod={{
@@ -258,12 +255,13 @@ const PostingManagement = () => {
                             />
                           }
                         />
+
                         <DeletePosting
                           id={item.id}
                           closeModal={closeModal}
                           isOpen={isModalOpen}
                         />
-                      </>
+                      </div>
                     ))}
                   </ReservPagination>
                 ) : (
