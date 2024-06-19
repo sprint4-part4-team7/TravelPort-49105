@@ -30,6 +30,21 @@ const PriceRange = ({
     setRangeMaxValue(value);
   };
 
+  const handleMinInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = Math.min(
+      Number(e.target.value.replace(/,/g, '')),
+      rangeMaxValue - priceGap,
+    );
+    setRangeMinValue(value);
+  };
+  const HandleMaxInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Math.max(
+      Number(e.target.value.replace(/,/g, '')),
+      rangeMinValue + priceGap,
+    );
+    setRangeMaxValue(value);
+  };
+
   const minPercent =
     ((rangeMinValue - fixedMinPrice) / (fixedMaxPrice - fixedMinPrice)) * 100;
   const maxPercent =
@@ -37,7 +52,7 @@ const PriceRange = ({
 
   return (
     <div className="flex flex-col p-24 rounded-24 shadow-[0_0_10px_0_rgba(0,0,0,0.2)] bg-white">
-      <h1 className="text-16 mb-32 ">1박당 요금</h1>
+      <h1 className="mb-32 text-16 ">1박당 요금</h1>
       <div className="slideWrapper">
         <input
           type="range"
@@ -58,7 +73,7 @@ const PriceRange = ({
           onChange={HandlePriceRangeMaxValue}
         />
         <div
-          className="absolute bg-blue-6 h-full -top-9 -left-10"
+          className="absolute h-full bg-blue-6 -top-9 -left-10"
           style={{
             left: `${minPercent}%`,
             right: `${100 - maxPercent}%`,
@@ -66,30 +81,18 @@ const PriceRange = ({
         />
       </div>
 
-      <div className="mt-42 flex shrink gap-40 mobile:w-full">
+      <div className="flex gap-40 mt-42 shrink mobile:w-full">
         <InputBox
           id="최소금액"
           label="최소 금액"
           value={rangeMinValue.toLocaleString()}
-          onChange={(e) => {
-            const value = Math.min(
-              Number(e.target.value),
-              rangeMaxValue - priceGap,
-            );
-            setRangeMinValue(value);
-          }}
+          onChange={handleMinInputChange}
         />
         <InputBox
           id="최대금액"
           label="최대 금액"
           value={rangeMaxValue.toLocaleString()}
-          onChange={(e) => {
-            const value = Math.max(
-              Number(e.target.value),
-              rangeMinValue + priceGap,
-            );
-            setRangeMaxValue(value);
-          }}
+          onChange={HandleMaxInputChange}
         />
       </div>
     </div>

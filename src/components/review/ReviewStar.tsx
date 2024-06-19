@@ -26,10 +26,11 @@ const ReviewStar = ({ onChange }: ReviewStarProps) => {
   }, [clicked, onChange]);
 
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 cursor-pointer">
       {array.map((el) =>
         clicked[el] ? (
           <ImStarFull
+            key={el}
             size={35}
             color="#3065e8"
             onClick={() => handleStarClick(el)}
