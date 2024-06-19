@@ -4,11 +4,17 @@ import { ImStarEmpty, ImStarFull } from 'react-icons/im';
 
 type ReviewStarProps = {
   onChange: (selectedScore: number) => void;
+  initialScore?: number;
 };
-const ReviewStar = ({ onChange }: ReviewStarProps) => {
+const ReviewStar = ({ onChange, initialScore = 0 }: ReviewStarProps) => {
   const [clicked, setClicked] = useState([false, false, false, false, false]);
 
   const array = [0, 1, 2, 3, 4];
+
+  useEffect(() => {
+    const initialClickStates = array.map((_, idx) => idx < initialScore);
+    setClicked(initialClickStates);
+  }, [initialScore]);
 
   const handleStarClick = (index: number) => {
     const clickStates = [...clicked];
