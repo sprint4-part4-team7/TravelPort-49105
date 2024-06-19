@@ -3,7 +3,7 @@ import { ReviewData } from '@/constants/types';
 import useReviewByProductIdQuery from './reactQuery/review/useReviewByProductIdQuery';
 
 const useProductReview = (productId: number) => {
-  const [productReviews, setProductReviews] = useState<ReviewData[]>();
+  const [productReviews, setProductReviews] = useState<ReviewData[]>([]);
 
   const { reviewByProductId } = useReviewByProductIdQuery(productId);
 

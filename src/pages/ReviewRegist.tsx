@@ -4,12 +4,17 @@ import ReviewRegister from '@/pages/ReviewRegister';
 import Footer from '@/components/common/Footer';
 
 const ReviewRegist = () => {
-  const { optionId } = useParams();
+  const { optionId, reviewId } = useParams<{
+    optionId: string;
+    reviewId?: string;
+  }>();
+
   const oIdNum = Number(optionId);
+
   return (
     <>
       <Layout>
-        <ReviewRegister optionId={oIdNum} />
+        <ReviewRegister optionId={oIdNum} reviewId={Number(reviewId)} />
       </Layout>
       <Footer />
     </>

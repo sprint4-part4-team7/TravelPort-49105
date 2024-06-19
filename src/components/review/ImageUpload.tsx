@@ -1,16 +1,24 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-undef */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import plusUpload from '@/assets/icons/plusUpload.svg';
 
 type ImageUploadProps = {
-  onChange: (selectedImages: string[], postImages: (null | File)[]) => void;
+  onChange: (
+    selectedImages: (string | null)[],
+    postImages: (null | File)[],
+  ) => void;
+  initialImages: (null | string)[];
 };
 
-const ImageUpload = ({ onChange }: ImageUploadProps): any => {
-  const [showImages, setShowImages] = useState<string[]>(Array(5).fill(''));
+const ImageUpload = ({ onChange, initialImages }: ImageUploadProps): any => {
+  const [showImages, setShowImages] = useState<(null | string)[]>([]);
   const [images, setImages] = useState<(null | File)[]>(Array(5).fill(null));
+
+  useEffect(() => {
+    setShowImages([...initialImages]);
+  }, [initialImages]);
 
   // 이미지 상대경로 저장
   const handleAddImages = (
@@ -39,7 +47,7 @@ const ImageUpload = ({ onChange }: ImageUploadProps): any => {
   // 클릭 시 이미지 삭제
   const handleDeleteImage = (boxIdx: number) => {
     const updatedShowImages = showImages.map((image, idx) =>
-      idx === boxIdx ? '' : image,
+      idx === boxIdx ? null : image,
     );
     const updatedImages = images.map((image, idx) =>
       idx === boxIdx ? null : image,
@@ -50,12 +58,12 @@ const ImageUpload = ({ onChange }: ImageUploadProps): any => {
   };
 
   return (
-    <div className="flex gap-12 flex-wrap">
+    <div className="flex flex-wrap gap-12">
       {showImages.map((image, idx) => {
         return (
           <div
             key={idx}
-            className="relative flex items-center justify-center w-120 h-120 bg-black-2 border-dotted border-black-4 border-1 rounded-2"
+            className="relative flex items-center justify-center border-dotted w-120 h-120 bg-black-2 border-black-4 border-1 rounded-2"
           >
             <label htmlFor={`input-file-${idx}`}>
               <input
@@ -64,20 +72,20 @@ const ImageUpload = ({ onChange }: ImageUploadProps): any => {
                 className="hidden"
                 onChange={(e) => handleAddImages(e, idx)}
               />
-              {image === '' && (
+              {!image && (
                 <div className="flex flex-col gap-8">
                   <img
                     src={plusUpload}
                     alt="업로드아이콘"
                     width={14}
-                    className="w-full flex justify-center cursor-pointer"
+                    className="flex justify-center w-full cursor-pointer"
                   />
-                  <div className="text-13 font-medium text-black-6">업로드</div>
+                  <div className="font-medium text-13 text-black-6">업로드</div>
                 </div>
               )}
             </label>
             {/* 저장해둔 이미지들을 순회하면서 화면에 이미지 출력 */}
-            {image !== '' && (
+            {image && (
               <div
                 className="absolute top-0 left-0"
                 onClick={() => handleDeleteImage(idx)}

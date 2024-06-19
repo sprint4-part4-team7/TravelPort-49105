@@ -4,6 +4,7 @@ import useProductOptionQuery from './reactQuery/productOption/useProductOptionQu
 const useReviewDefaults = (optionId: number) => {
   const [optionTitle, setOptionTitle] = useState('');
   const [productName, setProductName] = useState('');
+  const [productId, setProductId] = useState(0);
 
   const { productOption } = useProductOptionQuery(optionId);
 
@@ -12,9 +13,10 @@ const useReviewDefaults = (optionId: number) => {
   useEffect(() => {
     if (productOption) setOptionTitle(oName);
     setProductName(productOption?.product.name);
+    setProductId(productOption?.productId);
   }, [optionTitle, productOption]);
 
-  return { productOption, optionTitle, productName };
+  return { productOption, optionTitle, productName, productId };
 };
 
 export default useReviewDefaults;
