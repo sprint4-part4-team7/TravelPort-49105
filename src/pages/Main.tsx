@@ -8,6 +8,9 @@ import useProductAllQuery from '@/hooks/reactQuery/product/useProductAllQuery';
 import useFilterByCategory from '@/hooks/useFilterByCategory';
 import useDisplayCount from '@/hooks/useDispalyControl';
 import { useUserStore } from '@/utils/zustand';
+import carousel1 from '@/assets/images/carousel2.jpg';
+import carousel2 from '@/assets/images/carousel.jpg';
+import carousel3 from '@/assets/images/carousel3.jpg';
 import Carousel from '@/components/Carousel';
 import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
@@ -18,31 +21,30 @@ import Loading from '@/components/common/Loading';
 interface ImageItem {
   url: string;
   text?: string;
+  text2?: string;
   path?: string;
-  location?: string;
-  price?: number;
-  score?: number;
-  review?: number;
+  click?: string;
 }
 
 const carousel: ImageItem[] = [
   {
-    url: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIALsAyAMBIgACEQEDEQH/xAAZAAEBAQEBAQAAAAAAAAAAAAACAwEABgX/xAAZEAEBAQEBAQAAAAAAAAAAAAABABECQSH/xAAZAQEBAQEBAQAAAAAAAAAAAAACAAEDBQb/xAAWEQEBAQAAAAAAAAAAAAAAAAAAARH/2gAMAwEAAhEDEQA/APgJdkkuy9t4ugliTSxKboJYk0sSm6CXJJLkpup5Zk8uSi1NLEmkctKUMsSeWJTZU0jlRI5RygxyokUopQSKT8sS0pU0ilRIpRROxmkGigpda3Wlr0mWJNLsubx9TSxKiWJTdDLGaXJa3U0ik0uSi0Ejk8sym6mlyTSOU2UEjlRItpygkUnnyxKKVPLEmkUopQY+TyxtOUGLNIpRSpsfKjFo4Dda2U16ZLsmliQeNoJYk0sSm6CXJJLspup5Yk8sSi1PLEnkUtbKGWJUSKUaeWJPLEpsqaRyokUtOUGLPLGilTSKVEilHKmxqJFooDBqJFLSlTSybdRvTpYlRLEg8PU0uSaWJRanlyTSOU3QyxJ5YlFKnliTyxKKVNI5USKWlKCRZ5YlGnYk0ilNlTbGbFtdICRZ2NFE2LNi0UBIs2LaYN1rdRPVJYk0sSDwtFI5NLkotTSxJ5YlFqeWJNLEopU0jlRIpRSgkUnljRRNItRItpSp2M2LRgxZsUooDFmxbTgMGoxaKJsWaRadIDda3WlHrcsSaXJc3g6mkcqJHKboZYkkutbKmkcqJFKOUEik8saOVNilRilFKmkWoxaOVNiz6jacBizYtFAYs2LaUBik2LRxNizYtHAbJN1pvXpck0jlzfP6CRyqkUpsqaRyokUopQYpNjacoJFKjBo5QSLNi0UBizYtHAYs2LacBg1GDRQGLNi0cBizYNpwOos2LRwG65utN7NLEnliXJ85KmkcqJFLTlBIpPyxopU2KTYpRQGKTYtpwGDUYtHE2LNi06QGDUYNFAYs2La6QGLNg0UBizYtrpAYs2HVFAbrW6je1yxKmRS5vmpU0ilRi0cqaRZsW04DFmxaNNizYtFAYNRg2ukBizYtOkBgzYtHAYsmLaUBizYtOkBgz6i2lAYs2DRwG61uo49wxZpFub5qUEizYtFAYNRg2nAYNRh1RwGLNg0cFgzYtrpAYM2LTpAYM2LRwGLJi2nAYs2DRwWDNi0cBiyYtpQG61uo3umDUYdXJ8zAYs2DacDqLNg06QGLNg2lAYs2DTpBYM2DacFgzYNOkFgzYNHBYdTYtpwGLJi0cBizYNHBYM2DacFuubqN7th1Nh1cnzEFiyYtrpAYsmLRwGLJg2nBYM2DTpBYsmLacBgzYtHAYsuoNOkFiyYtpwWDNg0cFgyYtHBYsmLacDq2zq2jf//Z',
-    text: '낭만의 액티비티, 열기구',
+    url: carousel1,
+    text: '서비스 소개 ~',
     path: '/',
-    location: '인천 남동구',
-    price: 30000,
-    score: 5,
-    review: 1034,
   },
   {
-    url: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIALcAwwMBIgACEQEDEQH/xAAZAAEBAQEBAQAAAAAAAAAAAAACAQADBAf/xAAbEAEBAQEAAwEAAAAAAAAAAAAAARECEjFBIf/EABgBAQEBAQEAAAAAAAAAAAAAAAIBAAME/8QAGREBAQEBAQEAAAAAAAAAAAAAAAERAjES/9oADAMBAAIRAxEAPwD66lVnoeMKNPoVShRp0LFg0KNOjVEBp2DViihYilEhc+0wozpysKJCjO0Vo2FGdIsZY0iKjUsaxhrnRp2DYzl0CEzOb31CsRzQKmFUUQoWOlg1hrnRrpYFiwRwbHTBsWLAqYWNhHBxcWRcZ05aFI0iyI7RYuLIuM6RpGKRcTSHPxsORsTQ6crEx0sGxHHpysZ0xGc3sTCsSwEoWJh4NUQo10wasCudGx0sGwokAa6WJilAxsLGxdODi4si4xxMKNhSJrtGkWRZFkTTiyNIUhSJpWhIuHItiWhXLBsdsG8prl05Yzp4o2ubvYxWJYkQLBx0wbFGudg2Olg2KNAbHQbFGDYFjoOLDg42EzFBKRsXGOJhRJDkSuvNaFGkKRC1ZCkaFIlpNI2HIuBqVzwbHbBvLa59OXizpiNrkTVWqtRGw76FYFc6NdKFYaI0x69GMSwaTWLDgY0KxMZWxZG+NEpxsWNC+Icq8kkKMcpQ4MOBThSHInLpIFrB4peXTGsTUs1x8WdMRtc/lzqVUdBsSpWqLHOwaNKiwClWpTRGrNVhQa0VmZmjQolKNCiQohxiglEpylDglPQk6cukDk4501+MkWIyYiszOA1dGurn01CraNqxyqVGtG1YFa1Go04NX62pakYSRtVjYoJRKsKM0VKUWHIMhARQpBhxKcpcukc4UoHKTJamti6uoHkrY2uOjatC11iVqNrWpqxxqWjVtG0nOro2talWAzJakqoRShKrNpwoPNKDTKFBhQasKFEi/BLShQYqHKTDFtQ9XRta0L02Npajn5K2No6NqWpa6SNWtG1tG0nPper+Dalo2rI5UrUtS0LSA7WlDWlVjKOcpypWOHHOHyCyukPkOTg0iKCUGrKrNUQ1qa19BWXVtC1rQ6pRtXUc7WYdW1LUtTTdbWtTUtS0sc61qWpqE5WtalS1FwNXW1GbE05Slc4UbFdYccuXXkKp8ukc4cCrK6SqMqiStKmslXWoVbR6qxdTquXVK1z6qyNqawaxYOnU1kN3raNqjVc+mGqixyqMixgZmZmYoJRmdJ6OenOOnI9LD5dI58nHNT5IYqLK1ZqlQktDqlQtVhrn3Trl1Vg2hayViTXVqjE9VT6NZmcqyMxOfQrEZgVmZmWFGZmKHGYb6sdIUZgqnCZhaJUqsxhRrMiVz69OXSsQ1yZmJH//2Q==',
-    text: '낭만의 액티비티, 열기구',
-    path: '/',
-    location: '인천 남동구',
-    price: 30000,
-    score: 5,
-    review: 1034,
+    url: carousel2,
+    text: '프라이빗 풀이 있는',
+    text2: '추천 숙소 9곳',
+    path: '/list/1',
+    click: '숙소 상품 둘러보기',
+  },
+  {
+    url: carousel3,
+    text: '자연에서 즐기는',
+    text2: '카파도키아 열기구 투어',
+    path: '/list/2',
+    click: '체험 상품 둘러보기',
   },
 ];
 
