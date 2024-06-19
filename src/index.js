@@ -26,6 +26,7 @@ root.render(
     <div style={{ fontSize: 16 }}>
       <ReactQueryDevtools initialIsOpen />
       <ToastContainer
+        className="text-16 font-semibold"
         position="top-center"
         autoClose={3000}
         closeOnClick
