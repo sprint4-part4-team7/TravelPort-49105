@@ -1,34 +1,38 @@
 import changeDateForm from '@/utils/changeDateForm';
-import { ReactNode } from 'react';
+import useModal from '@/hooks/useModal';
+import ReservButtonOutlined from '@/components/myPage/ReservButtonOutlined';
+import DeletePosting from '@/components/myPage/Modal/DeletePosting';
+import PostingSwitch from '@/components/myPage/PostingSwitch';
 
 interface PostingCardProps {
   id: number;
   title: string;
   postingDate: string;
+  postingState: boolean;
   salePeriod?: {
     startDate: string;
     endDate: string;
   };
   option?: string;
-  upperRight?: ReactNode;
-  lowerRight?: ReactNode;
 }
 
 const PostingCard = ({
   id = 0,
   title,
   postingDate,
+  postingState,
   salePeriod,
   option,
-  upperRight,
-  lowerRight,
 }: PostingCardProps) => {
+  const { isModalOpen, openModal, closeModal } = useModal();
+
   const duration =
     salePeriod?.startDate && salePeriod?.endDate
       ? `${changeDateForm(salePeriod?.startDate)} ~ ${changeDateForm(salePeriod?.endDate)}`
       : salePeriod?.startDate || salePeriod?.endDate || '';
   const salePeriodStr = `판매 기간 : ${duration}`;
   const postingDateStr = `게시일 : ${changeDateForm(postingDate)}`;
+
   return (
     <div
       id={id ? id.toString() : 'undefined'}
@@ -38,7 +42,9 @@ const PostingCard = ({
         <div className="flex flex-col gap-12">
           <div className="flex flex-row font-semibold justify-between">
             <div className="text-20 font-semibold">상품명 : {title}</div>
-            <div className="text-16 font-semibold">{upperRight}</div>
+            <div className="text-16 font-semibold">
+              <PostingSwitch id={id} state={postingState} />
+            </div>
           </div>
           <div className="flex flex-col gap-6">
             {option && (
@@ -51,7 +57,8 @@ const PostingCard = ({
         </div>
         <div className="flex flex-row justify-between items-center">
           <div className="text-16">{postingDateStr}</div>
-          {lowerRight}
+          <ReservButtonOutlined status={5} onClick={openModal} />
+          <DeletePosting id={id} closeModal={closeModal} isOpen={isModalOpen} />
         </div>
       </div>
     </div>

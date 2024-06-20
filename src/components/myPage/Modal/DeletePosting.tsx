@@ -1,4 +1,5 @@
 import useProductDeleteMutation from '@/hooks/reactQuery/product/useProductDeleteMutation';
+import { toast } from 'react-toastify';
 import DefaultModal from '@/components/common/DefaultModal';
 
 const DeletePosting = ({
@@ -14,6 +15,7 @@ const DeletePosting = ({
 
   const handleDelete = () => {
     mutate(productId);
+    toast.success('게시물이 삭제되었습니다.');
     closeModal();
   };
   return (
