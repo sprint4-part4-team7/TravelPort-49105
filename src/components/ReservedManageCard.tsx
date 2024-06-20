@@ -1,6 +1,4 @@
 /* eslint-disable no-nested-ternary */
-// import DENIED from '@/assets/icons/x-square-red.svg';
-// import CANCEL from '@/assets/icons/x-square.svg';
 import { ReservProductOptionType, ReservStatusType } from '@/constants/types';
 import instance from '@/utils/axios';
 import { useState } from 'react';
@@ -71,7 +69,6 @@ const ReservedManageCard = ({
       title={productOption.product.name}
       date={reserveDate}
       option={productOption.optionName}
-      // schedule={`일정 : ${changeDateForm(timeTable.targetDate)}, ${timeTable.startTimeOnly} ~ ${timeTable.endTimeOnly}`}
       time={timeTable}
       userInfo={`예약자명 : ${user.name} / 전화번호 : ${user.phone}`}
       upperRight={<ReservChips status={state} />}
@@ -108,7 +105,6 @@ const ReservedManageCard = ({
               거절됨
             </div>
             <div className="flex gap-8 items-end tablet:flex-col mobile:justify-between">
-              <ReservButtonOutlined status={4} onClick={handleStandby} />
               <Button
                 variant="default"
                 outlined
