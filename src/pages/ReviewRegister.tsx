@@ -71,7 +71,6 @@ const ReviewRegister = ({ optionId, reviewId = 0 }: ReviewRegisterProps) => {
         toast.error('접근 권한이 없습니다.');
       } else {
         for (let i = 0; i < productReviews?.length; i++) {
-          console.log(productReviews[i]);
           if (productReviews[i].userId === userInfo.id) {
             setValue('score', productReviews[i].score);
             setValue('reviewContent', productReviews[i].reviewContent);
