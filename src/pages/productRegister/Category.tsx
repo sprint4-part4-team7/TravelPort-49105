@@ -65,7 +65,7 @@ const Category = ({ setPage }: PageIdProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col gap-32 mx-40">
+      <div className="flex flex-col gap-12 mx-40">
         <h3 className="text-17 font-semibold text-black-10">
           상품 유형을 골라주세요.
         </h3>
@@ -117,7 +117,7 @@ const Category = ({ setPage }: PageIdProps) => {
         </ul>
         {preCategoryValue === '숙박' && (
           <div>
-            <h3 className="mb-32 text-17 font-semibold text-black-10">
+            <h3 className="mb-12 text-17 font-semibold text-black-10">
               숙박 옵션을 선택해주세요.
             </h3>
             <div className="ml-40 w-full max-w-screen-lg grid grid-cols-2 md:grid-cols-3 desktop:grid-cols-6">
@@ -145,7 +145,7 @@ const Category = ({ setPage }: PageIdProps) => {
         )}
         {preCategoryValue === '체험' && (
           <div>
-            <h3 className="mb-32 text-17 font-semibold text-black-10">
+            <h3 className="mb-12 text-17 font-semibold text-black-10">
               체험 옵션을 선택해주세요.
             </h3>
             <div className="ml-40 w-full max-w-screen-lg grid grid-cols-2 md:grid-cols-3 desktop:grid-cols-6">
