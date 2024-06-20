@@ -61,9 +61,10 @@ const ReviewRegister = ({ optionId, reviewId }: ReviewRegisterProps) => {
   const { userInfo } = useUserStore();
   const userId = userInfo.id;
   const { productReviews } = useProductReview(productId);
+
   if (reviewId) {
     const { uId } = useGetUserIdByReviewId(reviewId);
-    if (uId !== userId) {
+    if (uId && uId !== userId) {
       navigate('/');
       toast.error('접근 권한이 없습니다.');
     }
