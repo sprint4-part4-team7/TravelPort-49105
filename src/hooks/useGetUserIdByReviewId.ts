@@ -1,17 +1,20 @@
-import review from '@/apis/review';
 import { useEffect, useState } from 'react';
+import useReviewByReviewIdQuery from './reactQuery/review/useReviewByReviewIdQuery';
 
 const useGetUserIdByReviewId = (reviewId: number) => {
-  const [uId, setUId] = useState(0);
+  const [uId, setUId] = useState<number | null>(null);
+  const { reviewData, isLoadingReview, reviewError } =
+    useReviewByReviewIdQuery(reviewId);
 
   useEffect(() => {
-    const fetchReviewData = async (rId: number) => {
-      const response = await review.getReviewInfo(rId);
-      setUId(response.review.userId);
-    };
-    fetchReviewData(reviewId);
-  }, [reviewId]);
+    if (reviewData && !isLoadingReview) {
+      const reviewUId = reviewData.review.user.id;
+      if (reviewUId) {
+        setUId(reviewUId);
+      }
+    }
+  }, [reviewData, isLoadingReview]);
 
-  return { uId };
+  return { uId, isLoadingReview, reviewError };
 };
 export default useGetUserIdByReviewId;

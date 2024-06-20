@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useProductImageStore, useThumbnailStore } from '@/utils/zustand';
+import { useNavigate } from 'react-router-dom';
 import plusImage from '@/assets/icons/plus-white.svg';
 import useModal from '@/hooks/useModal';
-import productOption from '@/apis/productOption';
 import product from '@/apis/product';
 import postImages from '@/apis/image';
+import instance from '@/utils/axios';
 import BUCKER_NAME from '@/constants/bucket';
 import trashImage from '@/assets/icons/trash-red.svg';
 import Button from '@/components/common/Button';
@@ -19,6 +20,8 @@ const Option = () => {
   const { productImages } = useProductImageStore();
 
   const disabled = false;
+
+  const navigation = useNavigate();
 
   // 이전 페이지에서 저장한 로컬 스토리지 데이터 불러오기
   const name = localStorage.getItem('title');
@@ -43,7 +46,6 @@ const Option = () => {
     return `${yyyy}-${mm}-${dd} ${hh}:${min}:${ss}`;
   };
 
-  // console.log(startDate !== null ? formatDate(new Date(startDate)) : '');
   const onSubmitAll = async () => {
     // 여기에 서버로 전송할 데이터를 모두 모아 보냄
     try {
@@ -51,19 +53,20 @@ const Option = () => {
       const categoryResponse = localStorage.getItem('categoryId');
       const handleUploadThumbnail = async () => {
         const thumbnailResponse = await postImages(
-          thumbnail,
-          BUCKER_NAME.PRODUCT_PREVIEW,
+          [thumbnail],
+          BUCKER_NAME.ADDITIONAL_PRODUCT,
         );
-        return thumbnailResponse;
+        return thumbnailResponse[0];
       };
       const handleUploadProduct = async () => {
         const productImagesResponse = await postImages(
           productImages,
           BUCKER_NAME.ADDITIONAL_PRODUCT,
         );
-        return productImagesResponse.data;
+        return productImagesResponse;
       };
       // 로컬에서 받아오는 데이터
+      console.log(await handleUploadProduct());
       const productInfo = {
         name: name !== null ? name : '', // 상품명을 여기에 입력
         productType: productType !== null ? productType : '', // 상품 타입, 여러 개의 타입이면 배열로 전달
@@ -89,31 +92,48 @@ const Option = () => {
           parseInt(categoryResponse, 10),
           productInfo,
         );
-        if (productResponse.data.status === 201) {
+        if (productResponse.data.id) {
           // console.log('2단계'); // 잘 받아와지는지 테스트용
+          console.log(optionList);
 
           // 3. 상품 옵션을 서버에 등록(option페이지에있는거 그대로 사용)
-          optionList.map((option) => {
-            const optionInfo = {
-              optionName: option[1], // 옵션 이름
-              optionDesc: '옵션 설명', // 옵션 설명
-              optionPrice: parseInt(option[4], 10), // 옵션 가격
-              optionImage: URL.createObjectURL(option[0]), // 옵션 이미지 URL
-              minUserCount: parseInt(option[2], 10), // 최소 참여 인원
-              maxUserCount: parseInt(option[2], 10), // 최대 참여 인원
-              userCount: parseInt(option[3], 10), // 티켓 갯수
-              timeTable: [
-                {
-                  startTimeOnly: `${option[5]}시`, // 시작 시간
-                  endTimeOnly: `${option[6]}시`, // 종료 시간
-                },
-              ],
+          /* eslint-disable array-callback-return */
+          const promise = optionList.map(async (option) => {
+            const handleUploadOption = async () => {
+              const optionResponse = await postImages(
+                [option[0]],
+                BUCKER_NAME.PRODUCT_OPTION,
+              );
+              return optionResponse[0];
             };
-            return productOption.postProductOption(
-              productResponse.data.id,
-              optionInfo,
-            ); // productResponse.id는 방금 등록한 상품의 ID입니다.
+            const optionInfo = [
+              {
+                productId: productResponse.data.id,
+                optionName: option[1], // 옵션 이름
+                optionDesc: option[7], // 옵션 설명
+                optionPrice: parseInt(option[4], 10), // 옵션 가격
+                optionImage: await handleUploadOption(), // 옵션 이미지 URL
+                minUserCount: parseInt(option[2], 10), // 최소 참여 인원
+                maxUserCount: parseInt(option[2], 10), // 최대 참여 인원
+                userCount: parseInt(option[3], 10), // 티켓 갯수
+                timeTable: [
+                  {
+                    startTimeOnly: `${option[5]}시`, // 시작 시간
+                    endTimeOnly: `${option[6]}시`, // 종료 시간
+                  },
+                ],
+              },
+            ];
+            return instance.post('/productOption', optionInfo); // 각 옵션에 대한 비동기 작업을 반환합니다.
           });
+          Promise.all(promise)
+            .then((results) => {
+              console.log('모든 옵션이 성공적으로 등록되었습니다.', results);
+            })
+            .catch((error) => {
+              console.error('옵션 등록 중 오류가 발생했습니다.', error);
+            });
+          localStorage.removeItem('categoryId');
           localStorage.removeItem('title');
           localStorage.removeItem('subCategory');
           localStorage.removeItem('content');
@@ -125,6 +145,7 @@ const Option = () => {
           localStorage.removeItem('endDate');
           localStorage.removeItem('holiday');
           // alert('상품 및 옵션이 성공적으로 등록되었습니다.');
+          navigation('/partner');
         }
       }
     } catch (error) {
@@ -132,6 +153,7 @@ const Option = () => {
       // alert('상품 및 옵션 등록 중 오류가 발생했습니다.');
     }
   };
+  // console.log(optionList);
 
   return (
     <>
@@ -152,7 +174,10 @@ const Option = () => {
           </thead>
           <tbody>
             {optionList.map((i: any, index: number) => (
-              <tr className="flex bg-black-2 p-12 gap-20 items-center justify-center text-16">
+              <tr
+                key={`${i}option`}
+                className="flex bg-black-2 p-12 gap-20 items-center justify-center text-16"
+              >
                 <td aria-label="img" className="flex flex-1 justify-center">
                   <img
                     className="w-60 h-60"

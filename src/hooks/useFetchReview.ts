@@ -1,13 +1,13 @@
-import { GetReviewType } from '@/constants/types';
+import { GetReviewType, ReviewByIdData } from '@/constants/types';
 import { useState } from 'react';
 import useReviewByReviewIdQuery from './reactQuery/review/useReviewByReviewIdQuery';
 
 const useFetchReview = (curReviewId: number) => {
-  const [review, setReview] = useState<GetReviewType>();
+  const [review, setReview] = useState<ReviewByIdData>();
 
-  const { reviewByReviewIdResponse } = useReviewByReviewIdQuery(curReviewId);
+  const { reviewData } = useReviewByReviewIdQuery(curReviewId);
 
-  setReview(reviewByReviewIdResponse);
+  setReview(reviewData);
 
   return { review };
 };

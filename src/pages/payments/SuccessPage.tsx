@@ -29,12 +29,11 @@ const SuccessPage = () => {
 
   const [isInitialized, setIsInitialized] = useState(false);
   const [isReservationWhitPay, setIsReservationWhitPay] = useState(false);
+  const [isCartReservationCompleted, setIsCartReservationCompleted] =
+    useState(false);
 
   const confirm = () => {
     navigate('/');
-  };
-  const toMyReserv = () => {
-    navigate('/mypage/reservation-status');
   };
 
   const {
@@ -62,11 +61,12 @@ const SuccessPage = () => {
         userId,
         cartIds,
       });
+      setIsCartReservationCompleted(true);
     }
   };
 
   const handleReservationPost = async () => {
-    if (!isReservationWhitPay) {
+    if (!isReservationWhitPay && !isCartReservationCompleted) {
       createReservation({
         userId: reservationInfo.userId,
         productOptionId: reservationInfo.productOptionId,
@@ -103,10 +103,11 @@ const SuccessPage = () => {
   }, [cartData, pId]);
 
   useEffect(() => {
-    if (cartInfo.length === 0 && reservationInfo.productOptionId !== 0) {
+    if (cartInfo.length === 0 && !isCartReservationCompleted) {
+      // Check if cart reservation is not completed
       handleReservationPost();
     }
-  }, [cartInfo, reservationInfo]);
+  }, [cartInfo, isCartReservationCompleted]);
 
   useEffect(() => {
     handlePaymentPut(payId);
@@ -126,8 +127,8 @@ const SuccessPage = () => {
             <div className="flex w-full gap-28 mt-100 mobile:flex-col">
               <Button
                 outlined
+                onClick={() => navigate('/mypage/reservation-status')}
                 buttonStyle="w-320 h-48 text-16 font-normal"
-                onClick={toMyReserv}
               >
                 내 예약 현황으로
               </Button>
