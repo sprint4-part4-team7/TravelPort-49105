@@ -64,7 +64,7 @@ const ChangePassword = ({ closeModal }: { closeModal: () => void }) => {
               pattern: {
                 value: PASSWORD_REGEX,
                 message:
-                  '비밀번호는 최소 8자 이상이며, 영문 또는 숫자로 이루어져야 합니다',
+                  '비밀번호는 최소 8자 이상이며, 영문과 숫자의 조합으로 이루어져야 합니다',
               },
               validate: (value) =>
                 value !== getValues('prevPassword') ||
