@@ -6,9 +6,9 @@ interface DatePickerValues {
   setStartDate: Dispatch<SetStateAction<Date | null>>;
   endDate: Date | null;
   setEndDate: Dispatch<SetStateAction<Date | null>>;
-  maxStartDate?: Date; // maxStartDate가 undefined 또는 Date 타입일 수 있음
-  minEndDate?: Date; // minEndDate가 undefined 또는 Date 타입일 수 있음
-  holiday?: any; // holiday가 undefined일 수 있음
+  maxStartDate?: Date;
+  minEndDate?: Date;
+  holiday?: any;
   onChange: (dates: any) => void;
 }
 
@@ -21,7 +21,7 @@ const useDatePicker = (productId?: number): DatePickerValues => {
 
   const fetchProductDetails = async (pId: number) => {
     try {
-      const { productByProductId } = await useProductByIdQuery(pId); // await 추가
+      const { productByProductId } = useProductByIdQuery(pId);
 
       const leftDate = productByProductId?.startDate; // 상품 판매 시작 날짜
       const rightDate = productByProductId?.endDate; // 상품 판매 종료 날짜
