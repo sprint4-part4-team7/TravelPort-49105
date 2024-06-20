@@ -160,7 +160,7 @@ const Option = () => {
       <div className="mx-40 flex flex-col">
         <table className="table-auto w-full">
           <thead>
-            <tr className="flex justify-center gap-20 text-17 p-12">
+            <tr className="flex font-semibold justify-center gap-20 text-17 p-12">
               <th className="flex-1">대표이미지</th>
               <th className="flex-1">체험상품명</th>
               <th className="flex-1">가능인원</th>
