@@ -7,7 +7,7 @@ import uploadIcon from '@/assets/icons/upload.svg';
 import { putUserInfo } from '@/apis/editInfo';
 import { PHONE_NUMBER_REGEX } from '@/constants/InputType';
 import { UserInfo } from '@/constants/types';
-import { ChangeEventHandler, useState } from 'react';
+import { ChangeEventHandler, useEffect, useState } from 'react';
 import postImages from '@/apis/image';
 import BUCKER_NAME from '@/constants/bucket';
 import { ReactComponent as Delete } from '@/assets/icons/x-circle-custom.svg';
@@ -26,6 +26,7 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
     userInfo.profileImage,
   );
   const [img, setImg] = useState<File[]>([]);
+  const [isChanged, setIsChanged] = useState(false);
   const isUser = !isPartner;
 
   const {
@@ -33,9 +34,19 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
     handleSubmit,
     setError,
     formState: { errors },
+    watch,
   } = useForm<UserInfo>({
     defaultValues: { ...userInfo },
   });
+
+  const watchedFields = watch();
+
+  useEffect(() => {
+    const hasChanged = (Object.keys(watchedFields) as (keyof UserInfo)[]).some(
+      (key) => watchedFields[key] !== userInfo[key],
+    );
+    setIsChanged(hasChanged);
+  }, [watchedFields, userInfo]);
 
   const handleImgUpload: ChangeEventHandler<HTMLInputElement> = (e) => {
     const file = e.target.files?.[0];
@@ -47,6 +58,7 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
     const instantUrl = URL.createObjectURL(file);
     setInstantImg(instantUrl);
     setImg([file]);
+    setIsChanged(true);
   };
 
   const handleSave = async (data: UserInfo) => {
@@ -67,8 +79,6 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
     if (newData.isPartner) {
       delete newData.realName;
     }
-    console.log(newData);
-
     try {
       await putUserInfo(newData);
       toast.success('저장되었습니다');
@@ -98,6 +108,7 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
                 onClick={() => {
                   setInstantImg(undefined);
                   setImg([]);
+                  setIsChanged(true);
                 }}
               >
                 <Delete stroke="#000000" />
@@ -208,7 +219,9 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
           </div>
         </div>
       </form>
-      <Button onClick={handleSubmit(handleSave)}>저장하기</Button>
+      <Button onClick={handleSubmit(handleSave)} disabled={!isChanged}>
+        저장하기
+      </Button>
       <Modal
         isOpen={isModalOpen}
         closeModal={closeModal}
