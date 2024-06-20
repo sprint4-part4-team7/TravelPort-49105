@@ -6,16 +6,9 @@ import { PageIdProps } from './productPage';
 import Option from './Option';
 import CheckButton from './CheckButton';
 
-const Date = ({ setPage }: PageIdProps) => {
-  const {
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
-    // maxStartDate,
-    // minEndDate,
-  } = useDatePicker();
-  const { register, watch } = useForm<any>({
+const DateCheck = ({ setPage }: PageIdProps) => {
+  const { startDate, setStartDate, endDate, setEndDate } = useDatePicker();
+  const { register, watch, setValue } = useForm<any>({
     mode: 'onChange',
   });
 
@@ -28,6 +21,44 @@ const Date = ({ setPage }: PageIdProps) => {
       setDisabled(false);
     }
   }, [endDate]);
+
+  useEffect(() => {
+    const holidayStore = localStorage.getItem('holiday');
+    if (holidayStore) {
+      const holidaySpace = holidayStore.split(',');
+      const holidayList: any = [];
+      holidaySpace.map((i) => {
+        if (i === '0') {
+          holidayList.push(['sun', 0]);
+        } else if (i === '1') {
+          holidayList.push(['mom', 1]);
+        } else if (i === '2') {
+          holidayList.push(['tue', 2]);
+        } else if (i === '3') {
+          holidayList.push(['wen', 3]);
+        } else if (i === '4') {
+          holidayList.push(['thu', 4]);
+        } else if (i === '5') {
+          holidayList.push(['fri', 5]);
+        } else if (i === '6') {
+          holidayList.push(['sat', 6]);
+        }
+        return '';
+      });
+      holidayList.map((v: any) => {
+        setValue(v[0], v[1]);
+        return '';
+      });
+    }
+    const startStoredDate = localStorage.getItem('startDate');
+    if (startStoredDate) {
+      setStartDate(new Date(startStoredDate));
+    }
+    const endStoredDate = localStorage.getItem('endDate');
+    if (endStoredDate) {
+      setEndDate(new Date(endStoredDate));
+    }
+  }, []);
 
   const onSubmit = () => {
     if (startDate !== null && endDate !== null) {
@@ -48,11 +79,11 @@ const Date = ({ setPage }: PageIdProps) => {
   return (
     <form>
       <div className="mx-40">
-        <div className="border p-24">
-          <h3 className="flex flex-col gap-24 text-17 font-semiblod text-black-10">
+        <div className="border p-12">
+          <h3 className="flex flex-col mb-12 text-17 font-semibold text-black-10">
             휴무일
           </h3>
-          <div className="flex items-center gap-12">
+          <div className="w-full max-w-screen-lg grid grid-cols-2 md:grid-cols-3 desktop:grid-cols-7 text-15">
             <label
               className="flex items-center gap-8 px-8 py-4 w-100"
               htmlFor="mon"
@@ -110,9 +141,6 @@ const Date = ({ setPage }: PageIdProps) => {
           endDate={endDate}
           setEndDate={setEndDate}
           categoryId={1}
-          // maxStartDate={maxStartDate}
-          // minEndDate={minEndDate}
-          // holiday={['']}
         />
       </div>
       <CheckButton disabled={disabled} onClick={() => onSubmit()} />
@@ -120,4 +148,4 @@ const Date = ({ setPage }: PageIdProps) => {
   );
 };
 
-export default Date;
+export default DateCheck;
