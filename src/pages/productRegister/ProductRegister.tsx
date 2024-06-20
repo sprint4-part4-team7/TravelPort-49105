@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Category from '@/pages/productRegister/Category';
 import Description from '@/pages/productRegister/Description';
 import Location from '@/pages/productRegister/Location';
-import Date from '@/pages/productRegister/Date';
+import DateCheck from '@/pages/productRegister/DateCheck';
 import Option from '@/pages/productRegister/Option';
 
 const ProductRegister = () => {
@@ -53,7 +53,7 @@ const ProductRegister = () => {
             <li>
               <div
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                onClick={() => setPage(<Date setPage={setPage} />)}
+                onClick={() => setPage(<DateCheck setPage={setPage} />)}
               >
                 <div className="step-number">4</div>
                 <span className="flex-1 ms-3 whitespace-nowrap">날짜</span>
