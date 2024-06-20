@@ -6,7 +6,7 @@ import saveImage from '@/assets/icons/check-circle-broken.svg';
 import searchImage from '@/assets/icons/search-pr.svg';
 import CheckButton from '@/pages/productRegister/CheckButton';
 import Button from '@/components/common/Button';
-import Date from '@/pages/productRegister/Date';
+import DateCheck from '@/pages/productRegister/DateCheck';
 
 type PostCodeForm = {
   address: string;
@@ -159,7 +159,7 @@ const PostCode = ({ setPage, setX, setY, setBuilding }: PostCodeProps) => {
       </div>
       <CheckButton
         disabled={disabled}
-        onClick={() => setPage(<Date setPage={setPage} />)}
+        onClick={() => setPage(<DateCheck setPage={setPage} />)}
       />
     </form>
   );
