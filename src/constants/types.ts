@@ -101,6 +101,27 @@ export type ReviewData = {
   userName: string;
   userProfileImage: string;
   optionName: string;
+  userId: number;
+};
+
+export type ReviewByIdData = {
+  review: {
+    id: number;
+    score: number;
+    reviewImages: string[];
+    reviewContent: string;
+    partnerAnswer?: string;
+    createdAt: string;
+    user: {
+      id: number;
+      name: string;
+      profileImage: string;
+    };
+    product: {
+      id: number;
+      name: string;
+    };
+  };
 };
 
 export type CardListsType = {

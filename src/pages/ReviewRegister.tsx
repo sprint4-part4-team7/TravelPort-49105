@@ -9,9 +9,13 @@ import useModal from '@/hooks/useModal';
 import { useNavigate } from 'react-router-dom';
 import useReviewDefaults from '@/hooks/useReviewDefaults';
 import useReviewPostMutation from '@/hooks/reactQuery/review/useReviewPostMutation';
+import useReviewPutMutation from '@/hooks/reactQuery/review/useReviewPutMutation';
 import BUCKER_NAME from '@/constants/bucket';
 import postImages from '@/apis/image';
 import { useUserStore } from '@/utils/zustand';
+import useProductReview from '@/hooks/useProductReview';
+import useGetUserIdByReviewId from '@/hooks/useGetUserIdByReviewId';
+import { toast } from 'react-toastify';
 import TextBox from '@/components/common/TextBox';
 import ReviewStar from '@/components/review/ReviewStar';
 import Button from '@/components/common/Button';
@@ -22,8 +26,9 @@ import DefaultModal from '@/components/common/DefaultModal';
 
 interface ReviewRegisterProps {
   optionId: number;
+  reviewId?: number;
 }
-const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
+const ReviewRegister = ({ optionId, reviewId = 0 }: ReviewRegisterProps) => {
   const {
     register,
     handleSubmit,
@@ -42,14 +47,56 @@ const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
   });
 
   const [postingImages, setPostingImages] = useState<(null | File)[]>([]);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [initialImages, setInitialImages] = useState<(null | string)[]>([]);
 
   const { isModalOpen, openModal, closeModal } = useModal();
   const navigate = useNavigate();
-  const { productOption, optionTitle, productName } =
+  const { productOption, optionTitle, productName, productId } =
     useReviewDefaults(optionId);
-  const { mutate, isLoading } = useReviewPostMutation();
+  const { mutate: createReview, isLoading: isCreating } =
+    useReviewPostMutation();
+  const { mutate: updateReview, isLoading: isUpdating } =
+    useReviewPutMutation();
   const { userInfo } = useUserStore();
   const userId = userInfo.id;
+  const { productReviews } = useProductReview(productId);
+  const { uId, isLoadingReview, reviewError } =
+    useGetUserIdByReviewId(reviewId);
+
+  useEffect(() => {
+    if (reviewId && !isLoadingReview && uId) {
+      if (uId !== userId) {
+        navigate('/');
+        toast.error('접근 권한이 없습니다.');
+      } else {
+        for (let i = 0; i < productReviews?.length; i++) {
+          if (productReviews[i].userId === userInfo.id) {
+            setValue('score', productReviews[i].score);
+            setValue('reviewContent', productReviews[i].reviewContent);
+            setValue('reviewImages', productReviews[i].reviewImages);
+            const initialImagesArray = new Array(5).fill(null);
+            for (let j = 0; j < productReviews[i].reviewImages.length; j++) {
+              initialImagesArray[j] = productReviews[i].reviewImages[j];
+            }
+            setInitialImages(initialImagesArray);
+            setIsEditMode(true);
+          }
+        }
+      }
+    } else if (uId) {
+      navigate('/');
+      toast.error('접근 권한이 없습니다.');
+    }
+  }, [
+    reviewId,
+    uId,
+    isLoadingReview,
+    userId,
+    productReviews,
+    setValue,
+    navigate,
+  ]);
 
   // 버튼 활성화 여부 조절
   const [isDisableToSubmit, setIsDisableToSubmit] = useState(true);
@@ -59,7 +106,9 @@ const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
     else setIsDisableToSubmit(true);
   }, [errors, getValues('score'), getValues('reviewContent')]);
 
-  if (isLoading) return <Loading />;
+  if (isCreating || isUpdating) {
+    return <Loading />;
+  }
 
   // 이미지 업로드 함수
   const handleUpload = async () => {
@@ -77,12 +126,22 @@ const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
   const onSubmit = async (data: any) => {
     const postedImages = await handleUpload();
     data.reviewImages = postedImages;
-    mutate({
-      userId,
-      productOptionId: optionId,
-      productId: productOption.product.id,
-      reviewInfo: data,
-    });
+
+    if (isEditMode && reviewId) {
+      updateReview({
+        userId,
+        productOptionId: optionId,
+        reviewId,
+        reviewInfo: data,
+      });
+    } else {
+      createReview({
+        userId,
+        productOptionId: optionId,
+        productId: productOption.product.id,
+        reviewInfo: data,
+      });
+    }
     closeModal();
   };
 
@@ -104,10 +163,13 @@ const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
   };
 
   const handleImageChange = (
-    selectedImages: string[],
+    selectedImages: (string | null)[],
     postImageArr: (null | File)[],
   ) => {
-    setValue('reviewImages', selectedImages);
+    const filteredSelectedImages: string[] = selectedImages.filter(
+      (image): image is string => image !== null,
+    );
+    setValue('reviewImages', filteredSelectedImages);
     setPostingImages(postImageArr);
   };
 
@@ -117,6 +179,8 @@ const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
       openModal();
     }
   };
+
+  const submitButtonText = isEditMode ? '수정하기' : '등록하기';
 
   return (
     <form
@@ -136,7 +200,10 @@ const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
       <hr />
       <div className="my-40 font-bold text-18">
         <h1 className="mb-20">STEP1 별점을 입력해주세요</h1>
-        <ReviewStar onChange={handleScoreChange} />
+        <ReviewStar
+          onChange={handleScoreChange}
+          initialScore={getValues('score')}
+        />
         {errors.score && (
           <p className="text-[#FF4D4F] text-12 mt-4">{errors.score.message}</p>
         )}
@@ -160,10 +227,10 @@ const ReviewRegister = ({ optionId }: ReviewRegisterProps) => {
       <h1 className="my-20 font-bold text-18">
         STEP3 사진을 추가하기 (최대 5장)
       </h1>
-      <ImageUpload onChange={handleImageChange} />
+      <ImageUpload onChange={handleImageChange} initialImages={initialImages} />
       <div className="mt-60">
         <Button buttonType="submit" disabled={isDisableToSubmit}>
-          등록하기
+          {submitButtonText}
         </Button>
       </div>
       <DefaultModal

@@ -11,8 +11,10 @@ const useReviewByReviewIdQuery = (reviewId: number) => {
     queryFn: () => review.getReviewInfo(reviewId),
   });
 
+  const reviewData = reviewByReviewIdResponse?.data;
+
   return {
-    reviewByReviewIdResponse,
+    reviewData,
     isLoadingReview,
     reviewError,
   };

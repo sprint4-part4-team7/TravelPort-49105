@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable consistent-return */
 import instance from '@/utils/axios';
-import { GetReviewType, ReviewData, ReviewInfoType } from '@/constants/types';
+import { ReviewData, ReviewInfoType } from '@/constants/types';
 
 const getReviewAll = () => {
   return instance({
@@ -11,7 +11,7 @@ const getReviewAll = () => {
   });
 };
 
-const getReviewInfo = async (reviewId: number): Promise<GetReviewType> => {
+const getReviewInfo = async (reviewId: number) => {
   return instance({
     url: `/review/${reviewId}`,
     method: 'GET',
