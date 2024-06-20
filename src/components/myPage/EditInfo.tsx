@@ -31,6 +31,7 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<UserInfo>({
     defaultValues: { ...userInfo },
@@ -49,18 +50,25 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
   };
 
   const handleSave = async (data: UserInfo) => {
-    localStorage.removeItem('profileImage');
+    if (data.name.trim() === '') {
+      setError('name', { type: 'required', message: '닉네임은 필수입니다' });
+      return;
+    }
     if (img.length) {
       const response = await postImages(img, BUCKER_NAME.PRODUCT_OPTION);
       data = { ...data, profileImage: response[0] };
+      localStorage.removeItem('profileImage');
     } else {
       data = { ...data, profileImage: '' };
     }
     const newData = { ...data };
     delete newData.isPartner;
     delete newData.email;
-    if (newData.isPartner) delete newData.realName;
-    else delete newData.description;
+    if (newData.isPartner) {
+      delete newData.realName;
+    }
+    console.log(newData);
+
     try {
       await putUserInfo(newData);
       toast.success('저장되었습니다');
@@ -171,8 +179,13 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
                 <textarea
                   id="description"
                   className="p-12 rounded outline-none resize-none h-72 text-16 border-1 border-black-5 focus:border-blue-6"
-                  placeholder="간단한 소개를 입력해주세요"
-                  {...register('description')}
+                  placeholder="간단한 소개를 입력해주세요.(100자)"
+                  {...register('description', {
+                    maxLength: {
+                      value: 100,
+                      message: '소개글은 100자 이하로 입력해주세요',
+                    },
+                  })}
                 />
               </label>
             </div>
