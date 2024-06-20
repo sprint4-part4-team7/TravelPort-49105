@@ -28,7 +28,7 @@ interface ReviewRegisterProps {
   optionId: number;
   reviewId?: number;
 }
-const ReviewRegister = ({ optionId, reviewId }: ReviewRegisterProps) => {
+const ReviewRegister = ({ optionId, reviewId = 0 }: ReviewRegisterProps) => {
   const {
     register,
     handleSubmit,
@@ -61,31 +61,43 @@ const ReviewRegister = ({ optionId, reviewId }: ReviewRegisterProps) => {
   const { userInfo } = useUserStore();
   const userId = userInfo.id;
   const { productReviews } = useProductReview(productId);
+  const { uId, isLoadingReview, reviewError } =
+    useGetUserIdByReviewId(reviewId);
 
-  if (reviewId) {
-    const { uId } = useGetUserIdByReviewId(reviewId);
-    if (uId && uId !== userId) {
+  useEffect(() => {
+    if (reviewId && !isLoadingReview && uId) {
+      if (uId !== userId) {
+        navigate('/');
+        toast.error('접근 권한이 없습니다.');
+      } else {
+        for (let i = 0; i < productReviews?.length; i++) {
+          console.log(productReviews[i]);
+          if (productReviews[i].userId === userInfo.id) {
+            setValue('score', productReviews[i].score);
+            setValue('reviewContent', productReviews[i].reviewContent);
+            setValue('reviewImages', productReviews[i].reviewImages);
+            const initialImagesArray = new Array(5).fill(null);
+            for (let j = 0; j < productReviews[i].reviewImages.length; j++) {
+              initialImagesArray[j] = productReviews[i].reviewImages[j];
+            }
+            setInitialImages(initialImagesArray);
+            setIsEditMode(true);
+          }
+        }
+      }
+    } else if (uId) {
       navigate('/');
       toast.error('접근 권한이 없습니다.');
     }
-  }
-
-  useEffect(() => {
-    for (let i = 0; i < productReviews?.length; i++) {
-      console.log(productReviews[i]);
-      if (productReviews[i].userId === userInfo.id) {
-        setValue('score', productReviews[i].score);
-        setValue('reviewContent', productReviews[i].reviewContent);
-        setValue('reviewImages', productReviews[i].reviewImages);
-        const initialImagesArray = new Array(5).fill(null);
-        for (let j = 0; j < productReviews[i].reviewImages.length; j++) {
-          initialImagesArray[j] = productReviews[i].reviewImages[j];
-        }
-        setInitialImages(initialImagesArray);
-        setIsEditMode(true);
-      }
-    }
-  }, [productReviews, setValue, userInfo.name]);
+  }, [
+    reviewId,
+    uId,
+    isLoadingReview,
+    userId,
+    productReviews,
+    setValue,
+    navigate,
+  ]);
 
   // 버튼 활성화 여부 조절
   const [isDisableToSubmit, setIsDisableToSubmit] = useState(true);
