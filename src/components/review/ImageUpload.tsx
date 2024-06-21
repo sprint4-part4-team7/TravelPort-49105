@@ -13,7 +13,9 @@ type ImageUploadProps = {
 };
 
 const ImageUpload = ({ onChange, initialImages }: ImageUploadProps): any => {
-  const [showImages, setShowImages] = useState<(null | string)[]>([]);
+  const [showImages, setShowImages] = useState<(null | string)[]>(
+    Array(5).fill(null),
+  );
   const [images, setImages] = useState<(null | File)[]>(Array(5).fill(null));
 
   useEffect(() => {
@@ -60,6 +62,7 @@ const ImageUpload = ({ onChange, initialImages }: ImageUploadProps): any => {
   return (
     <div className="flex flex-wrap gap-12">
       {showImages.map((image, idx) => {
+        console.log(image);
         return (
           <div
             key={idx}
