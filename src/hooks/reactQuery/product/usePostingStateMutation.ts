@@ -20,7 +20,7 @@ const usePostingStateMutation = () => {
     },
     onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ['postingStateMutation'],
+        queryKey: ['getProductByPartner'],
       });
     },
   });
