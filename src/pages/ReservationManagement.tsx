@@ -2,7 +2,6 @@ import ARROW from '@/assets/icons/arrowDown.svg';
 import { useEffect, useState } from 'react';
 import { useUserStore } from '@/utils/zustand';
 import useReservationManageQuery from '@/hooks/reactQuery/reservation/useReservationManageQuery';
-import SearchBar from '@/components/common/SearchBar';
 import ReservedManageCard from '@/components/ReservedManageCard';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
 
@@ -77,17 +76,16 @@ const ReservationManagement = () => {
   }, [isNew, lodgeData, activityData]);
 
   return (
-    <div className="mx-10 my-0 w-1000">
-      <div className="flex flex-col gap-60 mt-60">
+    <div className="mx-10 my-0 w-1000 mobile:w-full">
+      <div className="flex flex-col gap-30 mt-60">
         <div className="flex flex-col gap-20">
-          <div className="font-bold text-24">예약 관리</div>
-          <SearchBar cardLists={[]} />
+          <div className="font-bold text-28">예약 관리</div>
         </div>
 
         <div>
-          <div className="flex justify-between py-24">
+          <div className="flex justify-between py-24 mobile:flex-col mobile:gap-24">
             <div className="flex">
-              {['전체', '숙박', '체험', '교통'].map((category) => (
+              {['전체', '숙박', '체험'].map((category) => (
                 <button
                   type="button"
                   key={category}
