@@ -107,16 +107,16 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
     ...(userType === 'user'
       ? [
           {
-            id: 'reservation-status',
-            icon: list,
-            label: '예약 내역',
-            path: '/mypage/reservation-history',
-          },
-          {
             id: 'reservation-history',
             icon: reservationStatus,
             label: '예약 현황',
             path: '/mypage/reservation-status',
+          },
+          {
+            id: 'reservation-status',
+            icon: list,
+            label: '예약 내역',
+            path: '/mypage/reservation-history',
           },
         ]
       : [
@@ -146,16 +146,16 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
     ...(userType === 'user'
       ? [
           {
-            id: 'reservation-status',
-            icon: list,
-            label: '예약 내역',
-            path: '/mypage/reservation-history',
-          },
-          {
             id: 'reservation-history',
             icon: reservationStatus,
             label: '예약 현황',
             path: '/mypage/reservation-status',
+          },
+          {
+            id: 'reservation-status',
+            icon: list,
+            label: '예약 내역',
+            path: '/mypage/reservation-history',
           },
         ]
       : [
