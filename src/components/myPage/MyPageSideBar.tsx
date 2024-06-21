@@ -57,7 +57,7 @@ const MyPageSideBar = ({ children, isPartner = false }: MyPageSideBarProps) => {
   return (
     <div className="flex flex-row w-full min-h-screen gap-24 mobile:flex-col">
       <div className="relative flex flex-col justify-between px-12 border-r-1 mobile:border-r-0 border-black-4">
-        <div className="flex flex-col gap-32 w-241 mobile:w-full">
+        <div className="flex flex-col gap-32 w-241 tablet:w-175 mobile:w-full">
           <div className="flex flex-col items-center gap-12">
             <img
               src={userInfo.profileImage || image}

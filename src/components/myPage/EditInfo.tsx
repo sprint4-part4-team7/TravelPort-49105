@@ -7,7 +7,7 @@ import uploadIcon from '@/assets/icons/upload.svg';
 import { putUserInfo } from '@/apis/editInfo';
 import { PHONE_NUMBER_REGEX } from '@/constants/InputType';
 import { UserInfo } from '@/constants/types';
-import { ChangeEventHandler, useState } from 'react';
+import { ChangeEventHandler, useEffect, useState } from 'react';
 import postImages from '@/apis/image';
 import BUCKER_NAME from '@/constants/bucket';
 import { ReactComponent as Delete } from '@/assets/icons/x-circle-custom.svg';
@@ -26,15 +26,27 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
     userInfo.profileImage,
   );
   const [img, setImg] = useState<File[]>([]);
+  const [isChanged, setIsChanged] = useState(false);
   const isUser = !isPartner;
 
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
+    watch,
   } = useForm<UserInfo>({
     defaultValues: { ...userInfo },
   });
+
+  const watchedFields = watch();
+
+  useEffect(() => {
+    const hasChanged = (Object.keys(watchedFields) as (keyof UserInfo)[]).some(
+      (key) => watchedFields[key] !== userInfo[key],
+    );
+    setIsChanged(hasChanged);
+  }, [watchedFields, userInfo]);
 
   const handleImgUpload: ChangeEventHandler<HTMLInputElement> = (e) => {
     const file = e.target.files?.[0];
@@ -46,21 +58,27 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
     const instantUrl = URL.createObjectURL(file);
     setInstantImg(instantUrl);
     setImg([file]);
+    setIsChanged(true);
   };
 
   const handleSave = async (data: UserInfo) => {
-    localStorage.removeItem('profileImage');
+    if (data.name.trim() === '') {
+      setError('name', { type: 'required', message: '닉네임은 필수입니다' });
+      return;
+    }
     if (img.length) {
       const response = await postImages(img, BUCKER_NAME.PRODUCT_OPTION);
       data = { ...data, profileImage: response[0] };
+      localStorage.removeItem('profileImage');
     } else {
       data = { ...data, profileImage: '' };
     }
     const newData = { ...data };
     delete newData.isPartner;
     delete newData.email;
-    if (newData.isPartner) delete newData.realName;
-    else delete newData.description;
+    if (newData.isPartner) {
+      delete newData.realName;
+    }
     try {
       await putUserInfo(newData);
       toast.success('저장되었습니다');
@@ -90,6 +108,7 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
                 onClick={() => {
                   setInstantImg(undefined);
                   setImg([]);
+                  setIsChanged(true);
                 }}
               >
                 <Delete stroke="#000000" />
@@ -118,7 +137,7 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
           <InputBox
             id="nickname"
             label={isUser ? '닉네임' : '이름/법인명'}
-            placeholder="닉네임을 입력해주세요"
+            placeholder="닉네임을 입력해주세요.(20자)"
             register={register('name', {
               required: '닉네임은 필수입니다',
               maxLength: {
@@ -171,8 +190,13 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
                 <textarea
                   id="description"
                   className="p-12 rounded outline-none resize-none h-72 text-16 border-1 border-black-5 focus:border-blue-6"
-                  placeholder="간단한 소개를 입력해주세요"
-                  {...register('description')}
+                  placeholder="간단한 소개를 입력해주세요.(100자)"
+                  {...register('description', {
+                    maxLength: {
+                      value: 100,
+                      message: '소개글은 100자 이하로 입력해주세요',
+                    },
+                  })}
                 />
               </label>
             </div>
@@ -195,7 +219,9 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
           </div>
         </div>
       </form>
-      <Button onClick={handleSubmit(handleSave)}>저장하기</Button>
+      <Button onClick={handleSubmit(handleSave)} disabled={!isChanged}>
+        저장하기
+      </Button>
       <Modal
         isOpen={isModalOpen}
         closeModal={closeModal}
