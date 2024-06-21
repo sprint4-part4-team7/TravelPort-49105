@@ -30,6 +30,7 @@ const PartnerSignup = () => {
     handleSubmit,
     getValues,
     watch,
+    setError,
     formState: { errors },
   } = useForm<PartnerSignupForm>({
     mode: 'onChange',
@@ -74,6 +75,13 @@ const PartnerSignup = () => {
   };
 
   const handleSignupForm = async (data: PartnerSignupData) => {
+    if (data.company.trim() === '') {
+      setError('company', {
+        type: 'required',
+        message: '이름 또는 법인명을 입력해주세요.',
+      });
+      return;
+    }
     const { company: name, email, password } = data;
     const loginType: UserType = 'PARTNER';
     const signupData = { name, email, password, loginType, isEmailValid };

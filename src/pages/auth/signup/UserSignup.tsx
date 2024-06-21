@@ -29,6 +29,7 @@ const UserSignup = () => {
     register,
     handleSubmit,
     watch,
+    setError,
     getValues,
     formState: { errors },
   } = useForm<UserSignupForm>({
@@ -74,6 +75,13 @@ const UserSignup = () => {
   };
 
   const handleSignupForm = async (data: UserSignupData) => {
+    if (data.nickname.trim() === '') {
+      setError('nickname', {
+        type: 'required',
+        message: '닉네임을 입력해주세요.',
+      });
+      return;
+    }
     const { nickname: name, email, password } = data;
     const loginType: UserType = 'USER';
     const signupData = { name, email, password, loginType, isEmailValid };
