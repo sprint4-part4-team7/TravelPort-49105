@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import plusImage from '@/assets/icons/plus-blue.svg';
 import trashImage from '@/assets/icons/trash-red.svg';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { useProductImageStore, useThumbnailStore } from '@/utils/zustand';
 import Button from '@/components/common/Button';
 
@@ -21,7 +22,7 @@ const ImgModal = ({ closeModal }: ModalProps) => {
   });
   const [imageArray, setImageArray] = useState<any>([]);
   const { setThumbnail } = useThumbnailStore();
-  const { setProductImages } = useProductImageStore();
+  const { productImages, setProductImages } = useProductImageStore();
 
   const imageData = watch('img');
 
@@ -30,7 +31,7 @@ const ImgModal = ({ closeModal }: ModalProps) => {
   useEffect(() => {
     if (imageData !== undefined) {
       if (imageData.length > 5) {
-        // alert('최대 5개');
+        toast.error('이미지는 최대 5개입니다');
       } else if (imageData.length > 0) {
         const temp = [...imageArray];
         Array.from(imageData).map((i: any) => {
@@ -40,16 +41,13 @@ const ImgModal = ({ closeModal }: ModalProps) => {
         if (temp.length <= 5) {
           setImageArray(Array.from(temp));
         } else {
-          // alert('최대 5개');
+          toast.error('이미지는 최대 5개입니다');
         }
       }
     }
   }, [imageData]);
 
   const showImage = () => {
-    if (!imageData || imageData.length === 0) {
-      return null;
-    }
     return imageArray.map((file: any, index: number) => {
       return (
         <div
@@ -66,7 +64,12 @@ const ImgModal = ({ closeModal }: ModalProps) => {
           </div>
           <div className="flex gap-12 items-center">
             <label className="flex gap-8" htmlFor="check">
-              <input id="check" type="radio" {...register('check')} />
+              <input
+                id="check"
+                type="radio"
+                {...register('check')}
+                value={index}
+              />
               대표
             </label>
             <img
@@ -85,9 +88,21 @@ const ImgModal = ({ closeModal }: ModalProps) => {
     });
   };
 
-  const onSubmit = () => {
-    setThumbnail(imageArray[0]);
-    setProductImages(imageArray);
+  useEffect(() => {
+    if (productImages.length > 0) {
+      setImageArray(productImages);
+    }
+  }, []);
+
+  const onSubmit = (data: any) => {
+    if (imageArray.length > 0) {
+      if (data.check) {
+        setThumbnail(imageArray[parseInt(data.check, 10)]);
+      } else {
+        setThumbnail(imageArray[0]);
+      }
+      setProductImages(imageArray);
+    }
     closeModal();
   };
 
@@ -109,7 +124,7 @@ const ImgModal = ({ closeModal }: ModalProps) => {
             multiple
           />
         </label>
-        <div className="absolute bottom-32 flex gap-12 items-center">
+        <div className="w-383 absolute bottom-32 flex justify-center gap-12">
           <div className="w-166">
             <Button
               buttonStyle="h-28"
@@ -128,7 +143,7 @@ const ImgModal = ({ closeModal }: ModalProps) => {
         </div>
       </form>
       <div className="bg-black-3 rounded flex flex-col gap-8 p-12 my-10">
-        <p className="text-14">이미지</p>
+        <p className="font-semibold text-14">이미지</p>
         {showImage()}
       </div>
     </div>
