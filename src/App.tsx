@@ -47,10 +47,24 @@ const App = () => {
         <Route path="details/:categoryId/:productId">
           <Route index element={<ProductDetails />} />
         </Route>
-        <Route path="mypage/:status" element={<MyPage />} />
+        <Route
+          path="mypage/:status"
+          element={
+            <ProtectedRoute>
+              <MyPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="partner/">
           <Route index element={<PartnerMain />} />
-          <Route path="mypage/:status" element={<MyPage isPartner />} />
+          <Route
+            path="mypage/:status"
+            element={
+              <ProtectedRoute>
+                <MyPage isPartner />
+              </ProtectedRoute>
+            }
+          />
           <Route path="product-register" element={<ProductRegister />} />
         </Route>
         <Route path="payments">
