@@ -10,7 +10,7 @@ const useProductDeleteMutation = () => {
     },
     onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ['ProductDeleteMutation'],
+        queryKey: ['getProductByPartner'],
       });
     },
   });

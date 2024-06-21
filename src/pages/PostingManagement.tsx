@@ -2,13 +2,10 @@ import ARROW from '@/assets/icons/arrowDown.svg';
 import { useEffect, useState } from 'react';
 import { useUserStore } from '@/utils/zustand';
 import useProductByPartnerQuery from '@/hooks/reactQuery/product/useProductByPartnerQuery';
-import useModal from '@/hooks/useModal';
 import SearchBar from '@/components/common/SearchBar';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
 import PostingCard from '@/components/PostingCard';
-import PostingSwitch from '@/components/myPage/PostingSwitch';
-import ReservButtonOutlined from '@/components/myPage/ReservButtonOutlined';
-import DeletePosting from '@/components/myPage/Modal/DeletePosting';
+// import Button from '@/components/common/Button';
 
 const PostingManagement = () => {
   const { userInfo } = useUserStore();
@@ -19,7 +16,6 @@ const PostingManagement = () => {
   const [allData, setAllData] = useState<any[]>([]);
 
   const { postingData: allPost } = useProductByPartnerQuery(userInfo.id);
-  const { isModalOpen, openModal, closeModal } = useModal();
 
   const sortData = (data: any[], postNew: boolean) => {
     if (!Array.isArray(data)) return [];
@@ -76,10 +72,10 @@ const PostingManagement = () => {
       setLodgeData(sortData(lodge, isNew));
       setActivityData(sortData(activity, isNew));
     }
-  }, [isNew, allData]);
+  }, [isNew, allPost]);
 
   return (
-    <div className="mx-10 my-0 w-1000">
+    <div className="relative mx-10 my-0 w-1000">
       <div className="flex flex-col gap-60 mt-60">
         <div className="flex flex-col gap-20">
           <div className="font-bold text-24">상품 판매(게시) 관리</div>
@@ -144,36 +140,17 @@ const PostingManagement = () => {
                     allCardNum={allData.length}
                   >
                     {allData.slice(start, end).map((item) => (
-                      <>
-                        <PostingCard
-                          key={item.id}
-                          id={item.id}
-                          title={item.name}
-                          salePeriod={{
-                            startDate: item.startDate,
-                            endDate: item.endDate,
-                          }}
-                          postingDate={item.createdAt}
-                          upperRight={
-                            <PostingSwitch
-                              id={item.id}
-                              state={item.isPosting}
-                            />
-                          }
-                          lowerRight={
-                            <ReservButtonOutlined
-                              status={5}
-                              onClick={openModal}
-                            />
-                          }
-                        />
-
-                        <DeletePosting
-                          id={item.id}
-                          closeModal={closeModal}
-                          isOpen={isModalOpen}
-                        />
-                      </>
+                      <PostingCard
+                        key={item.id}
+                        id={item.id}
+                        title={item.name}
+                        salePeriod={{
+                          startDate: item.startDate,
+                          endDate: item.endDate,
+                        }}
+                        postingDate={item.createdAt}
+                        postingState={item.isPosting}
+                      />
                     ))}
                   </ReservPagination>
                 ) : (
@@ -190,35 +167,17 @@ const PostingManagement = () => {
                     allCardNum={lodgeData.length}
                   >
                     {lodgeData.slice(start, end).map((item) => (
-                      <>
-                        <PostingCard
-                          key={item.id}
-                          id={item.id}
-                          title={item.name}
-                          salePeriod={{
-                            startDate: item.startDate,
-                            endDate: item.endDate,
-                          }}
-                          postingDate={item.createdAt}
-                          upperRight={
-                            <PostingSwitch
-                              id={item.id}
-                              state={item.isPosting}
-                            />
-                          }
-                          lowerRight={
-                            <ReservButtonOutlined
-                              status={5}
-                              onClick={openModal}
-                            />
-                          }
-                        />
-                        <DeletePosting
-                          id={item.id}
-                          closeModal={closeModal}
-                          isOpen={isModalOpen}
-                        />
-                      </>
+                      <PostingCard
+                        key={item.id}
+                        id={item.id}
+                        title={item.name}
+                        salePeriod={{
+                          startDate: item.startDate,
+                          endDate: item.endDate,
+                        }}
+                        postingDate={item.createdAt}
+                        postingState={item.isPosting}
+                      />
                     ))}
                   </ReservPagination>
                 ) : (
@@ -235,35 +194,17 @@ const PostingManagement = () => {
                     allCardNum={activityData.length}
                   >
                     {activityData.slice(start, end).map((item) => (
-                      <>
-                        <PostingCard
-                          key={item.id}
-                          id={item.id}
-                          title={item.name}
-                          salePeriod={{
-                            startDate: item.startDate,
-                            endDate: item.endDate,
-                          }}
-                          postingDate={item.createdAt}
-                          upperRight={
-                            <PostingSwitch
-                              id={item.id}
-                              state={item.isPosting}
-                            />
-                          }
-                          lowerRight={
-                            <ReservButtonOutlined
-                              status={5}
-                              onClick={openModal}
-                            />
-                          }
-                        />
-                        <DeletePosting
-                          id={item.id}
-                          closeModal={closeModal}
-                          isOpen={isModalOpen}
-                        />
-                      </>
+                      <PostingCard
+                        key={item.id}
+                        id={item.id}
+                        title={item.name}
+                        salePeriod={{
+                          startDate: item.startDate,
+                          endDate: item.endDate,
+                        }}
+                        postingDate={item.createdAt}
+                        postingState={item.isPosting}
+                      />
                     ))}
                   </ReservPagination>
                 ) : (
@@ -281,6 +222,13 @@ const PostingManagement = () => {
           </div>
         </div>
       </div>
+      {/* <Button
+        variant="floating"
+        buttonStyle="fixed bottom-90 right-40 w-240 h-56 p-12
+      bg-blue-6 text-16 font-semibold cursor-pointer shadow-lg"
+      >
+        새 상품 게시하기
+      </Button> */}
     </div>
   );
 };
