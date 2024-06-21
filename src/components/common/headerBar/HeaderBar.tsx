@@ -34,6 +34,9 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
     navigate('/preparing');
   };
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [scrollDirection, setScrollDirection] = useState<'up' | 'down' | null>(
+    null,
+  );
 
   const { optionAll } = useProductOptionAll();
 
@@ -53,6 +56,28 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
   const handleHome = () => {
     navigate('/');
   };
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY) {
+        setScrollDirection('down');
+      } else {
+        setScrollDirection('up');
+      }
+
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 text-2xl font-bold bg-white py-36 ">
@@ -74,7 +99,11 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
               <SearchBar isMainSearchBar={main} cardLists={filteredTitles} />
             </div>
             {category && (
-              <div className="absolute right-0 flex gap-8 -bottom-40 left-15 z-1 mobile:w-152 mobile:gap-0 mobile:-bottom-30">
+              <div
+                className={`absolute right-0 flex gap-8 -bottom-40 left-15 z-1 mobile:w-152 mobile:gap-0 mobile:-bottom-30 
+      ${scrollDirection === 'down' ? 'animate-slideUpFade' : ''} 
+      ${scrollDirection === 'up' ? 'animate-slideDownFade' : ''}`}
+              >
                 <MainCategoryButton
                   title="숙소"
                   onclick={handleAccommodation}
