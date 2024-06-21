@@ -9,7 +9,7 @@ import {
 } from '@/hooks/useOAuthLogin';
 import { useForm } from 'react-hook-form';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
-import Logo from '@/assets/icons/travelPortLogo.svg';
+import Logo from '@/assets/icons/travelPortLogo-login.svg';
 import useLoginMutation from '@/hooks/reactQuery/auth/useLoginMutation';
 import InputBox from '@/components/common/InputBox';
 import Button from '@/components/common/Button';
@@ -36,9 +36,9 @@ const Login = () => {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="flex flex-col gap-40 justify-center items-center">
+      <div className="flex flex-col gap-60 justify-center items-center">
         <Link to="/">
-          <img alt="travelport logo" src={Logo} />
+          <img alt="travelport logo" width="180" src={Logo} />
         </Link>
         <div className="flex flex-col gap-30 max-w-350 ">
           <form
@@ -85,31 +85,70 @@ const Login = () => {
           </form>
           <div className="text-center text-14 text-black-12">
             아직 회원이 아니신가요?{' '}
-            <Link className="text-blue-6" to="/signup/user">
+            <Link
+              className="hover:opacity-75 active:opacity-50 text-blue-6"
+              to="/signup/user"
+            >
               이메일로 회원가입
             </Link>
           </div>
-          <div
-            className="flex px-24 py-12 justify-between items-center  
-    border-1 rounded-2xl 
-    border-solid border-black-7"
-          >
-            <div className="text-18 font-bold ">소셜 로그인</div>
-            <div className="flex gap-16">
-              <button type="button" onClick={googleLogin}>
-                <img alt="Google" src={Google} />
+          <div className="flex flex-col gap-16 justify-between items-center">
+            <div className="flex justify-center items-center gap-15">
+              <div className="w-70 h-1 bg-black-5" />
+              <div className="text-14 text-black-6 ">
+                SNS로 간편하게 시작하기
+              </div>
+              <div className="w-70 h-1 bg-black-5" />
+            </div>
+
+            <div className="flex gap-20">
+              <button
+                className="rounded-full hover:opacity-75 active:opacity-50"
+                type="button"
+                onClick={googleLogin}
+              >
+                <img
+                  className="rounded-full"
+                  alt="Google"
+                  width="50"
+                  height="50"
+                  src={Google}
+                />
               </button>
-              <button type="button" onClick={kakaoLogin}>
-                <img alt="Kakao" width="40px" height="40px" src={Kakao} />
+              <button
+                className="rounded-full hover:opacity-75 active:opacity-50"
+                type="button"
+                onClick={kakaoLogin}
+              >
+                <img
+                  className="rounded-full"
+                  alt="Kakao"
+                  width="50"
+                  height="50"
+                  src={Kakao}
+                />
               </button>
-              <button type="button" onClick={naverLogin}>
-                <img alt="Naver" width="40px" height="40px" src={Naver} />
+              <button
+                className="rounded-full hover:opacity-75 active:opacity-50"
+                type="button"
+                onClick={naverLogin}
+              >
+                <img
+                  className="rounded-full"
+                  alt="Naver"
+                  width="50"
+                  height="50"
+                  src={Naver}
+                />
               </button>
             </div>
           </div>
           <div className="text-center text-14 text-black-12">
             파트너 등록이 필요하신가요?{' '}
-            <Link className="text-blue-6" to="/signup/partner">
+            <Link
+              className="hover:opacity-75 active:opacity-50 text-blue-6"
+              to="/signup/partner"
+            >
               파트너 회원가입
             </Link>
           </div>
