@@ -115,7 +115,7 @@ const PostCode = ({ setPage, setX, setY, setBuilding }: PostCodeProps) => {
           <p className="font-semibold text-17">기본 주소 검색</p>
           <div className="flex justify-between h-48 p-12 rounded border-solid border-1 border-black-5 w-full has-[:focus]:border-blue-6 focus:border-1 mobile:max-w-none">
             <input
-              className="outline-none text-16 "
+              className="outline-none text-16 w-full"
               {...register('address', {
                 required: '주소를 다시 검색해주세요.',
               })}
@@ -134,9 +134,9 @@ const PostCode = ({ setPage, setX, setY, setBuilding }: PostCodeProps) => {
           <input
             className="h-48 p-12 rounded text-16 outline-none border-solid border-1 border-black-5 w-full focus:border-blue-6 focus:border-1 mobile:max-w-none"
             {...register('building', {
-              required: '빌딩이름을 다시 적어주세요.(50자)',
+              required: '상세주소(건물명)을 다시 적어주세요.(50자)',
             })}
-            placeholder="빌딩이름을 적어주세요.(50자)"
+            placeholder="상세주소(건물명)을 적어주세요.(50자)"
             id="sideAddress"
             type="text"
             onChange={changeBuildingName}
