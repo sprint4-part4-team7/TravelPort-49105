@@ -107,19 +107,32 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
     ...(userType === 'user'
       ? [
           {
-            id: 'reservation-status',
-            icon: list,
-            label: '예약 내역',
-            path: '/mypage/reservation-history',
-          },
-          {
             id: 'reservation-history',
             icon: reservationStatus,
             label: '예약 현황',
             path: '/mypage/reservation-status',
           },
+          {
+            id: 'reservation-status',
+            icon: list,
+            label: '예약 내역',
+            path: '/mypage/reservation-history',
+          },
         ]
-      : []),
+      : [
+          {
+            id: 'posting-manage',
+            icon: list,
+            label: '내 게시물',
+            path: '/partner/mypage/posting-manage',
+          },
+          {
+            id: 'reserve-manage',
+            icon: reservationStatus,
+            label: '예약 관리',
+            path: '/partner/mypage/reserve-manage',
+          },
+        ]),
     { id: 'logout', label: '로그아웃', action: clickLogoutButton },
   ];
 
@@ -133,19 +146,32 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
     ...(userType === 'user'
       ? [
           {
-            id: 'reservation-status',
-            icon: list,
-            label: '예약 내역',
-            path: '/mypage/reservation-history',
-          },
-          {
             id: 'reservation-history',
             icon: reservationStatus,
             label: '예약 현황',
             path: '/mypage/reservation-status',
           },
+          {
+            id: 'reservation-status',
+            icon: list,
+            label: '예약 내역',
+            path: '/mypage/reservation-history',
+          },
         ]
-      : []),
+      : [
+          {
+            id: 'posting-manage',
+            icon: list,
+            label: '내 게시물',
+            path: '/partner/mypage/posting-manage',
+          },
+          {
+            id: 'reserve-manage',
+            icon: reservationStatus,
+            label: '예약 관리',
+            path: '/partner/mypage/reserve-manage',
+          },
+        ]),
   ];
 
   return (
