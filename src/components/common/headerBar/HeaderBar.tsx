@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import logo from '@/assets/icons/travelPortLogo.svg';
+import logo from '@/assets/icons/lastLogo.svg';
 import { useNavigate } from 'react-router-dom';
 import useSearchData from '@/hooks/useSearchData';
 import { uniqueProduct } from '@/utils/uniqueProduct';
@@ -58,7 +58,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
     <div className="fixed top-0 left-0 right-0 z-50 text-2xl font-bold bg-white py-36 ">
       <div className="relative flex items-center justify-between px-48 h-60 mobile:px-20">
         <div className="flex items-center">
-          <div className="w-195 h-65 mobile:w-76 mobile:h-25 tablet:w-147 tablet:h-48">
+          <div className="w-full h-65 mobile:w-76 mobile:h-25 tablet:w-147 tablet:h-48">
             <button
               type="button"
               onClick={handleHome}
@@ -74,7 +74,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
               <SearchBar isMainSearchBar={main} cardLists={filteredTitles} />
             </div>
             {category && (
-              <div className="absolute -bottom-40 right-0 flex gap-8 left-15 z-1 mobile:w-152 mobile:gap-0 mobile:-bottom-30">
+              <div className="absolute right-0 flex gap-8 -bottom-40 left-15 z-1 mobile:w-152 mobile:gap-0 mobile:-bottom-30">
                 <MainCategoryButton
                   title="숙소"
                   onclick={handleAccommodation}
