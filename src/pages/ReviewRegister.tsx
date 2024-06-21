@@ -184,8 +184,6 @@ const ReviewRegister = ({ optionId, reviewId = 0 }: ReviewRegisterProps) => {
 
   const submitButtonText = isEditMode ? '수정하기' : '등록하기';
 
-  console.log(initialImages);
-
   return (
     <form
       onSubmit={handleSubmit(handleFormSubmit)}

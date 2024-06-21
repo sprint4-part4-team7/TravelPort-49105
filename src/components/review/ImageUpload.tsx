@@ -62,7 +62,6 @@ const ImageUpload = ({ onChange, initialImages }: ImageUploadProps): any => {
   return (
     <div className="flex flex-wrap gap-12">
       {showImages.map((image, idx) => {
-        console.log(image);
         return (
           <div
             key={idx}
