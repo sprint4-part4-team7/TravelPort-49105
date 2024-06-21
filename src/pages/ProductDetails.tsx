@@ -76,23 +76,23 @@ const ProductDetails = () => {
   return (
     <>
       <Layout>
-        <div className="max-w-784 mx-auto mt-100 mb-40 mobile:mt-40 mobile:px-20 tablet:px-20">
+        <div className="mx-auto mb-40 max-w-784 mt-100 mobile:mt-40 mobile:px-20 tablet:px-20">
           <DetailsCarousel urls={newUrls} />
-          <div className="flex flex-col gap-12 mt-32 mb-40 max-w-784 w-full mx-auto">
-            <h1 className="text-20 font-bold">{product?.name}</h1>
-            <h2 className="text-20 font-bold mt-4">{product?.minPrice}원~</h2>
-            <p className="text-16 mb-8">{product?.productDesc}</p>
+          <div className="flex flex-col w-full gap-12 mx-auto mt-32 mb-40 max-w-784">
+            <h1 className="font-bold text-20">{product?.name}</h1>
+            <h2 className="mt-4 font-bold text-20">{product?.minPrice}원~</h2>
+            <p className="mb-8 text-16">{product?.productDesc}</p>
 
-            <div className="flex gap-8 text-17 font-semibold">
+            <div className="flex gap-8 font-semibold text-17">
               <SalesPeriod product={product} />
             </div>
 
-            <div className="flex gap-8 text-17 font-semibold">
+            <div className="flex gap-8 font-semibold text-17">
               <LocationMap product={product} />
             </div>
           </div>
-          <div className="max-w-784 w-full mx-auto">
-            <div className="flex justify-center items-center my-20">
+          <div className="w-full mx-auto max-w-784">
+            <div className="flex items-center justify-center my-20">
               <h1
                 onClick={() => handleTabClick('reservation')}
                 className={`${activeTab === 'reservation' && 'rounded-8 bg-black-7 text-white'} p-12 text-14 font-semibold flex-1 text-center bg-black-3 cursor-pointer`}
@@ -123,7 +123,7 @@ const ProductDetails = () => {
             {activeTab === 'review' && (
               <div className="mt-60">
                 <ReviewAverage productId={productIdNum} />
-                <h1 className="text-18 font-semibold py-16">
+                <h1 className="py-16 font-semibold text-18">
                   리뷰
                   <span className="text-blue-6 pl-11">
                     {productReviews?.length ? productReviews.length : 0}개
@@ -136,7 +136,7 @@ const ProductDetails = () => {
                 ) : (
                   <NoData text="리뷰가 없어요." />
                 )}
-                <div className="mx-auto w-fit py-20">
+                <div className="py-20 mx-auto w-fit">
                   {!!reviewByProductId.length && (
                     <Pagination
                       pageNum={pageNum}
