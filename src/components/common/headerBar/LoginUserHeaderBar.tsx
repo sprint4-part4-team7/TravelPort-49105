@@ -119,7 +119,20 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
             path: '/mypage/reservation-status',
           },
         ]
-      : []),
+      : [
+          {
+            id: 'posting-manage',
+            icon: list,
+            label: '내 게시물',
+            path: '/partner/mypage/posting-manage',
+          },
+          {
+            id: 'reserve-manage',
+            icon: reservationStatus,
+            label: '예약 관리',
+            path: '/partner/mypage/reserve-manage',
+          },
+        ]),
     { id: 'logout', label: '로그아웃', action: clickLogoutButton },
   ];
 
@@ -145,7 +158,20 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
             path: '/mypage/reservation-status',
           },
         ]
-      : []),
+      : [
+          {
+            id: 'posting-manage',
+            icon: list,
+            label: '내 게시물',
+            path: '/partner/mypage/posting-manage',
+          },
+          {
+            id: 'reserve-manage',
+            icon: reservationStatus,
+            label: '예약 관리',
+            path: '/partner/mypage/reserve-manage',
+          },
+        ]),
   ];
 
   return (
