@@ -99,13 +99,25 @@ const Login = () => {
             </div>
 
             <div className="flex gap-20">
-              <button type="button" onClick={googleLogin}>
+              <button
+                className="hover:opacity-75"
+                type="button"
+                onClick={googleLogin}
+              >
                 <img alt="Google" width="45" height="45" src={Google} />
               </button>
-              <button type="button" onClick={kakaoLogin}>
+              <button
+                className="hover:opacity-75"
+                type="button"
+                onClick={kakaoLogin}
+              >
                 <img alt="Kakao" width="45" height="45" src={Kakao} />
               </button>
-              <button type="button" onClick={naverLogin}>
+              <button
+                className="hover:opacity-75"
+                type="button"
+                onClick={naverLogin}
+              >
                 <img alt="Naver" width="45" height="45" src={Naver} />
               </button>
             </div>
