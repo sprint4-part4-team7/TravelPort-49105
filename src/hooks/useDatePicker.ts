@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import useProductByIdQuery from './reactQuery/product/useProductByIdQuery';
 
 interface DatePickerValues {
@@ -36,8 +37,8 @@ const useDatePicker = (productId?: number): DatePickerValues => {
           : new Date(rightDate),
       );
       setHoliday(productByProductId?.closedDay);
-    } catch (error) {
-      console.error('Error???', error);
+    } catch (error: any) {
+      toast.error(error);
     }
   };
 

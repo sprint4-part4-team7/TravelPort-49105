@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useProductImageStore, useThumbnailStore } from '@/utils/zustand';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import plusImage from '@/assets/icons/plus-white.svg';
 import useModal from '@/hooks/useModal';
 import product from '@/apis/product';
@@ -20,7 +21,13 @@ const Option = () => {
   const { productImages } = useProductImageStore();
 
   const disabled = false;
+  const extractId = (str: any) => {
+    const regex = /"id":(\d+)/;
+    const match = str.match(regex);
+    return match ? parseInt(match[1], 10) : null;
+  };
 
+  const id = extractId(localStorage.getItem('user-info'));
   const navigation = useNavigate();
 
   // 이전 페이지에서 저장한 로컬 스토리지 데이터 불러오기
@@ -66,7 +73,6 @@ const Option = () => {
         return productImagesResponse;
       };
       // 로컬에서 받아오는 데이터
-      console.log(await handleUploadProduct());
       const productInfo = {
         name: name !== null ? name : '', // 상품명을 여기에 입력
         productType: productType !== null ? productType : '', // 상품 타입, 여러 개의 타입이면 배열로 전달
@@ -83,19 +89,14 @@ const Option = () => {
         endDate: endDate !== null ? formatDate(new Date(endDate)) : '', // 종료 날짜 (예: '2024-06-20')
         closedDay: holiday !== undefined ? holiday : [''], // 휴무일 배열
       };
-      // console.log('0단계', categoryResponse); // 잘 받아와지는지 테스트용
       // 2. 로컬을 바탕으로 상품을 서버에 등록
       if (categoryResponse) {
-        // console.log('1단계'); // 잘 받아와지는지 테스트용
         const productResponse = await product.postProduct(
-          1,
+          id !== null ? id : 1,
           parseInt(categoryResponse, 10),
           productInfo,
         );
         if (productResponse.data.id) {
-          // console.log('2단계'); // 잘 받아와지는지 테스트용
-          console.log(optionList);
-
           // 3. 상품 옵션을 서버에 등록(option페이지에있는거 그대로 사용)
           /* eslint-disable array-callback-return */
           const promise = optionList.map(async (option) => {
@@ -124,14 +125,16 @@ const Option = () => {
                 ],
               },
             ];
-            return instance.post('/productOption', optionInfo); // 각 옵션에 대한 비동기 작업을 반환합니다.
+            return instance.post('/productOption', optionInfo); // 각 옵션에 대한 비동기 작업을 반환
           });
           Promise.all(promise)
-            .then((results) => {
-              console.log('모든 옵션이 성공적으로 등록되었습니다.', results);
+            .then(() => {
+              // results
+              toast.success('모든 옵션이 성공적으로 등록되었습니다.');
             })
-            .catch((error) => {
-              console.error('옵션 등록 중 오류가 발생했습니다.', error);
+            .catch(() => {
+              // error
+              toast.error('옵션 등록 중 오류가 발생했습니다.');
             });
           localStorage.removeItem('categoryId');
           localStorage.removeItem('title');
@@ -144,23 +147,20 @@ const Option = () => {
           localStorage.removeItem('startDate');
           localStorage.removeItem('endDate');
           localStorage.removeItem('holiday');
-          // alert('상품 및 옵션이 성공적으로 등록되었습니다.');
           navigation('/partner');
         }
       }
     } catch (error) {
-      // console.error('상품 및 옵션 등록 중 오류가 발생했습니다:', error);
-      // alert('상품 및 옵션 등록 중 오류가 발생했습니다.');
+      toast.error('상품 및 옵션 등록 중 오류가 발생했습니다.');
     }
   };
-  // console.log(optionList);
 
   return (
     <>
       <div className="mx-40 flex flex-col">
         <table className="table-auto w-full">
           <thead>
-            <tr className="flex justify-center gap-20 text-17 p-12">
+            <tr className="flex font-semibold justify-center gap-20 text-17 p-12">
               <th className="flex-1">대표이미지</th>
               <th className="flex-1">체험상품명</th>
               <th className="flex-1">가능인원</th>
