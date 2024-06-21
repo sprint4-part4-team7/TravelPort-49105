@@ -89,21 +89,24 @@ const Login = () => {
               이메일로 회원가입
             </Link>
           </div>
-          <div
-            className="flex px-24 py-12 justify-between items-center  
-    border-1 rounded-2xl 
-    border-solid border-black-7"
-          >
-            <div className="text-18 font-bold ">소셜 로그인</div>
-            <div className="flex gap-16">
+          <div className="flex flex-col gap-16 justify-between items-center">
+            <div className="flex justify-center items-center gap-15">
+              <div className="w-70 h-1 bg-black-5" />
+              <div className="text-14 text-black-6 ">
+                SNS로 간편하게 시작하기
+              </div>
+              <div className="w-70 h-1 bg-black-5" />
+            </div>
+
+            <div className="flex gap-20">
               <button type="button" onClick={googleLogin}>
-                <img alt="Google" src={Google} />
+                <img alt="Google" width="45" height="45" src={Google} />
               </button>
               <button type="button" onClick={kakaoLogin}>
-                <img alt="Kakao" width="40px" height="40px" src={Kakao} />
+                <img alt="Kakao" width="45" height="45" src={Kakao} />
               </button>
               <button type="button" onClick={naverLogin}>
-                <img alt="Naver" width="40px" height="40px" src={Naver} />
+                <img alt="Naver" width="45" height="45" src={Naver} />
               </button>
             </div>
           </div>
