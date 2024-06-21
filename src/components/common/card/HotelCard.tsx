@@ -1,7 +1,5 @@
-// import emptyImage from '@/assets/images/star-empty.svg';
 import fillImage from '@/assets/images/star-fill.svg';
 import { useNavigate } from 'react-router-dom';
-// import Button from '@/components/common/Button';
 
 type HotelCardProps = {
   title: string;
@@ -50,15 +48,6 @@ const HotelCard = ({
         <p className="font-bold text-black-13 text-17 mobile:text-14">
           {price.toLocaleString()}원 / 1박
         </p>
-        {/* <div className="w-74">
-          <Button
-            outlined
-            buttonStyle="text-13 py-8 px-12 font-medium mobile:flex"
-            onClick={() => navigate(link)}
-          >
-            상세보기
-          </Button>
-        </div> */}
       </div>
     </div>
   );
