@@ -85,7 +85,10 @@ const Login = () => {
           </form>
           <div className="text-center text-14 text-black-12">
             아직 회원이 아니신가요?{' '}
-            <Link className="text-blue-6" to="/signup/user">
+            <Link
+              className="hover:opacity-75 active:opacity-50 text-blue-6"
+              to="/signup/user"
+            >
               이메일로 회원가입
             </Link>
           </div>
@@ -100,31 +103,34 @@ const Login = () => {
 
             <div className="flex gap-20">
               <button
-                className="hover:opacity-75"
+                className="hover:opacity-75 active:opacity-50"
                 type="button"
                 onClick={googleLogin}
               >
-                <img alt="Google" width="45" height="45" src={Google} />
+                <img alt="Google" width="50" height="50" src={Google} />
               </button>
               <button
-                className="hover:opacity-75"
+                className="hover:opacity-75 active:opacity-50"
                 type="button"
                 onClick={kakaoLogin}
               >
-                <img alt="Kakao" width="45" height="45" src={Kakao} />
+                <img alt="Kakao" width="50" height="50" src={Kakao} />
               </button>
               <button
-                className="hover:opacity-75"
+                className="hover:opacity-75 active:opacity-50"
                 type="button"
                 onClick={naverLogin}
               >
-                <img alt="Naver" width="45" height="45" src={Naver} />
+                <img alt="Naver" width="50" height="50" src={Naver} />
               </button>
             </div>
           </div>
           <div className="text-center text-14 text-black-12">
             파트너 등록이 필요하신가요?{' '}
-            <Link className="text-blue-6" to="/signup/partner">
+            <Link
+              className="hover:opacity-75 active:opacity-50 text-blue-6"
+              to="/signup/partner"
+            >
               파트너 회원가입
             </Link>
           </div>
