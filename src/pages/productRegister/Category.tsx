@@ -7,8 +7,8 @@ import { PageIdProps } from './productPage';
 
 type CategoryForm = {
   category: string;
-  accommodationOption: string; // 숙소 하위
-  attractionOption: string; // 체험 하위
+  accommodationOption: string;
+  attractionOption: string;
 };
 
 const Category = ({ setPage }: PageIdProps) => {
@@ -24,15 +24,18 @@ const Category = ({ setPage }: PageIdProps) => {
 
   const [subCategoryValid, setSubCategoryValid] = useState(false);
 
-  const preCategoryValue = watch('category'); // register의 category값을 감시(숙박input이 들어가나, 체험input이들어가나)
+  const preCategoryValue = watch('category');
   const accommodationOption = watch('accommodationOption');
   const attractionOption = watch('attractionOption');
 
   useEffect(() => {
+    const subCategory = localStorage.getItem('subCategory');
     if (localStorage.getItem('categoryId') === '1') {
-      setValue('category', '숙박'); // setValue를 사용하여 category에 원래있던 기초값을 전달
+      setValue('category', '숙박');
+      setValue('accommodationOption', subCategory !== null ? subCategory : '');
     } else if (localStorage.getItem('categoryId') === '2') {
-      setValue('category', '체험'); // setValue를 사용하여 category에 원래있던 기초값을 전달
+      setValue('category', '체험');
+      setValue('attractionOption', subCategory !== null ? subCategory : '');
     }
   }, []);
 
@@ -49,7 +52,6 @@ const Category = ({ setPage }: PageIdProps) => {
       data.category === '숙박'
         ? data.accommodationOption
         : data.attractionOption;
-    // console.log('SubCategory:', subCategory);
 
     setPage(<Description setPage={setPage} />);
 
@@ -58,15 +60,13 @@ const Category = ({ setPage }: PageIdProps) => {
     } else if (data.category === '체험') {
       localStorage.setItem('categoryId', '2');
     }
-
-    // 하위 유형 값을 로컬 스토리지에 저장
     localStorage.setItem('subCategory', subCategory || '');
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex flex-col gap-32 mx-40">
-        <h3 className="mb-5 text-17 font-semiblod text-black-10">
+      <div className="flex flex-col gap-12 mx-40">
+        <h3 className="text-17 font-semibold text-black-10">
           상품 유형을 골라주세요.
         </h3>
         <ul className="mx-40 grid gap-20 md:grid-cols-2">
@@ -117,40 +117,58 @@ const Category = ({ setPage }: PageIdProps) => {
         </ul>
         {preCategoryValue === '숙박' && (
           <div>
-            <h3 className="mb-5 text-17 font-semiblod text-black-10">
+            <h3 className="mb-12 text-17 font-semibold text-black-10">
               숙박 옵션을 선택해주세요.
             </h3>
-            {hotelTypes.map((type) => (
-              <label key={type} htmlFor={type}>
-                <input
-                  {...register('accommodationOption', { required: true })}
-                  type="radio"
-                  id={type}
-                  name="accommodationOption"
-                  value={type}
-                />
-                <p>{type}</p>
-              </label>
-            ))}
+            <div className="ml-40 w-full max-w-screen-lg grid grid-cols-2 md:grid-cols-3 desktop:grid-cols-6">
+              {hotelTypes.map((type) => (
+                <label
+                  className="cursor-pointer bg-white/40 hover:bg-white/20 w-100 h-40 p-4 mb-16 rounded-md flex justify-between items-center shadow transition-colors has-[:checked]:bg-blue-6 has-[:checked]:text-white"
+                  key={type}
+                  htmlFor={type}
+                >
+                  <div className="flex items-center space-x-5 text-16 font-semibold m-auto">
+                    <span className="text-lg">{type}</span>
+                  </div>
+                  <input
+                    {...register('accommodationOption', { required: true })}
+                    type="radio"
+                    id={type}
+                    name="accommodationOption"
+                    value={type}
+                    className="hidden"
+                  />
+                </label>
+              ))}
+            </div>
           </div>
         )}
         {preCategoryValue === '체험' && (
           <div>
-            <h3 className="mb-5 text-17 font-semiblod text-black-10">
+            <h3 className="mb-12 text-17 font-semibold text-black-10">
               체험 옵션을 선택해주세요.
             </h3>
-            {ActivityTypes.map((type) => (
-              <label key={type} htmlFor={type}>
-                <input
-                  {...register('attractionOption', { required: true })}
-                  type="radio"
-                  id={type}
-                  name="attractionOption"
-                  value={type}
-                />
-                <p>{type}</p>
-              </label>
-            ))}
+            <div className="ml-40 w-full max-w-screen-lg grid grid-cols-2 md:grid-cols-3 desktop:grid-cols-6">
+              {ActivityTypes.map((type) => (
+                <label
+                  className="cursor-pointer bg-white/40 hover:bg-white/20 w-100 h-40 p-4 mb-16 rounded-md flex justify-between items-center shadow transition-colors has-[:checked]:bg-blue-6 has-[:checked]:text-white"
+                  key={type}
+                  htmlFor={type}
+                >
+                  <div className="flex items-center space-x-5 text-16 font-semibold m-auto">
+                    <span className="text-lg">{type}</span>
+                  </div>
+                  <input
+                    {...register('attractionOption', { required: true })}
+                    type="radio"
+                    id={type}
+                    name="attractionOption"
+                    value={type}
+                    className="hidden"
+                  />
+                </label>
+              ))}
+            </div>
           </div>
         )}
       </div>
