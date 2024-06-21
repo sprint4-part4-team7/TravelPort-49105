@@ -9,7 +9,7 @@ import {
 } from '@/hooks/useOAuthLogin';
 import { useForm } from 'react-hook-form';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
-import Logo from '@/assets/icons/travelPortLogo.svg';
+import Logo from '@/assets/icons/travelPortLogo-login.svg';
 import useLoginMutation from '@/hooks/reactQuery/auth/useLoginMutation';
 import InputBox from '@/components/common/InputBox';
 import Button from '@/components/common/Button';
@@ -36,9 +36,9 @@ const Login = () => {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="flex flex-col gap-40 justify-center items-center">
+      <div className="flex flex-col gap-60 justify-center items-center">
         <Link to="/">
-          <img alt="travelport logo" src={Logo} />
+          <img alt="travelport logo" width="180" src={Logo} />
         </Link>
         <div className="flex flex-col gap-30 max-w-350 ">
           <form
