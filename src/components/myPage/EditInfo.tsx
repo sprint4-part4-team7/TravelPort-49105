@@ -137,7 +137,7 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
           <InputBox
             id="nickname"
             label={isUser ? '닉네임' : '이름/법인명'}
-            placeholder="닉네임을 입력해주세요"
+            placeholder="닉네임을 입력해주세요.(20자)"
             register={register('name', {
               required: '닉네임은 필수입니다',
               maxLength: {
