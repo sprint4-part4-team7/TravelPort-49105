@@ -52,7 +52,7 @@ const PartnerSignup = () => {
     checkBtnClass = `${checkBtnBasic} bg-black-3 text-black-5`;
   } else {
     disableType = false;
-    checkBtnClass = `${checkBtnBasic} bg-blue-1 text-black-12`;
+    checkBtnClass = `${checkBtnBasic} bg-blue-1 text-black-12 hover:opacity-75 active:opacity-50`;
   }
 
   const handleCheckEmail = async () => {
@@ -185,14 +185,20 @@ const PartnerSignup = () => {
 
           <div className="text-center text-14 text-black-12">
             이미 회원이신가요?{' '}
-            <Link className="text-blue-6" to="/login">
+            <Link
+              className="hover:opacity-75 active:opacity-50 text-blue-6"
+              to="/login"
+            >
               로그인하기
             </Link>
           </div>
 
           <div className="text-center text-14 text-black-12">
             일반 회원가입이 필요하신가요?{' '}
-            <Link className="text-blue-6" to="/signup/user">
+            <Link
+              className="hover:opacity-75 active:opacity-50 text-blue-6"
+              to="/signup/user"
+            >
               일반 회원가입
             </Link>
           </div>
