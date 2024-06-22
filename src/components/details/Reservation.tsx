@@ -32,7 +32,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [diffDay, setDiffDay] = useState(0);
   const [remainCount, setRemainCount] = useState<number[]>([]);
-  const [optionIdArray, setOptionIdArray] = useState<number[]>([]);
+  const [, setOptionIdArray] = useState<number[]>([]);
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
@@ -92,7 +92,6 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
       options.forEach((option) => {
         const newOptionId = option.id;
         setOptionIdArray((prev) => [...prev, newOptionId]);
-        console.log(optionIdArray);
       });
       const getOptionRemainsByTable = (timeTable: any) => {
         for (let i = 0; i < timeTable?.length; i++) {
@@ -118,7 +117,6 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     setTicketNum(ticketNum - 1);
   };
   const handleTicketPlus = () => {
-    console.log(filteredOption);
     // if (ticketNum >= remainCount) return;
     setTicketNum(ticketNum + 1);
   };
