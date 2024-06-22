@@ -1,4 +1,3 @@
-// 상품등록페이지 메인
 import React, { useEffect, useState } from 'react';
 import Category from '@/pages/productRegister/Category';
 import Description from '@/pages/productRegister/Description';
@@ -8,10 +7,43 @@ import Option from '@/pages/productRegister/Option';
 
 const ProductRegister = () => {
   const [page, setPage] = useState<React.ReactNode>();
+  const [activeStep, setActiveStep] = useState(1);
 
   useEffect(() => {
-    setPage(<Category setPage={setPage} />);
+    setPage(<Category setPage={setPage} setActiveStep={setActiveStep} />);
   }, []);
+
+  const steps = [
+    {
+      id: 1,
+      title: '상품 유형',
+      component: <Category setPage={setPage} setActiveStep={setActiveStep} />,
+    },
+    {
+      id: 2,
+      title: '제목, 상세설명, 사진',
+      component: (
+        <Description setPage={setPage} setActiveStep={setActiveStep} />
+      ),
+    },
+    {
+      id: 3,
+      title: '위치',
+      component: <Location setPage={setPage} setActiveStep={setActiveStep} />,
+    },
+    {
+      id: 4,
+      title: '날짜',
+      component: <DateCheck setPage={setPage} setActiveStep={setActiveStep} />,
+    },
+    { id: 5, title: '상품 옵션', component: <Option /> },
+  ];
+
+  const handleStepClick = (stepId: number, component: React.ReactNode) => {
+    setActiveStep(stepId);
+    setPage(component);
+  };
+
   return (
     <>
       <aside
@@ -21,53 +53,29 @@ const ProductRegister = () => {
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
-            <li>
-              <div
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                onClick={() => setPage(<Category setPage={setPage} />)}
-              >
-                <div className="step-number">1</div>
-                <span className="ms-3">상품 유형</span>
-              </div>
-            </li>
-            <li>
-              <div
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                onClick={() => setPage(<Description setPage={setPage} />)}
-              >
-                <div className="step-number">2</div>
-                <span className="flex-1 ms-3 whitespace-nowrap">
-                  제목, 상세설명, 사진
-                </span>
-              </div>
-            </li>
-            <li>
-              <div
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                onClick={() => setPage(<Location setPage={setPage} />)}
-              >
-                <div className="step-number">3</div>
-                <span className="flex-1 ms-3 whitespace-nowrap">위치</span>
-              </div>
-            </li>
-            <li>
-              <div
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                onClick={() => setPage(<DateCheck setPage={setPage} />)}
-              >
-                <div className="step-number">4</div>
-                <span className="flex-1 ms-3 whitespace-nowrap">날짜</span>
-              </div>
-            </li>
-            <li>
-              <div
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                onClick={() => setPage(<Option />)}
-              >
-                <div className="step-number">5</div>
-                <span className="flex-1 ms-3 whitespace-nowrap">상품 옵션</span>
-              </div>
-            </li>
+            {steps.map((step) => (
+              <li key={step.id}>
+                <div
+                  className={`flex items-center p-2 rounded-lg group cursor-pointer ${
+                    activeStep === step.id
+                      ? 'text-blue-600 bg-blue-100 dark:text-white dark:bg-blue-800'
+                      : 'text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700'
+                  }`}
+                  onClick={() => handleStepClick(step.id, step.component)}
+                >
+                  <div
+                    className={`step-number w-32 h-32 flex items-center justify-center rounded-full ${
+                      activeStep === step.id
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-gray-200 text-gray-600'
+                    }`}
+                  >
+                    {activeStep > step.id ? '✔' : step.id}
+                  </div>
+                  <span className="text-16 ms-3">{step.title}</span>
+                </div>
+              </li>
+            ))}
           </ul>
         </div>
       </aside>

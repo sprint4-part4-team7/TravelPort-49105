@@ -119,8 +119,8 @@ const Option = () => {
                 userCount: parseInt(option[3], 10), // 티켓 갯수
                 timeTable: [
                   {
-                    startTimeOnly: `${option[5]}시`, // 시작 시간
-                    endTimeOnly: `${option[6]}시`, // 종료 시간
+                    startTimeOnly: `${option[5]}`, // 시작 시간
+                    endTimeOnly: `${option[6]}`, // 종료 시간
                   },
                 ],
               },
