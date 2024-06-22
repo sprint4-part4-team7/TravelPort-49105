@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import logo from '@/assets/icons/lastLogo.svg';
 import Category from '@/pages/productRegister/Category';
 import Description from '@/pages/productRegister/Description';
 import Location from '@/pages/productRegister/Location';
@@ -8,6 +10,7 @@ import Option from '@/pages/productRegister/Option';
 const ProductRegister = () => {
   const [page, setPage] = useState<React.ReactNode>();
   const [activeStep, setActiveStep] = useState(1);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setPage(<Category setPage={setPage} setActiveStep={setActiveStep} />);
@@ -43,6 +46,9 @@ const ProductRegister = () => {
     setActiveStep(stepId);
     setPage(component);
   };
+  const handleHome = () => {
+    navigate('/');
+  };
 
   return (
     <>
@@ -51,6 +57,13 @@ const ProductRegister = () => {
         className="fixed top-0 left-0 z-40 w-284 h-screen transition-transform -translate-x-full sm:translate-x-0"
         aria-label="Sidebar"
       >
+        <button
+          type="button"
+          onClick={handleHome}
+          className="p-60 border-none bg-none"
+        >
+          <img src={logo} alt="Main Logo" style={{ cursor: 'pointer' }} />
+        </button>
         <div className="h-full px-5 py-10 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <ul className="space-y-2 font-medium flex flex-col gap-15">
             {steps.map((step) => (
