@@ -2,7 +2,7 @@ import React from 'react';
 
 const Skeleton = () => {
   return (
-    <div className="flex flex-col w-265 h-400 overflow-hidden rounded-xl shadow-[0_0_4px_0_rgba(0,0,0,0.25)] tablet:w-229 tablet:h-350 mobile:w-335 mobile:h-198 mobile:flex-row animate-pulse">
+    <div className="flex mr-10 ml-10 flex-col w-265 h-400 overflow-hidden rounded-xl shadow-[0_0_4px_0_rgba(0,0,0,0.25)] tablet:w-229 tablet:h-350 mobile:w-335 mobile:h-198 mobile:flex-row animate-pulse">
       <div className="flex items-center justify-center bg-gray-300 w-265 h-267 tablet:h-217 mobile:w-158 mobile:h-198">
         <svg
           className="w-8 h-8 stroke-gray-400"
