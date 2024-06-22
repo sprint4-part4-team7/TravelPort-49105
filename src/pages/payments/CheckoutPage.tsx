@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Payments.css';
 import usePaymentWidget from '@/hooks/usePaymentWidget';
 import useProductOptionQuery from '@/hooks/reactQuery/productOption/useProductOptionQuery';
-import useTilmeTabaleQuery from '@/hooks/reactQuery/timeTable/useTimeTableQuery';
+import useTimeTableQuery from '@/hooks/reactQuery/timeTable/useTimeTableQuery';
 import {
   useCartStore,
   useReservationStore,
@@ -17,14 +17,20 @@ import Loading from '@/components/common/Loading';
 const CheckoutPage = () => {
   const { reservationInfo } = useReservationStore();
   const resetCart = useCartStore((state) => state.resetCart);
+
   useEffect(() => {
     resetCart();
   }, []);
+
   const optionId = reservationInfo?.productOptionId;
   const timeTableId = reservationInfo?.timeTableId;
 
-  const { data: timeTableData } = useTilmeTabaleQuery(timeTableId);
-  const { productOption, isLoading, error } = useProductOptionQuery(optionId);
+  const { data: timeTableData } = useTimeTableQuery(timeTableId);
+  const {
+    productOption,
+    isLoading: productOptionLoading,
+    refetch: refetchProductOption,
+  } = useProductOptionQuery(optionId);
   const userCount = productOption?.userCount;
 
   const { userInfo } = useUserStore();
@@ -57,6 +63,7 @@ const CheckoutPage = () => {
   const [count, setCount] = useState(reservationInfo?.ticketCount || 1);
   const optionPrice = productOption?.optionPrice || 0;
   const [isChecked, setIsChecked] = useState(true);
+  const [refreshData, setRefreshData] = useState(false);
 
   const handleCheckedChange = (checked: boolean) => {
     setIsChecked(checked);
@@ -81,8 +88,26 @@ const CheckoutPage = () => {
     customerEmail,
   );
 
-  if (isLoading) return <Loading />;
-  if (error) return <h1>error...</h1>;
+  useEffect(() => {
+    if (
+      productOption &&
+      (productOption.optionName === undefined ||
+        productOption.optionPrice === undefined)
+    ) {
+      setRefreshData(true);
+    }
+  }, [productOption]);
+
+  useEffect(() => {
+    if (refreshData) {
+      refetchProductOption();
+      setRefreshData(false);
+    }
+  }, [refreshData, refetchProductOption]);
+
+  if (productOptionLoading || !productOption || !timeTableData) {
+    return <Loading />;
+  }
 
   return (
     <>

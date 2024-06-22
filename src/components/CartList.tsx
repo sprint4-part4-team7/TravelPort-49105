@@ -47,7 +47,7 @@ const CartList = ({
 
   const [count, setCount] = useState(item?.ticketCount);
   const [isSelected, setIsSelected] = useState(false);
-  const [refreshData, setRefreshData] = useState(false); // 새로고침 상태 추가
+  const [refreshData, setRefreshData] = useState(false);
 
   useEffect(() => {
     // 상품 정보가 로딩된 후에 초기화
@@ -58,7 +58,6 @@ const CartList = ({
   }, [item, productOptionLoading, timeTableLoading]);
 
   useEffect(() => {
-    // options 또는 price가 undefined일 때 새로고침 요청
     if (
       productOption &&
       (productOption.optionName === undefined ||
@@ -69,10 +68,9 @@ const CartList = ({
   }, [productOption]);
 
   useEffect(() => {
-    // refreshData가 true일 때 데이터 다시 요청
     if (refreshData) {
-      refetchProductOption(); // 예를 들어, useProductOptionQuery의 refetch 함수를 호출
-      setRefreshData(false); // 요청 후 refreshData 상태 초기화
+      refetchProductOption();
+      setRefreshData(false);
     }
   }, [refreshData, refetchProductOption]);
 
