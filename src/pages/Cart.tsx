@@ -79,7 +79,7 @@ const Cart = () => {
             </div>
             <div className="flex tablet:flex-col mobile:flex-col gap-90">
               <div className="w-full mb-100">
-                {cartData.length === 0 ? (
+                {cartData && cartData.length === 0 ? (
                   <div className="flex items-center justify-center px-8 font-semibold pt-86 text-22 text-black-5">
                     장바구니가 비어있어요
                   </div>
