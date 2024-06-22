@@ -9,7 +9,6 @@ import {
   useUserStore,
 } from '@/utils/zustand';
 import Layout from '@/components/common/layout/Layout';
-import Footer from '@/components/common/Footer';
 import Pay from '@/components/Pay';
 import OrderSummary from '@/components/OrderSummary';
 import Loading from '@/components/common/Loading';
@@ -110,42 +109,39 @@ const CheckoutPage = () => {
   }
 
   return (
-    <>
-      <Layout>
-        <div className="border-b-2 border-solid border-black-12 mt-100">
-          <div className="px-8 py-16 font-semibold text-22">1. 결제확인</div>
-        </div>
+    <Layout>
+      <div className="border-b-2 border-solid border-black-12 mt-100">
+        <div className="px-8 py-16 font-semibold text-22">1. 결제확인</div>
+      </div>
 
-        <OrderSummary
-          productOptionData={productOption}
-          count={count}
-          decreaseCount={decreaseCount}
-          increaseCount={increaseCount}
-          optionPrice={optionPrice}
-          day={day}
-          onCheckedChange={handleCheckedChange}
-          isChecked={isChecked}
-          userCount={userCount}
-          optionName={optionName}
-        />
+      <OrderSummary
+        productOptionData={productOption}
+        count={count}
+        decreaseCount={decreaseCount}
+        increaseCount={increaseCount}
+        optionPrice={optionPrice}
+        day={day}
+        onCheckedChange={handleCheckedChange}
+        isChecked={isChecked}
+        userCount={userCount}
+        optionName={optionName}
+      />
 
-        <div className="flex justify-end gap-20 font-semibold mt-28 text-17 mb-100">
-          <div>최종 결제 금액</div>
-          <div className="ml-2">{totalAmount.toLocaleString()}원</div>
-        </div>
+      <div className="flex justify-end gap-20 font-semibold mt-28 text-17 mb-100">
+        <div>최종 결제 금액</div>
+        <div className="ml-2">{totalAmount.toLocaleString()}원</div>
+      </div>
 
-        <div className="border-b-2 border-solid border-black-12">
-          <div className="px-8 py-16 font-semibold text-22">2. 결제수단</div>
-        </div>
+      <div className="border-b-2 border-solid border-black-12">
+        <div className="px-8 py-16 font-semibold text-22">2. 결제수단</div>
+      </div>
 
-        <div className="flex flex-col items-center w-full ">
-          <div className="w-570 mobile:w-400">
-            <Pay requestPayment={requestPayment} />
-          </div>
+      <div className="flex flex-col items-center w-full ">
+        <div className="w-570 mobile:w-400">
+          <Pay requestPayment={requestPayment} />
         </div>
-      </Layout>
-      <Footer />
-    </>
+      </div>
+    </Layout>
   );
 };
 
