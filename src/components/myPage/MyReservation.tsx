@@ -15,6 +15,7 @@ import CheckCancelMsg from '@/components/myPage/Modal/CheckCancelMsg';
 import ReservChipsExpired from '@/components/myPage/ReservChipsExpired';
 import CancelReserv from '@/components/myPage/Modal/CancelReserv';
 import Loading from '../common/Loading';
+import Button from '../common/Button';
 
 const MyReservation = ({
   isExpired = 'false',
@@ -148,8 +149,16 @@ const MyReservation = ({
           ))}
         </ReservPagination>
       ) : (
-        <div className="border-solid text-24 text-center font-medium border-1 border-black-7 rounded-8 p-16">
-          예약 목록이 없습니다.
+        <div className="flex flex-col gap-16 border-solid text-24 text-center items-center font-medium border-1 border-black-4 rounded-8 py-24 px-16">
+          <span>앗! 예약한 내용이 없어요!</span>
+          <span className="text-16 mb-16">둘러보며 예약해보세요!</span>
+          <Button
+            variant="floating"
+            width="w-375 mobile:w-1/2"
+            onClick={() => navigate('/')}
+          >
+            둘러보러 가기
+          </Button>
         </div>
       )}
       {!!cancelMsg && (
