@@ -35,7 +35,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen my-20">
       <div className="flex flex-col gap-60 justify-center items-center">
         <Link to="/">
           <img alt="travelport logo" width="180" src={Logo} />
