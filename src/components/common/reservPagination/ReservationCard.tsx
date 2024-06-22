@@ -39,7 +39,7 @@ const ReservationCard = ({
   return (
     <div
       id={id ? id.toString() : 'undefined'}
-      className="flex flex-col p-16 w-full max-w-834 gap-32 border-1 border-black-5 rounded-8"
+      className="flex flex-col p-16 w-full gap-32 border-1 border-black-5 rounded-8"
     >
       <div className="flex flex-col justify-between gap-32">
         <div className="flex flex-col gap-12">
