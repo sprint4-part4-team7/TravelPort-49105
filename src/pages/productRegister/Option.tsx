@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useProductImageStore, useThumbnailStore } from '@/utils/zustand';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -20,7 +20,8 @@ const Option = () => {
   const { thumbnail } = useThumbnailStore();
   const { productImages } = useProductImageStore();
 
-  const disabled = false;
+  const [disabled, setDisabled] = useState(true);
+
   const extractId = (str: any) => {
     const regex = /"id":(\d+)/;
     const match = str.match(regex);
@@ -53,6 +54,25 @@ const Option = () => {
     return `${yyyy}-${mm}-${dd} ${hh}:${min}:${ss}`;
   };
 
+  useEffect(() => {
+    if (
+      name !== null &&
+      productType !== null &&
+      productDesc !== null &&
+      productSiteLat !== null &&
+      productSiteLng !== null &&
+      productAddress !== null &&
+      buildingName !== null &&
+      startDate !== null &&
+      endDate !== null &&
+      holiday !== null &&
+      optionList.length > 0
+    ) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [optionList]);
   const onSubmitAll = async () => {
     // 여기에 서버로 전송할 데이터를 모두 모아 보냄
     try {
