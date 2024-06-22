@@ -7,7 +7,7 @@ type ButtonProps = {
 };
 const CheckButton = ({ disabled, onClick }: ButtonProps) => {
   return (
-    <div className="absolute bottom-24 mx-40 w-[calc(100%-364px)]">
+    <div className="absolute bottom-24 mx-40 w-[calc(100%-394px)]">
       <Button
         buttonType="submit"
         variant="default"

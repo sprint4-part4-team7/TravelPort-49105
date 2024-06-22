@@ -11,7 +11,7 @@ type CategoryForm = {
   attractionOption: string;
 };
 
-const Category = ({ setPage }: PageIdProps) => {
+const Category = ({ setPage, setActiveStep }: PageIdProps) => {
   const {
     register,
     handleSubmit,
@@ -53,14 +53,14 @@ const Category = ({ setPage }: PageIdProps) => {
         ? data.accommodationOption
         : data.attractionOption;
 
-    setPage(<Description setPage={setPage} />);
-
     if (data.category === '숙박') {
       localStorage.setItem('categoryId', '1');
     } else if (data.category === '체험') {
       localStorage.setItem('categoryId', '2');
     }
     localStorage.setItem('subCategory', subCategory || '');
+    setActiveStep(2);
+    setPage(<Description setPage={setPage} setActiveStep={setActiveStep} />);
   };
 
   return (

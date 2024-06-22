@@ -15,12 +15,19 @@ type PostCodeForm = {
 
 type PostCodeProps = {
   setPage: React.Dispatch<React.SetStateAction<React.ReactNode>>;
+  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
   setX: React.Dispatch<React.SetStateAction<number>>;
   setY: React.Dispatch<React.SetStateAction<number>>;
   setBuilding: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const PostCode = ({ setPage, setX, setY, setBuilding }: PostCodeProps) => {
+const PostCode = ({
+  setPage,
+  setActiveStep,
+  setX,
+  setY,
+  setBuilding,
+}: PostCodeProps) => {
   const { register, handleSubmit, setValue } = useForm<PostCodeForm>({
     mode: 'onChange',
   });
@@ -159,7 +166,12 @@ const PostCode = ({ setPage, setX, setY, setBuilding }: PostCodeProps) => {
       </div>
       <CheckButton
         disabled={disabled}
-        onClick={() => setPage(<DateCheck setPage={setPage} />)}
+        onClick={() => {
+          setActiveStep(4);
+          setPage(
+            <DateCheck setPage={setPage} setActiveStep={setActiveStep} />,
+          );
+        }}
       />
     </form>
   );
