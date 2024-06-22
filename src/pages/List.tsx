@@ -126,6 +126,7 @@ const List = () => {
     categoryId === '1'
       ? 'flex flex-col gap-24 mb-64 w-full mobile:mx-auto mobile:w-fit'
       : 'grid grid-cols-3 gap-24 w-fit mx-auto mb-64 mobile:grid-cols-1';
+
   return (
     <>
       <Layout main noSearch={false}>
@@ -134,6 +135,7 @@ const List = () => {
             <div className="flex items-center justify-between cursor-pointer gap-30">
               {filterings.map((filtering) => (
                 <p
+                  key={Math.random()}
                   className="font-medium text-13"
                   onClick={() => handleFilterTab(filtering)}
                 >
@@ -204,7 +206,7 @@ const List = () => {
             </div>
           </div>
 
-          {paginatedProducts.length ? (
+          {paginatedProducts.length !== 0 ? (
             <div className={`${listClass}`}>
               {paginatedProducts.map((item: any) => {
                 return categoryId === '1' ? (

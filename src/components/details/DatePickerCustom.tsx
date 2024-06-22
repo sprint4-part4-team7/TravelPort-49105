@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable prefer-const */
 /* eslint-disable react/button-has-type */
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './DatePickerCustom.css';
@@ -95,12 +95,14 @@ const DatePickerCustom = ({
 
   const displayText = startDate
     ? endDate
-      ? `${format(startDate, 'yyyy-MM-dd')} - ${format(endDate, 'yyyy-MM-dd')}`
+      ? `${format(startDate, 'yyyy-MM-dd')} ~ ${format(endDate, 'yyyy-MM-dd')}`
       : format(startDate, 'yyyy-MM-dd')
     : '날짜를 선택하세요.';
 
   // 숙박이 아닐 경우 endDate = null
-  if (categoryId !== 1) setEndDate(null);
+  useEffect(() => {
+    if (categoryId !== 1) setEndDate(null);
+  }, [categoryId, endDate]);
 
   return (
     <div className="flex gap-10">

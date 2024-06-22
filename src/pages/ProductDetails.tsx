@@ -80,7 +80,9 @@ const ProductDetails = () => {
           <DetailsCarousel urls={newUrls} />
           <div className="flex flex-col w-full gap-12 mx-auto mt-32 mb-40 max-w-784">
             <h1 className="font-bold text-20">{product?.name}</h1>
-            <h2 className="mt-4 font-bold text-20">{product?.minPrice}원~</h2>
+            <h2 className="mt-4 font-bold text-20">
+              {product?.minPrice.toLocaleString()}원~
+            </h2>
             <p className="mb-8 text-16">{product?.productDesc}</p>
 
             <div className="flex gap-8 font-semibold text-17">

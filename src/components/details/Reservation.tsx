@@ -31,6 +31,8 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   const [ticketNum, setTicketNum] = useState(0);
   const [isDisabled, setIsDisabled] = useState(true);
   const [diffDay, setDiffDay] = useState(0);
+  const [remainCount, setRemainCount] = useState<number[]>([]);
+  const [optionIdArray, setOptionIdArray] = useState<number[]>([]);
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
@@ -85,6 +87,25 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     return 0;
   };
 
+  useEffect(() => {
+    if (startDate && endDate) {
+      options.forEach((option) => {
+        const newOptionId = option.id;
+        setOptionIdArray((prev) => [...prev, newOptionId]);
+        console.log(optionIdArray);
+      });
+      const getOptionRemainsByTable = (timeTable: any) => {
+        for (let i = 0; i < timeTable?.length; i++) {
+          if (timeTable[i].targetDate?.includes(formatDate(startDate))) {
+            return timeTable[i].remainCount;
+          }
+        }
+      };
+      setRemainCount(getOptionRemainsByTable(table));
+    }
+    if (!startDate || !endDate) setOptionIdArray([]);
+  }, [table, startDate, endDate, options, optionId]);
+
   const handleClick = (id: number) => {
     setSelectedOption(id);
   };
@@ -97,11 +118,8 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     setTicketNum(ticketNum - 1);
   };
   const handleTicketPlus = () => {
-    if (
-      !filteredOption[0]?.userCount ||
-      ticketNum >= filteredOption[0].userCount
-    )
-      return;
+    console.log(filteredOption);
+    // if (ticketNum >= remainCount) return;
     setTicketNum(ticketNum + 1);
   };
 
@@ -165,7 +183,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
       <hr className="mb-20" />
       <div className="grid grid-cols-3 gap-16 mx-auto font-semibold cursor-pointer mobile:grid-cols-2 text-14 mb-60">
         {options.map((option) => {
-          if (option.userCount === 0) {
+          if (remainCount?.length) {
             return (
               <div
                 key={option.id}
@@ -223,11 +241,13 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
           </div>
           <h3 className="font-semibold text-18 text-end">
             {filteredOption.length &&
-              (
-                filteredOption[0].optionPrice *
-                ticketNum *
-                diffDay
-              ).toLocaleString()}
+              (categoryId === 1
+                ? (
+                    filteredOption[0].optionPrice *
+                    ticketNum *
+                    diffDay
+                  ).toLocaleString()
+                : (filteredOption[0].optionPrice * ticketNum).toLocaleString())}
             원
           </h3>
         </div>
