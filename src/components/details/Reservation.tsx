@@ -14,6 +14,7 @@ import useCartPostMutation from '@/hooks/reactQuery/cart/useCartPostMutation';
 import useModal from '@/hooks/useModal';
 import RESERV_STATUS from '@/constants/reserv';
 import { toast } from 'react-toastify';
+import instance from '@/utils/axios';
 import Button from '@/components/common/Button';
 import '@/styles/ProductDetails.css';
 import DatePickerCustom from './DatePickerCustom';
@@ -31,10 +32,10 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   const [ticketNum, setTicketNum] = useState(0);
   const [isDisabled, setIsDisabled] = useState(true);
   const [diffDay, setDiffDay] = useState(0);
-  const [remainCount, setRemainCount] = useState<number[]>([]);
-  const [optionIdArray, setOptionIdArray] = useState<number[]>([]);
+  const [remainCounts, setRemainCounts] = useState<number[]>([]);
 
   const { isModalOpen, openModal, closeModal } = useModal();
+  const { table } = useTimeTable(optionId);
 
   const { userInfo } = useUserStore();
   const navigate = useNavigate();
@@ -49,7 +50,6 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     maxStartDate,
     minEndDate,
   } = useDatePicker(product?.id);
-  const { table } = useTimeTable(optionId);
 
   useEffect(() => {
     if (
@@ -87,24 +87,36 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     return 0;
   };
 
+  const getOptionRemainsByTable = (timeTable: any) => {
+    if (startDate) {
+      for (let i = 0; i < timeTable?.length; i++) {
+        if (timeTable[i].targetDate?.includes(formatDate(startDate))) {
+          return timeTable[i].remainCount;
+        }
+      }
+    }
+    return 0;
+  };
+
+  const fetchRemainCounts = async (optionIds: number[]) => {
+    const newRemainCounts = await Promise.all(
+      optionIds.map(async (id) => {
+        const response = await instance.get(`/timeTable/productOption/${id}`);
+        const tableData = response.data;
+        return getOptionRemainsByTable(tableData);
+      }),
+    );
+    setRemainCounts(newRemainCounts);
+  };
+
   useEffect(() => {
     if (startDate && endDate) {
-      options.forEach((option) => {
-        const newOptionId = option.id;
-        setOptionIdArray((prev) => [...prev, newOptionId]);
-        console.log(optionIdArray);
-      });
-      const getOptionRemainsByTable = (timeTable: any) => {
-        for (let i = 0; i < timeTable?.length; i++) {
-          if (timeTable[i].targetDate?.includes(formatDate(startDate))) {
-            return timeTable[i].remainCount;
-          }
-        }
-      };
-      setRemainCount(getOptionRemainsByTable(table));
+      const newOptionIds = options.map((option) => option.id);
+      fetchRemainCounts(newOptionIds);
+    } else {
+      setRemainCounts([]);
     }
-    if (!startDate || !endDate) setOptionIdArray([]);
-  }, [table, startDate, endDate, options, optionId]);
+  }, [startDate, endDate, options]);
 
   const handleClick = (id: number) => {
     setSelectedOption(id);
@@ -118,8 +130,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     setTicketNum(ticketNum - 1);
   };
   const handleTicketPlus = () => {
-    console.log(filteredOption);
-    // if (ticketNum >= remainCount) return;
+    if (ticketNum >= remainCounts[selectedOption - 1]) return;
     setTicketNum(ticketNum + 1);
   };
 
@@ -182,8 +193,8 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
       <h1 className="my-20 font-bold text-24">{optionTitle}를 선택하세요</h1>
       <hr className="mb-20" />
       <div className="grid grid-cols-3 gap-16 mx-auto font-semibold cursor-pointer mobile:grid-cols-2 text-14 mb-60">
-        {options.map((option) => {
-          if (remainCount?.length) {
+        {options.map((option, idx) => {
+          if (remainCounts[idx] === 0) {
             return (
               <div
                 key={option.id}
