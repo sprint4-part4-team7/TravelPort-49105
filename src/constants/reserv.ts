@@ -10,12 +10,12 @@ interface ReservStatus {
 }
 
 const RESERV_STATUS: ReservStatus = {
+  CANCELED: 0,
   PENDING: 1 || null,
   FINISHED: 2,
   REJECTED: 3,
-  CANCELED: 4,
-  DELETED: 5,
-  REVIEWED: 6,
+  DELETED: 4,
+  REVIEWED: 5,
 };
 
 export default RESERV_STATUS;

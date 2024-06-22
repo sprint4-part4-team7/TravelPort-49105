@@ -29,12 +29,12 @@ const MyReservation = ({
   const [pageNum, setPageNum] = useState(1);
   const navigate = useNavigate();
 
-  const limit = 4;
+  const LIMIT = 4;
   const isReservExpired = isExpired === 'true';
 
   const { isPending, data: myReservation } = useQuery({
     queryKey: ['myReservation', userInfo.id, pageNum, isExpired],
-    queryFn: () => getMyReservation(userInfo.id, isExpired, pageNum - 1, limit),
+    queryFn: () => getMyReservation(userInfo.id, isExpired, pageNum - 1, LIMIT),
     enabled: !!userInfo.id,
   });
   const myReservationData = myReservation?.reservations as Reservation[];
@@ -74,7 +74,7 @@ const MyReservation = ({
         />
       ) : (
         <ReservButtonOutlined
-          status={4}
+          status={RESERV_STATUS.CANCELED}
           onClick={() => handleCancel(cancelId)}
         />
       );
@@ -123,7 +123,7 @@ const MyReservation = ({
       <div className="text-20 font-semibold">예약 목록</div>
       {!!myReservation?.totalCount && myReservation?.totalCount >= 0 ? (
         <ReservPagination
-          limit={limit}
+          limit={LIMIT}
           pageNum={pageNum}
           setPageNum={setPageNum}
           allCardNum={myReservation?.totalCount || 0}

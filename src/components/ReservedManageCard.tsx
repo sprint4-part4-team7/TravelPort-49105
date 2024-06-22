@@ -73,7 +73,7 @@ const ReservedManageCard = ({
       userInfo={`예약자명 : ${user.name} / 전화번호 : ${user.phone}`}
       upperRight={<ReservChips status={state} />}
       lowerRight={
-        state === RESERV_STATUS.PENDING || state === null ? (
+        state === RESERV_STATUS.PENDING ? (
           <div className="flex flex-col mobile:flex-row gap-8 justify-end">
             <div className="absolute top-16 right-16 text-14 text-right font-semibold">
               대기중
@@ -95,8 +95,14 @@ const ReservedManageCard = ({
               승인됨
             </div>
             <div className="flex gap-8 items-end tablet:flex-col mobile:justify-between">
-              <ReservButtonOutlined status={4} onClick={handleStandby} />
-              <ReservButtonOutlined status={3} onClick={handleReject} />
+              <ReservButtonOutlined
+                status={RESERV_STATUS.CANCELED}
+                onClick={handleStandby}
+              />
+              <ReservButtonOutlined
+                status={RESERV_STATUS.REJECTED}
+                onClick={handleReject}
+              />
             </div>
           </div>
         ) : state === RESERV_STATUS.REJECTED ? (
