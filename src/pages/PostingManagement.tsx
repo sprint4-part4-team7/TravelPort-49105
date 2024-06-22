@@ -2,10 +2,9 @@ import ARROW from '@/assets/icons/arrowDown.svg';
 import { useEffect, useState } from 'react';
 import { useUserStore } from '@/utils/zustand';
 import useProductByPartnerQuery from '@/hooks/reactQuery/product/useProductByPartnerQuery';
-import SearchBar from '@/components/common/SearchBar';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
 import PostingCard from '@/components/PostingCard';
-// import Button from '@/components/common/Button';
+import Button from '@/components/common/Button';
 
 const PostingManagement = () => {
   const { userInfo } = useUserStore();
@@ -75,17 +74,16 @@ const PostingManagement = () => {
   }, [isNew, allPost]);
 
   return (
-    <div className="relative mx-10 my-0 w-1000">
-      <div className="flex flex-col gap-60 mt-60">
+    <div className="relative mx-10 my-0 w-1000 mobile:w-full">
+      <div className="flex flex-col gap-30 mt-60">
         <div className="flex flex-col gap-20">
-          <div className="font-bold text-24">상품 판매(게시) 관리</div>
-          <SearchBar cardLists={[]} />
+          <div className="font-bold text-28">상품 판매(게시) 관리</div>
         </div>
 
         <div>
-          <div className="flex justify-between py-24">
+          <div className="flex justify-between py-24 mobile:flex-col mobile:gap-24">
             <div className="flex">
-              {['전체', '숙박', '체험', '교통'].map((category) => (
+              {['전체', '숙박', '체험'].map((category) => (
                 <button
                   type="button"
                   key={category}
@@ -222,13 +220,14 @@ const PostingManagement = () => {
           </div>
         </div>
       </div>
-      {/* <Button
+      <Button
         variant="floating"
-        buttonStyle="fixed bottom-90 right-40 w-240 h-56 p-12
+        buttonStyle="fixed bottom-90 right-40 h-56 p-12
       bg-blue-6 text-16 font-semibold cursor-pointer shadow-lg"
+        width="w-240"
       >
         새 상품 게시하기
-      </Button> */}
+      </Button>
     </div>
   );
 };

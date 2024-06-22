@@ -30,11 +30,14 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   const [optionId, setOptionId] = useState(0);
   const [ticketNum, setTicketNum] = useState(0);
   const [isDisabled, setIsDisabled] = useState(true);
+  const [diffDay, setDiffDay] = useState(0);
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const { userInfo } = useUserStore();
   const navigate = useNavigate();
+
+  const optionTitle = categoryId === 1 ? '객실 종류' : '옵션';
 
   const {
     startDate,
@@ -55,7 +58,21 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     )
       setIsDisabled(true);
     else setIsDisabled(false);
-  }, [ticketNum, selectedOption, startDate, endDate, categoryId, isDisabled]);
+
+    if (startDate && endDate) {
+      const diffTime = endDate.getTime() - startDate.getTime();
+      const difference = diffTime / (1000 * 60 * 60 * 24);
+      setDiffDay(difference);
+    }
+  }, [
+    ticketNum,
+    selectedOption,
+    startDate,
+    endDate,
+    categoryId,
+    isDisabled,
+    diffDay,
+  ]);
 
   const getTableId = (timeTable: any) => {
     if (!timeTable || !startDate) return 0;
@@ -103,7 +120,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
       productOptionId: optionId,
       timeTableId: getTableId(table),
       reservationState: RESERV_STATUS.PENDING,
-      reservationPrice: filteredOption[0].optionPrice * ticketNum,
+      reservationPrice: filteredOption[0].optionPrice * ticketNum * diffDay,
       ticketCount: ticketNum,
       cancelMsg: '',
     };
@@ -144,7 +161,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
         />
       </div>
 
-      <h1 className="my-20 font-bold text-24">회차를 선택하세요</h1>
+      <h1 className="my-20 font-bold text-24">{optionTitle}를 선택하세요</h1>
       <hr className="mb-20" />
       <div className="grid grid-cols-3 gap-16 mx-auto font-semibold cursor-pointer mobile:grid-cols-2 text-14 mb-60">
         {options.map((option) => {
@@ -206,7 +223,11 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
           </div>
           <h3 className="font-semibold text-18 text-end">
             {filteredOption.length &&
-              (filteredOption[0].optionPrice * ticketNum).toLocaleString()}
+              (
+                filteredOption[0].optionPrice *
+                ticketNum *
+                diffDay
+              ).toLocaleString()}
             원
           </h3>
         </div>

@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
-import Logo from '@/assets/icons/travelPortLogo.svg';
+import Logo from '@/assets/icons/travelPortLogo-login.svg';
 import { getCookie } from '@/utils/cookie';
 import jwtDecode from '@/utils/jwtDecode';
 import useVerifyEmail from '@/hooks/reactQuery/auth/useVerifyEmail';
@@ -29,6 +29,7 @@ const UserSignup = () => {
     register,
     handleSubmit,
     watch,
+    setError,
     getValues,
     formState: { errors },
   } = useForm<UserSignupForm>({
@@ -52,7 +53,7 @@ const UserSignup = () => {
     checkBtnClass = `${checkBtnBasic} bg-black-3 text-black-5`;
   } else {
     disableType = false;
-    checkBtnClass = `${checkBtnBasic} bg-blue-1 text-black-12`;
+    checkBtnClass = `${checkBtnBasic} bg-blue-1 text-black-12 hover:opacity-75 active:opacity-50`;
   }
 
   const handleCheckEmail = async () => {
@@ -74,6 +75,13 @@ const UserSignup = () => {
   };
 
   const handleSignupForm = async (data: UserSignupData) => {
+    if (data.nickname.trim() === '') {
+      setError('nickname', {
+        type: 'required',
+        message: '닉네임을 입력해주세요.',
+      });
+      return;
+    }
     const { nickname: name, email, password } = data;
     const loginType: UserType = 'USER';
     const signupData = { name, email, password, loginType, isEmailValid };
@@ -188,14 +196,20 @@ const UserSignup = () => {
 
           <div className="text-center text-14 text-black-12">
             이미 회원이신가요?{' '}
-            <Link className="text-blue-6" to="/login">
+            <Link
+              className="hover:opacity-75 active:opacity-50 text-blue-6"
+              to="/login"
+            >
               로그인하기
             </Link>
           </div>
 
           <div className="text-center text-14 text-black-12">
             파트너 등록이 필요하신가요?{' '}
-            <Link className="text-blue-6" to="/signup/partner">
+            <Link
+              className="hover:opacity-75 active:opacity-50 text-blue-6"
+              to="/signup/partner"
+            >
               파트너 회원가입
             </Link>
           </div>

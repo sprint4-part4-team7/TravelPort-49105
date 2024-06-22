@@ -48,7 +48,9 @@ const ReviewRegister = ({ optionId, reviewId = 0 }: ReviewRegisterProps) => {
 
   const [postingImages, setPostingImages] = useState<(null | File)[]>([]);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [initialImages, setInitialImages] = useState<(null | string)[]>([]);
+  const [initialImages, setInitialImages] = useState<(null | string)[]>(
+    Array(5).fill(null),
+  );
 
   const { isModalOpen, openModal, closeModal } = useModal();
   const navigate = useNavigate();

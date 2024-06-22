@@ -8,6 +8,21 @@ module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
+      keyframes: {
+        slideUpFade: {
+          '0%': { transform: 'translateY(0)', opacity: 1 },
+          '100%': { transform: 'translateY(-100px)', opacity: 0 },
+        },
+        slideDownFade: {
+          '0%': { transform: 'translateY(-100px)', opacity: 0 },
+          '100%': { transform: 'translateY(0)', opacity: 1 },
+        },
+      },
+      animation: {
+        slideUpFade: 'slideUpFade 0.5s forwards',
+        slideDownFade: 'slideDownFade 0.5s forwards',
+      },
+
       borderWidth: rem0_10,
       borderRadius: rem0_100,
       fontSize: rem0_100,

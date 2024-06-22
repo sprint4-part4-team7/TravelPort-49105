@@ -41,7 +41,7 @@ const PostingCard = ({
       className="flex flex-col p-16 w-full max-w-834 gap-32 
       border-1 border-black-5 rounded-8
       cursor-pointer hover:bg-black-2 active:bg-black-1
-      "
+      moblie:w-full"
       onClick={() => navigate('/partner/product-register')}
     >
       <div className="flex flex-col justify-between gap-32">

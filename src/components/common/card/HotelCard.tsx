@@ -1,7 +1,5 @@
-// import emptyImage from '@/assets/images/star-empty.svg';
 import fillImage from '@/assets/images/star-fill.svg';
 import { useNavigate } from 'react-router-dom';
-import Button from '@/components/common/Button';
 
 type HotelCardProps = {
   title: string;
@@ -26,36 +24,30 @@ const HotelCard = ({
   const navigate = useNavigate();
 
   return (
-    <div className="flex w-full min-w-462 h-200 overflow-hidden rounded-12 border-1 border-solid border-black-4 mx-auto px-16 py-20 hover:bg-blue-1 mobile:max-w-500">
-      <img src={image} alt="예시사진" className="w-160 h-160 object-cover" />
-      <div className="px-16">
-        <h2 className="text-black-12 mt-4 mb-5 text-22 font-semibold leading-23 truncate mobile:text-17">
+    <div
+      onClick={() => navigate(link)}
+      className="flex w-full px-16 py-20 mx-auto overflow-hidden border-solid min-w-462 h-200 rounded-12 border-1 border-black-4 hover:bg-blue-1 mobile:max-w-500"
+    >
+      <img src={image} alt="예시사진" className="object-cover w-160 h-160" />
+      <div className="flex flex-col px-16 justify-evenly">
+        <h2 className="font-semibold truncate text-black-12 text-22 leading-23 mobile:text-17">
           {title}
         </h2>
-        <p className="text-black-7 mb-8 text-15 mobile:text-12 mobile:text-black-7 truncate">
+        <p className="truncate text-black-7 text-15 mobile:text-12 mobile:text-black-7">
           {location}
         </p>
-        <div className="flex flex-row items-center mb-7 mobile:items-start mobile:mb-5">
-          <div className="flex flex-row item-center pr-8 mobile:mb-8">
+        <div className="flex flex-row items-center mobile:items-start">
+          <div className="flex flex-row pr-8 item-center mobile:mb-8">
             <img src={fillImage} alt="이미지가 있음" width={21} />
-            <p className="text-black-13 text-14 font-bold pl-4">{roundScore}</p>
+            <p className="pl-4 font-bold text-black-13 text-14">{roundScore}</p>
           </div>
-          <p className="text-black-6 text-13 font-medium">
+          <p className="font-medium text-black-6 text-13">
             리뷰 {review.toLocaleString()}개
           </p>
         </div>
-        <p className="text-black-13 text-17 font-bold mb-8 mobile:text-14">
+        <p className="font-bold text-black-13 text-17 mobile:text-14">
           {price.toLocaleString()}원 / 1박
         </p>
-        <div className="w-74">
-          <Button
-            outlined
-            buttonStyle="text-13 py-8 px-12 font-medium mobile:flex"
-            onClick={() => navigate(link)}
-          >
-            상세보기
-          </Button>
-        </div>
       </div>
     </div>
   );
