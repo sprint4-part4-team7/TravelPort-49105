@@ -2,6 +2,7 @@
 import React from 'react';
 import Button from '@/components/common/Button';
 import Card from '@/components/common/card/Card';
+import Skeleton from './common/Skeleton';
 
 interface ImageItem {
   url: string;
@@ -17,12 +18,16 @@ interface PopularAccommodationsProps {
   images: ImageItem[];
   title: string;
   onclick: () => void;
+  isLoading: boolean;
+  displayCount: number;
 }
 
 const MainCard: React.FC<PopularAccommodationsProps> = ({
   images,
   title,
   onclick,
+  isLoading,
+  displayCount,
 }) => {
   return (
     <div>
@@ -42,20 +47,24 @@ const MainCard: React.FC<PopularAccommodationsProps> = ({
           </div>
         </div>
       </div>
-      <div className="grid gap-20 mobile:grid-cols-1 tablet:grid-cols-3 desktop:grid-cols-4 mobile:min-w-335 tablet:min-w-768 min-w-1200">
-        {images &&
-          images.map((item, index) => (
-            <Card
-              key={index}
-              title={item.text as string}
-              location={item.location as string}
-              price={item.price as number}
-              score={item.score as number}
-              review={item.review as number}
-              image={item.url as string}
-              link={item.path as string}
-            />
-          ))}
+      <div className="grid gap-20 mobile:grid-cols-1 tablet:grid-cols-3 desktop:grid-cols-4 mobile:min-w-335 tablet:min-w-750 min-w-1190">
+        {isLoading
+          ? Array.from({ length: displayCount }).map((_, index) => (
+              <Skeleton key={index} />
+            ))
+          : images &&
+            images.map((item, index) => (
+              <Card
+                key={index}
+                title={item.text as string}
+                location={item.location as string}
+                price={item.price as number}
+                score={item.score as number}
+                review={item.review as number}
+                image={item.url as string}
+                link={item.path as string}
+              />
+            ))}
       </div>
     </div>
   );
