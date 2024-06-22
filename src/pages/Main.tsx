@@ -17,6 +17,7 @@ import Layout from '@/components/common/layout/Layout';
 import MainCard from '@/components/MainCard';
 import PartnerMain from '@/pages/PartnerMain';
 import Loading from '@/components/common/Loading';
+import Skeleton from '@/components/common/Skeleton';
 
 interface ImageItem {
   url: string;
@@ -100,8 +101,6 @@ const Main = () => {
     }
   }
 
-  if (isLoadingProducts) return <Loading />;
-
   return (
     <>
       <Layout main category noSearch={false}>
@@ -111,6 +110,8 @@ const Main = () => {
             images={CategoryAccommodation}
             title="인기많은 숙소"
             onclick={handleAccommodation}
+            isLoading={isLoadingProducts}
+            displayCount={displayCount}
           />
         </div>
         <div className="flex justify-center p-20 pb-5">
@@ -118,6 +119,8 @@ const Main = () => {
             images={CategoryActivity}
             title="인기많은 액티비티"
             onclick={handleActivity}
+            isLoading={isLoadingProducts}
+            displayCount={displayCount}
           />
         </div>
       </Layout>
