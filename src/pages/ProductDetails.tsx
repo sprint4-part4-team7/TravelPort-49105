@@ -21,7 +21,6 @@ import DetailInfo from '@/components/details/DetailInfo';
 import Pagination from '@/components/common/Pagination';
 import NoPage from './NoPage';
 import Layout from '@/components/common/layout/Layout';
-import Footer from '@/components/common/Footer';
 import Loading from '@/components/common/Loading';
 import NoData from '@/components/common/NoData';
 
@@ -74,87 +73,84 @@ const ProductDetails = () => {
   if (!productId || !idArray.includes(Number(productId))) return <NoPage />;
 
   return (
-    <>
-      <Layout>
-        <div className="mx-auto mb-40 max-w-784 mt-100 mobile:mt-40 mobile:px-20 tablet:px-20">
-          <DetailsCarousel urls={newUrls} />
-          <div className="flex flex-col w-full gap-12 mx-auto mt-32 mb-40 max-w-784">
-            <h1 className="font-bold text-20">{product?.name}</h1>
-            <h2 className="mt-4 font-bold text-20">
-              {product?.minPrice.toLocaleString()}원~
-            </h2>
-            <p className="mb-8 text-16">{product?.productDesc}</p>
+    <Layout>
+      <div className="mx-auto mb-40 max-w-784 mt-100 mobile:mt-40 mobile:px-20 tablet:px-20">
+        <DetailsCarousel urls={newUrls} />
+        <div className="flex flex-col w-full gap-12 mx-auto mt-32 mb-40 max-w-784">
+          <h1 className="font-bold text-20">{product?.name}</h1>
+          <h2 className="mt-4 font-bold text-20">
+            {product?.minPrice.toLocaleString()}원~
+          </h2>
+          <p className="mb-8 text-16">{product?.productDesc}</p>
 
-            <div className="flex gap-8 font-semibold text-17">
-              <SalesPeriod product={product} />
-            </div>
-
-            <div className="flex gap-8 font-semibold text-17">
-              <LocationMap product={product} />
-            </div>
+          <div className="flex gap-8 font-semibold text-17">
+            <SalesPeriod product={product} />
           </div>
-          <div className="w-full mx-auto max-w-784">
-            <div className="flex items-center justify-center my-20">
-              <h1
-                onClick={() => handleTabClick('reservation')}
-                className={`${activeTab === 'reservation' && 'rounded-8 bg-black-7 text-white'} p-12 text-14 font-semibold flex-1 text-center bg-black-3 cursor-pointer`}
-              >
-                예약하기
-              </h1>
-              <h1
-                onClick={() => handleTabClick('details')}
-                className={`${activeTab === 'details' && 'rounded-8 bg-black-7 text-white'} p-12 text-14 font-semibold flex-1 text-center bg-black-3 cursor-pointer`}
-              >
-                상세정보
-              </h1>
-              <h1
-                onClick={() => handleTabClick('review')}
-                className={`${activeTab === 'review' && 'rounded-8 bg-black-7 text-white'} p-12 text-14 font-semibold flex-1 text-center bg-black-3 cursor-pointer`}
-              >
-                리뷰
-              </h1>
-            </div>
-            {activeTab === 'reservation' && (
-              <Reservation
-                product={product}
-                options={options}
-                categoryId={Number(categoryId)}
-              />
-            )}
-            {activeTab === 'details' && <DetailInfo options={options} />}
-            {activeTab === 'review' && (
-              <div className="mt-60">
-                <ReviewAverage productId={productIdNum} />
-                <h1 className="py-16 font-semibold text-18">
-                  리뷰
-                  <span className="text-blue-6 pl-11">
-                    {productReviews?.length ? productReviews.length : 0}개
-                  </span>
-                </h1>
-                {dataByPage?.length ? (
-                  dataByPage.map((review: any) => {
-                    return <Review key={review.id} review={review} />;
-                  })
-                ) : (
-                  <NoData text="리뷰가 없어요." />
-                )}
-                <div className="py-20 mx-auto w-fit">
-                  {!!reviewByProductId.length && (
-                    <Pagination
-                      pageNum={pageNum}
-                      setPageNum={setPageNum}
-                      allCardNum={reviewByProductId.length}
-                      divNum={LIMIT}
-                    />
-                  )}
-                </div>
-              </div>
-            )}
+
+          <div className="flex gap-8 font-semibold text-17">
+            <LocationMap product={product} />
           </div>
         </div>
-      </Layout>
-      <Footer />
-    </>
+        <div className="w-full mx-auto max-w-784">
+          <div className="flex items-center justify-center my-20">
+            <h1
+              onClick={() => handleTabClick('reservation')}
+              className={`${activeTab === 'reservation' && 'rounded-8 bg-black-7 text-white'} p-12 text-14 font-semibold flex-1 text-center bg-black-3 cursor-pointer`}
+            >
+              예약하기
+            </h1>
+            <h1
+              onClick={() => handleTabClick('details')}
+              className={`${activeTab === 'details' && 'rounded-8 bg-black-7 text-white'} p-12 text-14 font-semibold flex-1 text-center bg-black-3 cursor-pointer`}
+            >
+              상세정보
+            </h1>
+            <h1
+              onClick={() => handleTabClick('review')}
+              className={`${activeTab === 'review' && 'rounded-8 bg-black-7 text-white'} p-12 text-14 font-semibold flex-1 text-center bg-black-3 cursor-pointer`}
+            >
+              리뷰
+            </h1>
+          </div>
+          {activeTab === 'reservation' && (
+            <Reservation
+              product={product}
+              options={options}
+              categoryId={Number(categoryId)}
+            />
+          )}
+          {activeTab === 'details' && <DetailInfo options={options} />}
+          {activeTab === 'review' && (
+            <div className="mt-60">
+              <ReviewAverage productId={productIdNum} />
+              <h1 className="py-16 font-semibold text-18">
+                리뷰
+                <span className="text-blue-6 pl-11">
+                  {productReviews?.length ? productReviews.length : 0}개
+                </span>
+              </h1>
+              {dataByPage?.length ? (
+                dataByPage.map((review: any) => {
+                  return <Review key={review.id} review={review} />;
+                })
+              ) : (
+                <NoData text="리뷰가 없어요." />
+              )}
+              <div className="py-20 mx-auto w-fit">
+                {!!reviewByProductId.length && (
+                  <Pagination
+                    pageNum={pageNum}
+                    setPageNum={setPageNum}
+                    allCardNum={reviewByProductId.length}
+                    divNum={LIMIT}
+                  />
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </Layout>
   );
 };
 

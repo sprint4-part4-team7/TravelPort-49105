@@ -24,7 +24,7 @@ const ReservChips = ({ status }: { status: number | null }) => {
       style += 'text-system-error';
       text = '거절됨';
       break;
-    case RESERV_STATUS.DELETED:
+    case RESERV_STATUS.CANCELED:
       src = rejected;
       style += 'text-system-error';
       text = '취소됨';

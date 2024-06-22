@@ -15,7 +15,6 @@ import Layout from '@/components/common/layout/Layout';
 import HotelCard from '@/components/common/card/HotelCard';
 import HeadCount from '@/components/common/filter/HeadCount';
 import PriceRange from '@/components/common/filter/PriceRange';
-import Footer from '@/components/common/Footer';
 import Card from '@/components/common/card/Card';
 import Pagination from '@/components/common/Pagination';
 import DatePickerCustom from '@/components/details/DatePickerCustom';
@@ -128,129 +127,126 @@ const List = () => {
       : 'grid grid-cols-3 gap-24 w-fit mx-auto mb-64 mobile:grid-cols-1';
 
   return (
-    <>
-      <Layout main noSearch={false}>
-        <div className="mx-auto mt-40 max-w-928 min-w-460 ">
-          <div className="relative rounded-42 px-48 py-20 shadow-[0_0_12px_0_rgba(0,0,0,0.25)] mb-100">
-            <div className="flex items-center justify-between cursor-pointer gap-30">
-              {filterings.map((filtering) => (
-                <p
-                  key={Math.random()}
-                  className="font-medium text-13"
-                  onClick={() => handleFilterTab(filtering)}
-                >
-                  {filtering} <span className="mobile:hidden">선택</span>
-                  <img
-                    src={arrowDown}
-                    alt="드롭다운 아이콘"
-                    className="inline mobile:hidden"
-                  />
-                </p>
-              ))}
+    <Layout main noSearch={false}>
+      <div className="mx-auto mt-40 max-w-928 min-w-460 ">
+        <div className="relative rounded-42 px-48 py-20 shadow-[0_0_12px_0_rgba(0,0,0,0.25)] mb-100">
+          <div className="flex items-center justify-between cursor-pointer gap-30">
+            {filterings.map((filtering) => (
+              <p
+                key={Math.random()}
+                className="font-medium text-13"
+                onClick={() => handleFilterTab(filtering)}
+              >
+                {filtering} <span className="mobile:hidden">선택</span>
+                <img
+                  src={arrowDown}
+                  alt="드롭다운 아이콘"
+                  className="inline mobile:hidden"
+                />
+              </p>
+            ))}
 
-              {filterTab === '날짜' && isOpen && (
-                <div
-                  className="absolute top-80 left-20 right-20 max-w-500"
-                  ref={outsideRef}
-                >
-                  <DatePickerCustom
-                    startDate={startDate}
-                    setStartDate={setStartDate}
-                    endDate={endDate}
-                    setEndDate={setEndDate}
-                    categoryId={Number(categoryId)}
-                  />
-                </div>
-              )}
-              {filterTab === '인원수' && isOpen && (
-                <div
-                  className="absolute left-0 w-2/5 top-80 mobile:w-full"
-                  ref={outsideRef}
-                >
-                  <HeadCount count={count} setCount={setCount} />
-                </div>
-              )}
-              {filterTab === '가격대' && isOpen && (
-                <div
-                  className="absolute left-0 w-3/5 top-80 tablet:w-full mobile:w-full"
-                  ref={outsideRef}
-                >
-                  <PriceRange
-                    rangeMinValue={rangeMinValue}
-                    setRangeMinValue={setRangeMinValue}
-                    rangeMaxValue={rangeMaxValue}
-                    setRangeMaxValue={setRangeMaxValue}
-                    fixedMaxPrice={fixedMaxPrice}
-                    fixedMinPrice={fixedMinPrice}
-                  />
-                </div>
-              )}
-              {filterTab === `${categoryName} 종류` && isOpen && (
-                <div
-                  className="absolute right-0 z-50 w-2/5 top-80 mobile:w-full"
-                  ref={outsideRef}
-                >
-                  <ProductType
-                    category={Number(categoryId)}
-                    categoryName={categoryName}
-                    checkedList={checkedList}
-                    checkHandler={checkHandler}
-                  />
-                </div>
-              )}
-              <div>
-                <Button buttonStyle="py-10 px-20" onClick={handleFilterClick}>
-                  검색하기
-                </Button>
+            {filterTab === '날짜' && isOpen && (
+              <div
+                className="absolute top-80 left-20 right-20 max-w-500"
+                ref={outsideRef}
+              >
+                <DatePickerCustom
+                  startDate={startDate}
+                  setStartDate={setStartDate}
+                  endDate={endDate}
+                  setEndDate={setEndDate}
+                  categoryId={Number(categoryId)}
+                />
               </div>
+            )}
+            {filterTab === '인원수' && isOpen && (
+              <div
+                className="absolute left-0 w-2/5 top-80 mobile:w-full"
+                ref={outsideRef}
+              >
+                <HeadCount count={count} setCount={setCount} />
+              </div>
+            )}
+            {filterTab === '가격대' && isOpen && (
+              <div
+                className="absolute left-0 w-3/5 top-80 tablet:w-full mobile:w-full"
+                ref={outsideRef}
+              >
+                <PriceRange
+                  rangeMinValue={rangeMinValue}
+                  setRangeMinValue={setRangeMinValue}
+                  rangeMaxValue={rangeMaxValue}
+                  setRangeMaxValue={setRangeMaxValue}
+                  fixedMaxPrice={fixedMaxPrice}
+                  fixedMinPrice={fixedMinPrice}
+                />
+              </div>
+            )}
+            {filterTab === `${categoryName} 종류` && isOpen && (
+              <div
+                className="absolute right-0 z-50 w-2/5 top-80 mobile:w-full"
+                ref={outsideRef}
+              >
+                <ProductType
+                  category={Number(categoryId)}
+                  categoryName={categoryName}
+                  checkedList={checkedList}
+                  checkHandler={checkHandler}
+                />
+              </div>
+            )}
+            <div>
+              <Button buttonStyle="py-10 px-20" onClick={handleFilterClick}>
+                검색하기
+              </Button>
             </div>
           </div>
+        </div>
 
-          {paginatedProducts.length !== 0 ? (
-            <div className={`${listClass}`}>
-              {paginatedProducts.map((item: any) => {
-                return categoryId === '1' ? (
-                  <HotelCard
-                    key={item.productId}
-                    title={item.productName}
-                    location={item.productAddress}
-                    price={item.minPrice}
-                    score={item.reviewAvg}
-                    review={item.reviewCount}
-                    image={item.thumbnail}
-                    link={`/details/${Number(categoryId)}/${item.productId}`}
-                  />
-                ) : (
-                  <Card
-                    key={item.productId}
-                    title={item.productName}
-                    location={item.productAddress}
-                    price={item.minPrice}
-                    score={item.reviewAvg}
-                    review={item.reviewCount}
-                    image={item.thumbnail}
-                    link={`/details/${Number(categoryId)}/${item.productId}`}
-                  />
-                );
-              })}
-            </div>
-          ) : (
-            <NoData text="찾는 상품이 없어요." />
-          )}
-        </div>
-        <div className="mx-auto w-fit">
-          {!!cards?.length && (
-            <Pagination
-              pageNum={pageNum}
-              setPageNum={setPageNum}
-              allCardNum={cards?.length ? cards?.length : 0}
-              divNum={categoryId === '1' ? 3 : 6}
-            />
-          )}
-        </div>
-      </Layout>
-      <Footer />
-    </>
+        {paginatedProducts.length !== 0 ? (
+          <div className={`${listClass}`}>
+            {paginatedProducts.map((item: any) => {
+              return categoryId === '1' ? (
+                <HotelCard
+                  key={item.productId}
+                  title={item.productName}
+                  location={item.productAddress}
+                  price={item.minPrice}
+                  score={item.reviewAvg}
+                  review={item.reviewCount}
+                  image={item.thumbnail}
+                  link={`/details/${Number(categoryId)}/${item.productId}`}
+                />
+              ) : (
+                <Card
+                  key={item.productId}
+                  title={item.productName}
+                  location={item.productAddress}
+                  price={item.minPrice}
+                  score={item.reviewAvg}
+                  review={item.reviewCount}
+                  image={item.thumbnail}
+                  link={`/details/${Number(categoryId)}/${item.productId}`}
+                />
+              );
+            })}
+          </div>
+        ) : (
+          <NoData text="찾는 상품이 없어요." />
+        )}
+      </div>
+      <div className="mx-auto w-fit">
+        {!!cards?.length && (
+          <Pagination
+            pageNum={pageNum}
+            setPageNum={setPageNum}
+            allCardNum={cards?.length ? cards?.length : 0}
+            divNum={categoryId === '1' ? 3 : 6}
+          />
+        )}
+      </div>
+    </Layout>
   );
 };
 

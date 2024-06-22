@@ -1,6 +1,7 @@
 import changeDateForm from '@/utils/changeDateForm';
 import useModal from '@/hooks/useModal';
 import { useNavigate } from 'react-router-dom';
+import RESERV_STATUS from '@/constants/reserv';
 import ReservButtonOutlined from '@/components/myPage/ReservButtonOutlined';
 import DeletePosting from '@/components/myPage/Modal/DeletePosting';
 import PostingSwitch from '@/components/myPage/PostingSwitch';
@@ -67,7 +68,10 @@ const PostingCard = ({
         <div className="flex flex-row justify-between items-center">
           <div className="text-16">{postingDateStr}</div>
           <div onClick={(e) => e.stopPropagation()}>
-            <ReservButtonOutlined status={5} onClick={openModal} />
+            <ReservButtonOutlined
+              status={RESERV_STATUS.DELETED}
+              onClick={openModal}
+            />
             <DeletePosting
               id={id}
               closeModal={closeModal}
