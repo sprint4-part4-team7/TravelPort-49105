@@ -33,17 +33,21 @@ const CartList = ({
 }: CartListProps) => {
   const navigate = useNavigate();
   const cartId = item?.id;
-  const optionId = item?.productOption?.id ?? null;
-  const timeTableId = item?.timeTable?.id ?? null;
+  const optionId = item?.productOption?.id;
+  const timeTableId = item?.timeTable?.id;
 
-  const { productOption, isLoading: productOptionLoading } =
-    useProductOptionQuery(optionId);
+  const {
+    productOption,
+    isLoading: productOptionLoading,
+    refetch: refetchProductOption,
+  } = useProductOptionQuery(optionId);
   const { data: timeTableData, isLoading: timeTableLoading } =
     useTimeTableQuery(timeTableId);
   const { mutate: cartDelete } = useCartDeleteByCartIdMutation();
 
   const [count, setCount] = useState(item?.ticketCount);
   const [isSelected, setIsSelected] = useState(false);
+  const [refreshData, setRefreshData] = useState(false);
 
   useEffect(() => {
     // 상품 정보가 로딩된 후에 초기화
@@ -52,6 +56,23 @@ const CartList = ({
       setIsSelected(false);
     }
   }, [item, productOptionLoading, timeTableLoading]);
+
+  useEffect(() => {
+    if (
+      productOption &&
+      (productOption.optionName === undefined ||
+        productOption.optionPrice === undefined)
+    ) {
+      setRefreshData(true);
+    }
+  }, [productOption]);
+
+  useEffect(() => {
+    if (refreshData) {
+      refetchProductOption();
+      setRefreshData(false);
+    }
+  }, [refreshData, refetchProductOption]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -63,21 +84,19 @@ const CartList = ({
 
   const formattedDate = formatDate(timeTableData?.targetDate);
 
-  const image = item?.productOption.product.thumbnail;
-  const name = item?.productOption.product.name;
-  const options = productOption?.optionName;
-  const price = productOption?.optionPrice;
-  const maxCount = productOption?.maxUserCount;
-  const userCount = productOption?.userCount;
-  const categoryId = item?.productOption.product.categoryId;
+  const image = item?.productOption?.product?.thumbnail;
+  const name = item?.productOption?.product?.name;
+  const options = productOption && productOption.optionName;
+  const price = productOption && productOption.optionPrice;
+  const maxCount = productOption && productOption.maxUserCount;
+  const userCount = productOption && productOption.userCount;
+  const categoryId = item?.productOption?.product?.categoryId;
 
   const option =
-    productOption?.product?.categoryId === 1
-      ? `${options} ( ${maxCount} 인실 )`
-      : `${options}`;
+    categoryId === 1 ? `${options} ( ${maxCount} 인실 )` : `${options}`;
 
   const day =
-    productOption?.product?.categoryId === 1
+    categoryId === 1
       ? `${formattedDate}`
       : `${formattedDate} ${timeTableData?.startTimeOnly} ~ ${timeTableData?.endTimeOnly}`;
 
@@ -100,27 +119,27 @@ const CartList = ({
   };
 
   useEffect(() => {
-    const totalPrice = price * count;
+    const totalPrice = (price ?? 0) * count;
     onPriceChange(totalPrice, count);
   }, [count, price]);
 
   const increaseCount = () => {
     const newCount = count + 1;
     setCount(newCount);
-    onPriceChange(item.price * newCount, newCount);
+    onPriceChange((price ?? 0) * newCount, newCount);
   };
 
   const decreaseCount = () => {
     if (count > 1) {
       const newCount = count - 1;
       setCount(newCount);
-      onPriceChange(item.price * newCount, newCount);
+      onPriceChange((price ?? 0) * newCount, newCount);
     }
   };
 
   const handleDetail = () => {
-    const cId = item?.productOption.product.categoryId;
-    const id = item?.productOption.product.id;
+    const cId = item?.productOption?.product?.categoryId;
+    const id = item?.productOption?.product?.id;
     navigate(`/details/${cId}/${id}`);
   };
 
@@ -133,7 +152,15 @@ const CartList = ({
     });
   };
 
-  if (productOptionLoading || timeTableLoading) return <Loading />;
+  if (
+    !item ||
+    productOptionLoading ||
+    timeTableLoading ||
+    !productOption ||
+    options === undefined ||
+    price === undefined
+  )
+    return <Loading />;
 
   return (
     <div className="flex items-center py-16 border-solid border-b-1 border-black_3">
