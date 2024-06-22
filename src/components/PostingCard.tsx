@@ -39,7 +39,7 @@ const PostingCard = ({
   return (
     <div
       id={id ? id.toString() : 'undefined'}
-      className="flex flex-col p-16 w-full max-w-834 gap-32 
+      className="flex flex-col p-16 w-full gap-32 
       border-1 border-black-5 rounded-8
       cursor-pointer hover:bg-black-2 active:bg-black-1
       moblie:w-full"
