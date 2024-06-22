@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getCookie } from '@/utils/cookie';
 
 const instance = axios.create({
-  baseURL: 'http://ec2-43-201-69-246.ap-northeast-2.compute.amazonaws.com/',
+  baseURL: 'http://ec2-3-38-211-3.ap-northeast-2.compute.amazonaws.com/',
   headers: {
     Authorization: `Bearer ${getCookie('accessToken')}`,
   },
