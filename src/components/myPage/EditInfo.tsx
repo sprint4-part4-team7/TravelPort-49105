@@ -42,11 +42,12 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
   const watchedFields = watch();
 
   useEffect(() => {
-    const hasChanged = (Object.keys(watchedFields) as (keyof UserInfo)[]).some(
-      (key) => watchedFields[key] !== userInfo[key],
-    );
+    const hasChanged =
+      (Object.keys(watchedFields) as (keyof UserInfo)[]).some(
+        (key) => watchedFields[key] !== userInfo[key],
+      ) || !!instantImg;
     setIsChanged(hasChanged);
-  }, [watchedFields, userInfo]);
+  }, [watchedFields]);
 
   const handleImgUpload: ChangeEventHandler<HTMLInputElement> = (e) => {
     const file = e.target.files?.[0];
@@ -58,7 +59,6 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
     const instantUrl = URL.createObjectURL(file);
     setInstantImg(instantUrl);
     setImg([file]);
-    setIsChanged(true);
   };
 
   const handleSave = async (data: UserInfo) => {
@@ -83,6 +83,7 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
       await putUserInfo(newData);
       toast.success('저장되었습니다');
       setUserInfo({ ...userInfo, ...newData });
+      setInstantImg(undefined);
     } catch (error) {
       toast.error('저장에 실패했습니다');
     }
@@ -108,7 +109,6 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
                 onClick={() => {
                   setInstantImg(undefined);
                   setImg([]);
-                  setIsChanged(true);
                 }}
               >
                 <Delete stroke="#000000" />

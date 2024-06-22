@@ -12,11 +12,11 @@ import carousel1 from '@/assets/images/carousel2.jpg';
 import carousel2 from '@/assets/images/carousel.jpg';
 import carousel3 from '@/assets/images/carousel3.jpg';
 import Carousel from '@/components/Carousel';
-import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
 import MainCard from '@/components/MainCard';
 import PartnerMain from '@/pages/PartnerMain';
 import Loading from '@/components/common/Loading';
+import Skeleton from '@/components/common/Skeleton';
 
 interface ImageItem {
   url: string;
@@ -100,29 +100,28 @@ const Main = () => {
     }
   }
 
-  if (isLoadingProducts) return <Loading />;
-
   return (
-    <>
-      <Layout main category noSearch={false}>
-        <Carousel items={carousel} />
-        <div className="flex justify-center p-20 pb-5 mb-80">
-          <MainCard
-            images={CategoryAccommodation}
-            title="인기많은 숙소"
-            onclick={handleAccommodation}
-          />
-        </div>
-        <div className="flex justify-center p-20 pb-5">
-          <MainCard
-            images={CategoryActivity}
-            title="인기많은 액티비티"
-            onclick={handleActivity}
-          />
-        </div>
-      </Layout>
-      <Footer />
-    </>
+    <Layout main category noSearch={false}>
+      <Carousel items={carousel} />
+      <div className="flex justify-center p-20 pb-5 mb-80">
+        <MainCard
+          images={CategoryAccommodation}
+          title="인기많은 숙소"
+          onclick={handleAccommodation}
+          isLoading={isLoadingProducts}
+          displayCount={displayCount}
+        />
+      </div>
+      <div className="flex justify-center p-20 pb-5">
+        <MainCard
+          images={CategoryActivity}
+          title="인기많은 액티비티"
+          onclick={handleActivity}
+          isLoading={isLoadingProducts}
+          displayCount={displayCount}
+        />
+      </div>
+    </Layout>
   );
 };
 

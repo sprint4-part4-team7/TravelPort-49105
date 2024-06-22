@@ -22,7 +22,11 @@ type ModalProps = {
 };
 
 const OptionModal = ({ closeModal, optionList, setOptionList }: ModalProps) => {
-  const { register, handleSubmit } = useForm<OptionModalForm>({
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid },
+  } = useForm<OptionModalForm>({
     mode: 'onChange',
   });
   const trueButton = true;
@@ -43,7 +47,6 @@ const OptionModal = ({ closeModal, optionList, setOptionList }: ModalProps) => {
     ]);
     closeModal();
   };
-
   return (
     <div className="w-384 h-532">
       <h1 className="font-semibold text-16 mb-6">옵션추가하기(체험)</h1>
@@ -59,7 +62,7 @@ const OptionModal = ({ closeModal, optionList, setOptionList }: ModalProps) => {
             <input
               className="hidden"
               id="uploadBox"
-              {...register('img')}
+              {...register('img', { required: true })}
               type="file"
               accept="image/*"
             />
@@ -68,7 +71,7 @@ const OptionModal = ({ closeModal, optionList, setOptionList }: ModalProps) => {
             <p className="font-semibold text-14">체험 상품명</p>
             <input
               className="w-full h-48 p-12 rounded text-16 outline-none border-solid border-1 border-black-5 focus:border-blue-6 focus:border-1 mobile:max-w-none"
-              {...register('title')}
+              {...register('title', { required: true })}
               placeholder="상품옵션의 이름을 적어주세요.(50자)"
               id="title"
               type="text"
@@ -79,7 +82,7 @@ const OptionModal = ({ closeModal, optionList, setOptionList }: ModalProps) => {
             <p className="font-semibold text-14">세부 상품 설명</p>
             <textarea
               className="w-full resize-none h-96 p-12 rounded text-16 outline-none border-solid border-1 border-black-5 focus:border-blue-6 focus:border-1 mobile:max-w-none"
-              {...register('content')}
+              {...register('content', { required: true })}
               placeholder="등록할 상품옵션의 설명을 적어주세요.(300자)"
               id="content"
               maxLength={300}
@@ -89,6 +92,7 @@ const OptionModal = ({ closeModal, optionList, setOptionList }: ModalProps) => {
             <NumberInputBox
               register={register('maximum', {
                 valueAsNumber: true,
+                required: true,
               })}
               labelname="예약가능인원"
               inputstyle="w-full"
@@ -100,6 +104,7 @@ const OptionModal = ({ closeModal, optionList, setOptionList }: ModalProps) => {
             <NumberInputBox
               register={register('userCount', {
                 valueAsNumber: true,
+                required: true,
               })}
               labelname="티켓 갯수"
               inputstyle="w-full"
@@ -111,6 +116,7 @@ const OptionModal = ({ closeModal, optionList, setOptionList }: ModalProps) => {
             <NumberInputBox
               register={register('price', {
                 valueAsNumber: true,
+                required: true,
               })}
               labelname="가격"
               inputstyle="w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -120,35 +126,41 @@ const OptionModal = ({ closeModal, optionList, setOptionList }: ModalProps) => {
               placeholder="1000000"
             />
           </div>
-          <div className="w-full flex items-center justify-between gap-6">
-            <NumberInputBox
-              register={register('start', {
-                valueAsNumber: true,
-              })}
-              labelname="시작 시간"
-              inputstyle="w-full"
-              numberBox="start"
-              unit="시"
-              placeholder="0"
-              max={23}
-            />
-            <NumberInputBox
-              register={register('end', {
-                valueAsNumber: true,
-              })}
-              labelname="종료 시간"
-              inputstyle="w-full"
-              numberBox="end"
-              unit="시"
-              placeholder="23"
-              max={23}
-            />
-            <div className="w-1/2 flex flex-col items-center gap-1 mt-10">
-              <img className="m-auto" src={message} alt="설명메세지" />
-              <p className="text-9 text-black-6">체험에는 시작시간과</p>
-              <p className="text-9 text-black-6">종료시간이 필요합니다.</p>
+          {localStorage.getItem('categoryId') === '1' ? (
+            ''
+          ) : (
+            <div className="w-full flex items-center justify-between gap-6">
+              <NumberInputBox
+                register={register('start', {
+                  valueAsNumber: true,
+                  required: true,
+                })}
+                labelname="시작 시간"
+                inputstyle="w-full"
+                numberBox="start"
+                unit="시"
+                placeholder="0"
+                max={23}
+              />
+              <NumberInputBox
+                register={register('end', {
+                  valueAsNumber: true,
+                  required: true,
+                })}
+                labelname="종료 시간"
+                inputstyle="w-full"
+                numberBox="end"
+                unit="시"
+                placeholder="23"
+                max={23}
+              />
+              <div className="w-1/2 flex flex-col items-center gap-1 mt-10">
+                <img className="m-auto" src={message} alt="설명메세지" />
+                <p className="text-9 text-black-6">체험에는 시작시간과</p>
+                <p className="text-9 text-black-6">종료시간이 필요합니다.</p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
         <div className="w-383 absolute bottom-32 flex justify-center gap-12">
           <div className="w-166">
@@ -162,7 +174,7 @@ const OptionModal = ({ closeModal, optionList, setOptionList }: ModalProps) => {
             </Button>
           </div>
           <div className="w-166">
-            <Button buttonStyle="h-28" buttonType="submit">
+            <Button buttonStyle="h-28" buttonType="submit" disabled={!isValid}>
               완료
             </Button>
           </div>

@@ -7,24 +7,26 @@ type DetailInfoProps = {
 const DetailInfo = ({ options }: DetailInfoProps) => {
   return (
     <>
-      <h1 className="py-16 text-20 font-semibold">소개</h1>
+      <h1 className="py-16 font-semibold text-20">소개</h1>
       <div className="flex flex-col gap-20 pb-40">
-        {options.map((option) => (
-          <>
-            <h1 className="text-18 font-medium">{option.optionName}</h1>
-            <p className="text-16 leading-[162%]">{option.optionDesc}</p>
+        {options &&
+          options.map((option) => (
+            <div key={option.id}>
+              <h1 className="font-medium text-18">{option.optionName}</h1>
+              <p className="mt-10 text-16">{option.optionDesc}</p>
 
-            {option.optionImages.forEach((image) => {
-              return (
-                <img
-                  src={image}
-                  alt="옵션이미지"
-                  className="w-full object-cover"
-                />
-              );
-            })}
-          </>
-        ))}
+              {option.optionImages?.map((image) => {
+                return (
+                  <img
+                    key={Math.random()}
+                    src={image}
+                    alt="옵션이미지"
+                    className="object-cover w-full"
+                  />
+                );
+              })}
+            </div>
+          ))}
       </div>
     </>
   );

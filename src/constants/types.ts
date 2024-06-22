@@ -203,7 +203,7 @@ export interface Reservation {
   };
 }
 
-export type ReservStatusType = 1 | 2 | 3 | 4 | 5 | 6 | null;
+export type ReservStatusType = 0 | 1 | 2 | 3 | 4 | 5 | null;
 
 export type ReservProductOptionType = {
   optionName: string;

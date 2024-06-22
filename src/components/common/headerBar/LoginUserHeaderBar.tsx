@@ -5,6 +5,7 @@ import myInfo from '@/assets/icons/my-info.svg';
 import reservationStatus from '@/assets/icons/reservation-status.svg';
 import list from '@/assets/icons/list.svg';
 import menu from '@/assets/icons/menu.svg';
+import smallCart from '@/assets/icons/smallCart.svg';
 import useLogoutMutation from '@/hooks/reactQuery/auth/useLogoutMutation';
 import { removeCookie } from '@/utils/cookie';
 import { useNavigate } from 'react-router-dom';
@@ -145,6 +146,12 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
     },
     ...(userType === 'user'
       ? [
+          {
+            id: 'cart',
+            icon: smallCart,
+            label: '장바구니',
+            path: '/cart',
+          },
           {
             id: 'reservation-history',
             icon: reservationStatus,

@@ -15,7 +15,7 @@ import ProductDetails from '@/pages/ProductDetails';
 import ProductRegister from '@/pages/productRegister/ProductRegister';
 import SearchResultPage from '@/pages/SearchResultPage';
 import ReviewRegist from '@/pages/ReviewRegist';
-import PartnerMain from '@/pages/PartnerMain';
+// import PartnerMain from '@/pages/PartnerMain';
 import NoPage from '@/pages/NoPage';
 import PreparingPage from '@/pages/PreparingPage';
 import Cart from '@/pages/Cart';
@@ -56,16 +56,30 @@ const App = () => {
           }
         />
         <Route path="partner/">
-          <Route index element={<PartnerMain />} />
+          {/* <Route
+            index
+            element={
+              <ProtectedRoute partner>
+                <PartnerMain />
+              </ProtectedRoute>
+            }
+          /> */}
           <Route
             path="mypage/:status"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute partner>
                 <MyPage isPartner />
               </ProtectedRoute>
             }
           />
-          <Route path="product-register" element={<ProductRegister />} />
+          <Route
+            path="product-register"
+            element={
+              <ProtectedRoute partner>
+                <ProductRegister />
+              </ProtectedRoute>
+            }
+          />
         </Route>
         <Route path="payments">
           <Route
@@ -104,7 +118,7 @@ const App = () => {
         <Route
           path="review/:optionId/:reviewId?"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute partner>
               <ReviewRegist />
             </ProtectedRoute>
           }

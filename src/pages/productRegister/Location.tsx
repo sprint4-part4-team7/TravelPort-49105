@@ -5,7 +5,7 @@ import PostCode from '@/components/common/map/PostCode';
 import KakaoMap from '@/components/common/map/KakaoMap';
 import { PageIdProps } from './productPage';
 
-const Location = ({ setPage }: PageIdProps) => {
+const Location = ({ setPage, setActiveStep }: PageIdProps) => {
   const [x, setX] = useState(33.5563);
   const [y, setY] = useState(126.79581);
   const [building, setBuilding] = useState('');
@@ -15,6 +15,7 @@ const Location = ({ setPage }: PageIdProps) => {
       <div>
         <PostCode
           setPage={setPage}
+          setActiveStep={setActiveStep}
           setX={setX}
           setY={setY}
           setBuilding={setBuilding}

@@ -76,7 +76,7 @@ const ReservationManagement = () => {
   }, [isNew, lodgeData, activityData]);
 
   return (
-    <div className="mx-10 my-0 w-1000 mobile:w-full">
+    <div className="mx-10 my-0 w-full mobile:w-full">
       <div className="flex flex-col gap-30 mt-60">
         <div className="flex flex-col gap-20">
           <div className="font-bold text-28">예약 관리</div>

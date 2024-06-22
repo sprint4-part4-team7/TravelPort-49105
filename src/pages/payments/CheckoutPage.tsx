@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import './Payments.css';
 import usePaymentWidget from '@/hooks/usePaymentWidget';
 import useProductOptionQuery from '@/hooks/reactQuery/productOption/useProductOptionQuery';
-import useTilmeTabaleQuery from '@/hooks/reactQuery/timeTable/useTimeTableQuery';
+import useTimeTableQuery from '@/hooks/reactQuery/timeTable/useTimeTableQuery';
 import {
   useCartStore,
   useReservationStore,
   useUserStore,
 } from '@/utils/zustand';
 import Layout from '@/components/common/layout/Layout';
-import Footer from '@/components/common/Footer';
 import Pay from '@/components/Pay';
 import OrderSummary from '@/components/OrderSummary';
 import Loading from '@/components/common/Loading';
@@ -17,14 +16,20 @@ import Loading from '@/components/common/Loading';
 const CheckoutPage = () => {
   const { reservationInfo } = useReservationStore();
   const resetCart = useCartStore((state) => state.resetCart);
+
   useEffect(() => {
     resetCart();
   }, []);
+
   const optionId = reservationInfo?.productOptionId;
   const timeTableId = reservationInfo?.timeTableId;
 
-  const { data: timeTableData } = useTilmeTabaleQuery(timeTableId);
-  const { productOption, isLoading, error } = useProductOptionQuery(optionId);
+  const { data: timeTableData } = useTimeTableQuery(timeTableId);
+  const {
+    productOption,
+    isLoading: productOptionLoading,
+    refetch: refetchProductOption,
+  } = useProductOptionQuery(optionId);
   const userCount = productOption?.userCount;
 
   const { userInfo } = useUserStore();
@@ -57,6 +62,7 @@ const CheckoutPage = () => {
   const [count, setCount] = useState(reservationInfo?.ticketCount || 1);
   const optionPrice = productOption?.optionPrice || 0;
   const [isChecked, setIsChecked] = useState(true);
+  const [refreshData, setRefreshData] = useState(false);
 
   const handleCheckedChange = (checked: boolean) => {
     setIsChecked(checked);
@@ -81,46 +87,61 @@ const CheckoutPage = () => {
     customerEmail,
   );
 
-  if (isLoading) return <Loading />;
-  if (error) return <h1>error...</h1>;
+  useEffect(() => {
+    if (
+      productOption &&
+      (productOption.optionName === undefined ||
+        productOption.optionPrice === undefined)
+    ) {
+      setRefreshData(true);
+    }
+  }, [productOption]);
+
+  useEffect(() => {
+    if (refreshData) {
+      refetchProductOption();
+      setRefreshData(false);
+    }
+  }, [refreshData, refetchProductOption]);
+
+  if (productOptionLoading || !productOption || !timeTableData) {
+    return <Loading />;
+  }
 
   return (
-    <>
-      <Layout>
-        <div className="border-b-2 border-solid border-black-12 mt-100">
-          <div className="px-8 py-16 font-semibold text-22">1. 결제확인</div>
-        </div>
+    <Layout>
+      <div className="border-b-2 border-solid border-black-12 mt-100">
+        <div className="px-8 py-16 font-semibold text-22">1. 결제확인</div>
+      </div>
 
-        <OrderSummary
-          productOptionData={productOption}
-          count={count}
-          decreaseCount={decreaseCount}
-          increaseCount={increaseCount}
-          optionPrice={optionPrice}
-          day={day}
-          onCheckedChange={handleCheckedChange}
-          isChecked={isChecked}
-          userCount={userCount}
-          optionName={optionName}
-        />
+      <OrderSummary
+        productOptionData={productOption}
+        count={count}
+        decreaseCount={decreaseCount}
+        increaseCount={increaseCount}
+        optionPrice={optionPrice}
+        day={day}
+        onCheckedChange={handleCheckedChange}
+        isChecked={isChecked}
+        userCount={userCount}
+        optionName={optionName}
+      />
 
-        <div className="flex justify-end gap-20 font-semibold mt-28 text-17 mb-100">
-          <div>최종 결제 금액</div>
-          <div className="ml-2">{totalAmount.toLocaleString()}원</div>
-        </div>
+      <div className="flex justify-end gap-20 font-semibold mt-28 text-17 mb-100">
+        <div>최종 결제 금액</div>
+        <div className="ml-2">{totalAmount.toLocaleString()}원</div>
+      </div>
 
-        <div className="border-b-2 border-solid border-black-12">
-          <div className="px-8 py-16 font-semibold text-22">2. 결제수단</div>
-        </div>
+      <div className="border-b-2 border-solid border-black-12">
+        <div className="px-8 py-16 font-semibold text-22">2. 결제수단</div>
+      </div>
 
-        <div className="flex flex-col items-center w-full ">
-          <div className="w-570 mobile:w-400">
-            <Pay requestPayment={requestPayment} />
-          </div>
+      <div className="flex flex-col items-center w-full ">
+        <div className="w-570 mobile:w-400">
+          <Pay requestPayment={requestPayment} />
         </div>
-      </Layout>
-      <Footer />
-    </>
+      </div>
+    </Layout>
   );
 };
 

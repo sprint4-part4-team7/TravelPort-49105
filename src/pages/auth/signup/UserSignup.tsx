@@ -96,7 +96,7 @@ const UserSignup = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen my-60">
       <div className="flex flex-col gap-40 justify-center items-center">
         <Link to="/">
           <img alt="travelport logo" src={Logo} />

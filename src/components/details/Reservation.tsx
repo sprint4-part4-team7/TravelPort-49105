@@ -14,6 +14,7 @@ import useCartPostMutation from '@/hooks/reactQuery/cart/useCartPostMutation';
 import useModal from '@/hooks/useModal';
 import RESERV_STATUS from '@/constants/reserv';
 import { toast } from 'react-toastify';
+import instance from '@/utils/axios';
 import Button from '@/components/common/Button';
 import '@/styles/ProductDetails.css';
 import DatePickerCustom from './DatePickerCustom';
@@ -31,8 +32,10 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   const [ticketNum, setTicketNum] = useState(0);
   const [isDisabled, setIsDisabled] = useState(true);
   const [diffDay, setDiffDay] = useState(0);
+  const [remainCounts, setRemainCounts] = useState<number[]>([]);
 
   const { isModalOpen, openModal, closeModal } = useModal();
+  const { table } = useTimeTable(optionId);
 
   const { userInfo } = useUserStore();
   const navigate = useNavigate();
@@ -47,7 +50,6 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     maxStartDate,
     minEndDate,
   } = useDatePicker(product?.id);
-  const { table } = useTimeTable(optionId);
 
   useEffect(() => {
     if (
@@ -85,6 +87,37 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     return 0;
   };
 
+  const getOptionRemainsByTable = (timeTable: any) => {
+    if (startDate) {
+      for (let i = 0; i < timeTable?.length; i++) {
+        if (timeTable[i].targetDate?.includes(formatDate(startDate))) {
+          return timeTable[i].remainCount;
+        }
+      }
+    }
+    return 0;
+  };
+
+  const fetchRemainCounts = async (optionIds: number[]) => {
+    const newRemainCounts = await Promise.all(
+      optionIds.map(async (id) => {
+        const response = await instance.get(`/timeTable/productOption/${id}`);
+        const tableData = response.data;
+        return getOptionRemainsByTable(tableData);
+      }),
+    );
+    setRemainCounts(newRemainCounts);
+  };
+
+  useEffect(() => {
+    if (startDate && endDate) {
+      const newOptionIds = options.map((option) => option.id);
+      fetchRemainCounts(newOptionIds);
+    } else {
+      setRemainCounts([]);
+    }
+  }, [startDate, endDate, options]);
+
   const handleClick = (id: number) => {
     setSelectedOption(id);
   };
@@ -97,11 +130,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     setTicketNum(ticketNum - 1);
   };
   const handleTicketPlus = () => {
-    if (
-      !filteredOption[0]?.userCount ||
-      ticketNum >= filteredOption[0].userCount
-    )
-      return;
+    if (ticketNum >= remainCounts[selectedOption - 1]) return;
     setTicketNum(ticketNum + 1);
   };
 
@@ -164,8 +193,8 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
       <h1 className="my-20 font-bold text-24">{optionTitle}를 선택하세요</h1>
       <hr className="mb-20" />
       <div className="grid grid-cols-3 gap-16 mx-auto font-semibold cursor-pointer mobile:grid-cols-2 text-14 mb-60">
-        {options.map((option) => {
-          if (option.userCount === 0) {
+        {options.map((option, idx) => {
+          if (remainCounts[idx] === 0) {
             return (
               <div
                 key={option.id}
@@ -223,11 +252,13 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
           </div>
           <h3 className="font-semibold text-18 text-end">
             {filteredOption.length &&
-              (
-                filteredOption[0].optionPrice *
-                ticketNum *
-                diffDay
-              ).toLocaleString()}
+              (categoryId === 1
+                ? (
+                    filteredOption[0].optionPrice *
+                    ticketNum *
+                    diffDay
+                  ).toLocaleString()
+                : (filteredOption[0].optionPrice * ticketNum).toLocaleString())}
             원
           </h3>
         </div>

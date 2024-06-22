@@ -5,7 +5,6 @@ import EditInfo from '@/components/myPage/EditInfo';
 import MyPageSideBar from '@/components/myPage/MyPageSideBar';
 import MyReservation from '@/components/myPage/MyReservation';
 import ReservationManagement from '@/pages/ReservationManagement';
-import Footer from '@/components/common/Footer';
 import Layout from '@/components/common/layout/Layout';
 import PostingManagement from './PostingManagement';
 
@@ -20,20 +19,15 @@ const MyPage = ({ isPartner = false }: { isPartner?: boolean }) => {
   }, [status]);
 
   return (
-    <>
-      <Layout>
-        <MyPageSideBar isPartner={isPartner}>
-          {status === 'edit-info' && <EditInfo isPartner={isPartner} />}
-          {status === 'reservation-status' && <MyReservation />}
-          {status === 'reservation-history' && (
-            <MyReservation isExpired="true" />
-          )}
-          {status === 'posting-manage' && <PostingManagement />}
-          {status === 'reserve-manage' && <ReservationManagement />}
-        </MyPageSideBar>
-      </Layout>
-      <Footer />
-    </>
+    <Layout>
+      <MyPageSideBar isPartner={isPartner}>
+        {status === 'edit-info' && <EditInfo isPartner={isPartner} />}
+        {status === 'reservation-status' && <MyReservation />}
+        {status === 'reservation-history' && <MyReservation isExpired="true" />}
+        {status === 'posting-manage' && <PostingManagement />}
+        {status === 'reserve-manage' && <ReservationManagement />}
+      </MyPageSideBar>
+    </Layout>
   );
 };
 

@@ -1,6 +1,7 @@
 import changeDateForm from '@/utils/changeDateForm';
 import useModal from '@/hooks/useModal';
 import { useNavigate } from 'react-router-dom';
+import RESERV_STATUS from '@/constants/reserv';
 import ReservButtonOutlined from '@/components/myPage/ReservButtonOutlined';
 import DeletePosting from '@/components/myPage/Modal/DeletePosting';
 import PostingSwitch from '@/components/myPage/PostingSwitch';
@@ -38,7 +39,7 @@ const PostingCard = ({
   return (
     <div
       id={id ? id.toString() : 'undefined'}
-      className="flex flex-col p-16 w-full max-w-834 gap-32 
+      className="flex flex-col p-16 w-full gap-32 
       border-1 border-black-5 rounded-8
       cursor-pointer hover:bg-black-2 active:bg-black-1
       moblie:w-full"
@@ -67,7 +68,10 @@ const PostingCard = ({
         <div className="flex flex-row justify-between items-center">
           <div className="text-16">{postingDateStr}</div>
           <div onClick={(e) => e.stopPropagation()}>
-            <ReservButtonOutlined status={5} onClick={openModal} />
+            <ReservButtonOutlined
+              status={RESERV_STATUS.DELETED}
+              onClick={openModal}
+            />
             <DeletePosting
               id={id}
               closeModal={closeModal}

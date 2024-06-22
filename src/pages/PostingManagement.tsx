@@ -2,6 +2,7 @@ import ARROW from '@/assets/icons/arrowDown.svg';
 import { useEffect, useState } from 'react';
 import { useUserStore } from '@/utils/zustand';
 import useProductByPartnerQuery from '@/hooks/reactQuery/product/useProductByPartnerQuery';
+import { useNavigate } from 'react-router-dom';
 import ReservPagination from '@/components/common/reservPagination/ReservPagination';
 import PostingCard from '@/components/PostingCard';
 import Button from '@/components/common/Button';
@@ -13,6 +14,7 @@ const PostingManagement = () => {
   const [lodgeData, setLodgeData] = useState<any[]>([]);
   const [activityData, setActivityData] = useState<any[]>([]);
   const [allData, setAllData] = useState<any[]>([]);
+  const navigate = useNavigate();
 
   const { postingData: allPost } = useProductByPartnerQuery(userInfo.id);
 
@@ -74,7 +76,7 @@ const PostingManagement = () => {
   }, [isNew, allPost]);
 
   return (
-    <div className="relative mx-10 my-0 w-1000 mobile:w-full">
+    <div className="relative mx-10 my-0 w-full mobile:w-full">
       <div className="flex flex-col gap-30 mt-60">
         <div className="flex flex-col gap-20">
           <div className="font-bold text-28">상품 판매(게시) 관리</div>
@@ -225,6 +227,7 @@ const PostingManagement = () => {
         buttonStyle="fixed bottom-90 right-40 h-56 p-12
       bg-blue-6 text-16 font-semibold cursor-pointer shadow-lg"
         width="w-240"
+        onClick={() => navigate('/partner/product-register')}
       >
         새 상품 게시하기
       </Button>

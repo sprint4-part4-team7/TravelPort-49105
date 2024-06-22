@@ -1,5 +1,5 @@
 import React from 'react';
-import search from '@/assets/icons/search-lg.svg';
+import search from '@/assets/icons/headerSearchButton.svg';
 
 interface MainCategoryButtonprops {
   title: string;
@@ -12,16 +12,16 @@ const MainCategoryButton: React.FC<MainCategoryButtonprops> = ({
 }) => {
   return (
     <button
-      className="px-16 py-6 border-solid mobile:px-8 mobile:py-6 border-1 border-blue-6 rounded-18 mobile:border-none tablet:px-10"
+      className="px-16 py-6 border-solid mobile:px-8 mobile:py-6 border-1 border-black-4 rounded-18 mobile:border-none tablet:px-10"
       type="button"
       onClick={onclick}
     >
       <div className="flex gap-8 tablet:gap-3">
-        <p className="font-semibold text-blue-6 text-14 mobile:hidden tablet:text-12">
+        <p className="font-normal text-black-8 text-14 mobile:hidden tablet:text-12">
           {title}
         </p>
-        <p className="font-semibold tablet:hidden desktop:hidden text-blue-6 text-11 mobile:flex ">
-          #{title}
+        <p className="font-normal tablet:hidden desktop:hidden text-black-8 text-11 mobile:flex ">
+          # {title}
         </p>
         <img className="mobile:hidden" src={search} alt="돋보기 아이콘" />
       </div>

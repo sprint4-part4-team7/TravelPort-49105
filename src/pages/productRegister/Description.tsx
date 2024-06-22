@@ -16,7 +16,7 @@ type DescriptionForm = {
   img: File;
 };
 
-const Description = ({ setPage }: PageIdProps) => {
+const Description = ({ setPage, setActiveStep }: PageIdProps) => {
   const {
     register,
     handleSubmit,
@@ -52,7 +52,8 @@ const Description = ({ setPage }: PageIdProps) => {
   const onSubmit = (data: DescriptionForm) => {
     localStorage.setItem('title', data.title);
     localStorage.setItem('content', data.content);
-    setPage(<Location setPage={setPage} />);
+    setActiveStep(3);
+    setPage(<Location setPage={setPage} setActiveStep={setActiveStep} />);
   };
   return (
     <>

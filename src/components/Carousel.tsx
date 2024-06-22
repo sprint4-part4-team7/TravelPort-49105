@@ -26,7 +26,7 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
   );
 
   return (
-    <div className="relative w-full mx-auto mt-40 bg-red-500 max-w-screen-2lg mb-100">
+    <div className="relative w-full mx-auto mt-40 max-w-screen-2lg mb-100">
       <div className="relative overflow-hidden ">
         <div
           className="flex transition-transform duration-500 ease-out"
