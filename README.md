@@ -14,9 +14,9 @@
 
 ### 🖥 Front-End
 
-| <img src="https://avatars.githubusercontent.com/u/79882248?v=4" width=65 title="태훈"/> | <img src="https://avatars.githubusercontent.com/u/114905530?v=4" width=65 title="지윤"/> | <img src="https://avatars.githubusercontent.com/u/129635857?v=4" width=65 title="지인"/> | <img src="https://avatars.githubusercontent.com/u/144013048?v=4" width=65 title="유진"/> | <img src="https://avatars.githubusercontent.com/u/155596644?v=4" width=65 title="영훈"/> |
+| <img src="https://avatars.githubusercontent.com/u/79882248?v=4" width=65 title="태훈"/> | <img src="https://avatars.githubusercontent.com/u/155596644?v=4" width=65 title="영훈"/> | <img src="https://avatars.githubusercontent.com/u/114905530?v=4" width=65 title="지윤"/> | <img src="https://avatars.githubusercontent.com/u/129635857?v=4" width=65 title="지인"/> | <img src="https://avatars.githubusercontent.com/u/144013048?v=4" width=65 title="유진"/> |
 | :-------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: |
-|                   [하태훈 _Team leader_](https://github.com/Hooni07)                    |                           [박지윤](https://github.com/hijiyun)                           |                          [변지인](https://github.com/byunjiin)                           |                         [이유진](https://github.com/eugene9851)                          |                         [강영훈](https://github.com/harrykotter)                         |
+|                   [하태훈 _Team leader_](https://github.com/Hooni07)                    |                         [강영훈](https://github.com/harrykotter)                         |                           [박지윤](https://github.com/hijiyun)                           |                          [변지인](https://github.com/byunjiin)                           |                         [이유진](https://github.com/eugene9851)                          |
 
 ### 🗄 Back-End
 
@@ -37,19 +37,23 @@
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white"/>
 <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white"/>
 <img src="https://img.shields.io/badge/TypeSript-3178C6?style=flat&logo=TypeScript&logoColor=white"/>
-<img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white" >
 <img src="https://img.shields.io/badge/Tailwind-06B6D4?style=flat&logo=TailwindCss&logoColor=white" >
-<img src="https://img.shields.io/badge/ESLint-4B32C3?style=flat&logo=eslint&logoColor=white" >
-<img src="https://img.shields.io/badge/Prettier-F7B93E?style=flat&logo=prettier&logoColor=white" >
 <img src="https://img.shields.io/badge/AWS-232F3E?style=flat&logo=amazonwebservices&logoColor=white" >
 <img src="https://img.shields.io/badge/Amazon_S3-569A31?style=flat&logo=AmazonS3&logoColor=white" >
-<img src="https://img.shields.io/badge/Netlify-00C7B7?style=flat&logo=Netlify&logoColor=white" >
+
+## 💅 Linting
+
+<img src="https://img.shields.io/badge/ESLint-4B32C3?style=flat&logo=eslint&logoColor=white" >
+<img src="https://img.shields.io/badge/Prettier-F7B93E?style=flat&logo=prettier&logoColor=white" >
 
 ## 📚 Libraries
 
+<img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white" >
 <img src="https://img.shields.io/badge/Axios-5A29E4?style=flat&logo=Axios&logoColor=white" >
 <img src="https://img.shields.io/badge/ReactQuery-FF4154?style=flat&logo=ReactQuery&logoColor=white" >
 <img src="https://img.shields.io/badge/ReactRouter-CA4245?style=flat&logo=ReactRouter&logoColor=white" >
+<img src="https://img.shields.io/badge/Zustand-0854C1?style=flat" >
+<img src="https://img.shields.io/badge/Toss_payments-0854C1?style=flat" >
 
 ## 🌏 Co-work Tools
 
@@ -142,6 +146,43 @@
 
 <details><summary>🍏 변지인</summary>
 
+- **card 컴포넌트**
+  - card내부에 들어갈 내용들을 인자로 설정+이미지는 Lorem Picsum로 임시이미지 사용+별점 계산
+- **KaKaoMap + DaumPostcode 컴포넌트**
+  - 위치를 검색(kakaoMap)하고 나타내기(daumpostcode) 위해 사용
+  - 서버와 로컬스토리지에 해당 위도,경도,주소,상세주소 저장
+- **페이지네이션**
+  - 한번에 보일 숫자들 구현 ( pc, 템플릿)
+    - 1~5개 : < 1 2 3 4 5 > \*모바일은 3까지
+    - 6~10개 : << < 1 2 3 4 5 6 7 8 9 10 > >> \*모바일은 5까지
+    - 10개 이상 : << < 11 12 13 14 15 16 17 18 19 20 > >> 같은 로직으로 반복
+  - 현재 페이지 의미
+    : 숫자는 고정되어있고 현재페이지를 숫자에 바꿔보여줌 - 현재페이지 : 파란색 원으로 숫자 주위를 표시 - 그 이외 : 흰색으로 숫자만 표시 - hover효과 : 하늘색 원으로 숫자 주위를 표시
+  - 화살표의 의미 정하기
+    - '<' 단순 1칸 앞( 2일땐 1로, 11일땐 페이지 바뀌며 10로)
+    - '>' 단순 1칸 뒤 ( 1일땐 2로, 10일땐 페이지 바뀌며 11로)
+    - '<<' 가장 처음 페이지로 이동(1~30페이지면 1로 이동)
+    - '>>' 가장 마지막 페이지로 이동(1~30페이지면 30로 이동)
+      '>>' ex) 8페이지에서 11로 이동하고 싶다면, ‘10’을 한번 누르고 ‘>’ 누르고 ‘11’로 이동
+  - 페이지 갯수만큼 버튼 만들기
+    - 상위 CardSample에서 총 card수와 화면에 표출할 수를 받아와서, 총/표출 수로 반복문
+    - 반복문안에 직접 버튼을 넣어 만들기
+- **상품 등록 페이지**
+  - 전반적으로 useForm을 사용해 input을 구분하고, useEffect와 useState를 활용하여 로직 구현
+  - checkbutton 컴포넌트(다음버튼)
+  - numberInput 컴포넌트(타입이 number인 input)
+  - sidebar
+    - 현재페이지에 맞도록 로직 연결(파란hover로 표시)
+    - 지나간 페이지는 체크표시
+- 상품유형설정페이지(로컬스토리지에 저장)
+  - 카테고리를 필수로 선택
+  - 카테고리에 맞게 하위옵션 표출
+- 제목, 설명, 대표이미지등록 및 상품사진 등록 페이지(로컬스토리지+주스탄드)
+  - 모달에서 지정한 사진을 미리보기로직을 통해 구현
+  - 이미지모달에서
+- 지도 페이지
+- 위치 페이지
+- 상품상세옵션페이지
 </details>
 
 <details><summary>💎 이유진</summary>
@@ -199,9 +240,13 @@
 
 ## 👤 User flow
 
+<img src="public/img/TravelPort_userflow.png" title="userflow" />
+
 ## 📖 Page preview
 
 ## ❗ Trouble Shooting
+
+### 잦은 팀원 교체 이슈
 
 ### 기술 이슈
 
