@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '@/assets/icons/lastLogo.svg';
-import Category from '@/pages/productRegister/Category';
-import Description from '@/pages/productRegister/Description';
-import Location from '@/pages/productRegister/Location';
-import DateCheck from '@/pages/productRegister/DateCheck';
-import Option from '@/pages/productRegister/Option';
+import Category from '@/pages/partner/productRegister/Category';
+import Description from '@/pages/partner/productRegister/Description';
+import Location from '@/pages/partner/productRegister/Location';
+import DateCheck from '@/pages/partner/productRegister/DateCheck';
+import Option from '@/pages/partner/productRegister/Option';
 
 const ProductRegister = () => {
   const [page, setPage] = useState<React.ReactNode>();

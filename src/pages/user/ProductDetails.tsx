@@ -19,7 +19,7 @@ import Review from '@/components/review/Review';
 import ReviewAverage from '@/components/review/ReviewAverage';
 import DetailInfo from '@/components/details/DetailInfo';
 import Pagination from '@/components/common/pagination/Pagination';
-import NoPage from './NoPage';
+import NoPage from '../NoPage';
 import Layout from '@/components/common/layout/Layout';
 import Loading from '@/components/common/Loading';
 import NoData from '@/components/common/NoData';

@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import Layout from '@/components/common/layout/Layout';
-import ReviewRegister from '@/pages/ReviewRegister';
+import ReviewRegister from '@/pages/user/review/ReviewRegister';
 
 const ReviewRegist = () => {
   const { optionId, reviewId } = useParams<{

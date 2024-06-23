@@ -14,7 +14,7 @@ import carousel3 from '@/assets/images/carousel3.jpg';
 import Carousel from '@/components/main/Carousel';
 import Layout from '@/components/common/layout/Layout';
 import MainCard from '@/components/main/MainCard';
-import PartnerMain from '@/pages/PartnerMain';
+import PartnerMain from '@/pages/partner/PartnerMain';
 import Loading from '@/components/common/Loading';
 import Skeleton from '@/components/common/Skeleton';
 
