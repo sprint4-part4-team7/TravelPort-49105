@@ -1,6 +1,6 @@
 import location from '@/assets/icons/location.svg';
 import arrowRightUp from '@/assets/icons/arrowRightUp.svg';
-import useModal from '@/hooks/useModal';
+import useModal from '@/hooks/functionHooks/useModal';
 import { DetailData } from '@/constants/Types';
 import KakaoMap from '@/components/common/map/KakaoMap';
 import Modal from '@/components/common/modal/Modal';

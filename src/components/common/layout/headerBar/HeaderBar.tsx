@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import logo from '@/assets/icons/pcLogo.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
-import useSearchData from '@/hooks/useSearchData';
+import useSearchData from '@/hooks/functionHooks/useSearchData';
 import { uniqueProduct } from '@/utils/UniqueProduct';
 import { useUserStore } from '@/utils/Zustand';
 import useProductOptionAll from '@/hooks/reactQuery/productOption/useProductOptionAllQuery';

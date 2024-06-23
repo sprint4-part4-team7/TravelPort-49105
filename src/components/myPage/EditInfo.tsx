@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { useUserStore } from '@/utils/Zustand';
 import { useForm } from 'react-hook-form';
-import useModal from '@/hooks/useModal';
+import useModal from '@/hooks/functionHooks/useModal';
 import uploadIcon from '@/assets/icons/upload.svg';
 import { putUserInfo } from '@/apis/editInfo';
 import { PHONE_NUMBER_REGEX } from '@/constants/InputType';

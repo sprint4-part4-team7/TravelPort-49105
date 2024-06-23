@@ -3,7 +3,7 @@ import { useProductImageStore, useThumbnailStore } from '@/utils/Zustand';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import plusImage from '@/assets/icons/plusWhite.svg';
-import useModal from '@/hooks/useModal';
+import useModal from '@/hooks/functionHooks/useModal';
 import product from '@/apis/product';
 import postImages from '@/apis/image';
 import instance from '@/utils/Axios';

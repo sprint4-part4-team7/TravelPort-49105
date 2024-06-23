@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import useProductByIdQuery from './reactQuery/product/useProductByIdQuery';
+import useProductByIdQuery from '../reactQuery/product/useProductByIdQuery';
 
 interface DatePickerValues {
   startDate: Date | null;

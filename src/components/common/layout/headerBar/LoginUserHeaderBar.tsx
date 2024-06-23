@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import useOutsideClick from '@/hooks/useOutsideClick';
+import useOutsideClick from '@/hooks/functionHooks/useOutsideClick';
 import cart from '@/assets/icons/shoppingCart.svg';
 import myInfo from '@/assets/icons/myInfo.svg';
 import reservationStatus from '@/assets/icons/reservationStatus.svg';

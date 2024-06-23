@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import menu from '@/assets/icons/menu.svg';
-import useOutsideClick from '@/hooks/useOutsideClick';
+import useOutsideClick from '@/hooks/functionHooks/useOutsideClick';
 import Button from '@/components/common/button/Button';
 
 const UnLoginUserHeaderBar = () => {

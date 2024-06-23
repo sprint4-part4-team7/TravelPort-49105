@@ -6,7 +6,7 @@
 import { useNavigate } from 'react-router-dom';
 import useProductAllQuery from '@/hooks/reactQuery/product/useProductAllQuery';
 import useFilterByCategory from '@/hooks/category/useFilterByCategory';
-import useDisplayCount from '@/hooks/useDispalyControl';
+import useDisplayCount from '@/hooks/functionHooks/useDispalyControl';
 import { useUserStore } from '@/utils/Zustand';
 import carousel1 from '@/assets/images/carousel2.jpg';
 import carousel2 from '@/assets/images/carousel.jpg';

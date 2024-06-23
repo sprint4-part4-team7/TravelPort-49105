@@ -3,7 +3,7 @@ import { ReservProductOptionType, ReservStatusType } from '@/constants/Types';
 import instance from '@/utils/Axios';
 import { useState } from 'react';
 import ARROW_UP_RIGHT from '@/assets/icons/arrowUpRightBlue.svg';
-import useModal from '@/hooks/useModal';
+import useModal from '@/hooks/functionHooks/useModal';
 import RESERV_STATUS from '@/constants/Reserv';
 import Button from '@/components/common/button/Button';
 import ReservationCard from '@/components/common/pagination/reservPagination/ReservationCard';

@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import uploadImage from '@/assets/icons/upload.svg';
-import useModal from '@/hooks/useModal';
+import useModal from '@/hooks/functionHooks/useModal';
 import { useThumbnailStore } from '@/utils/Zustand';
 import { PageIdProps } from './productPage';
 import Location from './Location';

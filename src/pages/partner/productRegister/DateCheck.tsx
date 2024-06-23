@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import useDatePicker from '@/hooks/useDatePicker';
+import useDatePicker from '@/hooks/functionHooks/useDatePicker';
 import DatePickerCustom from '@/components/details/DatePickerCustom';
 import { PageIdProps } from './productPage';
 import Option from './Option';

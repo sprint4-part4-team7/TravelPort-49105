@@ -4,7 +4,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-undef */
 import React from 'react';
-import useCarousel from '@/hooks/useCarousel';
+import useCarousel from '@/hooks/functionHooks/useCarousel';
 import arrowright from '@/assets/icons/carouselArrow.svg';
 import arrowleft from '@/assets/icons/carouselArrow2.svg';
 

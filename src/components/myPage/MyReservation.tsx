@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { getMyReservation } from '@/apis/myReservation';
 import { useUserStore } from '@/utils/Zustand';
 import { Reservation } from '@/constants/Types';
-import useModal from '@/hooks/useModal';
+import useModal from '@/hooks/functionHooks/useModal';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import RESERV_STATUS from '@/constants/Reserv';

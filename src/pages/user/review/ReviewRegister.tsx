@@ -5,7 +5,7 @@
 /* eslint-disable no-undef */
 import { useForm } from 'react-hook-form';
 import React, { useEffect, useState } from 'react';
-import useModal from '@/hooks/useModal';
+import useModal from '@/hooks/functionHooks/useModal';
 import { useNavigate } from 'react-router-dom';
 import useReviewDefaults from '@/hooks/review/useReviewDefaults';
 import useReviewPostMutation from '@/hooks/reactQuery/review/useReviewPostMutation';

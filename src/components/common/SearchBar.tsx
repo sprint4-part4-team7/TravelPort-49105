@@ -3,8 +3,8 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import searchIcon from '@/assets/icons/search1.svg';
 import { CardListsType } from '@/constants/Types';
-import useOutsideClick from '@/hooks/useOutsideClick';
-import useSearchData from '@/hooks/useSearchData';
+import useOutsideClick from '@/hooks/functionHooks/useOutsideClick';
+import useSearchData from '@/hooks/functionHooks/useSearchData';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 

@@ -1,5 +1,5 @@
 import changeDateForm from '@/utils/ChangeDateForm';
-import useModal from '@/hooks/useModal';
+import useModal from '@/hooks/functionHooks/useModal';
 import { useNavigate } from 'react-router-dom';
 import RESERV_STATUS from '@/constants/Reserv';
 import ReservButtonOutlined from '@/components/myPage/button/ReservButtonOutlined';

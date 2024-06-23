@@ -14,7 +14,7 @@ import {
   startOfDay,
   subDays,
 } from 'date-fns';
-import useOutsideClick from '@/hooks/useOutsideClick';
+import useOutsideClick from '@/hooks/functionHooks/useOutsideClick';
 
 type DatePickerProps = {
   startDate: Date | null;

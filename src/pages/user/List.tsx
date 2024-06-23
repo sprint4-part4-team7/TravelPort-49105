@@ -7,9 +7,9 @@
 import { useRef, useState, useEffect, useMemo } from 'react';
 import arrowDown from '@/assets/icons/arrowDown.svg';
 import { useParams } from 'react-router-dom';
-import useOutsideClick from '@/hooks/useOutsideClick';
-import useDatePicker from '@/hooks/useDatePicker';
-import useTypeCheckbox from '@/hooks/useTypeCheckbox';
+import useOutsideClick from '@/hooks/functionHooks/useOutsideClick';
+import useDatePicker from '@/hooks/functionHooks/useDatePicker';
+import useTypeCheckbox from '@/hooks/functionHooks/useTypeCheckbox';
 import useFetchByCategory from '@/hooks/products/useFetchByCategory';
 import Layout from '@/components/common/layout/Layout';
 import HotelCard from '@/components/common/card/HotelCard';
