@@ -20,7 +20,7 @@ const SuccessPage = () => {
 
   const { userInfo } = useUserStore();
   const { cartInfo } = useCartStore();
-  const cartIds = cartInfo.map((item) => ({ cartId: item.cartId }));
+  const cartIds = cartInfo.map((item) => ({ cartId: item.id }));
   const { reservationInfo } = useReservationStore();
   const [searchParams] = useSearchParams();
   const paymentKey = searchParams.get('paymentKey') ?? '';

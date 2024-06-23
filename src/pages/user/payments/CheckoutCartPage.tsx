@@ -8,7 +8,7 @@ import CartPay from '@/components/cart/CartPay';
 import Pay from '@/components/payments/Pay';
 
 interface CartItem {
-  cartId: number;
+  id: number;
   price: number;
   count: number;
 }
@@ -31,7 +31,7 @@ const CheckoutCartPage = () => {
   // 모든 항목을 처음부터 체크된 상태로 초기화
   const initialCheckedItems = cartInfo.reduce(
     (acc: CheckedItems, item: CartItem) => {
-      acc[item.cartId] = true;
+      acc[item.id] = true;
       return acc;
     },
     {},
@@ -50,7 +50,7 @@ const CheckoutCartPage = () => {
 
   // 체크된 항목들의 총 금액 계산
   const totalAmount = cartInfo?.reduce((total, item) => {
-    if (checkedItems[item.cartId]) {
+    if (checkedItems[item.id]) {
       return total + item.price * item.count;
     }
     return total;
@@ -70,9 +70,9 @@ const CheckoutCartPage = () => {
       </div>
       {cartInfo?.map((item: CartItem) => (
         <CartPay
-          key={item.cartId}
+          key={item.id}
           item={item}
-          isChecked={checkedItems[item.cartId]}
+          isChecked={checkedItems[item.id]}
           onCheckboxChange={handleCheckboxChange}
         />
       ))}
