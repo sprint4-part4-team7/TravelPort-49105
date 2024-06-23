@@ -6,8 +6,8 @@ import useCartByUserIdQuery from '@/hooks/reactQuery/cart/useCartByUserIdQuery';
 import { useUserStore, useCartStore } from '@/utils/zustand';
 import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/common/layout/Layout';
-import Button from '@/components/common/Button';
-import CartList from '@/components/CartList';
+import Button from '@/components/common/button/Button';
+import CartList from '@/components/cart/CartList';
 import Loading from '@/components/common/Loading';
 
 export interface CartInfo {

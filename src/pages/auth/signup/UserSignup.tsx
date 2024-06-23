@@ -9,8 +9,8 @@ import useVerifyEmail from '@/hooks/reactQuery/auth/useVerifyEmail';
 import { useUserStore } from '@/utils/zustand';
 import useSignupMutation from '@/hooks/reactQuery/auth/useSignupMutation';
 import { toast } from 'react-toastify';
-import Button from '@/components/common/Button';
-import InputBox from '@/components/common/InputBox';
+import Button from '@/components/common/button/Button';
+import InputBox from '@/components/common/input/InputBox';
 
 interface UserSignupData {
   nickname: string;

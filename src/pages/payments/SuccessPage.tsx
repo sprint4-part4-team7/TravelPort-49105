@@ -11,7 +11,7 @@ import {
 } from '@/utils/zustand';
 import useCartReservationByUserIdMutation from '@/hooks/reactQuery/cart/useCartReservationByUserIdMutation';
 import Layout from '@/components/common/layout/Layout';
-import Button from '@/components/common/Button';
+import Button from '@/components/common/button/Button';
 import Loading from '@/components/common/Loading';
 import FailPage from './FailPage';
 

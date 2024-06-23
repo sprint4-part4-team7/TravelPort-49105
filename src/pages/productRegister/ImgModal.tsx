@@ -4,7 +4,7 @@ import trashImage from '@/assets/icons/trash-red.svg';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useProductImageStore, useThumbnailStore } from '@/utils/zustand';
-import Button from '@/components/common/Button';
+import Button from '@/components/common/button/Button';
 
 type ImageForm = {
   img: FileList;

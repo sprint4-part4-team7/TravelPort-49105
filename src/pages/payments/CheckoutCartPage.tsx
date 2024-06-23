@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import './Payments.css';
 
 import { useCartStore, useUserStore } from '@/utils/zustand';
-import usePaymentWidget from '@/hooks/usePaymentWidget';
+import usePaymentWidget from '@/hooks/payments/usePaymentWidget';
 import Layout from '@/components/common/layout/Layout';
-import CartPay from '@/components/CartPay';
-import Pay from '@/components/Pay';
+import CartPay from '@/components/cart/CartPay';
+import Pay from '@/components/payments/Pay';
 
 interface CartItem {
   cartId: number;

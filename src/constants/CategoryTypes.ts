@@ -1,4 +1,4 @@
-export const hotelTypes = [
+export const HOTEL_TYPES = [
   '호텔',
   '게스트하우스',
   '캠핑장/야영장',
@@ -6,7 +6,7 @@ export const hotelTypes = [
   '펜션',
   '기타',
 ];
-export const ActivityTypes = [
+export const ACTIVITY_TYPES = [
   '테마파크',
   '수상 액티비티',
   '레저스포츠',

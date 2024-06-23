@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import { useUserStore } from '@/utils/zustand';
 import useProductByPartnerQuery from '@/hooks/reactQuery/product/useProductByPartnerQuery';
 import { useNavigate } from 'react-router-dom';
-import ReservPagination from '@/components/common/reservPagination/ReservPagination';
-import PostingCard from '@/components/PostingCard';
-import Button from '@/components/common/Button';
+import ReservPagination from '@/components/common/pagination/reservPagination/ReservPagination';
+import PostingCard from '@/components/reservation/PostingCard';
+import Button from '@/components/common/button/Button';
 
 const PostingManagement = () => {
   const { userInfo } = useUserStore();

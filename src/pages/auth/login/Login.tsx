@@ -6,13 +6,13 @@ import {
   useGoogleLogin,
   useKakaoLogin,
   useNaverLogin,
-} from '@/hooks/useOAuthLogin';
+} from '@/hooks/auth/useOAuthLogin';
 import { useForm } from 'react-hook-form';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
 import Logo from '@/assets/icons/travelPortLogo-login.svg';
 import useLoginMutation from '@/hooks/reactQuery/auth/useLoginMutation';
-import InputBox from '@/components/common/InputBox';
-import Button from '@/components/common/Button';
+import InputBox from '@/components/common/input/InputBox';
+import Button from '@/components/common/button/Button';
 
 type LoginForm = {
   email: string;

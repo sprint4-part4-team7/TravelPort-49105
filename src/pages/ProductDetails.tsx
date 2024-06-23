@@ -4,9 +4,9 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import useFetchDetails from '@/hooks/useFetchDetails';
+import useFetchDetails from '@/hooks/products/useFetchDetails';
 import { useEffect, useState } from 'react';
-import useProductReview from '@/hooks/useProductReview';
+import useProductReview from '@/hooks/review/useProductReview';
 import { useParams } from 'react-router-dom';
 import useReviewByProductIdQuery from '@/hooks/reactQuery/review/useReviewByProductIdQuery';
 import instance from '@/utils/axios';
@@ -15,10 +15,10 @@ import LocationMap from '@/components/details/LocationMap';
 import SalesPeriod from '@/components/details/SalesPeriod';
 import Reservation from '@/components/details/Reservation';
 import DetailsCarousel from '@/components/details/DetailsCarousel';
-import Review from '@/components/Review';
+import Review from '@/components/review/Review';
 import ReviewAverage from '@/components/review/ReviewAverage';
 import DetailInfo from '@/components/details/DetailInfo';
-import Pagination from '@/components/common/Pagination';
+import Pagination from '@/components/common/pagination/Pagination';
 import NoPage from './NoPage';
 import Layout from '@/components/common/layout/Layout';
 import Loading from '@/components/common/Loading';

@@ -6,16 +6,16 @@ import useModal from '@/hooks/useModal';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import RESERV_STATUS from '@/constants/reserv';
-import ReservationCard from '@/components/common/reservPagination/ReservationCard';
-import ReservPagination from '@/components/common/reservPagination/ReservPagination';
+import ReservationCard from '@/components/common/pagination/reservPagination/ReservationCard';
+import ReservPagination from '@/components/common/pagination/reservPagination/ReservPagination';
 import ReservChips from '@/components/myPage/ReservChips';
-import ReservButton from '@/components/myPage/ReservButton';
-import ReservButtonOutlined from '@/components/myPage/ReservButtonOutlined';
-import CheckCancelMsg from '@/components/myPage/Modal/CheckCancelMsg';
+import ReservButton from '@/components/myPage/button/ReservButton';
+import ReservButtonOutlined from '@/components/myPage/button/ReservButtonOutlined';
+import CheckCancelMsg from '@/components/myPage/modal/CheckCancelMsg';
 import ReservChipsExpired from '@/components/myPage/ReservChipsExpired';
-import CancelReserv from '@/components/myPage/Modal/CancelReserv';
+import CancelReserv from '@/components/myPage/modal/CancelReserv';
 import Loading from '../common/Loading';
-import Button from '../common/Button';
+import Button from '../common/button/Button';
 
 const MyReservation = ({
   isExpired = 'false',
@@ -119,8 +119,8 @@ const MyReservation = ({
   }
 
   return (
-    <div className="flex flex-col gap-48 w-full">
-      <div className="text-20 font-semibold">예약 목록</div>
+    <div className="flex flex-col w-full gap-48">
+      <div className="font-semibold text-20">예약 목록</div>
       {!!myReservation?.totalCount && myReservation?.totalCount >= 0 ? (
         <ReservPagination
           limit={LIMIT}
@@ -149,9 +149,9 @@ const MyReservation = ({
           ))}
         </ReservPagination>
       ) : (
-        <div className="flex flex-col gap-16 border-solid text-24 text-center items-center font-medium border-1 border-black-4 rounded-8 py-24 px-16">
+        <div className="flex flex-col items-center gap-16 px-16 py-24 font-medium text-center border-solid text-24 border-1 border-black-4 rounded-8">
           <span>앗! 예약한 내용이 없어요!</span>
-          <span className="text-16 mb-16">둘러보며 예약해보세요!</span>
+          <span className="mb-16 text-16">둘러보며 예약해보세요!</span>
           <Button
             variant="floating"
             width="w-375 mobile:w-1/2"

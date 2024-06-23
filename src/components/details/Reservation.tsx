@@ -7,7 +7,7 @@ import plus from '@/assets/icons/plus.svg';
 import { useEffect, useState } from 'react';
 import { formatDate } from '@/utils/getDate';
 import { useReservationStore, useUserStore } from '@/utils/zustand';
-import useTimeTable from '@/hooks/useTimeTable';
+import useTimeTable from '@/hooks/timeTable/useTimeTable';
 import useDatePicker from '@/hooks/useDatePicker';
 import { useNavigate } from 'react-router-dom';
 import useCartPostMutation from '@/hooks/reactQuery/cart/useCartPostMutation';
@@ -15,10 +15,10 @@ import useModal from '@/hooks/useModal';
 import RESERV_STATUS from '@/constants/reserv';
 import { toast } from 'react-toastify';
 import instance from '@/utils/axios';
-import Button from '@/components/common/Button';
+import Button from '@/components/common/button/Button';
 import '@/styles/ProductDetails.css';
 import DatePickerCustom from './DatePickerCustom';
-import DefaultModal from '../common/DefaultModal';
+import DefaultModal from '../common/modal/DefaultModal';
 
 interface ReservationProps {
   product: DetailData;

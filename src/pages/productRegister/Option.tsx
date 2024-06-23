@@ -9,8 +9,8 @@ import postImages from '@/apis/image';
 import instance from '@/utils/axios';
 import BUCKER_NAME from '@/constants/bucket';
 import trashImage from '@/assets/icons/trash-red.svg';
-import Button from '@/components/common/Button';
-import Modal from '@/components/common/Modal';
+import Button from '@/components/common/button/Button';
+import Modal from '@/components/common/modal/Modal';
 import OptionModal from './OptionModal';
 
 const Option = () => {

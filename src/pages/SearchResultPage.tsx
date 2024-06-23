@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import useProductsWithMinPrice from '@/hooks/useProductsWithMinPrice';
+import useProductsWithMinPrice from '@/hooks/products/useProductsWithMinPrice';
 import useProductAllQuery from '@/hooks/reactQuery/product/useProductAllQuery';
 import Layout from '@/components/common/layout/Layout';
-import SearchResultSection from '@/components/SearchResultSection';
-import Pagination from '@/components/common/Pagination';
+import SearchResultSection from '@/components/searchResult/SearchResultSection';
+import Pagination from '@/components/common/pagination/Pagination';
 import Loading from '@/components/common/Loading';
 
 const useQuery = () => {

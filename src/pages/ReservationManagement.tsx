@@ -2,8 +2,8 @@ import ARROW from '@/assets/icons/arrowDown.svg';
 import { useEffect, useState } from 'react';
 import { useUserStore } from '@/utils/zustand';
 import useReservationManageQuery from '@/hooks/reactQuery/reservation/useReservationManageQuery';
-import ReservedManageCard from '@/components/ReservedManageCard';
-import ReservPagination from '@/components/common/reservPagination/ReservPagination';
+import ReservedManageCard from '@/components/reservation/ReservedManageCard';
+import ReservPagination from '@/components/common/pagination/reservPagination/ReservPagination';
 
 const ReservationManagement = () => {
   const { userInfo } = useUserStore();

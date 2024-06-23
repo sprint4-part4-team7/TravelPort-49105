@@ -5,15 +5,15 @@
 /* eslint-disable react/no-array-index-key */
 import { useNavigate } from 'react-router-dom';
 import useProductAllQuery from '@/hooks/reactQuery/product/useProductAllQuery';
-import useFilterByCategory from '@/hooks/useFilterByCategory';
+import useFilterByCategory from '@/hooks/category/useFilterByCategory';
 import useDisplayCount from '@/hooks/useDispalyControl';
 import { useUserStore } from '@/utils/zustand';
 import carousel1 from '@/assets/images/carousel2.jpg';
 import carousel2 from '@/assets/images/carousel.jpg';
 import carousel3 from '@/assets/images/carousel3.jpg';
-import Carousel from '@/components/Carousel';
+import Carousel from '@/components/main/Carousel';
 import Layout from '@/components/common/layout/Layout';
-import MainCard from '@/components/MainCard';
+import MainCard from '@/components/main/MainCard';
 import PartnerMain from '@/pages/PartnerMain';
 import Loading from '@/components/common/Loading';
 import Skeleton from '@/components/common/Skeleton';

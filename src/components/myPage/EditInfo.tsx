@@ -13,9 +13,9 @@ import BUCKER_NAME from '@/constants/bucket';
 import { ReactComponent as Delete } from '@/assets/icons/x-circle-custom.svg';
 import useProfileImage from '@/utils/randomProfile';
 import { toast } from 'react-toastify';
-import Button from '@/components/common/Button';
-import InputBox from '@/components/common/InputBox';
-import Modal from '@/components/common/Modal';
+import Button from '@/components/common/button/Button';
+import InputBox from '@/components/common/input/InputBox';
+import Modal from '@/components/common/modal/Modal';
 import ChangePassword from '@/components/myPage/ChangePassword';
 
 const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {

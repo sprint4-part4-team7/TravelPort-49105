@@ -3,7 +3,7 @@ import arrowRightUp from '@/assets/icons/arrowRightUp.svg';
 import useModal from '@/hooks/useModal';
 import { DetailData } from '@/constants/types';
 import KakaoMap from '@/components/common/map/KakaoMap';
-import Modal from '@/components/common/Modal';
+import Modal from '@/components/common/modal/Modal';
 
 interface LocationMapProps {
   product?: DetailData;

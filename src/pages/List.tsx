@@ -10,16 +10,16 @@ import { useParams } from 'react-router-dom';
 import useOutsideClick from '@/hooks/useOutsideClick';
 import useDatePicker from '@/hooks/useDatePicker';
 import useTypeCheckbox from '@/hooks/useTypeCheckbox';
-import useFetchByCategory from '@/hooks/useFetchByCategory';
+import useFetchByCategory from '@/hooks/products/useFetchByCategory';
 import Layout from '@/components/common/layout/Layout';
 import HotelCard from '@/components/common/card/HotelCard';
-import HeadCount from '@/components/common/filter/HeadCount';
-import PriceRange from '@/components/common/filter/PriceRange';
+import HeadCount from '@/components/list/filter/HeadCount';
+import PriceRange from '@/components/list/filter/PriceRange';
 import Card from '@/components/common/card/Card';
-import Pagination from '@/components/common/Pagination';
+import Pagination from '@/components/common/pagination/Pagination';
 import DatePickerCustom from '@/components/details/DatePickerCustom';
-import Button from '@/components/common/Button';
-import ProductType from '@/components/common/filter/ProductType';
+import Button from '@/components/common/button/Button';
+import ProductType from '@/components/list/filter/ProductType';
 import NoData from '@/components/common/NoData';
 
 const List = () => {

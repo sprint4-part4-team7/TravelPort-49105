@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import saveImage from '@/assets/icons/check-circle-broken.svg';
 import searchImage from '@/assets/icons/search-pr.svg';
 import CheckButton from '@/pages/productRegister/CheckButton';
-import Button from '@/components/common/Button';
+import Button from '@/components/common/button/Button';
 import DateCheck from '@/pages/productRegister/DateCheck';
 
 type PostCodeForm = {

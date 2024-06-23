@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Payments.css';
-import usePaymentWidget from '@/hooks/usePaymentWidget';
+import usePaymentWidget from '@/hooks/payments/usePaymentWidget';
 import useProductOptionQuery from '@/hooks/reactQuery/productOption/useProductOptionQuery';
 import useTimeTableQuery from '@/hooks/reactQuery/timeTable/useTimeTableQuery';
 import {
@@ -9,8 +9,8 @@ import {
   useUserStore,
 } from '@/utils/zustand';
 import Layout from '@/components/common/layout/Layout';
-import Pay from '@/components/Pay';
-import OrderSummary from '@/components/OrderSummary';
+import Pay from '@/components/payments/Pay';
+import OrderSummary from '@/components/payments/OrderSummary';
 import Loading from '@/components/common/Loading';
 
 const CheckoutPage = () => {

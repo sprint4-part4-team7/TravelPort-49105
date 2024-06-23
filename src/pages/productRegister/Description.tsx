@@ -6,8 +6,8 @@ import { useThumbnailStore } from '@/utils/zustand';
 import { PageIdProps } from './productPage';
 import Location from './Location';
 import CheckButton from './CheckButton';
-import Button from '@/components/common/Button';
-import Modal from '@/components/common/Modal';
+import Button from '@/components/common/button/Button';
+import Modal from '@/components/common/modal/Modal';
 import ImgModal from './ImgModal';
 
 type DescriptionForm = {

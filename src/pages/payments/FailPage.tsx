@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import failIcon from '@/assets/icons/noPay.svg';
 import Layout from '@/components/common/layout/Layout';
 import './Payments.css';
-import Button from '@/components/common/Button';
+import Button from '@/components/common/button/Button';
 
 const FailPage = () => {
   const navigate = useNavigate();
