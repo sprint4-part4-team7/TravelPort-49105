@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import logo from '@/assets/icons/lastLogo.svg';
-import { useNavigate } from 'react-router-dom';
+import logo from '@/assets/icons/pcLogo.svg';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useSearchData from '@/hooks/useSearchData';
 import { uniqueProduct } from '@/utils/uniqueProduct';
 import { useUserStore } from '@/utils/zustand';
@@ -18,25 +18,34 @@ interface HeaderBarProps {
 
 const HeaderBar: React.FC<HeaderBarProps> = ({
   main = false,
-  category = false,
+  category = true,
   noSearch = true,
 }) => {
   const { userInfo } = useUserStore();
   const userType = userInfo.isPartner === 1 ? 'partner' : 'user';
   const navigate = useNavigate();
+  const location = useLocation();
+  const [activeCategory, setActiveCategory] = useState<string>('/');
+
+  const handleNavigation = (path: string) => {
+    setActiveCategory(path);
+    navigate(path);
+  };
+
+  useEffect(() => {
+    setActiveCategory(location.pathname);
+  }, [location]);
+
   const handleAccommodation = () => {
-    navigate('/list/1');
+    handleNavigation('/list/1');
   };
   const handleActivity = () => {
-    navigate('/list/2');
+    handleNavigation('/list/2');
   };
   const handleTraffic = () => {
-    navigate('/preparing');
+    handleNavigation('/preparing');
   };
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [scrollDirection, setScrollDirection] = useState<'up' | 'down' | null>(
-    null,
-  );
 
   const { optionAll } = useProductOptionAll();
 
@@ -57,53 +66,22 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
     navigate('/');
   };
 
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY > lastScrollY) {
-        setScrollDirection('down');
-      } else {
-        setScrollDirection('up');
-      }
-
-      lastScrollY = currentScrollY;
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
   return (
     <div className="fixed top-0 left-0 right-0 z-50 text-2xl font-bold bg-white py-36 ">
       <div className="relative flex items-center justify-between px-48 h-60 mobile:px-20">
-        <div className="flex items-center">
+        <div className="flex items-center mobile:flex-col mobile:items-start">
           <div className="w-full h-65 mobile:w-76 mobile:h-25 tablet:w-147 tablet:h-48">
             <button
               type="button"
               onClick={handleHome}
-              className="p-0 border-none bg-none"
+              className="p-0 border-none bg-none mobile:"
             >
               <img src={logo} alt="Main Logo" style={{ cursor: 'pointer' }} />
             </button>
           </div>
-        </div>
-        {!noSearch && (
-          <div className={`flex-1 mx-48 mobile:mx-16 tablet:mx-24 relative `}>
-            <div className="w-full">
-              <SearchBar isMainSearchBar={main} cardLists={filteredTitles} />
-            </div>
+          <div>
             {category && (
-              <div
-                className={`absolute right-0 flex gap-8 -bottom-40 left-15 z-1 mobile:w-152 mobile:gap-0 mobile:-bottom-30 
-      ${scrollDirection === 'down' ? 'animate-slideUpFade' : ''} 
-      ${scrollDirection === 'up' ? 'animate-slideDownFade' : ''}`}
-              >
+              <div className="flex items-center justify-center mobile:hidden">
                 <MainCategoryButton
                   title="숙소"
                   onclick={handleAccommodation}
@@ -112,6 +90,13 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
                 <MainCategoryButton title="교통" onclick={handleTraffic} />
               </div>
             )}
+          </div>
+        </div>
+        {!noSearch && (
+          <div className={`flex-1 mx-48 mobile:mx-16 tablet:mx-24 relative `}>
+            <div className="w-full">
+              <SearchBar isMainSearchBar={main} cardLists={filteredTitles} />
+            </div>
           </div>
         )}
 
@@ -125,6 +110,48 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
             <UnLoginUserHeaderBar />
           )}
         </div>
+      </div>
+      <div>
+        {category && (
+          <div className="hidden mobile:flex mobile:pl-10">
+            <MainCategoryButton
+              title="홈"
+              onclick={handleHome}
+              className={`transition-all duration-500 ${
+                activeCategory === '/'
+                  ? 'border-b-2 border-black-9 border-solid mt-0'
+                  : 'mt-2'
+              }`}
+            />
+            <MainCategoryButton
+              title="숙소"
+              onclick={handleAccommodation}
+              className={`transition-all duration-500 ${
+                activeCategory === '/list/1'
+                  ? 'border-b-2 border-black-9 border-solid mt-0 '
+                  : 'mt-2'
+              }`}
+            />
+            <MainCategoryButton
+              title="체험"
+              onclick={handleActivity}
+              className={`transition-all duration-500 ${
+                activeCategory === '/list/2'
+                  ? 'border-b-2 border-black-9 border-solid mt-0'
+                  : 'mt-2'
+              }`}
+            />
+            <MainCategoryButton
+              title="교통"
+              onclick={handleTraffic}
+              className={`transition-all duration-500 ${
+                activeCategory === '/preparing'
+                  ? 'border-b-2 border-black-9 border-solid mt-0'
+                  : 'mt-2'
+              }`}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
   );
 
   return (
-    <div className="relative w-full mx-auto mt-40 max-w-screen-2lg mb-100">
+    <div className="relative w-full mx-auto mt-40 mb-100">
       <div className="relative overflow-hidden ">
         <div
           className="flex transition-transform duration-500 ease-out"
@@ -35,7 +35,7 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
           {items.map((item, index) => (
             <div
               key={index}
-              className="flex-shrink-0 w-full h-266"
+              className="flex-shrink-0 w-full h-380 tablet:h-266 mobile:h-266"
               style={{
                 backgroundImage: `url(${item.url})`,
                 backgroundSize: 'cover',
@@ -45,13 +45,13 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
             >
               <div className="relative w-full">
                 <div
-                  className={`${index === 0 && 'top-194 mobile:top-194'} absolute flex flex-col font-bold text-white left-80 text-24 top-110 mobile:text-20 mobile:top-144 mobile:left-32`}
+                  className={`${index === 0 && 'top-194 mobile:top-194'} absolute flex flex-col font-bold text-white top-157 left-86 tablet:left-80 text-24 tablet:text-20 tablet:top-110 mobile:text-20 mobile:top-144 mobile:left-32`}
                 >
                   <div>{item.text}</div>
                   <div>{item.text2}</div>
                 </div>
                 {index !== 0 && (
-                  <div className="absolute flex items-center justify-center m-auto rounded-full mobile:h-28 top-190 left-70 bg-grayCustom text-black-2 h-44 w-210 px-14 mobile:w-155 mobile:px-12 mobile:py-6 mobile:left-28 mobile:top-208">
+                  <div className="absolute flex items-center justify-center m-auto rounded-full mobile:h-28 tablet:top-190 tablet:left-70 top-237 left-78 bg-grayCustom text-black-2 h-44 w-210 px-14 mobile:w-155 mobile:px-12 mobile:py-6 mobile:left-28 mobile:top-208">
                     <button
                       type="button"
                       className="flex items-center justify-center py-10 text-18 mobile:text-12"
