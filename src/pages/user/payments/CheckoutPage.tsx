@@ -48,21 +48,24 @@ const CheckoutPage = () => {
 
   const formattedDate = formatDate(timeTableData?.targetDate);
   const maxUserCount = productOption?.maxUserCount || Infinity;
+  const [count, setCount] = useState(reservationInfo?.ticketCount || 1);
+  const optionPrice = reservationInfo.reservationPrice;
+  const price = productOption?.optionPrice;
+  const [isChecked, setIsChecked] = useState(true);
+  const [refreshData, setRefreshData] = useState(false);
+
+  const totalAmount = isChecked ? optionPrice * count : 0;
+  const days = totalAmount / (price * userCount);
 
   const day =
     productOption?.product?.categoryId === 1
-      ? `${formattedDate}`
+      ? `${formattedDate} ~ ${days} 박`
       : `${formattedDate} ${timeTableData?.startTimeOnly} ~ ${timeTableData?.endTimeOnly}`;
 
   const optionName =
     productOption?.product?.categoryId === 1
       ? `${productOption?.optionName} ( ${maxUserCount} 인실 )`
       : `${productOption?.optionName}`;
-
-  const [count, setCount] = useState(reservationInfo?.ticketCount || 1);
-  const optionPrice = productOption?.optionPrice || 0;
-  const [isChecked, setIsChecked] = useState(true);
-  const [refreshData, setRefreshData] = useState(false);
 
   const handleCheckedChange = (checked: boolean) => {
     setIsChecked(checked);
@@ -77,8 +80,6 @@ const CheckoutPage = () => {
       setCount(count - 1);
     }
   };
-
-  const totalAmount = isChecked ? optionPrice * count : 0;
 
   const { requestPayment } = usePaymentWidget(
     totalAmount,
