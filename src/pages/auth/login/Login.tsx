@@ -1,18 +1,18 @@
-import Google from '@/assets/images/google_login.png';
-import Kakao from '@/assets/images/kakao_login.svg';
-import Naver from '@/assets/images/naver_login.png';
+import Google from '@/assets/images/googleLogin.png';
+import Kakao from '@/assets/icons/kakaoLogin.svg';
+import Naver from '@/assets/images/naverLogin.png';
 import { Link } from 'react-router-dom';
 import {
   useGoogleLogin,
   useKakaoLogin,
   useNaverLogin,
-} from '@/hooks/useOAuthLogin';
+} from '@/hooks/auth/useOAuthLogin';
 import { useForm } from 'react-hook-form';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
-import Logo from '@/assets/icons/travelPortLogo-login.svg';
+import Logo from '@/assets/icons/travelPortLogoLogin.svg';
 import useLoginMutation from '@/hooks/reactQuery/auth/useLoginMutation';
-import InputBox from '@/components/common/InputBox';
-import Button from '@/components/common/Button';
+import InputBox from '@/components/common/input/InputBox';
+import Button from '@/components/common/button/Button';
 
 type LoginForm = {
   email: string;
@@ -35,8 +35,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen my-20">
-      <div className="flex flex-col gap-60 justify-center items-center">
+    <div className="flex items-center justify-center h-screen my-20">
+      <div className="flex flex-col items-center justify-center gap-60">
         <Link to="/">
           <img alt="travelport logo" width="180" src={Logo} />
         </Link>
@@ -92,13 +92,13 @@ const Login = () => {
               이메일로 회원가입
             </Link>
           </div>
-          <div className="flex flex-col gap-16 justify-between items-center">
-            <div className="flex justify-center items-center gap-15">
-              <div className="w-70 h-1 bg-black-5" />
+          <div className="flex flex-col items-center justify-between gap-16">
+            <div className="flex items-center justify-center gap-15">
+              <div className="h-1 w-70 bg-black-5" />
               <div className="text-14 text-black-6 ">
                 SNS로 간편하게 시작하기
               </div>
-              <div className="w-70 h-1 bg-black-5" />
+              <div className="h-1 w-70 bg-black-5" />
             </div>
 
             <div className="flex gap-20">

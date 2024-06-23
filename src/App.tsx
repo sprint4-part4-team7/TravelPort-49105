@@ -1,26 +1,26 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from '@/pages/auth/login/Login';
-import Main from '@/pages/Main';
-import CheckoutPage from '@/pages/payments/CheckoutPage';
-import SuccessPage from '@/pages/payments/SuccessPage';
-import FailPage from '@/pages/payments/FailPage';
+import Main from '@/pages/user/Main';
+import CheckoutPage from '@/pages/user/payments/CheckoutPage';
+import SuccessPage from '@/pages/user/payments/SuccessPage';
+import FailPage from '@/pages/user/payments/FailPage';
 import MyPage from '@/pages/MyPage';
-import List from '@/pages/List';
+import List from '@/pages/user/List';
 import GoogleRedirect from '@/pages/auth/login/GoogleRedirect';
 import KakaoRedirect from '@/pages/auth/login/KakaoRedirect';
 import NaverRedirect from '@/pages/auth/login/NaverRedirect';
 import PartnerSignup from '@/pages/auth/signup/PartnerSignup';
 import UserSignup from '@/pages/auth/signup/UserSignup';
-import ProductDetails from '@/pages/ProductDetails';
-import ProductRegister from '@/pages/productRegister/ProductRegister';
-import SearchResultPage from '@/pages/SearchResultPage';
-import ReviewRegist from '@/pages/ReviewRegist';
+import ProductDetails from '@/pages/user/ProductDetails';
+import ProductRegister from '@/pages/partner/productRegister/ProductRegister';
+import SearchResultPage from '@/pages/user/SearchResultPage';
+import ReviewRegist from '@/pages/user/review/ReviewRegist';
 // import PartnerMain from '@/pages/PartnerMain';
 import NoPage from '@/pages/NoPage';
 import PreparingPage from '@/pages/PreparingPage';
-import Cart from '@/pages/Cart';
-import CheckoutCartPage from '@/pages/payments/CheckoutCartPage';
-import ProtectedRoute from './components/ProtectedRoute';
+import Cart from '@/pages/user/cart/Cart';
+import CheckoutCartPage from '@/pages/user/payments/CheckoutCartPage';
+import ProtectedRoute from './components/common/ProtectedRoute';
 
 const App = () => {
   return (

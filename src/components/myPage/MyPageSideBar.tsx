@@ -1,11 +1,11 @@
 import React from 'react';
-import { useUserMypageStore, useUserStore } from '@/utils/zustand';
+import { useUserMypageStore, useUserStore } from '@/utils/Zustand';
 import { useNavigate } from 'react-router-dom';
-import useProfileImage from '@/utils/randomProfile';
+import useProfileImage from '@/utils/RandomProfile';
 import useLogoutMutation from '@/hooks/reactQuery/auth/useLogoutMutation';
-import { removeCookie } from '@/utils/cookie';
-import Button from '@/components/common/Button';
-import MyPageButton from '@/components/myPage/MyPageButton';
+import { removeCookie } from '@/utils/Cookie';
+import Button from '@/components/common/button/Button';
+import MyPageButton from '@/components/myPage/button/MyPageButton';
 
 interface MyPageSideBarProps {
   children: React.ReactNode;

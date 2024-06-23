@@ -1,5 +1,5 @@
-import { ReservStatusType, Reservation } from '@/constants/types';
-import instance from '@/utils/axios';
+import { ReservStatusType, Reservation } from '@/constants/Types';
+import instance from '@/utils/Axios';
 
 interface GetMyReservation {
   reservations: Reservation[];

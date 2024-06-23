@@ -1,24 +1,24 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
-import { CardListsType, DetailData } from '@/constants/types';
+import { CardListsType, DetailData } from '@/constants/Types';
 import minus from '@/assets/icons/minus.svg';
 import plus from '@/assets/icons/plus.svg';
 import { useEffect, useState } from 'react';
-import { formatDate } from '@/utils/getDate';
-import { useReservationStore, useUserStore } from '@/utils/zustand';
-import useTimeTable from '@/hooks/useTimeTable';
-import useDatePicker from '@/hooks/useDatePicker';
+import { formatDate } from '@/utils/GetDate';
+import { useReservationStore, useUserStore } from '@/utils/Zustand';
+import useTimeTable from '@/hooks/timeTable/useTimeTable';
+import useDatePicker from '@/hooks/functionHooks/useDatePicker';
 import { useNavigate } from 'react-router-dom';
 import useCartPostMutation from '@/hooks/reactQuery/cart/useCartPostMutation';
-import useModal from '@/hooks/useModal';
-import RESERV_STATUS from '@/constants/reserv';
+import useModal from '@/hooks/functionHooks/useModal';
+import RESERV_STATUS from '@/constants/Reserv';
 import { toast } from 'react-toastify';
-import instance from '@/utils/axios';
-import Button from '@/components/common/Button';
-import '@/styles/ProductDetails.css';
+import instance from '@/utils/Axios';
+import Button from '@/components/common/button/Button';
+import '@/styles/productDetails.css';
 import DatePickerCustom from './DatePickerCustom';
-import DefaultModal from '../common/DefaultModal';
+import DefaultModal from '../common/modal/DefaultModal';
 
 interface ReservationProps {
   product: DetailData;

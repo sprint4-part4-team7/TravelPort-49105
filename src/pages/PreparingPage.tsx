@@ -1,7 +1,7 @@
 import React from 'react';
 import ing from '@/assets/icons/ing.svg';
 import { useNavigate } from 'react-router-dom';
-import Button from '@/components/common/Button';
+import Button from '@/components/common/button/Button';
 
 const PreparingPage = () => {
   const navigate = useNavigate();

@@ -1,5 +1,5 @@
-import { ReservStatusType } from '@/constants/types';
-import instance from '@/utils/axios';
+import { ReservStatusType } from '@/constants/Types';
+import instance from '@/utils/Axios';
 
 interface GetReservationUserProps {
   userId: number;
@@ -12,6 +12,9 @@ interface GetReservationProductOptionProps {
 interface GetReservationManageProps {
   partnerId: number;
   categoryId: number;
+  offset: number;
+  limit: number;
+  order: string;
 }
 
 interface PostReservationProps {
@@ -43,9 +46,12 @@ const getReservationUser = ({ userId }: GetReservationUserProps) => {
 const getReservationManage = ({
   partnerId,
   categoryId,
+  offset,
+  limit,
+  order,
 }: GetReservationManageProps) => {
   return instance({
-    url: `/reservation/partner/${partnerId}/category/${categoryId}`,
+    url: `/reservation/partner/${partnerId}/category/${categoryId}?offset=${offset}&limit=${limit}&sortOrder=${order}`,
     method: 'GET',
   });
 };

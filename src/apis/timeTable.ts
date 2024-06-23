@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-catch */
 // api/payments.ts
-import instance from '@/utils/axios';
+import instance from '@/utils/Axios';
 
 const timeTableApi = {
   getTimeTableProductOption: async (optionId: number) => {
@@ -10,7 +10,6 @@ const timeTableApi = {
       );
       return response.data;
     } catch (error) {
-      // console.log(error);
       throw error;
     }
   },
@@ -20,7 +19,6 @@ const timeTableApi = {
       const response = await instance.get(`/timeTable/${timeTableId}`);
       return response.data;
     } catch (error) {
-      // console.log(error);
       throw error;
     }
   },
