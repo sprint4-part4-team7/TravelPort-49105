@@ -8,15 +8,13 @@ import useProductAllQuery from '@/hooks/reactQuery/product/useProductAllQuery';
 import useFilterByCategory from '@/hooks/category/useFilterByCategory';
 import useDisplayCount from '@/hooks/functionHooks/useDispalyControl';
 import { useUserStore } from '@/utils/Zustand';
-import carousel1 from '@/assets/images/carousel2.jpg';
-import carousel2 from '@/assets/images/carousel.jpg';
+import carousel1 from '@/assets/images/carousel1.jpg';
+import carousel2 from '@/assets/images/carousel2.jpg';
 import carousel3 from '@/assets/images/carousel3.jpg';
 import Carousel from '@/components/main/Carousel';
 import Layout from '@/components/common/layout/Layout';
 import MainCard from '@/components/main/MainCard';
 import PartnerMain from '@/pages/partner/PartnerMain';
-import Loading from '@/components/common/Loading';
-import Skeleton from '@/components/common/Skeleton';
 
 interface ImageItem {
   url: string;
@@ -29,7 +27,8 @@ interface ImageItem {
 const carousel: ImageItem[] = [
   {
     url: carousel1,
-    text: '서비스 소개 ~',
+    text: '머물고 싶은, 즐기고싶은',
+    text2: '장소를 큐레이팅합니다',
     path: '/',
   },
   {

@@ -67,7 +67,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 text-2xl font-bold bg-white py-36 ">
+    <div className="fixed top-0 left-0 right-0 z-50 py-16 text-2xl font-bold bg-white ">
       <div className="relative flex items-center justify-between px-48 h-60 mobile:px-20">
         <div className="flex items-center mobile:flex-col mobile:items-start">
           <div className="w-full h-65 mobile:w-76 mobile:h-25 tablet:w-147 tablet:h-48">
@@ -84,10 +84,10 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
               <div className="flex items-center justify-center mobile:hidden">
                 <MainCategoryButton
                   title="숙소"
-                  onclick={handleAccommodation}
+                  onClick={handleAccommodation}
                 />
-                <MainCategoryButton title="체험" onclick={handleActivity} />
-                <MainCategoryButton title="교통" onclick={handleTraffic} />
+                <MainCategoryButton title="체험" onClick={handleActivity} />
+                <MainCategoryButton title="교통" onClick={handleTraffic} />
               </div>
             )}
           </div>
@@ -116,39 +116,39 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
           <div className="hidden mobile:flex mobile:pl-10">
             <MainCategoryButton
               title="홈"
-              onclick={handleHome}
-              className={`transition-all duration-500 ${
+              onClick={handleHome}
+              className={`${
                 activeCategory === '/'
-                  ? 'border-b-2 border-black-9 border-solid mt-0'
-                  : 'mt-2'
-              }`}
+                  ? 'border-b-2 border-black-13'
+                  : 'border-b-2 border-transparent'
+              } transition-all`}
             />
             <MainCategoryButton
               title="숙소"
-              onclick={handleAccommodation}
-              className={`transition-all duration-500 ${
+              onClick={handleAccommodation}
+              className={`${
                 activeCategory === '/list/1'
-                  ? 'border-b-2 border-black-9 border-solid mt-0 '
-                  : 'mt-2'
-              }`}
+                  ? 'border-b-2 border-black-13'
+                  : 'border-b-2 border-transparent'
+              } transition-all `}
             />
             <MainCategoryButton
               title="체험"
-              onclick={handleActivity}
-              className={`transition-all duration-500 ${
+              onClick={handleActivity}
+              className={`${
                 activeCategory === '/list/2'
-                  ? 'border-b-2 border-black-9 border-solid mt-0'
-                  : 'mt-2'
-              }`}
+                  ? 'border-b-2 border-black-13'
+                  : 'border-b-2 border-transparent'
+              } transition-all `}
             />
             <MainCategoryButton
               title="교통"
-              onclick={handleTraffic}
-              className={`transition-all duration-500 ${
+              onClick={handleTraffic}
+              className={`${
                 activeCategory === '/preparing'
-                  ? 'border-b-2 border-black-9 border-solid mt-0'
-                  : 'mt-2'
-              }`}
+                  ? 'border-b-2 border-black-13'
+                  : 'border-b-2 border-transparent'
+              } transition-all `}
             />
           </div>
         )}

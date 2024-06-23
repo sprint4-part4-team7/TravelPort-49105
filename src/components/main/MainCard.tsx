@@ -1,5 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
+import arrowright from '@/assets/icons/plusArrowButton.svg';
 import Button from '@/components/common/button/Button';
 import Card from '@/components/common/card/Card';
 import Skeleton from '../common/Skeleton';
@@ -34,16 +35,21 @@ const MainCard: React.FC<PopularAccommodationsProps> = ({
       <div className="w-full">
         <div className="flex justify-between mb-18">
           <p className="font-semibold text-22 ">{title} </p>
-          <div className="w-61">
-            <Button
-              variant="default"
-              outlined
-              isCancel
-              onClick={onclick}
-              buttonStyle="rounded-4 px-12 py-8 text-13 font-medium text-black-5"
-            >
-              더보기
-            </Button>
+          <div className="flex items-center justify-center w-84">
+            <div className="py-8 pl-12 pr-6">
+              <Button
+                variant="default"
+                outlined
+                isCancel
+                onClick={onclick}
+                buttonStyle=" text-16 font-medium text-[#BFBFBF] border-none"
+              >
+                더보기
+                <div className="ml-4">
+                  <img src={arrowright} alt="오른쪽 화살표" />
+                </div>
+              </Button>
+            </div>
           </div>
         </div>
       </div>
