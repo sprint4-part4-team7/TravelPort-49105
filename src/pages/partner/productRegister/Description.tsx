@@ -96,9 +96,7 @@ const Description = ({ setPage, setActiveStep }: PageIdProps) => {
                   />
                 ) : (
                   <input
-                    {...register('img', {
-                      required: true,
-                    })}
+                    {...register('img')}
                     className="w-120 h-120 rounded-3 bg-black-4"
                     id="img"
                   />
@@ -120,7 +118,7 @@ const Description = ({ setPage, setActiveStep }: PageIdProps) => {
             </div>
           </div>
         </div>
-        <CheckButton disabled={!isValid} />
+        <CheckButton disabled={!isValid && !(thumbnail.size > 0)} />
       </form>
       <Modal isOpen={isModalOpen} closeModal={closeModal}>
         <ImgModal closeModal={closeModal} />
