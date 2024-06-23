@@ -20,7 +20,7 @@ const Layout: React.FC<LayoutProps> = ({
   return (
     <div className="flex flex-col min-h-screen font-plexSans">
       <HeaderBar main={main} category={category} noSearch={noSearch} />
-      <div className="flex-grow overflow-y-auto break-words whitespace-normal px-36 mt-144">
+      <div className="flex-grow overflow-y-auto break-words whitespace-normal px-36 mt-100">
         {children}
       </div>
       {!noFooter && <Footer />}
