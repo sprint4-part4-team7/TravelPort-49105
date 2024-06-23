@@ -167,7 +167,7 @@ const Option = () => {
           localStorage.removeItem('startDate');
           localStorage.removeItem('endDate');
           localStorage.removeItem('holiday');
-          navigation('/partner');
+          navigation('/');
         }
       }
     } catch (error) {
@@ -186,8 +186,15 @@ const Option = () => {
               <th className="flex-1">가능인원</th>
               <th className="flex-1">티켓갯수</th>
               <th className="flex-1">가격</th>
-              <th className="flex-1">시작시간</th>
-              <th className="flex-1">종료시간</th>
+              {localStorage.getItem('categoryId') === '1' ? (
+                ''
+              ) : (
+                <>
+                  <th className="flex-1">시작시간</th>
+                  <th className="flex-1">종료시간</th>
+                </>
+              )}
+
               <th className="flex-1">상품설명</th>
               <th className="flex-1">삭제</th>
             </tr>
@@ -237,22 +244,28 @@ const Option = () => {
                     readOnly
                   />
                 </td>
-                <td aria-label="start" className="flex-1">
-                  <input
-                    className="w-full text-center"
-                    type="text"
-                    value={`${i[5]}시`}
-                    readOnly
-                  />
-                </td>
-                <td aria-label="end" className="flex-1">
-                  <input
-                    className="w-full text-center"
-                    type="text"
-                    value={`${i[6]}시`}
-                    readOnly
-                  />
-                </td>
+                {localStorage.getItem('categoryId') === '1' ? (
+                  ''
+                ) : (
+                  <>
+                    <td aria-label="start" className="flex-1">
+                      <input
+                        className="w-full text-center"
+                        type="text"
+                        value={`${i[5]}시`}
+                        readOnly
+                      />
+                    </td>
+                    <td aria-label="end" className="flex-1">
+                      <input
+                        className="w-full text-center"
+                        type="text"
+                        value={`${i[6]}시`}
+                        readOnly
+                      />
+                    </td>
+                  </>
+                )}
                 <td aria-label="content" className="flex-1">
                   <input
                     className="w-full text-center truncate"
