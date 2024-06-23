@@ -1,21 +1,21 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import { useUserStore } from '@/utils/zustand';
+import { useUserStore } from '@/utils/Zustand';
 import { useForm } from 'react-hook-form';
-import useModal from '@/hooks/useModal';
+import useModal from '@/hooks/functionHooks/useModal';
 import uploadIcon from '@/assets/icons/upload.svg';
 import { putUserInfo } from '@/apis/editInfo';
 import { PHONE_NUMBER_REGEX } from '@/constants/InputType';
-import { UserInfo } from '@/constants/types';
+import { UserInfo } from '@/constants/Types';
 import { ChangeEventHandler, useEffect, useState } from 'react';
 import postImages from '@/apis/image';
-import BUCKER_NAME from '@/constants/bucket';
-import { ReactComponent as Delete } from '@/assets/icons/x-circle-custom.svg';
-import useProfileImage from '@/utils/randomProfile';
+import BUCKER_NAME from '@/constants/Bucket';
+import { ReactComponent as Delete } from '@/assets/icons/xCircleCustom.svg';
+import useProfileImage from '@/utils/RandomProfile';
 import { toast } from 'react-toastify';
-import Button from '@/components/common/Button';
-import InputBox from '@/components/common/InputBox';
-import Modal from '@/components/common/Modal';
+import Button from '@/components/common/button/Button';
+import InputBox from '@/components/common/input/InputBox';
+import Modal from '@/components/common/modal/Modal';
 import ChangePassword from '@/components/myPage/ChangePassword';
 
 const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {

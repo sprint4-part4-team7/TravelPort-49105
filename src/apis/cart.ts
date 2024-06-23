@@ -1,4 +1,4 @@
-import instance from '@/utils/axios';
+import instance from '@/utils/Axios';
 
 const getCartById = (userId: number) => {
   return instance({

@@ -1,7 +1,7 @@
-import approved from '@/assets/icons/status-chip-approved.svg';
-import pending from '@/assets/icons/status-chip-pending.svg';
-import rejected from '@/assets/icons/status-chip-rejected.svg';
-import RESERV_STATUS from '@/constants/reserv';
+import approved from '@/assets/icons/statusChipApproved.svg';
+import pending from '@/assets/icons/statusChipPending.svg';
+import rejected from '@/assets/icons/statusChipRejected.svg';
+import RESERV_STATUS from '@/constants/Reserv';
 
 const ReservChips = ({ status }: { status: number | null }) => {
   let src;

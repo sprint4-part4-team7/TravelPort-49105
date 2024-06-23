@@ -1,5 +1,5 @@
 import cartApi from '@/apis/cart';
-import { useCartStore } from '@/utils/zustand';
+import { useCartStore } from '@/utils/Zustand';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';

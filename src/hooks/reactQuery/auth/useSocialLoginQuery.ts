@@ -1,7 +1,7 @@
 import { getGoogleLogin, getKakaoLogin, getNaverLogin } from '@/apis/auth';
-import { getCookie, setCookie } from '@/utils/cookie';
-import jwtDecode from '@/utils/jwtDecode';
-import { useUserStore } from '@/utils/zustand';
+import { getCookie, setCookie } from '@/utils/Cookie';
+import jwtDecode from '@/utils/JWTDecode';
+import { useUserStore } from '@/utils/Zustand';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';

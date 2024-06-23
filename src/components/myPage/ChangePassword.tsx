@@ -2,8 +2,8 @@ import { useForm } from 'react-hook-form';
 import { putPassword } from '@/apis/editInfo';
 import { PASSWORD_REGEX } from '@/constants/InputType';
 import { toast } from 'react-toastify';
-import Button from '@/components/common/Button';
-import InputBox from '@/components/common/InputBox';
+import Button from '@/components/common/button/Button';
+import InputBox from '@/components/common/input/InputBox';
 
 interface Password {
   prevPassword: string;

@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 /* eslint-disable prettier/prettier */
 /* eslint-disable consistent-return */
-import instance from '@/utils/axios';
-import { ReviewData, ReviewInfoType } from '@/constants/types';
+import instance from '@/utils/Axios';
+import { ReviewData, ReviewInfoType } from '@/constants/Types';
 
 const getReviewAll = () => {
   return instance({

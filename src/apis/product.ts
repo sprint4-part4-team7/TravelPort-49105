@@ -1,9 +1,9 @@
 // 상품 전체의 api
-import instance from '@/utils/axios';
+import instance from '@/utils/Axios';
 
 interface ProductProps {
   name: string;
-  productType: string; // 백엔드에서 string[] -> string으로 고쳐주셨습니다.
+  productType: string;
   productDesc: string;
   productSiteLat: number;
   productSiteLng: number;

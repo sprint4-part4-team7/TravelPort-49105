@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
-import HeaderBar from '@/components/common/headerBar/HeaderBar';
-import Footer from '@/components/common/Footer';
+import HeaderBar from '@/components/common/layout/headerBar/HeaderBar';
+import Footer from '@/components/common/layout/Footer';
 
 interface LayoutProps {
   children: ReactNode;
@@ -20,7 +20,7 @@ const Layout: React.FC<LayoutProps> = ({
   return (
     <div className="flex flex-col min-h-screen font-plexSans">
       <HeaderBar main={main} category={category} noSearch={noSearch} />
-      <div className="flex-grow px-36 mt-144 break-words whitespace-normal overflow-y-auto">
+      <div className="flex-grow overflow-y-auto break-words whitespace-normal px-36 mt-144">
         {children}
       </div>
       {!noFooter && <Footer />}

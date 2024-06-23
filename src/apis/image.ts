@@ -1,5 +1,5 @@
-import { PostData, PresignedUrl } from '@/constants/types';
-import instance from '@/utils/axios';
+import { PostData, PresignedUrl } from '@/constants/Types';
+import instance from '@/utils/Axios';
 import axios from 'axios';
 
 // presigned URL을 사용하여 S3에 파일을 업로드하는 함수

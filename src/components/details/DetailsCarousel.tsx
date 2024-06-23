@@ -1,9 +1,9 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/no-array-index-key */
-import useCarousel from '@/hooks/useCarousel';
-import arrowright from '@/assets/icons/arrowright.svg';
-import arrowleft from '@/assets/icons/arrowleft.svg';
+import useCarousel from '@/hooks/functionHooks/useCarousel';
+import arrowright from '@/assets/icons/arrowRight.svg';
+import arrowleft from '@/assets/icons/arrowLeft.svg';
 
 type DetailsCarouselProps = {
   urls?: string[];
