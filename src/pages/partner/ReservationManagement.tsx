@@ -1,5 +1,5 @@
 import ARROW from '@/assets/icons/arrowDown.svg';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useUserStore } from '@/utils/Zustand';
 import useReservationManageQuery from '@/hooks/reactQuery/reservation/useReservationManageQuery';
 import ReservedManageCard from '@/components/reservation/ReservedManageCard';
@@ -8,29 +8,32 @@ import ReservPagination from '@/components/common/pagination/reservPagination/Re
 const ReservationManagement = () => {
   const { userInfo } = useUserStore();
   const [isNew, setIsNew] = useState<boolean>(true);
-  const [selectedCategory, setSelectedCategory] = useState<string>('전체');
-  const [lodgeData, setLodgeData] = useState<any[]>([]);
-  const [activityData, setActivityData] = useState<any[]>([]);
-  const [allData, setAllData] = useState<any[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('숙박'); // 추후 전체 예약 요청 가능 시, '전체'로 변경
+  const [pageNum, setPageNum] = useState(1);
+  const limit = 4;
 
   const { reservedData: lodge } = useReservationManageQuery({
     partnerId: userInfo.id,
     categoryId: 1,
+    offset: pageNum - 1,
+    limit,
+    isNew,
   });
 
   const { reservedData: activity } = useReservationManageQuery({
     partnerId: userInfo.id,
     categoryId: 2,
+    offset: pageNum - 1,
+    limit,
+    isNew,
   });
 
-  const sortData = (data: any[], postNew: boolean) => {
-    if (!Array.isArray(data)) return [];
-    return data.sort((a, b) => {
-      const timeA = new Date(a.createdAt).getTime();
-      const timeB = new Date(b.createdAt).getTime();
-      return postNew ? timeB - timeA : timeA - timeB;
-    });
-  };
+  // const { reservedData: all } = useReservationManageQuery({ // 전체 예약 요청 가능 시, 주석 해제
+  //   partnerId: userInfo.id,
+  //   offset: pageNum - 1,
+  //   limit,
+  //   isNew,
+  // });
 
   const toggleOrder = () => {
     setIsNew(!isNew);
@@ -43,14 +46,14 @@ const ReservationManagement = () => {
   const getCategoryCount = (category: string) => {
     switch (category) {
       case '숙박':
-        return lodgeData.length;
+        return lodge.totalCount;
       case '체험':
-        return activityData.length;
+        return activity.totalCount;
       case '교통':
         return 'x';
       case '전체':
       default:
-        return allData.length;
+        return lodge.totalCount + activity.totalCount;
     }
   };
 
@@ -60,23 +63,8 @@ const ReservationManagement = () => {
     ${selectedCategory === category ? 'border-solid border-b-1 border-black-12 text-black-12' : 'text-black-6'}`;
   };
 
-  const [pageNum, setPageNum] = useState(1);
-
-  const limit = 4;
-  const start = (pageNum - 1) * limit;
-  const end = start + limit;
-
-  useEffect(() => {
-    const fetchData = () => {
-      setLodgeData(sortData(lodge, isNew));
-      setActivityData(sortData(activity, isNew));
-      setAllData(sortData([...lodge, ...activity], isNew));
-    };
-    fetchData();
-  }, [isNew, lodgeData, activityData]);
-
   return (
-    <div className="w-full mx-10 my-0 mobile:w-full">
+    <div className="mx-10 my-0 w-full mobile:w-full">
       <div className="flex flex-col gap-30 mt-60">
         <div className="flex flex-col gap-20">
           <div className="font-bold text-28">예약 관리</div>
@@ -85,7 +73,7 @@ const ReservationManagement = () => {
         <div>
           <div className="flex justify-between py-24 mobile:flex-col mobile:gap-24">
             <div className="flex">
-              {['전체', '숙박', '체험'].map((category) => (
+              {['숙박', '체험'].map((category) => (
                 <button
                   type="button"
                   key={category}
@@ -99,7 +87,9 @@ const ReservationManagement = () => {
 
             <button
               type="button"
-              className="flex items-center justify-center gap-4 px-12 py-8 font-semibold border-solid text-16 border-1 border-black-5 rounded-8"
+              className="flex items-center justify-center gap-4 
+              px-12 py-8 text-16 font-semibold
+              border-1 border-solid border-black-5 rounded-8"
               onClick={toggleOrder}
             >
               {isNew ? (
@@ -127,17 +117,17 @@ const ReservationManagement = () => {
               )}
             </button>
           </div>
-          <div className="flex flex-col gap-24 p-16 border-solid border-1 border-black-7 rounded-8">
+          <div className="flex flex-col gap-24 border-1 border-solid border-black-7 rounded-8 p-16">
             <div className="flex flex-col gap-16 ">
-              {selectedCategory === '전체' &&
-                (allData.length > 0 ? (
+              {/* {selectedCategory === '전체' && // 전체 예약 요청 가능 시, 주석 해제
+                (all.totalCount > 0 ? (
                   <ReservPagination
                     limit={limit}
                     pageNum={pageNum}
                     setPageNum={setPageNum}
-                    allCardNum={allData.length}
+                    allCardNum={all.totalCount}
                   >
-                    {allData.slice(start, end).map((item) => (
+                    {all.reservations.map((item) => (
                       <ReservedManageCard
                         key={item.id}
                         id={item.id}
@@ -150,19 +140,19 @@ const ReservationManagement = () => {
                     ))}
                   </ReservPagination>
                 ) : (
-                  <div className="flex items-center justify-center font-medium text-24">
+                  <div className="flex items-center justify-center text-24 font-medium">
                     예약 내역이 없습니다.
                   </div>
-                ))}
+                ))} */}
               {selectedCategory === '숙박' &&
-                (lodgeData.length > 0 ? (
+                (lodge.totalCount > 0 ? (
                   <ReservPagination
                     limit={limit}
                     pageNum={pageNum}
                     setPageNum={setPageNum}
-                    allCardNum={lodgeData.length}
+                    allCardNum={lodge.totalCount}
                   >
-                    {lodgeData.slice(start, end).map((item) => (
+                    {lodge.reservations.map((item) => (
                       <ReservedManageCard
                         key={item.id}
                         id={item.id}
@@ -175,19 +165,19 @@ const ReservationManagement = () => {
                     ))}
                   </ReservPagination>
                 ) : (
-                  <div className="flex items-center justify-center font-medium text-24">
+                  <div className="flex items-center justify-center text-24 font-medium">
                     예약 내역이 없습니다.
                   </div>
                 ))}
               {selectedCategory === '체험' &&
-                (activityData.length > 0 ? (
+                (activity.totalCount > 0 ? (
                   <ReservPagination
                     limit={limit}
                     pageNum={pageNum}
                     setPageNum={setPageNum}
-                    allCardNum={activityData.length}
+                    allCardNum={activity.totalCount}
                   >
-                    {activityData.slice(start, end).map((item) => (
+                    {activity.reservations.map((item) => (
                       <ReservedManageCard
                         key={item.id}
                         id={item.id}
@@ -200,13 +190,13 @@ const ReservationManagement = () => {
                     ))}
                   </ReservPagination>
                 ) : (
-                  <div className="flex items-center justify-center font-medium text-24">
+                  <div className="flex items-center justify-center text-24 font-medium">
                     예약 내역이 없습니다.
                   </div>
                 ))}
 
               {selectedCategory === '교통' && (
-                <div className="flex items-center justify-center font-medium text-24">
+                <div className="flex items-center justify-center text-24 font-medium">
                   추후 서비스 예정입니다
                 </div>
               )}
