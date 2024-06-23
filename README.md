@@ -26,9 +26,9 @@
 
 ### 🧹 Designer
 
-| [profileImg]() |
-| :------------: |
-|    [은지]()    |
+| <img src="https://avatars.githubusercontent.com/u/173554927?v=4" width=65 title="은지" /> |
+| :---------------------------------------------------------------------------------------: |
+|                           [김은지](https://github.com/edmsjwl)                            |
 
 ## 🚀 Stacks
 
