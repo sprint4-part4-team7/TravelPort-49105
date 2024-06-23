@@ -45,7 +45,7 @@ const Carousel: React.FC<CarouselProps> = ({ items }) => {
             >
               <div className="relative w-full">
                 <div
-                  className={`${index === 0 && 'top-194 mobile:top-194'} absolute flex flex-col font-bold text-white top-157 left-86 tablet:left-80 text-24 tablet:text-20 tablet:top-110 mobile:text-20 mobile:top-144 mobile:left-32`}
+                  className={`${index === 0 && 'top-228 tablet:top-154 mobile:top-162'} absolute flex flex-col font-bold text-white top-157 left-86 tablet:left-80 text-24 tablet:text-20 tablet:top-110 mobile:text-20 mobile:top-144 mobile:left-32`}
                 >
                   <div>{item.text}</div>
                   <div>{item.text2}</div>
