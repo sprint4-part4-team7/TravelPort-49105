@@ -1,4 +1,4 @@
-import { UserInfo } from '@/constants/types';
+import { UserInfo } from '@/constants/Types';
 
 const jwtDecode = (token: string): UserInfo => {
   try {

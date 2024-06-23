@@ -1,5 +1,5 @@
 // 상품 전체의 api
-import instance from '@/utils/axios';
+import instance from '@/utils/Axios';
 
 interface ProductProps {
   name: string;

@@ -1,12 +1,12 @@
 /* eslint-disable react/no-array-index-key */
-import SMILE from '@/assets/icons/message-smile-square.svg';
-import ARROWRIGHT from '@/assets/icons/arrowright-blue.svg';
-import ARROWDOWN from '@/assets/icons/arrowdown-blue.svg';
-import STAR_EMPTY from '@/assets/images/star-empty.svg';
-import STAR_FILL from '@/assets/images/star-fill.svg';
+import SMILE from '@/assets/icons/messageSmileSquare.svg';
+import ARROWRIGHT from '@/assets/icons/arrowRightBlue.svg';
+import ARROWDOWN from '@/assets/icons/arrowDownBlue.svg';
+import STAR_EMPTY from '@/assets/icons/starEmpty.svg';
+import STAR_FILL from '@/assets/icons/starFill.svg';
 import { useState } from 'react';
-import { ReviewData } from '@/constants/types';
-import changeDateForm from '@/utils/changeDateForm';
+import { ReviewData } from '@/constants/Types';
+import changeDateForm from '@/utils/ChangeDateForm';
 
 type ReviewProps = {
   review: ReviewData;
@@ -35,14 +35,10 @@ const Review = ({ review }: ReviewProps) => {
   };
 
   return (
-    <div
-      className="inline-flex flex-col w-full min-w-335 px-20 py-28
-    border-b-1 border-solid border-black-4
-    text-14"
-    >
-      <div className="flex items-center gap-10 text-13 font-medium">
+    <div className="inline-flex flex-col w-full px-20 border-solid min-w-335 py-28 border-b-1 border-black-4 text-14">
+      <div className="flex items-center gap-10 font-medium text-13">
         <img
-          className="border-1 border-solid rounded-full border-black-6"
+          className="border-solid rounded-full border-1 border-black-6"
           src={userProfileImage}
           alt="프로필 이미지"
           width="32px"
@@ -50,7 +46,7 @@ const Review = ({ review }: ReviewProps) => {
         />
         {userName}
       </div>
-      <div className="flex overflow-x-auto w-full pt-14">
+      <div className="flex w-full overflow-x-auto pt-14">
         {!!filteredImages?.length &&
           filteredImages.map((image, index) => (
             <img
@@ -77,17 +73,14 @@ const Review = ({ review }: ReviewProps) => {
             })}
           </div>
           <div className="flex flex-col gap-8">
-            <div className="w-full text-wrap text-14 font-semibold">
+            <div className="w-full font-semibold text-wrap text-14">
               {reviewContent}
             </div>
-            <div className="flex justify-between items-center">
-              <div
-                className="border-1 border-solid border-black-5 rounded 
-                bg-black-3 text-11 px-8 py-4 text-black-12"
-              >
+            <div className="flex items-center justify-between">
+              <div className="px-8 py-4 border-solid rounded border-1 border-black-5 bg-black-3 text-11 text-black-12">
                 {optionName}
               </div>
-              <div className="text-13 font-medium text-black-6">{created}</div>
+              <div className="font-medium text-13 text-black-6">{created}</div>
             </div>
           </div>
         </div>
@@ -106,7 +99,7 @@ const Review = ({ review }: ReviewProps) => {
                 height="16px"
                 src={SMILE}
               />
-              <div className="text-13 text-blue-6 font-medium">판매자 댓글</div>
+              <div className="font-medium text-13 text-blue-6">판매자 댓글</div>
             </div>
             {isComment ? (
               <img alt="화살표" width="16px" height="16px" src={ARROWDOWN} />
@@ -116,7 +109,7 @@ const Review = ({ review }: ReviewProps) => {
           </button>
 
           {isComment && (
-            <div className="p-8 w-full text-wrap text-13 font-medium">
+            <div className="w-full p-8 font-medium text-wrap text-13">
               {partnerAnswer}
             </div>
           )}

@@ -1,6 +1,6 @@
 // 단일카드
-import emptyImage from '@/assets/images/star-empty.svg';
-import fillImage from '@/assets/images/star-fill.svg';
+import emptyImage from '@/assets/icons/starEmpty.svg';
+import fillImage from '@/assets/icons/starFill.svg';
 import { Link } from 'react-router-dom';
 
 type CardProps = {

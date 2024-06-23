@@ -2,11 +2,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
-import Logo from '@/assets/icons/travelPortLogo-login.svg';
-import { getCookie } from '@/utils/cookie';
-import jwtDecode from '@/utils/jwtDecode';
+import Logo from '@/assets/icons/travelPortLogoLogin.svg';
+import { getCookie } from '@/utils/Cookie';
+import jwtDecode from '@/utils/JWTDecode';
 import useVerifyEmail from '@/hooks/reactQuery/auth/useVerifyEmail';
-import { useUserStore } from '@/utils/zustand';
+import { useUserStore } from '@/utils/Zustand';
 import useSignupMutation from '@/hooks/reactQuery/auth/useSignupMutation';
 import { toast } from 'react-toastify';
 import Button from '@/components/common/button/Button';
@@ -96,8 +96,8 @@ const UserSignup = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen my-60">
-      <div className="flex flex-col gap-40 justify-center items-center">
+    <div className="flex items-center justify-center h-screen my-60">
+      <div className="flex flex-col items-center justify-center gap-40">
         <Link to="/">
           <img alt="travelport logo" src={Logo} />
         </Link>

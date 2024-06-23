@@ -5,8 +5,8 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import useCarousel from '@/hooks/useCarousel';
-import arrowright from '@/assets/icons/carouselarrow.svg';
-import arrowleft from '@/assets/icons/carouselarrow2.svg';
+import arrowright from '@/assets/icons/carouselArrow.svg';
+import arrowleft from '@/assets/icons/carouselArrow2.svg';
 
 interface CarouselItem {
   url: string;

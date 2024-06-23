@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 
-import { ActivityTypes, hotelTypes } from '@/constants/CategoryTypes';
+import { ACTIVITY_TYPES, HOTEL_TYPES } from '@/constants/CategoryTypes';
 import React from 'react';
 
 type ProductTypeProps = {
@@ -16,7 +16,7 @@ const ProductType = ({
   checkedList,
   checkHandler,
 }: ProductTypeProps) => {
-  const categoryTypes = category === 1 ? hotelTypes : ActivityTypes;
+  const categoryTypes = category === 1 ? HOTEL_TYPES : ACTIVITY_TYPES;
 
   return (
     <div className="p-24 shadow-[0_0_10px_0_rgba(0,0,0,0.2)] flex flex-col gap-32 justify-center items-start rounded-24 bg-white">

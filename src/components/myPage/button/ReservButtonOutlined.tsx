@@ -1,8 +1,8 @@
-import { ReactComponent as XIcon } from '@/assets/icons/x-square.svg';
-import { ReactComponent as CheckIcon } from '@/assets/icons/check-circle.svg';
-import { ReservStatusType } from '@/constants/types';
+import { ReactComponent as XIcon } from '@/assets/icons/xSquare.svg';
+import { ReactComponent as CheckIcon } from '@/assets/icons/checkCircle.svg';
+import { ReservStatusType } from '@/constants/Types';
 import { twMerge } from 'tailwind-merge';
-import RESERV_STATUS from '@/constants/reserv';
+import RESERV_STATUS from '@/constants/Reserv';
 
 interface ReservButtonOutlinedProps {
   status: ReservStatusType;

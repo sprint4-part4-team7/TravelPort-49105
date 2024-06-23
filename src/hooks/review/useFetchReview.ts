@@ -1,4 +1,4 @@
-import { GetReviewType, ReviewByIdData } from '@/constants/types';
+import { GetReviewType, ReviewByIdData } from '@/constants/Types';
 import { useState } from 'react';
 import useReviewByReviewIdQuery from '../reactQuery/review/useReviewByReviewIdQuery';
 

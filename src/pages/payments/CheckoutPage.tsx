@@ -7,7 +7,7 @@ import {
   useCartStore,
   useReservationStore,
   useUserStore,
-} from '@/utils/zustand';
+} from '@/utils/Zustand';
 import Layout from '@/components/common/layout/Layout';
 import Pay from '@/components/payments/Pay';
 import OrderSummary from '@/components/payments/OrderSummary';

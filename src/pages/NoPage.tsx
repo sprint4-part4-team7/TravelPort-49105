@@ -1,5 +1,5 @@
 import React from 'react';
-import noPage from '@/assets/icons/no-page.svg';
+import noPage from '@/assets/icons/noPage.svg';
 import { useNavigate } from 'react-router-dom';
 import Button from '@/components/common/button/Button';
 

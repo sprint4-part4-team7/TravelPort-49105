@@ -1,4 +1,4 @@
-import MONTH from '@/constants/month';
+import MONTH from '@/constants/Month';
 
 export const getDate = (timestamp: string) => {
   if (!timestamp) return '';

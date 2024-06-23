@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ReviewData } from '@/constants/types';
+import { ReviewData } from '@/constants/Types';
 import useReviewByProductIdQuery from '../reactQuery/review/useReviewByProductIdQuery';
 
 const useProductReview = (productId: number) => {

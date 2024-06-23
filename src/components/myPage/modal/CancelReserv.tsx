@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { putMyReservation } from '@/apis/myReservation';
 import { toast } from 'react-toastify';
-import RESERV_STATUS from '@/constants/reserv';
+import RESERV_STATUS from '@/constants/Reserv';
 import DefaultModal from '../../common/modal/DefaultModal';
 
 const CancelReserv = ({

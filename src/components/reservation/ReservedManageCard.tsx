@@ -1,10 +1,10 @@
 /* eslint-disable no-nested-ternary */
-import { ReservProductOptionType, ReservStatusType } from '@/constants/types';
-import instance from '@/utils/axios';
+import { ReservProductOptionType, ReservStatusType } from '@/constants/Types';
+import instance from '@/utils/Axios';
 import { useState } from 'react';
-import ARROW_UP_RIGHT from '@/assets/icons/arrow-up-right-blue.svg';
+import ARROW_UP_RIGHT from '@/assets/icons/arrowUpRightBlue.svg';
 import useModal from '@/hooks/useModal';
-import RESERV_STATUS from '@/constants/reserv';
+import RESERV_STATUS from '@/constants/Reserv';
 import Button from '@/components/common/button/Button';
 import ReservationCard from '@/components/common/pagination/reservPagination/ReservationCard';
 import ReservChips from '@/components/myPage/ReservChips';

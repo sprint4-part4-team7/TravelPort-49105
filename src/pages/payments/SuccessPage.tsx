@@ -3,12 +3,12 @@ import './Payments.css';
 import useReservationMutation from '@/hooks/reactQuery/reservation/useReservationMutation';
 import { useEffect, useState } from 'react';
 import usePaymentPutMutation from '@/hooks/reactQuery/payment/usePaymentPutMutation';
-import check from '@/assets/icons/check-circle-broken-pay.svg';
+import check from '@/assets/icons/checkCircleBrokenPay.svg';
 import {
   useCartStore,
   useReservationStore,
   useUserStore,
-} from '@/utils/zustand';
+} from '@/utils/Zustand';
 import useCartReservationByUserIdMutation from '@/hooks/reactQuery/cart/useCartReservationByUserIdMutation';
 import Layout from '@/components/common/layout/Layout';
 import Button from '@/components/common/button/Button';

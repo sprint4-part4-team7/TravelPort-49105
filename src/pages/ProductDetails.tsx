@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import useProductReview from '@/hooks/review/useProductReview';
 import { useParams } from 'react-router-dom';
 import useReviewByProductIdQuery from '@/hooks/reactQuery/review/useReviewByProductIdQuery';
-import instance from '@/utils/axios';
+import instance from '@/utils/Axios';
 import useProductAllQuery from '@/hooks/reactQuery/product/useProductAllQuery';
 import LocationMap from '@/components/details/LocationMap';
 import SalesPeriod from '@/components/details/SalesPeriod';

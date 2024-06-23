@@ -1,4 +1,4 @@
-import { useUserMypageStore } from '@/utils/zustand';
+import { useUserMypageStore } from '@/utils/Zustand';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import EditInfo from '@/components/myPage/EditInfo';

@@ -1,4 +1,4 @@
-import fillImage from '@/assets/images/star-fill.svg';
+import fillImage from '@/assets/icons/starFill.svg';
 import { useNavigate } from 'react-router-dom';
 
 type HotelCardProps = {

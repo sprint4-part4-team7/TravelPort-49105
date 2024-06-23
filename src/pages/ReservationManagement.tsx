@@ -1,6 +1,6 @@
 import ARROW from '@/assets/icons/arrowDown.svg';
 import { useEffect, useState } from 'react';
-import { useUserStore } from '@/utils/zustand';
+import { useUserStore } from '@/utils/Zustand';
 import useReservationManageQuery from '@/hooks/reactQuery/reservation/useReservationManageQuery';
 import ReservedManageCard from '@/components/reservation/ReservedManageCard';
 import ReservPagination from '@/components/common/pagination/reservPagination/ReservPagination';
@@ -76,7 +76,7 @@ const ReservationManagement = () => {
   }, [isNew, lodgeData, activityData]);
 
   return (
-    <div className="mx-10 my-0 w-full mobile:w-full">
+    <div className="w-full mx-10 my-0 mobile:w-full">
       <div className="flex flex-col gap-30 mt-60">
         <div className="flex flex-col gap-20">
           <div className="font-bold text-28">예약 관리</div>
@@ -99,9 +99,7 @@ const ReservationManagement = () => {
 
             <button
               type="button"
-              className="flex items-center justify-center gap-4 
-              px-12 py-8 text-16 font-semibold
-              border-1 border-solid border-black-5 rounded-8"
+              className="flex items-center justify-center gap-4 px-12 py-8 font-semibold border-solid text-16 border-1 border-black-5 rounded-8"
               onClick={toggleOrder}
             >
               {isNew ? (
@@ -129,7 +127,7 @@ const ReservationManagement = () => {
               )}
             </button>
           </div>
-          <div className="flex flex-col gap-24 border-1 border-solid border-black-7 rounded-8 p-16">
+          <div className="flex flex-col gap-24 p-16 border-solid border-1 border-black-7 rounded-8">
             <div className="flex flex-col gap-16 ">
               {selectedCategory === '전체' &&
                 (allData.length > 0 ? (
@@ -152,7 +150,7 @@ const ReservationManagement = () => {
                     ))}
                   </ReservPagination>
                 ) : (
-                  <div className="flex items-center justify-center text-24 font-medium">
+                  <div className="flex items-center justify-center font-medium text-24">
                     예약 내역이 없습니다.
                   </div>
                 ))}
@@ -177,7 +175,7 @@ const ReservationManagement = () => {
                     ))}
                   </ReservPagination>
                 ) : (
-                  <div className="flex items-center justify-center text-24 font-medium">
+                  <div className="flex items-center justify-center font-medium text-24">
                     예약 내역이 없습니다.
                   </div>
                 ))}
@@ -202,13 +200,13 @@ const ReservationManagement = () => {
                     ))}
                   </ReservPagination>
                 ) : (
-                  <div className="flex items-center justify-center text-24 font-medium">
+                  <div className="flex items-center justify-center font-medium text-24">
                     예약 내역이 없습니다.
                   </div>
                 ))}
 
               {selectedCategory === '교통' && (
-                <div className="flex items-center justify-center text-24 font-medium">
+                <div className="flex items-center justify-center font-medium text-24">
                   추후 서비스 예정입니다
                 </div>
               )}

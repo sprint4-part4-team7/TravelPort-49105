@@ -1,4 +1,4 @@
-import RESERV_STATUS from '@/constants/reserv';
+import RESERV_STATUS from '@/constants/Reserv';
 
 const ReservChipsExpired = ({ status }: { status: number | null }) => {
   let color;

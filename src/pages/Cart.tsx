@@ -3,7 +3,7 @@
 // Cart.tsx
 import React, { useCallback, useEffect, useState } from 'react';
 import useCartByUserIdQuery from '@/hooks/reactQuery/cart/useCartByUserIdQuery';
-import { useUserStore, useCartStore } from '@/utils/zustand';
+import { useUserStore, useCartStore } from '@/utils/Zustand';
 import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/common/layout/Layout';
 import Button from '@/components/common/button/Button';

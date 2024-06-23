@@ -1,5 +1,5 @@
 // 카테고리(숙박,체험 고르기)의 api
-import instance from '@/utils/axios';
+import instance from '@/utils/Axios';
 
 export const postCategory = async (category: string) => {
   try {

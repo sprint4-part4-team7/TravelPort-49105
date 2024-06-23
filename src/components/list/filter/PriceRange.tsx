@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
 import InputBox from '../../common/input/InputBox';
-import '@/styles/PriceRange.css';
+import '@/styles/priceRange.css';
 
 type PriceRangeProps = {
   rangeMinValue: number;

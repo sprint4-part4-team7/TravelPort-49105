@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form';
-import plusImage from '@/assets/icons/plus-blue.svg';
-import trashImage from '@/assets/icons/trash-red.svg';
+import plusImage from '@/assets/icons/plusBlue.svg';
+import trashImage from '@/assets/icons/trashRed.svg';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useProductImageStore, useThumbnailStore } from '@/utils/zustand';
+import { useProductImageStore, useThumbnailStore } from '@/utils/Zustand';
 import Button from '@/components/common/button/Button';
 
 type ImageForm = {
@@ -52,9 +52,9 @@ const ImgModal = ({ closeModal }: ModalProps) => {
       return (
         <div
           key={file.name}
-          className="flex  bg-white border border-black-4 items-center p-12 rounded justify-between"
+          className="flex items-center justify-between p-12 bg-white border rounded border-black-4"
         >
-          <div className="flex gap-12 items-center">
+          <div className="flex items-center gap-12">
             <img
               className="w-40 h-40"
               src={URL.createObjectURL(file)}
@@ -62,7 +62,7 @@ const ImgModal = ({ closeModal }: ModalProps) => {
             />
             <p>{file.name}</p>
           </div>
-          <div className="flex gap-12 items-center">
+          <div className="flex items-center gap-12">
             <label className="flex gap-8" htmlFor="check">
               <input
                 id="check"
@@ -110,7 +110,7 @@ const ImgModal = ({ closeModal }: ModalProps) => {
     <div className="w-384 h-532">
       <form onSubmit={handleSubmit(onSubmit)}>
         <label
-          className="flex items-center justify-center gap-12 border border-dashed border-blue-6 rounded text-blue-6 p-12"
+          className="flex items-center justify-center gap-12 p-12 border border-dashed rounded border-blue-6 text-blue-6"
           htmlFor="imgPlus"
         >
           <img src={plusImage} alt="플러스 아이콘" />
@@ -124,7 +124,7 @@ const ImgModal = ({ closeModal }: ModalProps) => {
             multiple
           />
         </label>
-        <div className="w-383 absolute bottom-32 flex justify-center gap-12">
+        <div className="absolute flex justify-center gap-12 w-383 bottom-32">
           <div className="w-166">
             <Button
               buttonStyle="h-28"
@@ -142,7 +142,7 @@ const ImgModal = ({ closeModal }: ModalProps) => {
           </div>
         </div>
       </form>
-      <div className="bg-black-3 rounded flex flex-col gap-8 p-12 my-10">
+      <div className="flex flex-col gap-8 p-12 my-10 rounded bg-black-3">
         <p className="font-semibold text-14">이미지</p>
         {showImage()}
       </div>

@@ -4,7 +4,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import './DatePickerCustom.css';
+import '@/styles/datePickerCustom.css';
 import { ko } from 'date-fns/locale/ko';
 import {
   addDays,

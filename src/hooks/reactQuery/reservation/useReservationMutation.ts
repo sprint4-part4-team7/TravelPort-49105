@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import reservationApi from '@/apis/reservation';
 import { useState } from 'react';
-import { useCartStore } from '@/utils/zustand';
-import { ReservStatusType } from '@/constants/types';
+import { useCartStore } from '@/utils/Zustand';
+import { ReservStatusType } from '@/constants/Types';
 
 interface PostReservationProp {
   userId: number;

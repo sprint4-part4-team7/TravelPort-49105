@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import uploadImage from '@/assets/icons/upload.svg';
 import useModal from '@/hooks/useModal';
-import { useThumbnailStore } from '@/utils/zustand';
+import { useThumbnailStore } from '@/utils/Zustand';
 import { PageIdProps } from './productPage';
 import Location from './Location';
 import CheckButton from './CheckButton';
@@ -58,11 +58,11 @@ const Description = ({ setPage, setActiveStep }: PageIdProps) => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mx-40 flex flex-col gap-24">
-          <label className="flex gap-12 flex-col" htmlFor="title">
+        <div className="flex flex-col gap-24 mx-40">
+          <label className="flex flex-col gap-12" htmlFor="title">
             <p className="font-semibold text-17">제목</p>
             <input
-              className="h-48 p-12 rounded text-16 outline-none border-solid border-1 border-black-5 w-full focus:border-blue-6 focus:border-1 mobile:max-w-none"
+              className="w-full h-48 p-12 border-solid rounded outline-none text-16 border-1 border-black-5 focus:border-blue-6 focus:border-1 mobile:max-w-none"
               {...register('title', {
                 required: true,
               })}
@@ -72,10 +72,10 @@ const Description = ({ setPage, setActiveStep }: PageIdProps) => {
               maxLength={50}
             />
           </label>
-          <label className="flex gap-12 flex-col" htmlFor="content">
+          <label className="flex flex-col gap-12" htmlFor="content">
             <p className="font-semibold text-17">내용</p>
             <textarea
-              className="resize-none h-216 p-12 rounded text-16 outline-none border-solid border-1 border-black-5 w-full focus:border-blue-6 focus:border-1 mobile:max-w-none"
+              className="w-full p-12 border-solid rounded outline-none resize-none h-216 text-16 border-1 border-black-5 focus:border-blue-6 focus:border-1 mobile:max-w-none"
               {...register('content', {
                 required: true,
               })}
@@ -86,8 +86,8 @@ const Description = ({ setPage, setActiveStep }: PageIdProps) => {
           </label>
           <div className="flex flex-col gap-12">
             <p className="font-semibold text-17">이미지 업로드</p>
-            <div className="flex flex-row gap-32 items-center">
-              <label className="flex flex-col gap-8 items-center" htmlFor="img">
+            <div className="flex flex-row items-center gap-32">
+              <label className="flex flex-col items-center gap-8" htmlFor="img">
                 {thumbnail.size > 0 ? (
                   <img
                     className="w-120 h-120 rounded-3"

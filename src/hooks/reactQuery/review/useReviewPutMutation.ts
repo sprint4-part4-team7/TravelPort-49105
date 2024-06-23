@@ -1,5 +1,5 @@
 import review from '@/apis/review';
-import { ReviewInfoType } from '@/constants/types';
+import { ReviewInfoType } from '@/constants/Types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface PutReviewMutationProps {

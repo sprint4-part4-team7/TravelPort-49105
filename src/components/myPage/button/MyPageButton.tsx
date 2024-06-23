@@ -1,4 +1,4 @@
-import { useUserMypageStore } from '@/utils/zustand';
+import { useUserMypageStore } from '@/utils/Zustand';
 import React from 'react';
 
 interface MyPageButtonProps {

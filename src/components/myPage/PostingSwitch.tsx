@@ -1,5 +1,5 @@
 import usePostingStateMutation from '@/hooks/reactQuery/product/usePostingStateMutation';
-import { useUserStore } from '@/utils/zustand';
+import { useUserStore } from '@/utils/Zustand';
 import { useState } from 'react';
 
 interface SwitchProps {
@@ -25,7 +25,7 @@ const PostingSwitch = ({ id, state = false }: SwitchProps) => {
   };
 
   return (
-    <div className="flex justify-center items-center gap-4">
+    <div className="flex items-center justify-center gap-4">
       {isChecked ? <div>게시중</div> : <div>게시 중지</div>}
       <label className="plane-switch">
         <input

@@ -1,6 +1,6 @@
-import { ReactComponent as LinkIcon } from '@/assets/icons/arrow-up-right.svg';
+import { ReactComponent as LinkIcon } from '@/assets/icons/arrowUpRight.svg';
 import { ReactComponent as ReviewIcon } from '@/assets/icons/review.svg';
-import RESERV_STATUS from '@/constants/reserv';
+import RESERV_STATUS from '@/constants/Reserv';
 import { useState } from 'react';
 
 interface ReservButtonProps {
@@ -43,7 +43,7 @@ const ReservButton = ({ status, onClick }: ReservButtonProps) => {
   return (
     <button
       type="button"
-      className="flex flex-row items-center px-12 py-8 gap-4 text-14 hover:text-blue-6 font-semibold"
+      className="flex flex-row items-center gap-4 px-12 py-8 font-semibold text-14 hover:text-blue-6"
       onClick={onClick}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}

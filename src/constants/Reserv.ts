@@ -1,4 +1,4 @@
-import { ReservStatusType } from './types';
+import { ReservStatusType } from './Types';
 
 interface ReservStatus {
   PENDING: ReservStatusType;

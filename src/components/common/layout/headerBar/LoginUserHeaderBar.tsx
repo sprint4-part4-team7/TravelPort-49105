@@ -1,16 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import useOutsideClick from '@/hooks/useOutsideClick';
 import cart from '@/assets/icons/shoppingCart.svg';
-import myInfo from '@/assets/icons/my-info.svg';
-import reservationStatus from '@/assets/icons/reservation-status.svg';
+import myInfo from '@/assets/icons/myInfo.svg';
+import reservationStatus from '@/assets/icons/reservationStatus.svg';
 import list from '@/assets/icons/list.svg';
 import menu from '@/assets/icons/menu.svg';
 import smallCart from '@/assets/icons/smallCart.svg';
 import useLogoutMutation from '@/hooks/reactQuery/auth/useLogoutMutation';
-import { removeCookie } from '@/utils/cookie';
+import { removeCookie } from '@/utils/Cookie';
 import { useNavigate } from 'react-router-dom';
-import { useUserStore } from '@/utils/zustand';
-import useProfileImage from '@/utils/randomProfile';
+import { useUserStore } from '@/utils/Zustand';
+import useProfileImage from '@/utils/RandomProfile';
 
 interface LoginUserHeaderBarProps {
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-undef */
-import { CardListsType } from '@/constants/types';
+import { CardListsType } from '@/constants/Types';
 import { useState } from 'react';
 
 const useSearchData = (cardLists: CardListsType[]) => {

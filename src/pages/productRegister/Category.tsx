@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import React, { useEffect, useState } from 'react';
-import { hotelTypes, ActivityTypes } from '@/constants/CategoryTypes';
+import { HOTEL_TYPES, ACTIVITY_TYPES } from '@/constants/CategoryTypes';
 import CheckButton from './CheckButton';
 import Description from './Description';
 import { PageIdProps } from './productPage';
@@ -66,10 +66,10 @@ const Category = ({ setPage, setActiveStep }: PageIdProps) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-12 mx-40">
-        <h3 className="text-17 font-semibold text-black-10">
+        <h3 className="font-semibold text-17 text-black-10">
           상품 유형을 골라주세요.
         </h3>
-        <ul className="mx-40 grid gap-20 md:grid-cols-2">
+        <ul className="grid gap-20 mx-40 md:grid-cols-2">
           <li>
             <label
               htmlFor="accommodation"
@@ -85,7 +85,7 @@ const Category = ({ setPage, setActiveStep }: PageIdProps) => {
                 checked={preCategoryValue === '숙박'}
               />
               <div className="flex flex-col h-200 p-3 justify-center items-center flex-[1_0_0]">
-                <p className="w-full text-22 font-semibold text-center">숙박</p>
+                <p className="w-full font-semibold text-center text-22">숙박</p>
                 <p className="w-full text-center">
                   호텔, 호스텔, 게스트하우스, 모텔 등
                 </p>
@@ -107,7 +107,7 @@ const Category = ({ setPage, setActiveStep }: PageIdProps) => {
                 checked={preCategoryValue === '체험'}
               />
               <div className="flex flex-col h-200 p-3 justify-center items-center flex-[1_0_0]">
-                <p className="w-full text-22 font-semibold text-center">체험</p>
+                <p className="w-full font-semibold text-center text-22">체험</p>
                 <p className="w-full text-center">
                   스카이다이빙, 관광지, 도자기 공예, 원예 체험 등
                 </p>
@@ -117,17 +117,17 @@ const Category = ({ setPage, setActiveStep }: PageIdProps) => {
         </ul>
         {preCategoryValue === '숙박' && (
           <div>
-            <h3 className="mb-12 text-17 font-semibold text-black-10">
+            <h3 className="mb-12 font-semibold text-17 text-black-10">
               숙박 옵션을 선택해주세요.
             </h3>
-            <div className="ml-40 w-full max-w-screen-lg grid grid-cols-2 md:grid-cols-3 desktop:grid-cols-6">
-              {hotelTypes.map((type) => (
+            <div className="grid w-full max-w-screen-lg grid-cols-2 ml-40 md:grid-cols-3 desktop:grid-cols-6">
+              {HOTEL_TYPES.map((type) => (
                 <label
                   className="cursor-pointer bg-white/40 hover:bg-white/20 w-100 h-40 p-4 mb-16 rounded-md flex justify-between items-center shadow transition-colors has-[:checked]:bg-blue-6 has-[:checked]:text-white"
                   key={type}
                   htmlFor={type}
                 >
-                  <div className="flex items-center space-x-5 text-16 font-semibold m-auto">
+                  <div className="flex items-center m-auto space-x-5 font-semibold text-16">
                     <span className="text-lg">{type}</span>
                   </div>
                   <input
@@ -145,17 +145,17 @@ const Category = ({ setPage, setActiveStep }: PageIdProps) => {
         )}
         {preCategoryValue === '체험' && (
           <div>
-            <h3 className="mb-12 text-17 font-semibold text-black-10">
+            <h3 className="mb-12 font-semibold text-17 text-black-10">
               체험 옵션을 선택해주세요.
             </h3>
-            <div className="ml-40 w-full max-w-screen-lg grid grid-cols-2 md:grid-cols-3 desktop:grid-cols-6">
-              {ActivityTypes.map((type) => (
+            <div className="grid w-full max-w-screen-lg grid-cols-2 ml-40 md:grid-cols-3 desktop:grid-cols-6">
+              {ACTIVITY_TYPES.map((type) => (
                 <label
                   className="cursor-pointer bg-white/40 hover:bg-white/20 w-100 h-40 p-4 mb-16 rounded-md flex justify-between items-center shadow transition-colors has-[:checked]:bg-blue-6 has-[:checked]:text-white"
                   key={type}
                   htmlFor={type}
                 >
-                  <div className="flex items-center space-x-5 text-16 font-semibold m-auto">
+                  <div className="flex items-center m-auto space-x-5 font-semibold text-16">
                     <span className="text-lg">{type}</span>
                   </div>
                   <input

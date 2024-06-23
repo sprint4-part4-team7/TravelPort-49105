@@ -1,5 +1,5 @@
 // api/payments.ts
-import instance from '@/utils/axios';
+import instance from '@/utils/Axios';
 
 const putPayment = async (
   paymentId: number,

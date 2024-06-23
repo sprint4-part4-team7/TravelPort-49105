@@ -1,7 +1,7 @@
-import changeDateForm from '@/utils/changeDateForm';
+import changeDateForm from '@/utils/ChangeDateForm';
 import useModal from '@/hooks/useModal';
 import { useNavigate } from 'react-router-dom';
-import RESERV_STATUS from '@/constants/reserv';
+import RESERV_STATUS from '@/constants/Reserv';
 import ReservButtonOutlined from '@/components/myPage/button/ReservButtonOutlined';
 import DeletePosting from '@/components/myPage/modal/DeletePosting';
 import PostingSwitch from '@/components/myPage/PostingSwitch';

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { getMyReservation } from '@/apis/myReservation';
-import { useUserStore } from '@/utils/zustand';
-import { Reservation } from '@/constants/types';
+import { useUserStore } from '@/utils/Zustand';
+import { Reservation } from '@/constants/Types';
 import useModal from '@/hooks/useModal';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import RESERV_STATUS from '@/constants/reserv';
+import RESERV_STATUS from '@/constants/Reserv';
 import ReservationCard from '@/components/common/pagination/reservPagination/ReservationCard';
 import ReservPagination from '@/components/common/pagination/reservPagination/ReservPagination';
 import ReservChips from '@/components/myPage/ReservChips';

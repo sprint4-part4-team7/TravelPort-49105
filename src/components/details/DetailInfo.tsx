@@ -1,4 +1,4 @@
-import { CardListsType } from '@/constants/types';
+import { CardListsType } from '@/constants/Types';
 
 type DetailInfoProps = {
   options: CardListsType[];

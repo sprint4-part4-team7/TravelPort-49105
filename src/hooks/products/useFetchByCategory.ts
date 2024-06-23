@@ -1,5 +1,5 @@
 import product from '@/apis/product';
-import { ProductType } from '@/constants/types';
+import { ProductType } from '@/constants/Types';
 import { useEffect, useState } from 'react';
 
 const useFetchByCategory = (categoryId: number) => {

@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import uploadBox from '@/assets/icons/uploadBox.png';
-import message from '@/assets/icons/message-smile-square-black.svg';
+import message from '@/assets/icons/messageSmileSquareBlack.svg';
 import Button from '@/components/common/button/Button';
 import NumberInputBox from '@/components/common/input/NumberInputBox';
 

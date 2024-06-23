@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useProductImageStore, useThumbnailStore } from '@/utils/zustand';
+import { useProductImageStore, useThumbnailStore } from '@/utils/Zustand';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import plusImage from '@/assets/icons/plus-white.svg';
+import plusImage from '@/assets/icons/plusWhite.svg';
 import useModal from '@/hooks/useModal';
 import product from '@/apis/product';
 import postImages from '@/apis/image';
-import instance from '@/utils/axios';
-import BUCKER_NAME from '@/constants/bucket';
-import trashImage from '@/assets/icons/trash-red.svg';
+import instance from '@/utils/Axios';
+import BUCKER_NAME from '@/constants/Bucket';
+import trashImage from '@/assets/icons/trashRed.svg';
 import Button from '@/components/common/button/Button';
 import Modal from '@/components/common/modal/Modal';
 import OptionModal from './OptionModal';
@@ -177,10 +177,10 @@ const Option = () => {
 
   return (
     <>
-      <div className="mx-40 flex flex-col">
-        <table className="table-auto w-full">
+      <div className="flex flex-col mx-40">
+        <table className="w-full table-auto">
           <thead>
-            <tr className="flex font-semibold justify-center gap-20 text-17 p-12">
+            <tr className="flex justify-center gap-20 p-12 font-semibold text-17">
               <th className="flex-1">대표이미지</th>
               <th className="flex-1">체험상품명</th>
               <th className="flex-1">가능인원</th>
@@ -196,9 +196,9 @@ const Option = () => {
             {optionList.map((i: any, index: number) => (
               <tr
                 key={`${i}option`}
-                className="flex bg-black-2 p-12 gap-20 items-center justify-center text-16"
+                className="flex items-center justify-center gap-20 p-12 bg-black-2 text-16"
               >
-                <td aria-label="img" className="flex flex-1 justify-center">
+                <td aria-label="img" className="flex justify-center flex-1">
                   <img
                     className="w-60 h-60"
                     src={URL.createObjectURL(i[0])}
@@ -261,7 +261,7 @@ const Option = () => {
                     readOnly
                   />
                 </td>
-                <td aria-label="content" className="flex flex-1 justify-center">
+                <td aria-label="content" className="flex justify-center flex-1">
                   <img
                     src={trashImage}
                     alt="삭제 아이콘"
@@ -277,7 +277,7 @@ const Option = () => {
             ))}
           </tbody>
         </table>
-        <div className="w-148 mt-4">
+        <div className="mt-4 w-148">
           <Button
             buttonType="button"
             buttonStyle="text-16 p-12 flex gap-6 justify-center items-center"

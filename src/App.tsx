@@ -20,7 +20,7 @@ import NoPage from '@/pages/NoPage';
 import PreparingPage from '@/pages/PreparingPage';
 import Cart from '@/pages/Cart';
 import CheckoutCartPage from '@/pages/payments/CheckoutCartPage';
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from './components/common/ProtectedRoute';
 
 const App = () => {
   return (

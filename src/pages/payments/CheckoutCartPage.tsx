@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Payments.css';
 
-import { useCartStore, useUserStore } from '@/utils/zustand';
+import { useCartStore, useUserStore } from '@/utils/Zustand';
 import usePaymentWidget from '@/hooks/payments/usePaymentWidget';
 import Layout from '@/components/common/layout/Layout';
 import CartPay from '@/components/cart/CartPay';

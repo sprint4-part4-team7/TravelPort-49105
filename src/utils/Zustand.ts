@@ -1,4 +1,4 @@
-import { ReservStatusType, UserInfo } from '@/constants/types';
+import { ReservStatusType, UserInfo } from '@/constants/Types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
