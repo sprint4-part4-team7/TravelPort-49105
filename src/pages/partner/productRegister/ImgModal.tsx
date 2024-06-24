@@ -78,8 +78,8 @@ const ImgModal = ({ closeModal }: ModalProps) => {
               role="presentation"
               onClick={() => {
                 const temp = [...imageArray];
-                temp.splice(index, 1); // 배열에서 선택한 인덱스를 삭제해서 배열을 재정의
-                setImageArray(temp); // 재정의된 배열을 set안에 넣어서 재정의+state변환
+                temp.splice(index, 1);
+                setImageArray(temp);
               }}
             />
           </div>
