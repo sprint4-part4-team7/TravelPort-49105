@@ -120,7 +120,6 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   const handleClick = (id: number) => {
     setSelectedOption(id);
   };
-  console.log(options);
 
   const filteredOption =
     options.length !== 0 && Array.isArray(options)
@@ -132,7 +131,6 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     setTicketNum(ticketNum - 1);
   };
 
-  console.log(remainCounts);
   const handleTicketPlus = () => {
     if (remainCounts.length === 0) return setTicketNum(0);
     if (ticketNum >= remainCounts[selectedOption - 1]) return;
