@@ -42,9 +42,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
   const handleActivity = () => {
     handleNavigation('/list/2');
   };
-  const handleTraffic = () => {
-    handleNavigation('/preparing');
-  };
+
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   const { optionAll } = useProductOptionAll();
@@ -87,7 +85,6 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
                   onClick={handleAccommodation}
                 />
                 <MainCategoryButton title="체험" onClick={handleActivity} />
-                <MainCategoryButton title="교통" onClick={handleTraffic} />
               </div>
             )}
           </div>
@@ -137,15 +134,6 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
               onClick={handleActivity}
               className={`${
                 activeCategory === '/list/2'
-                  ? 'border-b-2 border-black-13'
-                  : 'border-b-2 border-transparent'
-              } transition-all `}
-            />
-            <MainCategoryButton
-              title="교통"
-              onClick={handleTraffic}
-              className={`${
-                activeCategory === '/preparing'
                   ? 'border-b-2 border-black-13'
                   : 'border-b-2 border-transparent'
               } transition-all `}

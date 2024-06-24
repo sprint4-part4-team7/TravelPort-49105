@@ -11,7 +11,7 @@ import CartList from '@/components/cart/CartList';
 import Loading from '@/components/common/Loading';
 
 export interface CartInfo {
-  cartId: number;
+  id: number;
   name: string;
   option: string;
   day: any;
@@ -54,9 +54,7 @@ const Cart = () => {
       setSelectedTotal((prevTotal) => prevTotal + item.price * item.count);
     } else {
       setSelectedItems((prevSelectedItems) =>
-        prevSelectedItems.filter(
-          (selectedItem) => selectedItem.cartId !== item.cartId,
-        ),
+        prevSelectedItems.filter((selectedItem) => selectedItem.id !== item.id),
       );
       setSelectedTotal((prevTotal) => prevTotal - item.price * item.count);
     }
@@ -66,6 +64,8 @@ const Cart = () => {
     setCartInfo(selectedItems);
     navigate('/payments/cart');
   };
+
+  console.log(cartData);
 
   if (isLoading) return <Loading />;
   return (
@@ -84,7 +84,7 @@ const Cart = () => {
               ) : (
                 cartData.map((item: CartInfo) => (
                   <CartList
-                    key={item.cartId}
+                    key={item.id}
                     item={item}
                     onSelect={handleSelect}
                     onDelete={handleDelete}
