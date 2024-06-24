@@ -20,7 +20,6 @@ const SuccessPage = () => {
 
   const { userInfo } = useUserStore();
   const { cartInfo } = useCartStore();
-  console.log(cartInfo);
   const cartIds = cartInfo.map((item) => ({ cartId: item.cartId }));
   const { reservationInfo } = useReservationStore();
   const [searchParams] = useSearchParams();
@@ -54,8 +53,6 @@ const SuccessPage = () => {
   } = useCartReservationByUserIdMutation();
 
   const { mutate: sendPayments } = usePaymentPutMutation(cartIds);
-
-  console.log(userInfo?.id, cartIds);
 
   const handleCartReservationPost = async () => {
     const userId = userInfo?.id;
