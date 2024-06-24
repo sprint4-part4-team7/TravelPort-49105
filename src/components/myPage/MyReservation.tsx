@@ -66,6 +66,7 @@ const MyReservation = ({
     reviewId?: number,
     reviewedId?: number,
   ) => {
+    if (state === RESERV_STATUS.CANCELED) return null;
     if (!isReservExpired) {
       return state === RESERV_STATUS.REJECTED ? (
         <ReservButton
@@ -100,7 +101,7 @@ const MyReservation = ({
       default:
         buttonFnc = () => {};
     }
-
+    if (state === RESERV_STATUS.CANCELED) return null;
     return state === RESERV_STATUS.PENDING ? (
       <ReservButtonOutlined
         status={RESERV_STATUS.CANCELED}
