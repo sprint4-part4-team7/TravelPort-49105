@@ -1,5 +1,4 @@
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
 import { CardListsType, DetailData } from '@/constants/Types';
 import minus from '@/assets/icons/minus.svg';

@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-param-reassign */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
 import { useForm } from 'react-hook-form';
 import React, { useEffect, useState } from 'react';
 import useModal from '@/hooks/functionHooks/useModal';
@@ -20,7 +17,6 @@ import TextBox from '@/components/common/input/TextBox';
 import ReviewStar from '@/components/review/ReviewStar';
 import Button from '@/components/common/button/Button';
 import ImageUpload from '@/components/review/ImageUpload';
-import Modal from '@/components/common/modal/Modal';
 import Loading from '@/components/common/Loading';
 import DefaultModal from '@/components/common/modal/DefaultModal';
 
@@ -63,8 +59,7 @@ const ReviewRegister = ({ optionId, reviewId = 0 }: ReviewRegisterProps) => {
   const { userInfo } = useUserStore();
   const userId = userInfo.id;
   const { productReviews } = useProductReview(productId);
-  const { uId, isLoadingReview, reviewError } =
-    useGetUserIdByReviewId(reviewId);
+  const { uId, isLoadingReview } = useGetUserIdByReviewId(reviewId);
 
   useEffect(() => {
     if (reviewId && !isLoadingReview && uId) {

@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { useUserStore } from '@/utils/Zustand';
 import { useForm } from 'react-hook-form';
@@ -66,14 +65,14 @@ const EditInfo = ({ isPartner = false }: { isPartner?: boolean }) => {
       setError('name', { type: 'required', message: '닉네임은 필수입니다' });
       return;
     }
+    let newData = { ...data };
     if (img.length) {
       const response = await postImages(img, BUCKER_NAME.PRODUCT_OPTION);
-      data = { ...data, profileImage: response[0] };
+      newData = { ...data, profileImage: response[0] };
       localStorage.removeItem('profileImage');
     } else {
-      data = { ...data, profileImage: '' };
+      newData = { ...data, profileImage: '' };
     }
-    const newData = { ...data };
     delete newData.isPartner;
     delete newData.email;
     if (newData.isPartner) {

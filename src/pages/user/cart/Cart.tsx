@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 // Cart.tsx
 import React, { useCallback, useEffect, useState } from 'react';
 import useCartByUserIdQuery from '@/hooks/reactQuery/cart/useCartByUserIdQuery';
@@ -30,8 +28,8 @@ const Cart = () => {
   const [selectedTotal, setSelectedTotal] = useState(0);
   const setCartInfo = useCartStore((state) => state.setCartInfo);
   const [cartItems, setCartItems] = useState<any>([]);
-  const [totalPay, setTotalPay] = useState(0);
-  const [totalCount, setTotalCount] = useState(1);
+  const [, setTotalPay] = useState(0);
+  const [, setTotalCount] = useState(1);
 
   useEffect(() => {
     if (cartData) {

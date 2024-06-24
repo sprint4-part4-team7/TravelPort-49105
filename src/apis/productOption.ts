@@ -1,6 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable prettier/prettier */
-// import { OptionbyIdData } from '@/constants/types';
 import instance from '@/utils/Axios';
 
 interface ProductOptionProps {

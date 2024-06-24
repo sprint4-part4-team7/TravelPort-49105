@@ -19,7 +19,7 @@ const MyPage = ({ isPartner = false }: { isPartner?: boolean }) => {
   }, [status]);
 
   return (
-    <Layout>
+    <Layout noSearch category={!isPartner}>
       <MyPageSideBar isPartner={isPartner}>
         {status === 'edit-info' && <EditInfo isPartner={isPartner} />}
         {status === 'reservation-status' && <MyReservation />}

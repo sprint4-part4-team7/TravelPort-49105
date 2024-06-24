@@ -1,9 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable array-callback-return */
-/* eslint-disable eqeqeq */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable prefer-const */
-/* eslint-disable no-undef */
 import { useRef, useState, useEffect, useMemo } from 'react';
 import arrowDown from '@/assets/icons/arrowDown.svg';
 import { useParams } from 'react-router-dom';
@@ -28,7 +25,7 @@ const List = () => {
   const [isOpen, setIsOpen] = useState(false); // 탭 open 여부
   const [pageNum, setPageNum] = useState(1); // 현재 클릭된 페이지 숫자
 
-  let filteredData = new Set(); // 필터링된  데이터
+  const filteredData = new Set(); // 필터링된  데이터
 
   const { productsByCategory } = useFetchByCategory(Number(categoryId)); // 리스트 페이지에 들어가는 모든 데이터
   const [cards, setCards] = useState<any[]>([]);

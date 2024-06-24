@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { Cookies } from 'react-cookie';
 
 const cookies = new Cookies();
