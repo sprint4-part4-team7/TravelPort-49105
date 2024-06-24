@@ -21,6 +21,8 @@ const CheckoutCartPage = () => {
   const { cartInfo } = useCartStore();
   const { userInfo } = useUserStore();
 
+  console.log(cartInfo, userInfo);
+
   const productName =
     cartInfo.length === 1
       ? `${cartInfo[0]}`

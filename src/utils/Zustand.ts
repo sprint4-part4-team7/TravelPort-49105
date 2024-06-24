@@ -77,6 +77,7 @@ export const useReservationStore = create(
 
 interface CartInfo {
   id: number;
+  cartId?: any;
   name: string;
   option: string;
   day: any;
