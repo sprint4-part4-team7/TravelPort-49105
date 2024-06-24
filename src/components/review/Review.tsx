@@ -31,16 +31,15 @@ const Review = ({ review }: ReviewProps) => {
   const reviewScore = score !== null ? Math.round(score) : 0;
   const created = changeDateForm(createdAt);
   const [isComment, setIsComment] = useState(false);
-  const [profileImg, setProfileImg] = useState('');
+  const [profileImg, setProfileImg] = useState(userProfileImage || '');
 
   const filteredImages = reviewImages.filter((image: string) => image !== '');
-
   const randomImg = useProfileImage(userInfo);
   useEffect(() => {
-    if (userProfileImage === '') {
-      setProfileImg(randomImg);
-    } else setProfileImg(userProfileImage);
-  }, []);
+    if (userProfileImage) {
+      setProfileImg(userProfileImage);
+    } else setProfileImg(randomImg);
+  }, [userProfileImage, randomImg]);
 
   // 판매자 댓글 클릭 시, 댓글 내용이 보이게 하도록 하는 handler 함수
   const handleComment = () => {
