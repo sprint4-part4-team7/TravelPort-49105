@@ -118,7 +118,7 @@ const App = () => {
         <Route
           path="review/:optionId/:reviewId?"
           element={
-            <ProtectedRoute partner>
+            <ProtectedRoute>
               <ReviewRegist />
             </ProtectedRoute>
           }
