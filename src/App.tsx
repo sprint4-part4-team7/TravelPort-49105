@@ -15,7 +15,7 @@ import ProductDetails from '@/pages/user/ProductDetails';
 import ProductRegister from '@/pages/partner/productRegister/ProductRegister';
 import SearchResultPage from '@/pages/user/SearchResultPage';
 import ReviewRegist from '@/pages/user/review/ReviewRegist';
-// import PartnerMain from '@/pages/PartnerMain';
+import PartnerMain from '@/pages/partner/PartnerMain';
 import NoPage from '@/pages/NoPage';
 import PreparingPage from '@/pages/PreparingPage';
 import Cart from '@/pages/user/cart/Cart';
@@ -56,14 +56,14 @@ const App = () => {
           }
         />
         <Route path="partner/">
-          {/* <Route
+          <Route
             index
             element={
               <ProtectedRoute partner>
                 <PartnerMain />
               </ProtectedRoute>
             }
-          /> */}
+          />
           <Route
             path="mypage/:status"
             element={
