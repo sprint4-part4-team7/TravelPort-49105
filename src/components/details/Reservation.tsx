@@ -109,7 +109,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   };
 
   useEffect(() => {
-    if (startDate && endDate) {
+    if (startDate && endDate && Array.isArray(options)) {
       const newOptionIds = options.map((option) => option.id);
       fetchRemainCounts(newOptionIds);
     } else {
@@ -197,7 +197,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
       <hr className="mb-20" />
       <div className="grid grid-cols-3 gap-16 mx-auto font-semibold cursor-pointer mobile:grid-cols-2 text-14 mb-60">
         {Array.isArray(options) &&
-          options.map((option, idx) => {
+          options?.map((option, idx) => {
             if (remainCounts[idx] === 0) {
               return (
                 <div
