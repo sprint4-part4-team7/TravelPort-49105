@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FieldError } from 'react-hook-form';
+import EYEON from '@/assets/icons/eyeon.svg';
+import EYEOFF from '@/assets/icons/eyeoff.svg';
 
 type InputBoxProps = {
   id: string;
@@ -32,6 +34,7 @@ const InputBox = ({
   onFocus = undefined,
   onClick = undefined,
 }: InputBoxProps) => {
+  const [isVisible, setIsVisible] = useState(false);
   const inputboxBasic = `p-12 rounded text-16 outline-none border-solid border-1 border-black-5 ${direction === 'col' ? '' : 'w-full max-w-335 mobile:max-w-none'}`;
   const focusDesign = 'focus:border-blue-6 focus:border-1';
   const errorDesign = 'border-system-error';
@@ -41,6 +44,17 @@ const InputBox = ({
   if (error) {
     inputboxClass = `${inputboxBasic} ${errorDesign}`;
   }
+
+  if (inputType === 'password') {
+    if (isVisible) {
+      // eslint-disable-next-line no-param-reassign
+      inputType = 'text';
+    }
+  }
+
+  const toggleVisibility = () => {
+    setIsVisible(!isVisible);
+  };
 
   return (
     <div
@@ -55,18 +69,42 @@ const InputBox = ({
           direction === 'col' ? '' : 'max-w-335 mobile:max-w-none'
         }`}
       >
-        <input
-          id={id}
-          className={inputboxClass}
-          type={inputType}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          disabled={disabled}
-          {...register}
-          onFocus={onFocus}
-          onClick={onClick}
-        />
+        <div
+          className={`relative flex flex-col ${
+            direction === 'col' ? '' : 'max-w-335 mobile:max-w-none'
+          }`}
+        >
+          <input
+            id={id}
+            className={inputboxClass}
+            type={inputType}
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+            disabled={disabled}
+            {...register}
+            onFocus={onFocus}
+            onClick={onClick}
+          />
+          {label.includes('비밀번호') && !disabled && (
+            <button
+              type="button"
+              onClick={toggleVisibility}
+              className="absolute top-1/2 right-12 transform -translate-y-1/2"
+            >
+              {isVisible ? (
+                <img src={EYEON} width={16} height={16} alt="비밀번호 보기" />
+              ) : (
+                <img
+                  src={EYEOFF}
+                  width={16}
+                  height={16}
+                  alt="비밀번호 숨기기"
+                />
+              )}
+            </button>
+          )}
+        </div>
         {error && (
           <div className="text-system-error text-12">{error.message}</div>
         )}
