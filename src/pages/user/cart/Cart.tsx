@@ -65,8 +65,6 @@ const Cart = () => {
     navigate('/payments/cart');
   };
 
-  console.log(cartData);
-
   if (isLoading) return <Loading />;
   return (
     <Layout>
