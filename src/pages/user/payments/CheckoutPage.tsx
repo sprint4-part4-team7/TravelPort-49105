@@ -55,7 +55,7 @@ const CheckoutPage = () => {
   const [refreshData, setRefreshData] = useState(false);
 
   const totalAmount = isChecked ? optionPrice * count : 0;
-  const days = totalAmount / (price * userCount);
+  const days = Math.round(totalAmount / (price * userCount));
 
   const day =
     productOption?.product?.categoryId === 1

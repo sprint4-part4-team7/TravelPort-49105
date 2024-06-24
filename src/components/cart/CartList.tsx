@@ -97,7 +97,7 @@ const CartList = ({
 
   const day =
     categoryId === 1
-      ? `${formattedDate}`
+      ? `${formattedDate} ~ 1박`
       : `${formattedDate} ${timeTableData?.startTimeOnly} ~ ${timeTableData?.endTimeOnly}`;
 
   const handleSelect = () => {
