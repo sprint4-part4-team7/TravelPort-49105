@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-shadow */
 import { useMemo } from 'react';
 
 const useProductsWithMinPrice = (products: any, search: string) => {

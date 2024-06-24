@@ -2,7 +2,6 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable no-undef */
 import React from 'react';
 import useCarousel from '@/hooks/functionHooks/useCarousel';
 import arrowright from '@/assets/icons/carouselArrow.svg';

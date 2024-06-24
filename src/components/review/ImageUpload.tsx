@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable no-undef */
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import plusUpload from '@/assets/icons/plusUpload.svg';
 
 type ImageUploadProps = {

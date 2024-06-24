@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useEffect, useState } from 'react';
 import { ImStarEmpty, ImStarFull } from 'react-icons/im';
 
