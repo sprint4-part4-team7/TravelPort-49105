@@ -49,9 +49,12 @@ const OptionModal = ({ closeModal, optionList, setOptionList }: ModalProps) => {
   };
   return (
     <div className="w-384 h-532">
-      <h1 className="mb-6 font-semibold text-16">옵션추가하기(체험)</h1>
+      <h1 className="mb-6 font-semibold text-16">
+        {localStorage.getItem('categoryId') === '1'
+          ? '옵션추가하기(숙소)'
+          : '옵션추가하기(체험)'}
+      </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* 체험 옵션 input */}
         <div className="flex flex-col gap-12">
           <label htmlFor="uploadBox">
             <img
