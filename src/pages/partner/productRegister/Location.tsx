@@ -1,5 +1,3 @@
-// [파트너] 상품등록페이지 안의 위치등록 페이지
-
 import { useState } from 'react';
 import PostCode from '@/components/common/map/PostCode';
 import KakaoMap from '@/components/common/map/KakaoMap';
