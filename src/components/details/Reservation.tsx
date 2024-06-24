@@ -132,7 +132,9 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     setTicketNum(ticketNum - 1);
   };
 
+  console.log(remainCounts);
   const handleTicketPlus = () => {
+    if (remainCounts.length === 0) return setTicketNum(0);
     if (ticketNum >= remainCounts[selectedOption - 1]) return;
     setTicketNum(ticketNum + 1);
   };
