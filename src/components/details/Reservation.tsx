@@ -33,6 +33,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [diffDay, setDiffDay] = useState(0);
   const [remainCounts, setRemainCounts] = useState<number[]>([]);
+  const [optionIdArray, setOptionIdArray] = useState<number[]>([]);
 
   const { isModalOpen, openModal, closeModal } = useModal();
   const { table } = useTimeTable(optionId);
@@ -112,6 +113,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   useEffect(() => {
     if (startDate && endDate && Array.isArray(options)) {
       const newOptionIds = options.map((option) => option.id);
+      setOptionIdArray(newOptionIds);
       fetchRemainCounts(newOptionIds);
     } else {
       setRemainCounts([]);
@@ -133,8 +135,9 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   };
 
   const handleTicketPlus = () => {
+    const realRemainCountIdx = optionIdArray.indexOf(optionId);
     if (remainCounts.length === 0) return setTicketNum(0);
-    if (ticketNum >= remainCounts[selectedOption - 1]) return;
+    if (ticketNum >= remainCounts[realRemainCountIdx]) return;
     setTicketNum(ticketNum + 1);
   };
 
