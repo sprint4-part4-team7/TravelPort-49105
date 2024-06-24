@@ -111,7 +111,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   };
 
   useEffect(() => {
-    if (startDate && endDate && Array.isArray(options)) {
+    if (startDate && Array.isArray(options)) {
       const newOptionIds = options.map((option) => option.id);
       setOptionIdArray(newOptionIds);
       fetchRemainCounts(newOptionIds);
