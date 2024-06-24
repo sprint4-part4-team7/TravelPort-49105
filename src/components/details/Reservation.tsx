@@ -31,7 +31,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   const [optionId, setOptionId] = useState(0);
   const [ticketNum, setTicketNum] = useState(0);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [diffDay, setDiffDay] = useState(0);
+  const [diffDay, setDiffDay] = useState(1);
   const [remainCounts, setRemainCounts] = useState<number[]>([]);
   const [optionIdArray, setOptionIdArray] = useState<number[]>([]);
 
