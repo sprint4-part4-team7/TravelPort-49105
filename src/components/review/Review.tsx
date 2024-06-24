@@ -4,9 +4,11 @@ import ARROWRIGHT from '@/assets/icons/arrowRightBlue.svg';
 import ARROWDOWN from '@/assets/icons/arrowDownBlue.svg';
 import STAR_EMPTY from '@/assets/icons/starEmpty.svg';
 import STAR_FILL from '@/assets/icons/starFill.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ReviewData } from '@/constants/Types';
 import changeDateForm from '@/utils/ChangeDateForm';
+import useProfileImage from '@/utils/RandomProfile';
+import { useUserStore } from '@/utils/Zustand';
 
 type ReviewProps = {
   review: ReviewData;
@@ -23,11 +25,22 @@ const Review = ({ review }: ReviewProps) => {
     userProfileImage,
     optionName,
   } = review;
+
+  const { userInfo } = useUserStore();
+
   const reviewScore = score !== null ? Math.round(score) : 0;
   const created = changeDateForm(createdAt);
   const [isComment, setIsComment] = useState(false);
+  const [profileImg, setProfileImg] = useState('');
 
   const filteredImages = reviewImages.filter((image: string) => image !== '');
+
+  const randomImg = useProfileImage(userInfo);
+  useEffect(() => {
+    if (userProfileImage === '') {
+      setProfileImg(randomImg);
+    } else setProfileImg(userProfileImage);
+  }, []);
 
   // 판매자 댓글 클릭 시, 댓글 내용이 보이게 하도록 하는 handler 함수
   const handleComment = () => {
@@ -39,7 +52,7 @@ const Review = ({ review }: ReviewProps) => {
       <div className="flex items-center gap-10 font-medium text-13">
         <img
           className="border-solid rounded-full border-1 border-black-6"
-          src={userProfileImage}
+          src={profileImg}
           alt="프로필 이미지"
           width="32px"
           height="32px"
