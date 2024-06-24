@@ -23,10 +23,6 @@ export const postLogout = () => {
 };
 
 /**
- * 로그인된 유저 정보 확인 (파트너인지, 일반 유저인지, 닉네임, 프로필 이미지가 있는 api)
- */
-
-/**
  * 로그인 & 소셜 로그인(Google, Kakao, Naver), Access Token Cookie 저장
  */
 export const postLogin = async (data: LoginForm): Promise<any> => {

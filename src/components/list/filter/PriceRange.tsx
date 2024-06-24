@@ -35,8 +35,10 @@ const PriceRange = ({
       Number(e.target.value.replace(/,/g, '')),
       rangeMaxValue - priceGap,
     );
-    setRangeMinValue(value);
+    const realValue = value >= 0 ? value : 0;
+    setRangeMinValue(realValue);
   };
+
   const HandleMaxInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Math.max(
       Number(e.target.value.replace(/,/g, '')),

@@ -1,6 +1,4 @@
-/* eslint-disable no-undef */
 /* eslint-disable no-nested-ternary */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import searchIcon from '@/assets/images/search.svg';
 import { CardListsType } from '@/constants/Types';
 import useOutsideClick from '@/hooks/functionHooks/useOutsideClick';

@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 // Cart.tsx
 import React, { useCallback, useEffect, useState } from 'react';
 import useCartByUserIdQuery from '@/hooks/reactQuery/cart/useCartByUserIdQuery';
@@ -11,7 +9,7 @@ import CartList from '@/components/cart/CartList';
 import Loading from '@/components/common/Loading';
 
 export interface CartInfo {
-  cartId: number;
+  id: number;
   name: string;
   option: string;
   day: any;
@@ -30,8 +28,8 @@ const Cart = () => {
   const [selectedTotal, setSelectedTotal] = useState(0);
   const setCartInfo = useCartStore((state) => state.setCartInfo);
   const [cartItems, setCartItems] = useState<any>([]);
-  const [totalPay, setTotalPay] = useState(0);
-  const [totalCount, setTotalCount] = useState(1);
+  const [, setTotalPay] = useState(0);
+  const [, setTotalCount] = useState(1);
 
   useEffect(() => {
     if (cartData) {
@@ -54,9 +52,7 @@ const Cart = () => {
       setSelectedTotal((prevTotal) => prevTotal + item.price * item.count);
     } else {
       setSelectedItems((prevSelectedItems) =>
-        prevSelectedItems.filter(
-          (selectedItem) => selectedItem.cartId !== item.cartId,
-        ),
+        prevSelectedItems.filter((selectedItem) => selectedItem.id !== item.id),
       );
       setSelectedTotal((prevTotal) => prevTotal - item.price * item.count);
     }
@@ -84,7 +80,7 @@ const Cart = () => {
               ) : (
                 cartData.map((item: CartInfo) => (
                   <CartList
-                    key={item.cartId}
+                    key={item.id}
                     item={item}
                     onSelect={handleSelect}
                     onDelete={handleDelete}

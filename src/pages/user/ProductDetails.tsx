@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-/* eslint-disable consistent-return */
-/* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/button-has-type */
 /* eslint-disable @typescript-eslint/no-unused-expressions */

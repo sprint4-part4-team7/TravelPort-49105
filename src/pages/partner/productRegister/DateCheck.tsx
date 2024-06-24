@@ -6,7 +6,7 @@ import { PageIdProps } from './productPage';
 import Option from './Option';
 import CheckButton from './CheckButton';
 
-const DateCheck = ({ setPage }: PageIdProps) => {
+const DateCheck = ({ setPage, setActiveStep }: PageIdProps) => {
   const { startDate, setStartDate, endDate, setEndDate } = useDatePicker();
   const { register, watch, setValue } = useForm<any>({
     mode: 'onChange',
@@ -72,6 +72,7 @@ const DateCheck = ({ setPage }: PageIdProps) => {
         return '';
       });
       localStorage.setItem('holiday', saveHoliday.toString());
+      setActiveStep(5);
       setPage(<Option />);
     }
   };

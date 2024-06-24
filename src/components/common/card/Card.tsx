@@ -1,4 +1,3 @@
-// 단일카드
 import emptyImage from '@/assets/icons/starEmpty.svg';
 import fillImage from '@/assets/icons/starFill.svg';
 import { Link } from 'react-router-dom';

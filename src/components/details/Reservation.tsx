@@ -1,5 +1,5 @@
-/* eslint-disable react/no-array-index-key */
 /* eslint-disable consistent-return */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable array-callback-return */
 import { CardListsType, DetailData } from '@/constants/Types';
 import minus from '@/assets/icons/minus.svg';
@@ -110,7 +110,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   };
 
   useEffect(() => {
-    if (startDate && endDate) {
+    if (startDate && endDate && Array.isArray(options)) {
       const newOptionIds = options.map((option) => option.id);
       fetchRemainCounts(newOptionIds);
     } else {
@@ -123,13 +123,17 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   };
 
   const filteredOption =
-    options && options?.filter((option) => option?.id === selectedOption);
+    options.length !== 0 && Array.isArray(options)
+      ? options?.filter((option) => option?.id === selectedOption)
+      : [];
 
   const handleTicketMinus = () => {
     if (ticketNum <= 0) return;
     setTicketNum(ticketNum - 1);
   };
+
   const handleTicketPlus = () => {
+    if (remainCounts.length === 0) return setTicketNum(0);
     if (ticketNum >= remainCounts[selectedOption - 1]) return;
     setTicketNum(ticketNum + 1);
   };
@@ -193,32 +197,33 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
       <h1 className="my-20 font-bold text-24">{optionTitle}를 선택하세요</h1>
       <hr className="mb-20" />
       <div className="grid grid-cols-3 gap-16 mx-auto font-semibold cursor-pointer mobile:grid-cols-2 text-14 mb-60">
-        {options.map((option, idx) => {
-          if (remainCounts[idx] === 0) {
+        {Array.isArray(options) &&
+          options?.map((option, idx) => {
+            if (remainCounts[idx] === 0) {
+              return (
+                <div
+                  key={option.id}
+                  className="flex flex-col items-center justify-center line bg-black-3 text-black-6 border-black-4 border-1 rounded-4 h-60"
+                >
+                  <div>{option.optionName}</div>
+                  <div className="font-normal">마감</div>
+                </div>
+              );
+            }
             return (
               <div
                 key={option.id}
-                className="flex flex-col items-center justify-center line bg-black-3 text-black-6 border-black-4 border-1 rounded-4 h-60"
+                className={`flex justify-center items-center border-black-4 border-1 rounded-4 h-60 flex-1 ${selectedOption === option.id ? 'bg-blue-6 text-white' : ''}`}
+                onClick={() => {
+                  handleClick(option.id);
+                  setTicketNum(0);
+                  setOptionId(option.id);
+                }}
               >
-                <div>{option.optionName}</div>
-                <div className="font-normal">마감</div>
+                {option.optionName}
               </div>
             );
-          }
-          return (
-            <div
-              key={option.id}
-              className={`flex justify-center items-center border-black-4 border-1 rounded-4 h-60 flex-1 ${selectedOption === option.id ? 'bg-blue-6 text-white' : ''}`}
-              onClick={() => {
-                handleClick(option.id);
-                setTicketNum(0);
-                setOptionId(option.id);
-              }}
-            >
-              {option.optionName}
-            </div>
-          );
-        })}
+          })}
       </div>
 
       <h1 className="my-20 font-bold text-24">수량을 선택하세요</h1>
@@ -251,7 +256,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
             </div>
           </div>
           <h3 className="font-semibold text-18 text-end">
-            {filteredOption.length &&
+            {filteredOption.length !== 0 &&
               (categoryId === 1
                 ? (
                     filteredOption[0].optionPrice *
