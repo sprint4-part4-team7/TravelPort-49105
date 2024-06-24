@@ -43,7 +43,19 @@ const usePaymentWidget = (
       paymentWidgetRef.current = paymentWidget;
     };
 
-    initializeWidget();
+    const observer = new MutationObserver(() => {
+      const paymentMethodElement = document.getElementById('payment-method');
+      const agreementElement = document.getElementById('agreement');
+      if (paymentMethodElement && agreementElement) {
+        observer.disconnect();
+        initializeWidget();
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
 
     return () => {
       // 컴포넌트 언마운트 시 결제 위젯 정리
@@ -60,6 +72,8 @@ const usePaymentWidget = (
         agreementWidgetRef.current.destroy();
       }
       paymentWidgetRef.current = null;
+
+      observer.disconnect();
     };
   }, [value, productName, customerName, customerEmail]);
 
