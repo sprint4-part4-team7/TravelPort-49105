@@ -9,12 +9,10 @@ interface SwitchProps {
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
 const PostingSwitch = ({ id, state = false }: SwitchProps) => {
-  // 체크 상태를 관리할 state 선언
   const { userInfo } = useUserStore();
   const [isChecked, setIsChecked] = useState(state);
   const { mutate } = usePostingStateMutation();
 
-  // 체크 상태를 토글하는 함수
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
     mutate({

@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable array-callback-return */
 import { CardListsType, DetailData } from '@/constants/Types';

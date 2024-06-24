@@ -11,8 +11,8 @@ const useOAuthLogin = (provider: Provider) => {
 
   const uri = {
     google: `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile&response_type=code&redirect_uri=http://localhost:3000/login/oauth/google&client_id=${clientId.google}`,
-    kakao: `https://kauth.kakao.com/oauth/authorize?client_id=${clientId.kakao}&redirect_uri=http://localhost:3000/login/oauth/kakao&response_type=code`,
-    naver: `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId.naver}&state=hLiDdL2uhPtsftcU&redirect_uri=http://localhost:3000/login/oauth/naver&response_type=code`,
+    kakao: `https://kauth.kakao.com/oauth/authorize?client_id=${clientId.kakao}&redirect_uri=http://13.209.143.44:3000/login/oauth/kakao&response_type=code`,
+    naver: `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId.naver}&state=hLiDdL2uhPtsftcU&redirect_uri=http://13.209.143.44:3000/login/oauth/naver&response_type=code`,
   };
 
   const loginHandler = useCallback(() => {

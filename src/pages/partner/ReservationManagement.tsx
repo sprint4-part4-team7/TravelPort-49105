@@ -28,13 +28,6 @@ const ReservationManagement = () => {
     isNew,
   });
 
-  // const { reservedData: all } = useReservationManageQuery({ // 전체 예약 요청 가능 시, 주석 해제
-  //   partnerId: userInfo.id,
-  //   offset: pageNum - 1,
-  //   limit,
-  //   isNew,
-  // });
-
   const toggleOrder = () => {
     setIsNew(!isNew);
   };
@@ -119,31 +112,6 @@ const ReservationManagement = () => {
           </div>
           <div className="flex flex-col gap-24 border-1 border-solid border-black-7 rounded-8 p-16">
             <div className="flex flex-col gap-16 ">
-              {/* {selectedCategory === '전체' && // 전체 예약 요청 가능 시, 주석 해제
-                (all.totalCount > 0 ? (
-                  <ReservPagination
-                    limit={limit}
-                    pageNum={pageNum}
-                    setPageNum={setPageNum}
-                    allCardNum={all.totalCount}
-                  >
-                    {all.reservations.map((item) => (
-                      <ReservedManageCard
-                        key={item.id}
-                        id={item.id}
-                        reservationState={item.reservationState}
-                        productOption={item.productOption}
-                        user={item.user}
-                        reserveDate={item.createdAt}
-                        timeTable={item.timeTable}
-                      />
-                    ))}
-                  </ReservPagination>
-                ) : (
-                  <div className="flex items-center justify-center text-24 font-medium">
-                    예약 내역이 없습니다.
-                  </div>
-                ))} */}
               {selectedCategory === '숙박' &&
                 (lodge.totalCount > 0 ? (
                   <ReservPagination
