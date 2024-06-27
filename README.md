@@ -1,5 +1,7 @@
 # TravelPort:49105
 
+<img src="public/img/[Project]Travel Port_표지.png" title="title" />
+
 ## 🔎 Introduction
 
 ### ❓ Why TravelPort:49105?
@@ -32,34 +34,19 @@
 
 ## 🚀 Stacks
 
-<img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=Git&logoColor=white"/>
-<img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/>
-<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white"/>
-<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white"/>
-<img src="https://img.shields.io/badge/TypeSript-3178C6?style=flat&logo=TypeScript&logoColor=white"/>
-<img src="https://img.shields.io/badge/Tailwind-06B6D4?style=flat&logo=TailwindCss&logoColor=white" >
-<img src="https://img.shields.io/badge/AWS-232F3E?style=flat&logo=amazonwebservices&logoColor=white" >
-<img src="https://img.shields.io/badge/Amazon_S3-569A31?style=flat&logo=AmazonS3&logoColor=white" >
+<img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=Git&logoColor=white"/><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/><img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white"/><img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white"/><img src="https://img.shields.io/badge/TypeSript-3178C6?style=flat&logo=TypeScript&logoColor=white"/><img src="https://img.shields.io/badge/Tailwind-06B6D4?style=flat&logo=TailwindCss&logoColor=white" /><img src="https://img.shields.io/badge/AWS-232F3E?style=flat&logo=amazonwebservices&logoColor=white" /><img src="https://img.shields.io/badge/Amazon_S3-569A31?style=flat&logo=AmazonS3&logoColor=white" />
 
 ## 💅 Linting
 
-<img src="https://img.shields.io/badge/ESLint-4B32C3?style=flat&logo=eslint&logoColor=white" >
-<img src="https://img.shields.io/badge/Prettier-F7B93E?style=flat&logo=prettier&logoColor=white" >
+<img src="https://img.shields.io/badge/ESLint-4B32C3?style=flat&logo=eslint&logoColor=white" /><img src="https://img.shields.io/badge/Prettier-F7B93E?style=flat&logo=prettier&logoColor=white" />
 
 ## 📚 Libraries
 
-<img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white" >
-<img src="https://img.shields.io/badge/Axios-5A29E4?style=flat&logo=Axios&logoColor=white" >
-<img src="https://img.shields.io/badge/ReactQuery-FF4154?style=flat&logo=ReactQuery&logoColor=white" >
-<img src="https://img.shields.io/badge/ReactRouter-CA4245?style=flat&logo=ReactRouter&logoColor=white" >
-<img src="https://img.shields.io/badge/Zustand-0854C1?style=flat" >
-<img src="https://img.shields.io/badge/Toss_payments-0854C1?style=flat" >
+<img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white" /><img src="https://img.shields.io/badge/Axios-5A29E4?style=flat&logo=Axios&logoColor=white" /><img src="https://img.shields.io/badge/ReactQuery-FF4154?style=flat&logo=ReactQuery&logoColor=white" /><img src="https://img.shields.io/badge/ReactRouter-CA4245?style=flat&logo=ReactRouter&logoColor=white" /><img src="https://img.shields.io/badge/Zustand-0854C1?style=flat" /><img src="https://img.shields.io/badge/Toss_payments-0854C1?style=flat" />
 
 ## 🌏 Co-work Tools
 
-<img src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=discord&logoColor=white" >
-<img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white" >
-<img src="https://img.shields.io/badge/Kakaotalk-FFCD00?style=flat&logo=kakaotalk&logoColor=white" >
+<img src="https://img.shields.io/badge/Discord-5865F2?style=flat&logo=discord&logoColor=white" /><img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=notion&logoColor=white" /><img src="https://img.shields.io/badge/Kakaotalk-FFCD00?style=flat&logo=kakaotalk&logoColor=white" />
 
 ## Member Rolls
 
@@ -506,10 +493,53 @@
 
 ## ❗ Trouble Shooting
 
-### 잦은 팀원 교체 이슈
+### 💔 잦은 팀원 교체 이슈
 
-### 기술 이슈
+#### 🤷‍♂️ 문제점
+
+- 초기에 개인 사유로 백엔드, 디자이너 하차
+- 이후 디자인 작업 진척도, 연락두절 및 불성실한 태도 문제로 디자이너 2회 하차
+
+#### 💡 해결방안
+
+- 팀원들과 기획을 빠르게 이해할 수 있는 문서 및 와이어프레임을 작성
+- 이로 인해 새로 들어온 팀원들이 빠르게 프로젝트를 이해하고 작업에 투입될 수 있었음
+
+#### 🩹 배운 점
+
+- 지체된 만큼 우선순위를 파악하며 밀도있게 진행함
+- 많은 사람들을 접하면서 논리적이고 원만하게 소통할 수 있게 됨
+
+### 📲 다량의 api 일괄 관리
+
+#### 🤷‍♂️ 문제점
+
+- 배열의 원소를 각각 api를 거쳐 다른 배열로 반환하기
+- 상품 예약하기 페이지에서 날짜를 클릭하면 해당 날짜에 대해 그 상품의 옵션별로 마감 여부를 나타내는 기능
+
+#### 💡 해결방안
+
+- Promise.all 사용
+- 해당 상품의 옵션 아이디를 배열에 넣고, 각 아이디 별로 timeTable을 불러오는 api를 비동기로 적용
+
+<img src="public/img/Screenshot1.png" title="screenshot1" />
+
+### 🧮 반복되는 api 호출
+
+#### 🤷‍♂️ 문제점
+
+- 옵션 페이지에서는 모든 정보를 서버로 한 번에 전송하고 (보내야 할 post가 3개) 비동기 처리도 필요
+- 프론트엔드에서는 이미지 URL을 문자열로 관리했지만, 서버에서는 파일 배열 타입을 요구
+
+#### 💡 해결방안
+
+- 프론트엔드와 백엔드 간의 데이터 타입 차이를 해결하고, 비동기 처리를 적절히 관리하는 것이 중요했음
+- localStorage, useState, Zustand, 연결 되어있는 3개의 api까지의 순차적인 흐름을 이해하는 과정이 필요
+
+<img src="public/img/Screenshot2.png" title="screenshot2"/>
+<img src="public/img/Screenshot3.png" title="screenshot3" />
+
+### 🛠 기타 기술적 아쉬움
 
 - 스타일링을 tailwind로 관리하며 작업 속도와 편의성은 증가했으나 정적으로 스타일을 제공해주는 단점으로 인해 작업 중 제한점이 많았다.
 
-- 백엔드 검증 이슈
