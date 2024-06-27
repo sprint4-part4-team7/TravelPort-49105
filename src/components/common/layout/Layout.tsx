@@ -58,7 +58,7 @@ const Layout: React.FC<LayoutProps> = ({
     <div className="flex flex-col min-h-screen font-plexSans">
       <HeaderBar main={main} category={category} noSearch={noSearch} />
       {carouselView && (
-        <div className="mt-100">
+        <div className="mt-100 mobile:mt-116">
           <Carousel items={carousel} />
         </div>
       )}
