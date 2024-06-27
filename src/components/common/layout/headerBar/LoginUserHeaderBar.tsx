@@ -200,6 +200,15 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
             <img className="w-32 h-32" src={cart} alt="쇼핑 카트 아이콘" />
           </button>
         )}
+        {userInfo.isPartner === 1 && (
+          <button
+            type="button"
+            onClick={toggleDropdown}
+            className="font-normal text-15"
+          >
+            {userInfo.name}
+          </button>
+        )}
       </div>
       <div className="hidden mobile:flex">
         <button type="button" onClick={toggleSidebar}>
