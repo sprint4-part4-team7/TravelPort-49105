@@ -23,6 +23,7 @@ interface CartListProps {
   onSelect: (item: any, isSelected: boolean) => void;
   onDelete: (cartId: number) => void;
   onPriceChange: (totalPrice: any, count: number) => void;
+  userPickTotalPrice: number;
 }
 
 const CartList = ({
@@ -30,6 +31,7 @@ const CartList = ({
   onSelect,
   onDelete,
   onPriceChange,
+  userPickTotalPrice,
 }: CartListProps) => {
   const navigate = useNavigate();
   const cartId = item?.id;
@@ -119,9 +121,9 @@ const CartList = ({
   };
 
   useEffect(() => {
-    const totalPrice = (price ?? 0) * count;
+    const totalPrice = (userPickTotalPrice ?? 0) * count;
     onPriceChange(totalPrice, count);
-  }, [count, price]);
+  }, [count, userPickTotalPrice]);
 
   const increaseCount = () => {
     const newCount = count + 1;
@@ -255,7 +257,7 @@ const CartList = ({
             </button>
           </div>
           <div className="flex font-semibold text-18 ">
-            {(price * count).toLocaleString()}원
+            {(userPickTotalPrice * count).toLocaleString()}원
           </div>
         </div>
       </div>

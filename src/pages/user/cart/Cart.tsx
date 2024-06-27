@@ -23,13 +23,16 @@ const Cart = () => {
   const navigate = useNavigate();
   const { userInfo } = useUserStore();
   const userId = userInfo?.id;
-  const { cartData, isLoading } = useCartByUserIdQuery(userId);
+  const { cartData, userPickTotalPrice, isLoading } =
+    useCartByUserIdQuery(userId);
   const [selectedItems, setSelectedItems] = useState<CartInfo[]>([]);
   const [selectedTotal, setSelectedTotal] = useState(0);
   const setCartInfo = useCartStore((state) => state.setCartInfo);
   const [cartItems, setCartItems] = useState<any>([]);
   const [, setTotalPay] = useState(0);
   const [, setTotalCount] = useState(1);
+
+  console.log(userPickTotalPrice);
 
   useEffect(() => {
     if (cartData) {
@@ -85,6 +88,7 @@ const Cart = () => {
                     onSelect={handleSelect}
                     onDelete={handleDelete}
                     onPriceChange={handlePriceChange}
+                    userPickTotalPrice={userPickTotalPrice}
                   />
                 ))
               )}

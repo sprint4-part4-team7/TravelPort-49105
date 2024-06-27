@@ -7,10 +7,12 @@ const useCartByUserIdQuery = (userId: number) => {
     queryFn: () => cartApi.getCartById(userId),
   });
 
-  const cartData = data?.data;
+  const cartData = data?.data?.carts;
+  const userPickTotalPrice = data?.data?.totalPrice;
 
   return {
     cartData,
+    userPickTotalPrice,
     isLoading,
     error,
   };
