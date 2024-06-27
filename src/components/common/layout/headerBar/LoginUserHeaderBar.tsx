@@ -201,7 +201,13 @@ const LoginUserHeaderBar: React.FC<LoginUserHeaderBarProps> = ({
           </button>
         )}
         {userInfo.isPartner === 1 && (
-          <div className="font-normal text-15">{userInfo.name}</div>
+          <button
+            type="button"
+            onClick={toggleDropdown}
+            className="font-normal text-15"
+          >
+            {userInfo.name}
+          </button>
         )}
       </div>
       <div className="hidden mobile:flex">
