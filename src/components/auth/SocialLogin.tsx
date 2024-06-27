@@ -1,8 +1,27 @@
+import Google from '@/assets/images/googleLogin.png';
+import Kakao from '@/assets/icons/kakaoLogin.svg';
+import Naver from '@/assets/images/naverLogin.png';
 import {
   useGoogleLogin,
   useKakaoLogin,
   useNaverLogin,
 } from '@/hooks/auth/useOAuthLogin';
+
+interface SocialButtonProps {
+  alt: string;
+  src: string;
+  onClick: () => void;
+}
+
+const SocialLoginButton = ({ alt, src, onClick }: SocialButtonProps) => (
+  <button
+    className="rounded-full hover:opacity-75 active:opacity-50"
+    type="button"
+    onClick={onClick}
+  >
+    <img className="rounded-full" alt={alt} width="50" height="50" src={src} />
+  </button>
+);
 
 const SocialLogin = () => {
   const googleLogin = useGoogleLogin();
@@ -18,45 +37,9 @@ const SocialLogin = () => {
       </div>
 
       <div className="flex gap-20">
-        <button
-          className="rounded-full hover:opacity-75 active:opacity-50"
-          type="button"
-          onClick={googleLogin}
-        >
-          <img
-            className="rounded-full"
-            alt="Google"
-            width="50"
-            height="50"
-            src={Google}
-          />
-        </button>
-        <button
-          className="rounded-full hover:opacity-75 active:opacity-50"
-          type="button"
-          onClick={kakaoLogin}
-        >
-          <img
-            className="rounded-full"
-            alt="Kakao"
-            width="50"
-            height="50"
-            src={Kakao}
-          />
-        </button>
-        <button
-          className="rounded-full hover:opacity-75 active:opacity-50"
-          type="button"
-          onClick={naverLogin}
-        >
-          <img
-            className="rounded-full"
-            alt="Naver"
-            width="50"
-            height="50"
-            src={Naver}
-          />
-        </button>
+        <SocialLoginButton alt="Google" src={Google} onClick={googleLogin} />
+        <SocialLoginButton alt="Kakao" src={Kakao} onClick={kakaoLogin} />
+        <SocialLoginButton alt="Naver" src={Naver} onClick={naverLogin} />
       </div>
     </div>
   );
