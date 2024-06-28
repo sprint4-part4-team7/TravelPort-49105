@@ -38,7 +38,7 @@ interface DeleteReservationProps {
 
 const getReservationUser = ({ userId }: GetReservationUserProps) => {
   return instance({
-    url: `/reservation/use/${userId}`,
+    url: `/reservation/user/${userId}`,
     method: 'GET',
   });
 };
