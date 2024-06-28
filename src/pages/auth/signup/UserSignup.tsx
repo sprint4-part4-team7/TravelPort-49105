@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/InputType';
 import Logo from '@/assets/icons/travelPortLogoLogin.svg';
 import { getCookie } from '@/utils/Cookie';
@@ -94,6 +94,11 @@ const UserSignup = () => {
       },
     });
   };
+
+  useEffect(() => {
+    setIsEmailValid(null);
+    setEmailMessage('');
+  }, [watch('email')]);
 
   return (
     <div className="flex items-center justify-center h-screen my-60">

@@ -65,7 +65,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 py-16 text-2xl font-bold bg-white ">
+    <div className="fixed top-0 left-0 right-0 z-50 py-16 text-2xl font-bold bg-white mobile:py-0 mobile:pt-10 mobile:pb-3">
       <div className="relative flex items-center justify-between px-48 h-60 mobile:px-20">
         <div className="flex items-center mobile:flex-col mobile:items-start">
           <div className="w-full h-65 mobile:w-76 mobile:h-25 tablet:w-147 tablet:h-48">
