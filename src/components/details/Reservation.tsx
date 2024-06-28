@@ -213,6 +213,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
           categoryId={categoryId}
           maxStartDate={maxStartDate}
           minEndDate={minEndDate}
+          holiday={holiday}
         />
       </div>
 
