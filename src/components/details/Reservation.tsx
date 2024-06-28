@@ -15,6 +15,7 @@ import useModal from '@/hooks/functionHooks/useModal';
 import RESERV_STATUS from '@/constants/Reserv';
 import { toast } from 'react-toastify';
 import instance from '@/utils/Axios';
+import useProductByIdQuery from '@/hooks/reactQuery/product/useProductByIdQuery';
 import Button from '@/components/common/button/Button';
 import '@/styles/productDetails.css';
 import DatePickerCustom from './DatePickerCustom';
@@ -34,23 +35,41 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   const [diffDay, setDiffDay] = useState(1);
   const [remainCounts, setRemainCounts] = useState<number[]>([]);
   const [optionIdArray, setOptionIdArray] = useState<number[]>([]);
+  const [maxStartDate, setMaxStartDate] = useState<Date | undefined>();
+  const [minEndDate, setMinEndDate] = useState<Date | undefined>();
+  const [holiday, setHoliday] = useState<any>();
+  console.log(holiday);
 
   const { isModalOpen, openModal, closeModal } = useModal();
   const { table } = useTimeTable(optionId);
+  const { productByProductId } = useProductByIdQuery(product?.id);
 
   const { userInfo } = useUserStore();
   const navigate = useNavigate();
 
   const optionTitle = categoryId === 1 ? '객실 종류' : '옵션';
 
-  const {
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
-    maxStartDate,
-    minEndDate,
-  } = useDatePicker(product?.id);
+  const { startDate, setStartDate, endDate, setEndDate } = useDatePicker();
+
+  const fetchProductDetails = () => {
+    const leftDate = productByProductId?.startDate; // 상품 판매 시작 날짜
+    const rightDate = productByProductId?.endDate; // 상품 판매 종료 날짜
+    setMaxStartDate(
+      leftDate && new Date().getTime() >= new Date(leftDate).getTime()
+        ? new Date()
+        : new Date(leftDate),
+    );
+    setMinEndDate(
+      rightDate && new Date().getTime() >= new Date(rightDate).getTime()
+        ? new Date()
+        : new Date(rightDate),
+    );
+    setHoliday(productByProductId?.closedDay);
+  };
+
+  useEffect(() => {
+    fetchProductDetails();
+  }, []);
 
   useEffect(() => {
     if (
