@@ -491,7 +491,7 @@
 
 ## 🧩 Scheduling
 
-### 노션
+### 프로젝트 개발 노션
 
 https://incongruous-cactus-4ae.notion.site/Part4-7-d8810d6b389946fa97ec336a2efd560b?pvs=4
 
