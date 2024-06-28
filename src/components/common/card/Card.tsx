@@ -44,11 +44,11 @@ const Card = ({
 
   return (
     <Link to={link}>
-      <div className="flex flex-col w-265 h-400 overflow-hidden rounded-xl shadow-[0_0_4px_0_rgba(0,0,0,0.25)] tablet:w-229 tablet:h-350 mobile:w-335 mobile:h-198 mobile:flex-row">
+      <div className="flex flex-col w-265 h-400 overflow-hidden rounded-xl shadow-[0_0_4px_0_rgba(0,0,0,0.25)] tablet:w-229 tablet:h-350 mobile:w-310 mobile:h-198 mobile:flex-row">
         <img
           src={image}
           alt="예시사진"
-          className="w-265 h-267 object-fit tablet:h-217 mobile:w-158 mobile:h-198"
+          className="w-265 h-267 object-fit tablet:h-217 mobile:w-138 mobile:h-198"
         />
         <div className="px-16 py-20 bg-white w-265 h-133 hover:bg-blue-1 tablet:w-229 mobile:w-177 mobile:h-198">
           <h2 className="py-4 mb-5 font-semibold truncate text-black-12 text-20 h-28 leading-20">

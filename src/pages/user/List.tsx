@@ -9,7 +9,6 @@ import useDatePicker from '@/hooks/functionHooks/useDatePicker';
 import useTypeCheckbox from '@/hooks/functionHooks/useTypeCheckbox';
 import useFetchByCategory from '@/hooks/products/useFetchByCategory';
 import Layout from '@/components/common/layout/Layout';
-import HotelCard from '@/components/common/card/HotelCard';
 import HeadCount from '@/components/list/filter/HeadCount';
 import PriceRange from '@/components/list/filter/PriceRange';
 import Card from '@/components/common/card/Card';
@@ -119,19 +118,17 @@ const List = () => {
   };
 
   const listClass =
-    categoryId === '1'
-      ? 'flex flex-col gap-24 mb-64 w-full mobile:mx-auto mobile:w-fit'
-      : 'grid grid-cols-3 gap-24 w-fit mx-auto mb-64 mobile:grid-cols-1';
+    'grid grid-cols-3 gap-24 w-fit mx-auto mb-64 mobile:grid-cols-1';
 
   return (
     <Layout main noSearch={false}>
-      <div className="mx-auto mt-40 max-w-928 min-w-460 ">
-        <div className="relative rounded-42 px-48 py-20 shadow-[0_0_12px_0_rgba(0,0,0,0.25)] mb-100">
-          <div className="flex items-center justify-between cursor-pointer gap-30">
+      <div className="mx-auto mt-40 max-w-928">
+        <div className="relative text-16 rounded-42 px-48 py-16 shadow-[0_0_12px_0_rgba(0,0,0,0.25)] mb-100 mobile:px-10 mobile:text-12">
+          <div className="flex items-center gap-10 cursor-pointer justify-evenly">
             {filterings.map((filtering) => (
               <p
                 key={Math.random()}
-                className="font-medium text-13"
+                className="font-medium text-16 mobile:text-14"
                 onClick={() => handleFilterTab(filtering)}
               >
                 {filtering} <span className="mobile:hidden">선택</span>
@@ -194,8 +191,11 @@ const List = () => {
               </div>
             )}
             <div>
-              <Button buttonStyle="py-10 px-20" onClick={handleFilterClick}>
-                검색하기
+              <Button
+                buttonStyle="py-10 px-20 mobile:px-10 mobile:py-6"
+                onClick={handleFilterClick}
+              >
+                검색<span className="mobile:hidden">하기</span>
               </Button>
             </div>
           </div>
@@ -204,18 +204,7 @@ const List = () => {
         {paginatedProducts.length !== 0 ? (
           <div className={`${listClass}`}>
             {paginatedProducts.map((item: any) => {
-              return categoryId === '1' ? (
-                <HotelCard
-                  key={item.productId}
-                  title={item.productName}
-                  location={item.productAddress}
-                  price={item.minPrice}
-                  score={item.reviewAvg}
-                  review={item.reviewCount}
-                  image={item.thumbnail}
-                  link={`/details/${Number(categoryId)}/${item.productId}`}
-                />
-              ) : (
+              return (
                 <Card
                   key={item.productId}
                   title={item.productName}
