@@ -9,8 +9,9 @@ import Button from '@/components/common/button/Button';
 import ReservationCard from '@/components/common/pagination/reservPagination/ReservationCard';
 import ReservChips from '@/components/myPage/ReservChips';
 import ReservButtonOutlined from '@/components/myPage/button/ReservButtonOutlined';
-import Modal from '../common/modal/Modal';
-import RejectReservation from '../myPage/modal/RejectReservation';
+import Modal from '@/components/common/modal/Modal';
+import WriteRejectReason from '@/components/myPage/modal/WriteRejectReason';
+import RejectReservation from '@/components/myPage/modal/RejectReservation';
 
 type ReserveProps = {
   id: number;
@@ -85,7 +86,12 @@ const ReservedManageCard = ({
               />
               <ReservButtonOutlined
                 status={RESERV_STATUS.REJECTED}
-                onClick={handleReject}
+                onClick={openModal}
+              />
+              <RejectReservation
+                closeModal={closeModal}
+                isOpen={isModalOpen}
+                handleState={handleReject}
               />
             </div>
           </div>
@@ -118,14 +124,14 @@ const ReservedManageCard = ({
                 onClick={openModal}
               >
                 사유 작성
-                <img alt="승인" src={ARROW_UP_RIGHT} width={16} height={16} />
+                <img alt="팝업" src={ARROW_UP_RIGHT} width={16} height={16} />
               </Button>
               <Modal
                 isOpen={isModalOpen}
                 closeModal={closeModal}
                 modal="w-full max-w-536"
               >
-                <RejectReservation id={id} closeModal={closeModal} />
+                <WriteRejectReason id={id} closeModal={closeModal} />
               </Modal>
             </div>
           </div>
