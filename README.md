@@ -487,9 +487,23 @@
 
 ## 👤 User flow
 
-<img src="public/img/TravelPort_userflow.png" title="userflow" />
+![image](https://github.com/sprint4-part4-team7/TravelPort-49105/assets/129635857/a6df4fbe-0345-4442-948b-eef230737bde)
+
+## 🧩 Scheduling
+
+### 노션
+
+https://incongruous-cactus-4ae.notion.site/Part4-7-d8810d6b389946fa97ec336a2efd560b?pvs=4
 
 ## 📖 Page preview
+
+### 초기 기획안
+
+https://docs.google.com/presentation/d/1NDmdhxuUg70VxQjDUL_AwMPfLTYq_VyfpIJZVh-YzIs/edit?usp=sharing
+
+### 배포 주소
+
+http://travelport49105.kro.kr/
 
 ## ❗ Trouble Shooting
 
