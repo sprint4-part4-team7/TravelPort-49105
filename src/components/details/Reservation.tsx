@@ -223,6 +223,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
       productOptionId: optionId,
       timeTableId: getTableId(table),
       ticketCount: ticketNum,
+      price: filteredOption[0].optionPrice * ticketNum * diffDay,
     });
   };
 
