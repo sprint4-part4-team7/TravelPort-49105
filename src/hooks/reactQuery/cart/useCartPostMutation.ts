@@ -6,6 +6,7 @@ interface CartPostMutationProps {
   productOptionId: number;
   timeTableId: number;
   ticketCount: number;
+  price: number;
 }
 
 const useCartPostMutation = () => {
@@ -17,12 +18,14 @@ const useCartPostMutation = () => {
       productOptionId,
       timeTableId,
       ticketCount,
+      price,
     }: CartPostMutationProps) => {
       return cartApi.postCart(
         userId,
         productOptionId,
         timeTableId,
         ticketCount,
+        price,
       );
     },
     onSuccess() {

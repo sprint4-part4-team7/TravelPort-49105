@@ -12,6 +12,7 @@ const postCart = (
   productOptionId: number,
   timeTableId: number,
   ticketCount: number,
+  price: number,
 ) => {
   return instance({
     url: `/cart`,
@@ -21,6 +22,7 @@ const postCart = (
       productOptionId,
       timeTableId,
       ticketCount,
+      price,
     },
   });
 };
