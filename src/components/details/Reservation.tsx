@@ -15,6 +15,8 @@ import useModal from '@/hooks/functionHooks/useModal';
 import RESERV_STATUS from '@/constants/Reserv';
 import { toast } from 'react-toastify';
 import instance from '@/utils/Axios';
+import useProductByIdQuery from '@/hooks/reactQuery/product/useProductByIdQuery';
+import { isWithinInterval, parseISO } from 'date-fns';
 import Button from '@/components/common/button/Button';
 import '@/styles/productDetails.css';
 import DatePickerCustom from './DatePickerCustom';
@@ -34,23 +36,40 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
   const [diffDay, setDiffDay] = useState(1);
   const [remainCounts, setRemainCounts] = useState<number[]>([]);
   const [optionIdArray, setOptionIdArray] = useState<number[]>([]);
+  const [maxStartDate, setMaxStartDate] = useState<Date | undefined>();
+  const [minEndDate, setMinEndDate] = useState<Date | undefined>();
+  const [holiday, setHoliday] = useState<any>();
 
   const { isModalOpen, openModal, closeModal } = useModal();
   const { table } = useTimeTable(optionId);
+  const { productByProductId } = useProductByIdQuery(product?.id);
 
   const { userInfo } = useUserStore();
   const navigate = useNavigate();
 
   const optionTitle = categoryId === 1 ? '객실 종류' : '옵션';
 
-  const {
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
-    maxStartDate,
-    minEndDate,
-  } = useDatePicker(product?.id);
+  const { startDate, setStartDate, endDate, setEndDate } = useDatePicker();
+
+  const fetchProductDetails = () => {
+    const leftDate = productByProductId?.startDate; // 상품 판매 시작 날짜
+    const rightDate = productByProductId?.endDate; // 상품 판매 종료 날짜
+    setMaxStartDate(
+      leftDate && new Date().getTime() >= new Date(leftDate).getTime()
+        ? new Date()
+        : new Date(leftDate),
+    );
+    setMinEndDate(
+      rightDate && new Date().getTime() >= new Date(rightDate).getTime()
+        ? new Date()
+        : new Date(rightDate),
+    );
+    setHoliday(productByProductId?.closedDay);
+  };
+
+  useEffect(() => {
+    fetchProductDetails();
+  }, [holiday, productByProductId]);
 
   useEffect(() => {
     if (
@@ -88,7 +107,33 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     return 0;
   };
 
-  const getOptionRemainsByTable = (timeTable: any) => {
+  const getOptionRemainsByTable = (timeTable: any, start: Date) => {
+    if (start && endDate) {
+      let minRemainCount = Infinity;
+      const formattedStartDate = formatDate(start);
+      const formattedEndDate = formatDate(endDate);
+
+      for (let i = 0; i < timeTable.length; i++) {
+        const targetDate = parseISO(timeTable[i].targetDate);
+        if (
+          isWithinInterval(targetDate, {
+            start: new Date(formattedStartDate),
+            end: new Date(formattedEndDate),
+          })
+        ) {
+          const remain = timeTable[i].remainCount;
+
+          if (remain === 0) {
+            return 0;
+          }
+
+          if (remain < minRemainCount) {
+            minRemainCount = remain;
+          }
+        }
+      }
+      return minRemainCount === Infinity ? 0 : minRemainCount;
+    }
     if (startDate) {
       for (let i = 0; i < timeTable?.length; i++) {
         if (timeTable[i].targetDate?.includes(formatDate(startDate))) {
@@ -99,12 +144,12 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     return 0;
   };
 
-  const fetchRemainCounts = async (optionIds: number[]) => {
+  const fetchRemainCounts = async (optionIds: number[], start: Date) => {
     const newRemainCounts = await Promise.all(
       optionIds.map(async (id) => {
         const response = await instance.get(`/timeTable/productOption/${id}`);
         const tableData = response.data;
-        return getOptionRemainsByTable(tableData);
+        return getOptionRemainsByTable(tableData, start);
       }),
     );
     setRemainCounts(newRemainCounts);
@@ -114,7 +159,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
     if (startDate && Array.isArray(options)) {
       const newOptionIds = options.map((option) => option.id);
       setOptionIdArray(newOptionIds);
-      fetchRemainCounts(newOptionIds);
+      fetchRemainCounts(newOptionIds, startDate);
     } else {
       setRemainCounts([]);
     }
@@ -194,6 +239,7 @@ const Reservation = ({ product, options, categoryId }: ReservationProps) => {
           categoryId={categoryId}
           maxStartDate={maxStartDate}
           minEndDate={minEndDate}
+          holiday={holiday}
         />
       </div>
 

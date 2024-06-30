@@ -1,64 +1,32 @@
-import { useForm } from 'react-hook-form';
-import { useMutation } from '@tanstack/react-query';
-import ReservApi from '@/apis/reservation';
-import TextBox from '@/components/common/input/TextBox';
-import Button from '@/components/common/button/Button';
-
-interface Reject {
-  cancelMsg: string;
-}
+import { toast } from 'react-toastify';
+import DefaultModal from '@/components/common/modal/DefaultModal';
 
 const RejectReservation = ({
-  id: reservationId,
   closeModal,
+  isOpen,
+  handleState,
 }: {
-  id: number;
   closeModal: () => void;
+  isOpen: boolean;
+  handleState: () => void;
 }) => {
-  const { register, handleSubmit, setValue, watch } = useForm<Reject>({
-    defaultValues: { cancelMsg: '' },
-  });
-
-  const mutateCancelMsg = useMutation({
-    mutationFn: (data: { reservationId: number; cancelMsg: string }) =>
-      ReservApi.putCancelMsg(data),
-    onSuccess: () => {
-      // 성공 시 모달을 닫습니다.
-      closeModal();
-    },
-  });
-
-  const handleSave = async (data: Reject) => {
-    mutateCancelMsg.mutate({
-      reservationId,
-      cancelMsg: data.cancelMsg,
-    });
+  const handleReject = () => {
+    handleState();
+    toast.success('거절 처리되었습니다.');
+    closeModal();
   };
-
-  const cancelMsgValue = watch('cancelMsg');
-
   return (
-    <div className="flex flex-col gap-48">
-      <TextBox
-        id="rejectReservation"
-        labelName="거절 사유"
-        textSize={18}
-        mb={16}
-        textLimit={100}
-        placeholder="거절 사유를 작성해주세요"
-        value={cancelMsgValue}
-        onChange={(e) => setValue('cancelMsg', e.target.value)}
-        register={register('cancelMsg', {
-          required: '거절 사유를 작성해주세요',
-        })}
-      />
-      <div className="flex justify-between gap-16">
-        <Button isCancel onClick={closeModal}>
-          취소
-        </Button>
-        <Button onClick={handleSubmit(handleSave)}>거절 사유 보내기</Button>
+    <DefaultModal
+      isOpen={isOpen}
+      title="예약 거절 시 되돌릴 수 없습니다."
+      buttonText="거절하기"
+      closeModal={closeModal}
+      onConfirm={handleReject}
+    >
+      <div className="text-24 font-semibold pt-0 text-left">
+        정말 거절하시겠습니까?
       </div>
-    </div>
+    </DefaultModal>
   );
 };
 
