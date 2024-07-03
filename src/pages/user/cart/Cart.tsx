@@ -49,12 +49,12 @@ const Cart = () => {
   const handleSelect = useCallback((item: CartInfo, isSelected: boolean) => {
     if (isSelected) {
       setSelectedItems((prevSelectedItems) => [...prevSelectedItems, item]);
-      setSelectedTotal((prevTotal) => prevTotal + item.price * item.count);
+      setSelectedTotal((prevTotal) => prevTotal + item.price);
     } else {
       setSelectedItems((prevSelectedItems) =>
         prevSelectedItems.filter((selectedItem) => selectedItem.id !== item.id),
       );
-      setSelectedTotal((prevTotal) => prevTotal - item.price * item.count);
+      setSelectedTotal((prevTotal) => prevTotal - item.price);
     }
   }, []);
 

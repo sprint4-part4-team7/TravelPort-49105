@@ -35,6 +35,8 @@ const CartList = ({
   const cartId = item?.id;
   const optionId = item?.productOption?.id;
   const timeTableId = item?.timeTable?.id;
+  const price = item?.price;
+  const optionPrice = item?.productOption?.optionPrice;
 
   const {
     productOption,
@@ -48,14 +50,18 @@ const CartList = ({
   const [count, setCount] = useState(item?.ticketCount);
   const [isSelected, setIsSelected] = useState(false);
   const [refreshData, setRefreshData] = useState(false);
+  const [lastTotalPrice, setLastTotalPrice] = useState(
+    price * (item && item.ticketCount),
+  );
 
   useEffect(() => {
     // 상품 정보가 로딩된 후에 초기화
     if (!productOptionLoading && !timeTableLoading) {
-      setCount(item?.ticketCount);
+      setCount(item?.ticketCount || 1);
       setIsSelected(false);
+      setLastTotalPrice(price ?? 0);
     }
-  }, [item, productOptionLoading, timeTableLoading]);
+  }, [item, productOptionLoading, timeTableLoading, price]);
 
   useEffect(() => {
     if (
@@ -87,7 +93,6 @@ const CartList = ({
   const image = item?.productOption?.product?.thumbnail;
   const name = item?.productOption?.product?.name;
   const options = productOption && productOption.optionName;
-  const price = productOption && productOption.optionPrice;
   const maxCount = productOption && productOption.maxUserCount;
   const userCount = productOption && productOption.userCount;
   const categoryId = item?.productOption?.product?.categoryId;
@@ -118,22 +123,25 @@ const CartList = ({
     onSelect(selectedItem, newSelected);
   };
 
-  useEffect(() => {
-    const totalPrice = (price ?? 0) * count;
-    onPriceChange(totalPrice, count);
-  }, [count, price]);
-
   const increaseCount = () => {
     const newCount = count + 1;
     setCount(newCount);
-    onPriceChange((price ?? 0) * newCount, newCount);
+
+    const newTotalPrice = lastTotalPrice + optionPrice;
+
+    setLastTotalPrice(newTotalPrice);
+    onPriceChange(newTotalPrice, newCount);
   };
 
   const decreaseCount = () => {
     if (count > 1) {
       const newCount = count - 1;
       setCount(newCount);
-      onPriceChange((price ?? 0) * newCount, newCount);
+
+      const newTotalPrice = lastTotalPrice - optionPrice;
+
+      setLastTotalPrice(newTotalPrice);
+      onPriceChange(newTotalPrice, newCount);
     }
   };
 
@@ -255,7 +263,7 @@ const CartList = ({
             </button>
           </div>
           <div className="flex font-semibold text-18 ">
-            {(price * count).toLocaleString()}원
+            {lastTotalPrice.toLocaleString()}원
           </div>
         </div>
       </div>
